@@ -23,9 +23,7 @@ public:
         
         vector<char> stack;
         
-        for (int i=0; i<s.size(); i++) {
-            
-            char curr = s[i];
+        for (auto curr : s) {
             
             //
             // when an open container is found,
