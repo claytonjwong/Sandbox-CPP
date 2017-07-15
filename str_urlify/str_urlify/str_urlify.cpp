@@ -28,7 +28,7 @@ public:
             
             space_index = str.find(' ');
         }
-        
+
     }
 };
 
