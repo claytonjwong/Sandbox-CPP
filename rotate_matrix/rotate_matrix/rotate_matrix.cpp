@@ -33,9 +33,6 @@ public:
                 m[i][SIZE-j-1] = temp;
             }
         }
-        
-        
-        
     }
 };
 
@@ -51,7 +48,7 @@ int main(int argc, const char * argv[]) {
     Solution solution;
     solution.rotate(matrix);
     
-    
-    
     return 0;
 }
+
+
