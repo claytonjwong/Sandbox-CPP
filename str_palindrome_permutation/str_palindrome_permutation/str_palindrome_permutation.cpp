@@ -21,36 +21,19 @@ public:
         }
         
         // track the count of each char of s only contains letters and spaces
-        unordered_map<char,int> umap;
+        int flip=0;
         for ( auto ch : s ){
 
             if (!isspace(ch)){
-                ch = tolower(ch);
-                umap[ch]++;
+                flip ^= 1 << ('a' - tolower(ch));
             }
         }
         
-        // a palindrome permutation has at most 1 single char
-        // all other chars need to be in even pairs ( 2, 4, 6 etc )
-        unordered_map<char,int>::iterator itr;
-        bool one_found = false;
-        for (itr = umap.begin(); itr != umap.end(); itr++) {
-            
-            if ( itr->second == 1 ) {
-                if ( one_found ) {
-                    return false; // at most only one single char can have count 1
-                } else {
-                    one_found = true;
-                }
-            }
-            else
-            if ( itr->second % 2 != 0 ) {
-                return false; // all other chars count need to be an even number
-            }
-            
-        }
+        // characters with an even count will be flipped an even amount of times
+        // only one character is allowed to be flipped an odd amount of times for odd len string
+        // so see if there is just one bit set (i.e. flip is a power of 2)
+        return flip == 0 || ( flip & (flip - 1) ) == 0; // odd len string, all bits except 1 should be 0
         
-        return true;
     }
 };
 
