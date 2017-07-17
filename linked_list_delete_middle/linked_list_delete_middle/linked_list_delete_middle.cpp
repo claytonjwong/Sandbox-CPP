@@ -1,8 +1,13 @@
 /*
  
- Implement an algorithm to delete a ode in the middle (i.e. any node but head/tail )
+ Implement an algorithm to delete a node in the middle (i.e. any node but head/tail )
  
  given access only to that node
+ 
+ Example:
+
+ input: 1->2->3->4   and remove node at index 2
+ output: 1->2->4
  
  */
 
@@ -98,6 +103,7 @@ int main(int argc, const char * argv[]) {
         
         itr = itr->next;
     }
+    cout << endl << endl;
     
     
     
