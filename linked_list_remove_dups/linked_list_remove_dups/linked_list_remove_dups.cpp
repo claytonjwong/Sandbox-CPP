@@ -1,6 +1,8 @@
 /*
  
- Write code to remove duplicates from an unsorted linked list 
+ Write code to remove duplicates from an unsorted linked list
+ 
+ How would you solve this problem if a temporary buffer is not allowed?
  
  */
 
@@ -16,8 +18,12 @@ struct node{
 
 class Solution{
 public:
+    
     node* remove_dups(node* list){
         
+        //
+        // O(n) with a buffer
+        //
         
         // add unique values into a set
         set<int> unique;
@@ -46,14 +52,47 @@ public:
         
         return head;
     }
+    
+    node* remove_dups_without_buff(node* list){
+        
+        //
+        // O(n^2) without a buffer
+        //
+        node* head = list;
+        node* itr = head;
+        while (itr) {
+            
+            // slide prev/curr right
+            node* prev = itr;
+            node* curr = itr->next;
+            
+            while (curr){
+                
+                // bypass duplicate
+                if (itr->val == curr->val){
+                    prev->next = curr->next;
+                }
+                
+                prev = curr;
+                curr = curr->next;
+            }
+            
+            
+            itr = itr->next;
+        }
+        
+        return head;
+    }
 };
 
 int main(int argc, const char * argv[]) {
     
+    //
+    // input
+    //
     node* test = NULL;
-    
-    int val;
     node* itr = NULL;
+    int val;
     
     cout << "Input linked list values: [ (-1) to END input ]" << endl;
     while ( true ){
@@ -80,8 +119,11 @@ int main(int argc, const char * argv[]) {
         
     }
     
+    //
+    // output
+    //
     Solution solution;
-    node* result = solution.remove_dups(test);
+    node* result = solution.remove_dups_without_buff(test);
     
     cout << endl << "unique: " << endl;
     itr = result;
