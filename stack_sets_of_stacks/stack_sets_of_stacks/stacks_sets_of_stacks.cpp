@@ -10,6 +10,7 @@
 
 #include <iostream>
 
+
 using namespace std;
 
 
@@ -163,7 +164,8 @@ private:
 
 template <class T>
 StackSet<T>::StackSet(void){
-    StackSet(DEFAULT_CAPACITY);
+    stack_list = NULL;
+    stack_capacity = DEFAULT_CAPACITY;
 }
 
 template <class T>
@@ -211,7 +213,7 @@ int main(int argc, const char * argv[]) {
         
     } catch ( EmptyStackSetException ex ) {
         
-        cout << "Exception caught, this is expected since we popped off an empty list." << endl << endl;
+        cout << "Exception caught, this is expected since we popped off an empty list:" << endl << endl;
     }
     
     return 0;
