@@ -45,12 +45,16 @@ private:
 };
 
 
-template<class T>
+
 class Graph{
 public:
     Graph() {}
-    void AddNode(Node<T>* node) { set.push_back(node); }
-    bool IsRouteViaBFS(Node<T>* start, Node<T>* target){
+    
+    template<class T>
+    static bool IsRouteViaBFS(Node<T>* start, Node<T>* target, int& iteration_count){
+        
+        // reset count
+        iteration_count = 0;
         
         // queue is used for BFS to search through immediate neighbors first
         queue<Node<T>*> q;
@@ -87,14 +91,13 @@ public:
                     visited[n]=true;
                     q.push(n);
                 }
+                iteration_count++;
             }
         }
         
         // BFS is exhausted without finding target
         return false;
     }
-private:
-    vector<Node<T>*> set;
 };
 
 int main(int argc, const char * argv[]) {
@@ -103,23 +106,41 @@ int main(int argc, const char * argv[]) {
     Node<int>* node1 = new Node<int>{1};
     Node<int>* node2 = new Node<int>{2};
     Node<int>* node3 = new Node<int>{3};
+    Node<int>* node4 = new Node<int>{4};
+    Node<int>* node5 = new Node<int>{5};
 
     /*
      
-     1  --->  2  --->  3
+     1's neighbors: 2,3,4,5
+     2's neighbors: 3,4,5
+     3's neighbors: 4,5
      
      */
     
     node1->AddAdjacencyTo(node2);
+    node1->AddAdjacencyTo(node3);
+    node1->AddAdjacencyTo(node4);
+    node1->AddAdjacencyTo(node5);
+
     node2->AddAdjacencyTo(node3);
+    node2->AddAdjacencyTo(node4);
+    node2->AddAdjacencyTo(node5);
     
+    node3->AddAdjacencyTo(node4);
+    node3->AddAdjacencyTo(node5);
     
-    Graph<int> graph;
-    graph.AddNode(node1);
-    graph.AddNode(node2);
-    graph.AddNode(node3);
+    node4->AddAdjacencyTo(node5);
     
-    cout << graph.IsRouteViaBFS(node1,node3) << endl << endl;
+
+    int iterations = 0;
+    bool found = Graph::IsRouteViaBFS(node1,node5,iterations);
+    
+    if (found){
+        cout << "Found in " << iterations << " iterations." << endl << endl;
+    } else {
+        cout << "Not found in " << iterations << " iterations." << endl << endl;
+    }
+    
     
     
     return 0;
