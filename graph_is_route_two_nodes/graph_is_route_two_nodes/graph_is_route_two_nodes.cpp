@@ -18,7 +18,7 @@
  
  The best algo to use depends on the dataset.
  
- If the two nodes are far away from eachother, than DFS is more efficient.
+ If the two nodes are far away from eachother, then DFS is more efficient.
  If the two nodes are close to eachother, then BFS is more efficient.
  
  */
