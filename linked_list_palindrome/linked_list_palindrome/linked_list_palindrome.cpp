@@ -9,19 +9,19 @@
 
 using namespace std;
 
-struct Node {
+struct ListNode {
     int val = 0;
-    Node* next = NULL;
+    ListNode* next = NULL;
 };
 
 class Solution{
 public:
     
-    bool is_palindrome(Node* list){
+    bool isPalindrome(ListNode* list){
         
         vector<int> stack;
-        Node* slow=list; // move 1 node at a time
-        Node* fast=list; // move 2 nodes at a time
+        ListNode* slow=list; // move 1 node at a time
+        ListNode* fast=list; // move 2 nodes at a time
         
         // len < 2
         if ( ! (list && list->next) ){
@@ -30,8 +30,11 @@ public:
         
         // len == 2
         if ( ! (list->next->next) ){
-            stack.push_back(list->val);
-            slow = slow->next;
+            if (list->val == list->next->val){
+                return true;
+            } else {
+                return false;
+            }
         }
         
         
@@ -86,8 +89,8 @@ public:
 
 int main(int argc, const char * argv[]) {
     
-    Node* head = NULL;
-    Node* itr = NULL;
+    ListNode* head = NULL;
+    ListNode* itr = NULL;
     
     cout << "Input: [-1 to END]:" << endl;
     
@@ -100,12 +103,12 @@ int main(int argc, const char * argv[]) {
         }
         
         if (!itr){
-            itr = new Node;
+            itr = new ListNode;
             itr->val = val;
             itr->next = NULL;
             head = itr;
         } else {
-            itr->next = new Node;
+            itr->next = new ListNode;
             itr = itr->next;
             itr->val = val;
             itr->next = NULL;
@@ -113,8 +116,8 @@ int main(int argc, const char * argv[]) {
     }
     
     Solution solution;
-    cout << "is_palindrome: " << to_string( solution.is_palindrome(head) ) << endl << endl;
-    
+    cout << "is_palindrome: " << to_string( solution.isPalindrome(head) ) << endl << endl;
+
     
     return 0;
 }
