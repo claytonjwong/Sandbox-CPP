@@ -19,23 +19,7 @@ Output:
 
 
 
-class Solution{
-public:
-    static vector<vector<int>> Rotate(vector<vector<int>>> m){
-        
-        int sz = m.size();
-        
-        for (int j=sz-1;i>=0;j--){
-            for (int i=0;i<sz;i++){
-                
-                
-                
-            }
-        }
-        
-        
-    };
-    
+
     
     -------------
     
