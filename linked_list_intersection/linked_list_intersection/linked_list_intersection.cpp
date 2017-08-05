@@ -1,120 +1,130 @@
 /*
  
- Given two singly linked lists, determine if the two lists intersect.  Return the intersecting node.  NOte that the intersection is defined based on reference, not value.  That is, if the kth node of the first linked list is the eact same node (by reference) as the jth node of the second linked list, then they are intersecting.
+ 160. Intersection of Two Linked Lists
+ 
+ https://leetcode.com/problems/intersection-of-two-linked-lists/description/
+ 
+ 
+ Write a program to find the node at which the intersection of two singly linked lists begins.
+ 
+ 
+ For example, the following two linked lists:
+ 
+ A:          a1 → a2
+ ↘
+ c1 → c2 → c3
+ ↗
+ B:     b1 → b2 → b3
+ begin to intersect at node c1.
+ 
+ 
+ Notes:
+ 
+ If the two linked lists have no intersection at all, return null.
+ The linked lists must retain their original structure after the function returns.
+ You may assume there are no cycles anywhere in the entire linked structure.
+ Your code should preferably run in O(n) time and use only O(1) memory.
  
  */
 
-#include <iostream>
+#include <stdio.h>
 
-using namespace std;
 
-struct Node{
-    int val = 0;
-    Node* next = NULL;
+
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(NULL) {}
 };
 
-class Solution{
+class Solution {
 public:
-    
-    Node* intersect(Node*, Node*);
-};
-
-Node* Solution::intersect(Node* one, Node* two){
-    
-    // iterate through each linked list and keep track of their lengths
-    // if the last node of each linked list is the same, then the lists intersect
-    // iterate through ahead through the longer list, then move long with the
-    // the shorter list to find and return the intersecting node
-    
-    Node* itr_one = one;
-    int len_one = 0;
-    while ( true ){
-        if (itr_one){
-            len_one++;
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
         
-            if (itr_one->next){
-                itr_one = itr_one->next;
-            } else {
-                break; // exit loop when itr_one points to the last node
-            }
+        if (!headA || !headB){
+            return NULL;
         }
-    }
-
-    Node* itr_two = two;
-    int len_two = 0;
-    while ( true ){
-        if (itr_two){
-            len_two++;
+        
+        int lenA = 1;
+        int lenB = 1;
+        
+        ListNode* itrA = headA;
+        ListNode* itrB = headB;
+        
+        // find the lengths of A and B by iterating to the last node in each list
+        while(itrA && itrA->next){
+            lenA++;
+            itrA = itrA->next;
+        }
+        while(itrB && itrB->next){
+            lenB++;
+            itrB = itrB->next;
+        }
+        
+        // if the last node does NOT match, then there is no intersection
+        if (itrA != itrB){
+            return NULL;
+        }
+        
+        // start iterating through A and B at the same node distance from the last node in each list
+        itrA = headA;
+        itrB = headB;
+        while (lenA > lenB){ // if A is longer, then move A ahead
+            lenA--;
+            itrA=itrA->next;
+        }
+        while (lenB > lenA){ // if B is longer, then move B ahead
+            lenB--;
+            itrB=itrB->next;
+        }
+        
+        // move A and B forward together to find first node itersection
+        while (itrA && itrB){
             
-            if (itr_two->next){
-                itr_two=itr_two->next;
-            } else {
-                break; // exit loop when itr_two points to the last node
+            if (itrA == itrB){
+                return itrA;
             }
+            
+            itrA=itrA->next;
+            itrB=itrB->next;
         }
-    }
-
-    // if the last nodes of each list are NOT the same node, then these lists do NOT interset
-    if (itr_one != itr_two){
+        
         return NULL;
     }
-    
-    // find the longer and shorter lists
-    Node* itr_short;
-    Node* itr_long;
-    if (len_one < len_two){
-        itr_short = one;
-        itr_long = two;
-    } else {
-        itr_short = two;
-        itr_long = one;
-    }
-    
-    // iterate forward by the length difference between the longer and shorter list
-    int diff = abs ( len_one - len_two );
-    while ( diff > 0 ){
-        itr_long = itr_long->next;
-        diff--;
-    }
-    
-    // iterate fowards together to find the first intersecting node
-    while (itr_long && itr_short){
-        if (itr_long == itr_short){
-            return itr_long;
-        }
-        
-        itr_long = itr_long->next;
-        itr_short = itr_short->next;
-    }
-    
-    
-    return NULL;
-}
+};
 
-int main(int argc, const char * argv[]) {
+
+int main(){
     
-    Node* one = new Node;
-    one->val = 1;
-    one->next = new Node;
-    one->next->val = 2;
-    one->next->next = new Node;
-    one->next->next->val = 3;
-    one->next->next->next = NULL;
+    ListNode* listB = new ListNode(1);
+    listB->next = new ListNode(2);
+    listB->next->next = new ListNode(3);
     
-    Node* two = new Node;
-    two->val = 0;
-    two->next = new Node;
-    two->next->val = 1;
-    two->next->next = NULL;
+    ListNode* listA = new ListNode(1);
+    listA->next = new ListNode(2);
+    listA->next->next = new ListNode(3);
+    
+    ListNode* listC = new ListNode(1);
+    listC->next = new ListNode(2);
+    listC->next->next = new ListNode(3);
+    
+    listA->next->next->next = listC;
+    listB->next->next->next = listC;
+    
+    
     
     Solution solution;
-    Node* result = solution.intersect(one,two);
+    ListNode* result = solution.getIntersectionNode(listA, listB);
     
-    if (result == NULL){
-        cout << "Success" << endl;
-    } else {
-        cout << "Failure" << endl;
-    }
     
     return 0;
 }
+
+
+
+
+
+
+
+
+
