@@ -73,7 +73,7 @@ public:
         
         vector<Chunk> chunks;
         toChunks(n, chunks); // every other chunk is 0, 1
-         
+        
         for (int i=0; i < chunks.size(); i++){
             
             //
@@ -126,7 +126,7 @@ public:
                 curr.size++;
             }
             else
-                if (!curr_bit_set && curr.val == Chunk::ZERO){ // chunk of 0s
+            if (!curr_bit_set && curr.val == Chunk::ZERO){ // chunk of 0s
                 curr.size++;
             }
             else { // new chunk, save old chunk
