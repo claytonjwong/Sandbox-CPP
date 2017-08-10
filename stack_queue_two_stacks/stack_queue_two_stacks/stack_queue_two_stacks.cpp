@@ -1,10 +1,8 @@
-//
-//  main.cpp
-//  stack_queue_two_stacks
-//
-//  Created by CLAYTON WONG on 7/23/17.
-//  Copyright © 2017 Clayton Wong. All rights reserved.
-//
+/*
+ 
+ CCI CH 3.4: Queue via Stacks: Implement a MyQueue class which implements a queue using two stacks.
+ 
+ */
 
 #include <iostream>
 
