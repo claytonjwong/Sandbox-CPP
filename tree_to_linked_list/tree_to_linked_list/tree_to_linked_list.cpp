@@ -50,33 +50,31 @@ class Solution{
 public:
     void flatten(TreeNode* root){
         
-        TreeNode* root_node = root;
+        TreeNode* curr = root;
         
         // make all left subtrees right subtrees
-        while (root_node){
+        while (curr){
             
-            if (root_node->left){
-                
-                TreeNode* curr_node = root_node;
-                TreeNode* curr_subtree = curr_node;
+            if (curr->left){
                 
                 // save previous right subtree
-                TreeNode* prev_right_subtree = curr_subtree->right;
+                TreeNode* prev_right = curr->right;
                 
                 // set right subtree to left subtree
-                curr_subtree->right = curr_subtree->left;
+                curr->right = curr->left;
                 
                 // set left subtree NULL
-                curr_subtree->left = NULL;
+                curr->left = NULL;
                 
                 // set right-most right to the previous right subtree
-                while (curr_node->right){
-                    curr_node = curr_node->right;
+                TreeNode* rightmost  = curr;
+                while (rightmost->right){
+                    rightmost = rightmost->right;
                 }
-                curr_node->right = prev_right_subtree;
+                rightmost->right = prev_right;
             }
             
-            root_node = root_node->right; // iterate to the right
+            curr = curr->right; // iterate to the right
         }
         
     }
