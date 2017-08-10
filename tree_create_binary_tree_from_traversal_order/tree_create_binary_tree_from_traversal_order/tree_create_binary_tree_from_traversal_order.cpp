@@ -37,9 +37,8 @@ public:
         
         // take first element of the preorder and make it the root of the tree
         TreeNode* root = new TreeNode(preorder[0]);
-        
-        
-        
+
+        // use inorder to determine where to place this sub-tree's root (left/right)
         for (int i=1; i < preorder.size(); i++){
         
             TreeNode* parent = root;
@@ -67,10 +66,6 @@ public:
                     }
                 }
             }
-            
-            
-            
-            
         }
         
         return root;
