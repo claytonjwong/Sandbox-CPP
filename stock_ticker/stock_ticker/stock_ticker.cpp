@@ -50,7 +50,7 @@ public:
         
         // add ticker if it does NOT exist
         if ( ticker_table.find(ticker) == ticker_table.end() ){
-            Stock* new_entry = new Stock(ticker, quantity);
+            auto new_entry = make_shared<Stock>(ticker, quantity);
             ticker_table[ticker] = new_entry;
             ticker_list.push_back(new_entry);
         } else {
@@ -86,7 +86,7 @@ public:
             }
             
             // swap max j with i
-            Stock* temp = ticker_list[maxj_index];
+            shared_ptr<Stock> temp = ticker_list[maxj_index];
             ticker_list[maxj_index] = ticker_list[i];
             ticker_list[i] = temp;
             
@@ -99,8 +99,8 @@ public:
     }
     
 private:
-    unordered_map<string, Stock*> ticker_table;
-    vector<Stock*> ticker_list;
+    unordered_map<string, shared_ptr<Stock>> ticker_table;
+    vector<shared_ptr<Stock>> ticker_list;
 };
 
 
