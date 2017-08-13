@@ -18,25 +18,53 @@
 
 #include <iostream>
 #include <vector>
+#include <unordered_map>
 
 using namespace std;
 
 class Solution {
 public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        vector<int> result = {-1,-1};
+    
+    /* Brute force O(N^2) */
+//    vector<int> twoSum(vector<int>& nums, int target) {
+//        vector<int> result = {-1,-1};
+//        
+//        for (int i=0; i < nums.size()-1; i++ ){
+//            for (int j=i+1; j < nums.size(); j++){
+//                if (nums[i]+nums[j]==target){
+//                    result = {i, j};
+//                    break;
+//                }
+//            }
+//        }
+//        
+//        return result;
+//    }
+    
+    vector<int> twoSum(vector<int>& nums, int target){
         
-        for (int i=0; i < nums.size()-1; i++ ){
-            for (int j=i+1; j < nums.size(); j++){
-                if (nums[i]+nums[j]==target){
-                    result = {i, j};
-                    break;
-                }
+        vector<int> result;
+        
+        unordered_map<int, int> lookup; // key=num val=index of num
+        
+        for (int i=0; i < nums.size(); i++){
+            
+            int num = nums[i];
+            int compliment = target - num; // derived from target = num + compliment
+            
+            if ( lookup.find(compliment) != lookup.end() ){ // lookup compliement
+                
+                result.push_back(i); // index of num
+                result.push_back(lookup[compliment]); // index of compliment
+                break;
             }
+            
+            lookup[num] = i; // add num into the hash if corresponding compliment is NOT found
         }
         
         return result;
     }
+    
 };
 
 
@@ -45,8 +73,8 @@ int main(int argc, const char * argv[]) {
     
     Solution solution;
     
-    vector<int> nums = { 2, 7, 11, 15 };
-    int target = 9;
+    vector<int> nums = { 3, 3 };
+    int target = 6;
     
     vector<int> result = solution.twoSum(nums, target);
     cout << "[0,1] == [" << result[0] << "," << result[1] << "]" << endl;
