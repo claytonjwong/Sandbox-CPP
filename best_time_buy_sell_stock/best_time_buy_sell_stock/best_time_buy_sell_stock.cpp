@@ -26,46 +26,80 @@
 
 using namespace std;
 
-
-class Solution {
+class Solution{
 public:
-    
-    /* brute force O(n^2) TLE */
-    int maxProfit2(vector<int>& prices) {
-        
-        if ( prices.empty () ){
-            return 0;
-        }
-        
-        int m = 0;
-        for (int i=0; i < prices.size()-1; i++){
-            for (int j=i+1; j < prices.size(); j++){
-                
-                m = max ( m, prices[j] - prices[i] );
-            }
-        }
-        
-        return m;
-    }
-    
-    /* O(n) keep track of min, and keep trying to find new max based on that min */
     int maxProfit(vector<int>& prices){
         
-        int profit = 0;
-        
+        int max_profit = 0;
         int min_price = INT_MAX;
-        
         for ( auto price : prices ){
-            
             min_price = min( min_price, price );
-            
-            profit = max( profit, price - min_price );
+            max_profit = max( max_profit, price - min_price );
         }
         
-        return profit;
+        return max_profit;
     }
-    
 };
+
+//class Solution {
+//public:
+//    int maxProfit(vector<int>& prices){
+//        
+//        int mp = 0;
+//        
+//        int min_price = INT_MAX;
+//        
+//        for (int i=0; i < prices.size(); i++){
+//            
+//            min_price = min( min_price, prices[i] );
+//            
+//            mp = max ( mp, prices[i] - min_price );
+//        }
+//        
+//        return mp;
+//    }
+//};
+
+//class Solution {
+//public:
+//    
+//    /* brute force O(n^2) TLE */
+//
+//    int maxProfit2(vector<int>& prices) {
+//        
+//        if ( prices.empty () ){
+//            return 0;
+//        }
+//        
+//        int m = 0;
+//        for (int i=0; i < prices.size()-1; i++){
+//            for (int j=i+1; j < prices.size(); j++){
+//                
+//                m = max ( m, prices[j] - prices[i] );
+//            }
+//        }
+//        
+//        return m;
+//    }
+//    
+//    /* O(n) keep track of min, and keep trying to find new max based on that min */
+//    int maxProfit(vector<int>& prices){
+//        
+//        int profit = 0;
+//        
+//        int min_price = INT_MAX;
+//        
+//        for ( auto price : prices ){
+//            
+//            min_price = min( min_price, price );
+//            
+//            profit = max( profit, price - min_price );
+//        }
+//        
+//        return profit;
+//    }
+//    
+//};
 
 
 int main(int argc, const char * argv[]) {
@@ -73,7 +107,7 @@ int main(int argc, const char * argv[]) {
     Solution solution;
     
     
-    vector<int> test {};
+    vector<int> test { 4, 3, 2, 3, 4, 7 };
     
     cout << "5 == " << solution.maxProfit(test) << endl;
     
