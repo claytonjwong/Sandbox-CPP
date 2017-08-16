@@ -6,6 +6,7 @@
  */
 
 #include <iostream>
+#include <cmath>
 
 
 using namespace std;
@@ -22,68 +23,73 @@ public:
 template<class T>
 class Solution {
 public:
-    static bool IsBalanced(Node<T>* node){
+    bool IsBalanced(Node<T>* node){
         
-        int left_depth = Solution::GetMaxDepth(node->left, 1);
-        int right_depth = Solution::GetMaxDepth(node->right, 1);
-        
-        return abs( left_depth - right_depth ) < 2; // true if depths differ by 0 or 1
+        return depth(node) != -1;
     }
     
-    static int GetMaxDepth(Node<T>* node, int curr_depth){
+    int depth(Node<T>* node){
         
-        if (!node){
-            return curr_depth - 1;
+        if (!node) { return 0; }
+        
+        int left = depth(node->left);
+        if (left==-1){
+            return -1;
         }
         
-        // leaf base case
-        if (node && !node->left && !node->right){
-            return curr_depth;
+        int right = depth(node->right);
+        if (right==-1){
+            return -1;
         }
         
-        // non-leaf recursive case
-        int left_depth=0;
-        int right_depth=0;
-        
-        if (node && node->left){
-            left_depth = Solution::GetMaxDepth(node->left, curr_depth+1);
+        if ( abs( left-right ) > 1 ){
+            return -1;
         }
         
-        if (node && node->right){
-            right_depth = Solution::GetMaxDepth(node->right, curr_depth+1);
-        }
-        
-        return max ( left_depth, right_depth );
+        return 1 + max( left,right );
     }
+    
+
 };
 
 int main(int argc, const char * argv[]) {
 
+    /*
+     
+     
+             0
+          /     \
+        1         2
+       / \       / \
+      11  22     3  4
+      / \    \       \
+     111 222  33      5
+     /                 \
+   1111                 6
+     
+     
+     */
     
-    Node<int>* root = new Node<int>(5);
-    root->left = new Node<int>(3);
-    root->left->left = new Node<int>(2);
-    root->left->right = new Node<int>(4);
-    root->left->left->left = new Node<int>(1);
-    root->right = new Node<int>(7);
-    root->right->left = new Node<int>(6);
-    root->right->right = new Node<int>(8);
-    root->right->right->right = new Node<int>(10);
-    root->right->right->right->right = new Node<int>(11);
     
+    Node<int>* root = NULL;
     
-    cout << "max depth (tree): " << Solution<int>::GetMaxDepth(root, 0) << endl;
-    cout << "max depth (left): " << Solution<int>::GetMaxDepth(root->left, 1) << endl;
-    cout << "max depth (right): " << Solution<int>::GetMaxDepth(root->right, 1) << endl;
-    cout << "IsBalanced? true 1: " << Solution<int>::IsBalanced(root) << endl;
+    root = new Node<int>(0);
+//    root->left = new Node<int>(1);
+//    root->left->left = new Node<int>(11);
+//    root->left->right = new Node<int>(22);
+//    root->left->right->right = new Node<int>(33);
+//    root->left->left->left = new Node<int>(111);
+//    root->left->left->right = new Node<int>(222);
+//    root->left->left->left->left = new Node<int>(1111);
     
-
-    root->right->right->right->right->right = new Node<int>(12);
+    root->right = new Node<int>(2);
+    root->right->left = new Node<int>(3);
+    root->right->right = new Node<int>(4);
+    root->right->right->right = new Node<int>(5);
+    root->right->right->right->right = new Node<int>(6  );
     
-    cout << "max depth (tree): " << Solution<int>::GetMaxDepth(root, 0) << endl;
-    cout << "max depth (left): " << Solution<int>::GetMaxDepth(root->left, 1) << endl;
-    cout << "max depth (right): " << Solution<int>::GetMaxDepth(root->right, 1) << endl;
-    cout << "IsBalanced? false 0: " << Solution<int>::IsBalanced(root) << endl;
+    Solution<int> solution;
+    cout << "IsBalanced? false 0: " << solution.IsBalanced(root) << endl;
     
     return 0;
 }
