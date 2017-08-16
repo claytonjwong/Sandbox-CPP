@@ -19,6 +19,9 @@ struct ListNode {
 
 class Solution {
 public:
+    
+    
+    
     ListNode* reverseList(ListNode* head) {
         
         if (!head){ return NULL; }
@@ -37,7 +40,33 @@ public:
         
         return head;
     }
-    
+/*
+    ListNode* reverseList(ListNode* head){
+        
+        //
+        // list of 0 or 1 elements cannot be reversed
+        //
+        if (!head) { return NULL; }
+        if (!head->next) { return head; }
+        
+        // p  c
+        // 1->2->3
+        //
+        //
+        //
+        //
+        ListNode* prev=head;
+        ListNode* curr=head->next;
+
+        while(curr){
+        
+            prev->next = curr->next;
+            
+            
+        }
+        return head;
+    }
+    */
     void PrintList(ListNode* list){
         while (list){
             cout << list->val << ",";
