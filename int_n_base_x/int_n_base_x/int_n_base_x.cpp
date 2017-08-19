@@ -23,21 +23,22 @@ public:
         
         return stoi(n_base_x);
     }
-    
-    int convertUsingInt(int n, int x){
-        
-        int n_base_x = 0;
-        
-        while ( n > 0 ){
-            
-            n_base_x *= 10;
-            n_base_x += n % x;
-            
-            n /= x;
-        }
-        
-        return n_base_x;
-    }
+/* Not working right... looks backwards... */
+//    
+//    int convertUsingInt(int n, int x){
+//        
+//        int n_base_x = 0;
+//        
+//        while ( n > 0 ){
+//            
+//            n_base_x *= 10;
+//            n_base_x += (n % x) * n_base_x;
+//            
+//            n /= x;
+//        }
+//        
+//        return n_base_x;
+//    }
 };
 
 int main(int argc, const char * argv[]) {
@@ -52,7 +53,7 @@ int main(int argc, const char * argv[]) {
         cin >> x;
         
         cout << endl << n << " base " << x << " = " << solution.convertUsingString(n,x) << endl << endl;
-        cout << endl << n << " base " << x << " = " << solution.convertUsingInt(n,x) << endl << endl;
+//        cout << endl << n << " base " << x << " = " << solution.convertUsingInt(n,x) << endl << endl;
         
     }
     
