@@ -6,10 +6,9 @@
 
 #include <iostream>
 #include <string>
+#include <cmath>
 
 using namespace std;
-
-
 
 void PrintBinary(int n){
     
@@ -32,6 +31,19 @@ void PrintIndex(){
     }
     cout << istr << endl;
 }
+
+void SwapRightMostNBits(int& a, int& b, unsigned int n){
+    
+    if (&a==&b) { return; }
+    if (n>31) { n=31; }
+    
+    int mask=(1<<n)-1;
+    a ^= (b & mask);
+    b ^= (a & mask);
+    a ^= (b & mask);
+}
+
+
 
 int main(int argc, const char * argv[]) {
 
@@ -60,39 +72,17 @@ int main(int argc, const char * argv[]) {
      
      */
     
-    
-    int n=10;
-    
-    cout << "     "; PrintIndex();
-    
-    int a=1;
-    int b=3;
-    cout << "     "; PrintBinary(a);
-    cout << "     "; PrintBinary(b);
-    cout << endl;
-    
-    //
-    // include everything from a that is not in b
-    //
-    cout << "a^=b ";
-    a ^= b;
-    PrintBinary(a);
-    cout << endl;
-    
-    
-    cout << "b^=a ";
-    b ^= a;
-    PrintBinary(b);
-    cout << endl;
-    
-    cout << "a^=b ";
-    a ^= b;
-    PrintBinary(a);
-    cout << endl;
-    
+    int a = 1;
+    int b = 2;
+
     cout << "a=" << a << endl;
     cout << "b=" << b << endl;
     
+    SwapRightMostNBits(a,b,32);
+    
+    cout << endl;
+    cout << "a=" << a << endl;
+    cout << "b=" << b << endl;
     return 0;
 }
 
