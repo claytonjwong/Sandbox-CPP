@@ -34,30 +34,6 @@ using namespace std;
 
 class Solution {
 public:
-/*
-    bool validWordAbbreviation(string word, string abbr) {
-        if (word==abbr) { return true;}
-        if (abbr.size() > word.size()) { return false; }
-        int j=0;
-        for (int i=0; i < (int)abbr.size() && j < (int)word.size(); i++){
-            char c=abbr[i];
-            int num=0; int num_idx=i;
-            while (c >= '0' && c <='9'){
-                num*=10; num+=(int)(c-'0');
-                if (num==0) { return false; }
-                c=abbr[++num_idx];
-            }
-            if (num_idx > i){
-                j+=num; i=num_idx;
-            }
-            if (i==(int)abbr.size() && j==(int)word.size()) { return true; }
-            if (j>=(int)word.size()){ return false; }
-            if (word[j++]!=abbr[i]){ return false; }
-        }
-        return j==word.size();
-    }
- */
-    
     bool validWordAbbreviation(string word, string abbr) {
         int i=0, j=0;
         while (i < word.size() && j < abbr.size()){
