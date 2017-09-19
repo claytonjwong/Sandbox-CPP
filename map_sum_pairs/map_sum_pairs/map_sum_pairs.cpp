@@ -25,13 +25,6 @@
 
 using namespace std;
 
-class TrieNode{
-public:
-    int val;
-    vector<shared_ptr<TrieNode>> next{26};
-    TrieNode(int val) : val{val} {}
-};
-
 class MapSum {
 public:
     /** Initialize your data structure here. */
@@ -45,7 +38,7 @@ public:
         int cnt=0, sz=(int)prefix.size();
         map<string,int>::iterator itr;
         for (itr=_map.lower_bound(prefix); itr!=_map.end(); itr++){
-            if (itr->first.substr(0,sz)==prefix){ cnt+=itr->second; }
+            if (itr->first.substr(0,sz)==prefix){ cnt+=itr->second; } else { break; }
         }
         return cnt;
     }
@@ -65,6 +58,9 @@ int main(int argc, const char * argv[]) {
     MapSum solution;
     solution.insert("apple", 3);
     solution.insert("app", 2);
+    solution.insert("othera", 69);
+    solution.insert("otherb", 69);
+    solution.insert("otherc", 69);
     cout << solution.sum("ap") << endl;
     
     
