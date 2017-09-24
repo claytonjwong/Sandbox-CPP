@@ -22,6 +22,7 @@
  */
 
 #include <iostream>
+#include <stdio.h>
 #include <set>
 
 using namespace std;
@@ -29,29 +30,17 @@ using namespace std;
 class Solution {
 public:
     string nextClosestTime(string time) {
-        set<char> digits{};
-        for (auto& ch : time){
-            if (isdigit(ch)){digits.insert(ch);}
-        }
-        int hour=stoi(time.substr(0,2));
-        int minute=stoi(time.substr(3,2));
-        auto next=make_pair(hour,minute);
+        set<char> digits(time.begin(),time.end());
+        int hour=stoi(time.substr(0,2)), minute=stoi(time.substr(3,2)); // HH:MM
+        auto next=make_pair(hour,minute);                               // 01234
         while(true){
-
             nextMinute(next);
-            string nextTime="";
-            if (next.first<10){ nextTime.push_back('0'); } nextTime+=to_string(next.first);
-            nextTime.push_back(':');
-            if (next.second<10){ nextTime.push_back('0'); } nextTime+=to_string(next.second);
-
-            bool valid=true;
-            for (auto& ch : nextTime){
-                if (isdigit(ch) && digits.find(ch)==digits.end()){
-                    valid=false;
-                    break;
-                }
-            }
-            if (valid) { return nextTime; }
+            char nextTime[6];
+            snprintf(nextTime,sizeof(nextTime),"%02d:%02d",next.first,next.second);
+            string candidate{nextTime};
+            set<char> nextDigits(candidate.begin(),candidate.end());
+            if (includes(digits.begin(),digits.end(),
+                nextDigits.begin(),nextDigits.end())) { return candidate; }
         }
     }
 private:
@@ -69,15 +58,12 @@ private:
 int main(int argc, const char * argv[]) {
     
     Solution solution;
-    
     while(true){
         string time;
         cout << "time: ";
         cin >> time;
         cout << solution.nextClosestTime(time) << endl;
     }
-    
-    
     return 0;
 }
 
