@@ -41,8 +41,8 @@
 #include <algorithm>
 
 using namespace std;
-/*
-class Solution{
+
+class Solution1{
 public:
     vector<int> findRedundantConnection(vector<vector<int>>& edges){
         const int size=2001;
@@ -52,14 +52,14 @@ public:
             int p=edge[0], q=edge[1];
             int parent=tree[p], child=tree[q];
             if (parent==child) { return vector<int>{p,q}; }
-            for (int i=0; i<size; ++i){ if (tree[i]==parent) { tree[i]=child; } }
+            for (int i=0; i<size; ++i){ if (tree[i]==parent) { tree[i]=child; } } // optimized #2
         }
         return res;
     }
 };
-*/
 
-class Solution{
+
+class Solution2{
 public:
     vector<int> findRedundantConnection(vector<vector<int>>& edges){
         const int size=2001;
@@ -76,23 +76,58 @@ public:
 private:
     int _find(vector<int>& tree, int i){
         if (tree[i]!=i){
-            tree[i]=_find(tree,tree[i]);
+            tree[i]=_find(tree,tree[i]); // optimized #3
         }
         return tree[i];
     }
 };
 
+class Solution3{
+public:
+    vector<int> findRedundantConnection(vector<vector<int>>& edges){
+        const int size=2001;
+        vector<int> res{}, tree(size);
+        for (int i=0; i<size; ++i){ tree[i]=i; }
+        for (auto& edge : edges){
+            int p=_find(tree,edge[0]),q=_find(tree,edge[1]);
+            if (p==q) { return edge; }
+            tree[p]=q;
+        }
+        return res;
+    }
+    
+private:
+    int _find(vector<int>& tree, int i){
+        while (tree[i]!=i){ tree[i]=tree[tree[i]]; }
+        return tree[i];
+    }
+};
+
+
+/*
+ Input:
+ [[3,4],[2,3],[1,2]]
+ Output:
+ [3,2]
+ Expected:
+ [2,3]
+ */
+
 int main(int argc, const char * argv[]) {
     
+    
     vector<vector<int>> edges {
-        { 1, 2 },
-        { 1, 3 },
-        { 3, 1 }
+        { 3,4 },
+        { 2,3 },
+        { 1,2 },
+        { 3,2 }
     };
     
-    Solution solution;
-    vector<int> res=solution.findRedundantConnection(edges);
-    
+    Solution2 solution2;
+    vector<int> res2=solution2.findRedundantConnection(edges);
+
+    Solution3 solution3;
+    vector<int> res3=solution2.findRedundantConnection(edges);
     
     return 0;
 }
