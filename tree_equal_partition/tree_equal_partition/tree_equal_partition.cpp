@@ -72,38 +72,6 @@ private:
     }
 };
 
-class Solution2{
-public:
-    int tSum(TreeNode* r, unordered_multiset<long long>& s) {
-        return r == nullptr ? 0 : *s.insert(r->val + tSum(r->left, s) + tSum(r->right, s));
-    }
-    bool checkEqualTree(TreeNode* root) {
-        unordered_multiset<long long> sums;
-        auto sum = tSum(root, sums);
-        return sum % 2 == 0 && sums.size() > 1 && sums.find(sum / 2) != sums.end();
-    }
-};
-
-class Solution3{
-public:
-    bool checkEqualTree(TreeNode* r) {
-        unordered_set<int> s;
-        int p = sum(r, s, true);
-        return !(p % 2) && s.count(p / 2) > 0;
-    }
-    
-    int sum(TreeNode *r, unordered_set<int> &s, bool isroot) {
-        if (!r) return 0;
-        auto v = r->val + sum(r->left, s, false) + sum(r->right, s, false);
-        int retval=0;
-        if (isroot) {
-            retval=v;
-        } else {
-            retval=*s.insert(v).first;
-        }
-        return retval;
-    }
-};
 
 int main(int argc, const char * argv[]) {
     
