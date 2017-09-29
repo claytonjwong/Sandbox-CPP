@@ -22,49 +22,22 @@
 
 using namespace std;
 
-class Solution {
+class Solution{
 public:
-    
-    /* Brute force O(N^2) */
-//    vector<int> twoSum(vector<int>& nums, int target) {
-//        vector<int> result = {-1,-1};
-//        
-//        for (int i=0; i < nums.size()-1; i++ ){
-//            for (int j=i+1; j < nums.size(); j++){
-//                if (nums[i]+nums[j]==target){
-//                    result = {i, j};
-//                    break;
-//                }
-//            }
-//        }
-//        
-//        return result;
-//    }
-    
     vector<int> twoSum(vector<int>& nums, int target){
-        
-        vector<int> result;
-        
-        unordered_map<int, int> lookup; // key=num val=index of num
-        
-        for (int i=0; i < nums.size(); i++){
-            
-            int num = nums[i];
-            int compliment = target - num; // derived from target = num + compliment
-            
-            if ( lookup.find(compliment) != lookup.end() ){ // lookup compliement
-                
-                result.push_back(i); // index of num
-                result.push_back(lookup[compliment]); // index of compliment
+        vector<int> res;
+        unordered_map<int,int> map{};
+        for (int i=0; i<nums.size(); ++i){
+            int compliment=target-nums[i];
+            if (map.find(compliment)!=map.end()){
+                res.push_back(map[compliment]);
+                res.push_back(i);
                 break;
             }
-            
-            lookup[num] = i; // add num into the hash if corresponding compliment is NOT found
+            map[nums[i]]=i;
         }
-        
-        return result;
+        return res;
     }
-    
 };
 
 
