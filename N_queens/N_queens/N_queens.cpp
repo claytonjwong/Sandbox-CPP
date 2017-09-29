@@ -52,7 +52,7 @@ private:
     
     vector<vector<int>> GetNQueens(int n){
         _results.clear();
-        vector<int> q(n,_INIT), next{};
+        vector<int> q(n,_INIT);
         GetValidBoards(q,0);
         return _results;
     }
