@@ -21,71 +21,31 @@
 
 #include <iostream>
 #include <vector>
+#include <set>
 
 using namespace std;
 
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums){
-        
-        vector<vector<int>> result;
-        
-        if (nums.size() < 3){
-            return result;
-        }
-        /*
-         
-         sort nums,
-         
-         then check sum and move begin and end indexes
-         based on the sum to try and reach a total sum of 0
-         
-         */
-        sort(nums.begin(), nums.end());
-        
-        for (int i=0; i < nums.size()-2; i++) {
-            
-            int beg = i+1;
-            int end = (int)nums.size()-1;
-            
-            do {
-            
-                int sum = nums[i] + nums[beg] + nums[end];
-            
-                vector<int> curr_combo { nums[i], nums[beg], nums[end] };
-            
-                if (sum == 0) {
-                    
-                    /* solution found */
-                    result.push_back(curr_combo);
-                    
-                    /*
-                     only consider unique values for beg/end
-                     continue incrementing/decrementing if the value is the same
-                     */
-                    do { beg++; } while ( beg < end and nums[beg-1] == nums[beg] );
-                    do { end--; } while ( beg < end and nums[end] == nums[end+1] );
+        set<vector<int>> zeroSum{};
+        if (nums.size()<3){ return vector<vector<int>>(); }
+        sort(nums.begin(),nums.end());
+        for (int i=0; i<nums.size()-2; ++i){
+            int left=i+1, right=(int)nums.size()-1, sum=0;
+            while (left<right){
+                sum=nums[i]+nums[left]+nums[right];
+                if (sum==0){
+                    zeroSum.insert(vector<int>{nums[i],nums[left],nums[right]});
+                    ++left; --right;
                 }
-                else if (sum > 0) {
-                    do { end--; } while ( beg < end and nums[end] == nums[end+1] );
-                }
-                else if (sum < 0) {
-                    do { beg++; } while ( beg < end and nums[beg-1] == nums[beg] );
-                }
-                
-            } while ( beg < end );
-            
-            /*
-             only consider unique values for i,
-             continue incrementing i  until the last instance of repeated value
-             */
-            while ( nums[i] == nums[i+1] and i < nums.size()-2 ){
-                i++;
+                else if (sum<0) { ++left;  }
+                else if (sum>0) { --right; }
             }
         }
-        
-        return result;
+        return vector<vector<int>>(zeroSum.begin(),zeroSum.end());
     }
+
 };
 
 int main(int argc, const char * argv[]) {
