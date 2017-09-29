@@ -45,16 +45,17 @@ public:
         }
         return sresults;
     }
+    
+private:
+    const int _INIT=-1;
+    vector<vector<int>> _results{};
+    
     vector<vector<int>> GetNQueens(int n){
         _results.clear();
         vector<int> q(n,_INIT), next{};
         GetValidBoards(q,0);
         return _results;
     }
-    
-private:
-    const int _INIT=-1;
-    vector<vector<int>> _results{};
     
     void GetValidBoards(vector<int>& q, int row){
         if (row==q.size()) {
