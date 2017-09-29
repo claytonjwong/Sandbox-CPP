@@ -1,14 +1,20 @@
 /*
  
+ 2. Add Two Numbers
+ 
+ https://leetcode.com/problems/add-two-numbers/description/
+ 
+ You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
+ 
+ You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+ 
+ Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+ Output: 7 -> 0 -> 8
  
  */
 
 
-
 #include <iostream>
-
-
-#include <vector>
 
 using namespace std;
 
@@ -21,63 +27,27 @@ struct ListNode {
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        
-        ListNode* result = NULL;
-        ListNode* itr;
-        
-        vector<int> v1;
-        itr = l1;
-        while (itr){
-            v1.push_back(itr->val);
-            itr = itr->next;
-        }
-        
-        vector<int> v2;
-        itr = l2;
-        while (itr){
-            v2.push_back(itr->val);
-            itr = itr->next;
-        }
-        
-        int sum = 0;
-        int carry = 0;
-        
-        while ( !v1.empty() || !v2.empty() ){
-            
-            sum = 0;
-            
-            if (!v1.empty()){
-                sum += v1.back();
-                v1.pop_back();
-            }
-            
-            if (!v2.empty()){
-                sum += v2.back();
-                v2.pop_back();
-            }
-            
-            sum += carry;
-            
-            if ( sum >= 10 ){
-                carry = 1;
-                sum %= 10;
+        if (!l1) { return l2; }
+        if (!l2) { return l1; }
+        ListNode *head=nullptr, *curr=nullptr;
+        bool carry=false;
+        while (l1 || l2){
+            int sum=0;
+            if (l1) { sum+=l1->val; l1=l1->next; }
+            if (l2) { sum+=l2->val; l2=l2->next; }
+            if (carry) { ++sum; }
+            if (sum > 9){ carry=true; sum%=10; }
+            else        { carry=false;         }
+            if (!curr){
+                curr=new ListNode(sum);
+                head=curr;
             } else {
-                carry = 0;
+                curr->next=new ListNode(sum);
+                curr=curr->next;
             }
-            
-            ListNode* curr = new ListNode(sum);
-            curr->next = result;
-            result = curr;
-            
         }
-        
-        if ( carry ){
-            ListNode* curr = new ListNode( carry );
-            curr->next = result;
-            result = curr;
-        }
-        
-        return result;
+        if (carry) { curr->next=new ListNode(1); }
+        return head;
     }
 };
 
