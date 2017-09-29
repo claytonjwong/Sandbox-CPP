@@ -22,71 +22,34 @@ struct ListNode {
     ListNode* next;
     ListNode(int val) : val{val}, next{NULL} {}
 };
- 
+
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        
-        ListNode* result = NULL;
-        ListNode* result_tail = NULL;
-        
-        int carry = 0;
-        while(l1 || l2){
-            
-            //
-            // default value of each list's current node to 0
-            //
-            int value1 = 0;
-            int value2 = 0;
-            
-            //
-            // overwite default value of 0 if the list is NOT exhausted
-            // and move each list forward in preparation for next iteration
-            //
-            if (l1){
-                value1 = l1->val;
-                l1 = l1->next;
-            }
-            if (l2){
-                value2 = l2->val;
-                l2 = l2->next;
-            }
-            
-            //
-            // add the values at this digit position ( +1 for carry if applicable )
-            // also keep track of the updated carry in preparation for the next iteration
-            //
-            int sum = value1 + value2 + carry;
-            
-            if (sum >= 10){
-                carry = 1;
-                sum %= 10;
+        if (!l1) { return l2; }
+        if (!l2) { return l1; }
+        ListNode *head=nullptr, *curr=nullptr;
+        bool carry=false;
+        while (l1 || l2){
+            int sum=0;
+            if (l1) { sum+=l1->val; l1=l1->next; }
+            if (l2) { sum+=l2->val; l2=l2->next; }
+            if (carry) { ++sum; }
+            if (sum > 9){ carry=true; sum%=10; }
+            else        { carry=false;         }
+            if (!curr){
+                curr=new ListNode(sum);
+                head=curr;
             } else {
-                carry = 0;
-            }
-            
-            //
-            // include sum of current digit onto the result
-            //
-            if (!result){
-                result = new ListNode(sum);
-                result_tail = result;
-            } else {
-                result_tail->next = new ListNode(sum);
-                result_tail = result_tail->next;
+                curr->next=new ListNode(sum);
+                curr=curr->next;
             }
         }
-        
-        //
-        // the very last sum might have a carry, add a new node if needed
-        //
-        if (carry){
-            result_tail->next = new ListNode(carry);
-        }
-        
-        return result;
+        if (carry) { curr->next=new ListNode(1); }
+        return head;
     }
 };
+
 
 int main(int argc, const char * argv[]) {
 
