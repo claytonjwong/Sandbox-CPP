@@ -17,46 +17,30 @@
  */
 
 #include <iostream>
-#include <unordered_map>
+#include <set>
 
 using namespace std;
 
-
 class Solution{
 public:
-    
     int lengthOfLongestSubstring(string s){
-        
-        int maxlen = 0;
-        
-        unordered_map<char, bool> dic;
-        
-        int i=0; // left-side of sliding window
-        int j=0; // right-side of sliding window
-        
-        while (i < s.size() && j < s.size()){
-            
-            if ( dic.find( s[j] ) == dic.end() ){ // add unique onto right-side of window
-                
-                //
-                // unique char @ j, add char @ j to dic, and move j forward
-                // and update maxlen if there is a new max
-                //
-                dic[ s[j++] ] = true;
-                maxlen = max( maxlen, j-i );
-                
-                
-            } else { // drop duplicate from left-side of window
-                
-                //
-                // duplicate char @ j, delete char @ i from dic, and iterate i forward
-                //
-                dic.erase( s[i++] );
+        set<char> unique{};
+        int max_len=0,i=0,j=0;
+        while(j<s.size()){
+            char ch=s[j];
+            if (unique.find(ch)==unique.end()){
+                ++j;
+                unique.insert(ch);
+            } else {
+                max_len=max(max_len,j-i);
+                ++i;
+                j=i;
+                unique.clear();
             }
-            
         }
+        max_len=max(max_len,j-i);
         
-        return maxlen;
+        return max_len;
     }
     
 };
