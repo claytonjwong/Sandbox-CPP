@@ -36,7 +36,7 @@
 
 using namespace std;
 
-class Solution {
+class Solution1 {
 public:
     int numberOfArithmeticSlices(vector<int>& A) {
         int res=0, size=(int)A.size();
@@ -49,9 +49,30 @@ public:
     }
 };
 
+
+class Solution2{
+public:
+    int numberOfArithmeticSlices(vector<int>& nums){
+        int sz=(int)nums.size();
+        if (sz < 3) { return 0; }
+        int prev=0;
+        for (int i=2; i<sz; i++){
+            if (nums[i-2]-nums[i-1]==nums[i-1]-nums[i]) {
+                ++prev;
+                _sum+=prev;
+            } else {
+                prev=0;
+            }
+        }
+        return _sum;
+    }
+private:
+    int _sum=0;
+};
+
 int main(int argc, const char * argv[]) {
 
-    Solution solution;
+    Solution1 solution;
     vector<int> nums { 1,2,3,8,9,10 };
     cout << "Slices: : " << solution.numberOfArithmeticSlices(nums) << endl;
 
