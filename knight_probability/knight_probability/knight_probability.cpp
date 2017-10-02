@@ -37,15 +37,15 @@ public:
         if (K==0) return 1.0;
         double p=0.0;
         for (auto& move : getMoves(N,r,c)){
-            int nextRow=move[0], nextCol=move[1], nextMove=K-1;
-            p+=_memo[nextRow][nextCol][nextMove] ?
-               _memo[nextRow][nextCol][nextMove] : knightProbability(N, nextMove, nextRow, nextCol);
+            int nextMove=K-1, nextRow=move[0], nextCol=move[1];
+            p+=_memo[nextMove][nextRow][nextCol] ?
+               _memo[nextMove][nextRow][nextCol] : knightProbability(N, nextMove, nextRow, nextCol);
         }
-        return _memo[r][c][K]=p/8.0;
+        return _memo[K][r][c]=p/8.0;
     }
     
 private:
-    double _memo[25][25][100] = {0.0}; // [r][c][K]
+    double _memo[100][25][25] = {0.0}; // [K][r][c]
     
     bool isValidMove(const int& N, const int& r, const int& c){
         return 0<=r&&r<N && 0<=c&&c<N ? true : false;
