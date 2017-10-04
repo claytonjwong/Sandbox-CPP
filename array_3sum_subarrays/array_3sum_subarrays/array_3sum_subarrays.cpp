@@ -158,8 +158,8 @@ private:
         return indexOfMaxSumOne;
     }
     
-    vector<int> maxSumOfTwoSubarrays(const vector<int>& sums, int start, int k){
-        vector<int> res(2,0);
+    pair<int,int> maxSumOfTwoSubarrays(const vector<int>& sums, int start, int k){
+        pair<int,int> res;
         int maxSumTwo=0,indexOfMaxSumTwo=start,indexOfMaxSumOne=start+k;
         for (int indexTwo=start; indexTwo < sums.size()-2*k; ++indexTwo){
             int indexOne=maxSumOfOneSubarrays(sums, indexTwo+k, k);
@@ -171,15 +171,39 @@ private:
                 indexOfMaxSumOne=indexOne;
             }
         }
-        res[0]=indexOfMaxSumTwo;
-        res[1]=indexOfMaxSumOne;
+        res.first=indexOfMaxSumTwo;
+        res.second=indexOfMaxSumOne;
+        return res;
+    }
+    
+    vector<int> maxSumOfThreeSubarrays(const vector<int>& sums, int start, int k){
+        vector<int> res(3,0);
+        int maxSumThree=0;
+        int indexOfMaxSumThree=start,indexOfMaxSumTwo=start+k,indexOfMaxSumOne=start+2*k;
+        for (int indexThree=start; indexThree < sums.size()-3*k; ++indexThree){
+            auto indexTwoAndOne=maxSumOfTwoSubarrays(sums, indexThree+k, k);
+            int indexTwo=indexTwoAndOne.first;
+            int indexOne=indexTwoAndOne.second;
+            int currSumThree=getSubarraySum(sums,indexThree,k);
+            int currSumTwo=getSubarraySum(sums,indexTwo,k);
+            int currSumOne=getSubarraySum(sums,indexOne,k);
+            if (currSumThree+currSumTwo+currSumOne > maxSumThree){
+                maxSumThree=currSumThree+currSumTwo+currSumOne;
+                indexOfMaxSumThree=indexThree;
+                indexOfMaxSumTwo=indexTwo;
+                indexOfMaxSumOne=indexOne;
+            }
+        }
+        res[0]=indexOfMaxSumThree;
+        res[1]=indexOfMaxSumTwo;
+        res[2]=indexOfMaxSumOne;
         return res;
     }
     
 public:
     vector<int> maxSumOfThreeSubarrays(vector<int>& nums, int k){
         vector<int> sums=calcSubarraySums(nums);
-        return maxSumOfTwoSubarrays(sums, 0, k);
+        return maxSumOfThreeSubarrays(sums,0,k);
     }
 };
 
@@ -187,7 +211,7 @@ public:
 int main(int argc, const char * argv[]) {
     
     vector<int> nums {
-        1,2,3,4,5,6,7,8,9
+        1,2,1,2,6,7,5,1
     };
     int k=2;
     
