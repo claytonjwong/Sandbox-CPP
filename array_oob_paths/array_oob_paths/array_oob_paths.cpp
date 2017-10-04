@@ -30,33 +30,43 @@ using namespace std;
 
 class Solution {
 private:
-    int _memo[51][51][51]={0};
-    bool isOnGrid(const int& m, const int& n, const int& i, const int& j){
-        return 0<=i&&i<m && 0<=j&&j<n;
-    }
+    const static int _MOD=1000000007;
+    const static int _SIZE=51;
+    int memo[_SIZE][_SIZE][_SIZE];
 
-public:
-    int findPaths(int m, int n, int N, int i, int j) {
-        if (!N)
-            return _memo[N][i][j]=!isOnGrid(m,n,i,j);
-        int paths=0;
-        vector<vector<int>> moves {{i-1,j},{i,j+1},{i+1,j},{i,j-1}};
-        for (auto& move : moves){
-            if (isOnGrid(m,n,move[0],move[1])){
-                paths+=_memo[N][move[0]][move[1]] ? _memo[N][move[0]][move[1]]
-                : findPaths(m,n,N-1,move[0],move[1]) % 1000000007;
-            } else {
-                ++paths;
+    void memoInit(){
+        for (int N=0; N<_SIZE; ++N){
+            for (int i=0; i<_SIZE; ++i){
+                for (int j=0; j<_SIZE; ++j){
+                    memo[N][i][j]=-1;
+                }
             }
         }
-        return _memo[N][i][j]=paths;
+    }
+
+    int memoPaths(int m, int n, int N, int i, int j) {
+        if (!(0<=i&&i<m && 0<=j&&j<n)) return 1;
+        if (N==0) return 0;
+        if (memo[N][i][j]!=-1){
+            return memo[N][i][j];
+        }
+        int paths=(memoPaths(m,n,N-1,i-1,j)%_MOD + memoPaths(m,n,N-1,i,j+1)%_MOD)%_MOD
+                 +(memoPaths(m,n,N-1,i+1,j)%_MOD + memoPaths(m,n,N-1,i,j-1)%_MOD)%_MOD;
+        return memo[N][i][j]=paths%_MOD;
+    }
+    
+public:
+    int findPaths(int m, int n, int N, int i, int j) {
+        memoInit();
+        return memoPaths(m,n,N,i,j);
     }
 };
+
 
 int main(int argc, const char * argv[]) {
     
     Solution solution;
-    cout << solution.findPaths(7,6,13,0,2) << endl;
+    cout << solution.findPaths(8,50,23,5,26) << endl;
     
     
     
