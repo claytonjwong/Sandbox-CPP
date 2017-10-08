@@ -66,73 +66,10 @@ public:
 };
 
 
-
-/*
-class Solution {
-private:
-    
-    bool iterateByK(vector<int>& nums, int k, vector<int>::iterator& itr){
-        while(itr!=nums.end() && k>0){
-            ++itr;
-            if (*itr) --k;
-        }
-        return k==0;
-    }
-    
-    void slideWindow(vector<int>& nums,
-                     vector<int>::iterator& l, vector<int>::iterator& r){
-        l=l+1;
-        while(*l==0 && l!=nums.end()) { ++l; };
-        
-        r=l+1;
-        while(*r==0 && r!=nums.end()) { ++r; };
-    }
-    
-    void markSubarray(vector<int>& nums, const int& k){
-        auto l=nums.begin(),r=nums.begin()+k-1;
-        int maxSum=0,maxIndex=0;
-        while (distance(l,r)>=k-1 && r!=nums.end()){
-            int sum=accumulate(l,r+1,0);
-            if (sum>maxSum){
-                maxSum=sum;
-                maxIndex=(int)(distance(nums.begin(),l));
-            }
-            slideWindow(nums,l,r);
-        }
-        l=nums.begin()+maxIndex;
-        r=l;
-        iterateByK(nums,k-1,r);
-        transform(l,r+1,l,[](int x){ return 0; });
-    }
-    
-    vector<int> getMarkedSubarrays(vector<int>& nums, const int& k){
-        auto l=nums.begin(),r=nums.end();
-        vector<int> res{};
-        for (int i=0; i<3; i++){
-            l=find(l,nums.end(),0);
-            res.push_back((int)(distance(nums.begin(),l)));
-            l+=k;
-        }
-        return res;
-    }
-    
-public:
-    vector<int> maxSumOfThreeSubarrays(vector<int>& nums, int k) {
-        vector<int> res{};
-        for (int i=0; i<3; ++i){
-            markSubarray(nums,k);
-        }
-        res=getMarkedSubarrays(nums,k);
-        return res;
-    }
-    
-
-};
-*/
-
 class Solution{
 private:
-//    unordered_map<int,int> _memoIndexOfMaxSumOne{}; // key is start index, val is max index
+    unordered_map<int,int> _memoSumOfOneSubarrays{};
+    unordered_map<int,pair<int,int>> _memoSumOfTwoSubarrays{};
     
     vector<int> calcSubarraySums(const vector<int>& nums){
         vector<int> sums(nums.size()+1,0);
@@ -147,6 +84,9 @@ private:
     }
     
     int maxSumOfOneSubarrays(const vector<int>& sums, int start, int k){
+        if (_memoSumOfOneSubarrays.find(start)!=_memoSumOfOneSubarrays.end()){
+            return _memoSumOfOneSubarrays[start];
+        }
         int maxSumOne=0,indexOfMaxSumOne=0;
         for (int indexOne=start; indexOne < sums.size()-k; ++indexOne){
             int currSumOne=getSubarraySum(sums,indexOne,k);
@@ -155,10 +95,16 @@ private:
                 indexOfMaxSumOne=indexOne;
             }
         }
-        return indexOfMaxSumOne;
+        for (int i=start; i<=indexOfMaxSumOne; ++i){
+            _memoSumOfOneSubarrays[i]=indexOfMaxSumOne;
+        }
+        return _memoSumOfOneSubarrays[start];
     }
     
     pair<int,int> maxSumOfTwoSubarrays(const vector<int>& sums, int start, int k){
+        if (_memoSumOfTwoSubarrays.find(start)!=_memoSumOfTwoSubarrays.end()){
+            return _memoSumOfTwoSubarrays[start];
+        }
         pair<int,int> res;
         int maxSumTwo=0,indexOfMaxSumTwo=start,indexOfMaxSumOne=start+k;
         for (int indexTwo=start; indexTwo < sums.size()-2*k; ++indexTwo){
@@ -173,7 +119,10 @@ private:
         }
         res.first=indexOfMaxSumTwo;
         res.second=indexOfMaxSumOne;
-        return res;
+        for (int i=start; i<=indexOfMaxSumTwo; ++i){
+            _memoSumOfTwoSubarrays[i]=res;
+        }
+        return _memoSumOfTwoSubarrays[start];
     }
     
     vector<int> maxSumOfThreeSubarrays(const vector<int>& sums, int start, int k){
@@ -211,7 +160,7 @@ public:
 int main(int argc, const char * argv[]) {
     
     vector<int> nums {
-        1,2,1,2,6,7,5,1
+        0,1,2,3,4,5
     };
     int k=2;
     
