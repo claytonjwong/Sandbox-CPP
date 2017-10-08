@@ -43,11 +43,11 @@ using namespace std;
 class Solution {
 public:
     int numDistinctIslands(vector<vector<int>>& grid) {
-        set<vector<pair<int,int>>> islands;
+        set<set<pair<int,int>>> islands;
         for (int r=0; r < grid.size(); ++r){
             for (int c=0; c < grid[0].size(); ++c){
                 if (grid[r][c]){
-                    vector<pair<int,int>> curr{};
+                    set<pair<int,int>> curr{};
                     helper(grid,r,c,curr,make_pair(r,c));
                     islands.insert(curr);
                 }
@@ -57,10 +57,10 @@ public:
     }
     
     void helper(vector<vector<int>>& grid, const int& r, const int& c,
-                vector<pair<int,int>>& island, const pair<int,int>& start){
+                set<pair<int,int>>& island, const pair<int,int>& start){
         if (!(0<=r&&r<grid.size() && 0<=c&&c<grid[0].size())) return;
         if (!grid[r][c]) return;
-        island.push_back(make_pair(r-start.first,c-start.second));
+        island.insert(make_pair(r-start.first,c-start.second));
         grid[r][c]=0;
         helper(grid,r-1,c,island,start); // top
         helper(grid,r,c+1,island,start); // right
