@@ -41,18 +41,15 @@
 using namespace std;
 
 class Solution {
-private:
-    set<vector<pair<int,int>>> islands;
-    
 public:
     int numDistinctIslands(vector<vector<int>>& grid) {
-        islands.clear();
+        set<vector<pair<int,int>>> islands;
         for (int r=0; r < grid.size(); ++r){
             for (int c=0; c < grid[0].size(); ++c){
                 if (grid[r][c]){
-                    vector<pair<int,int>> island{};
-                    helper(grid,r,c,island,make_pair(r,c));
-                    islands.insert(island);
+                    vector<pair<int,int>> curr{};
+                    helper(grid,r,c,curr,make_pair(r,c));
+                    islands.insert(curr);
                 }
             }
         }
