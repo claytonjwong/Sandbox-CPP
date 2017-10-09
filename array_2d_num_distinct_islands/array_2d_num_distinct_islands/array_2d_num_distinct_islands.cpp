@@ -48,7 +48,7 @@ public:
             for (int c=0; c < grid[0].size(); ++c){
                 if (grid[r][c]){
                     set<pair<int,int>> curr{};
-                    helper(grid,r,c,curr,make_pair(r,c));
+                    dfs(grid,r,c,curr,make_pair(r,c));
                     islands.insert(curr);
                 }
             }
@@ -56,16 +56,16 @@ public:
         return (int)islands.size();
     }
     
-    void helper(vector<vector<int>>& grid, const int& r, const int& c,
+    void dfs(vector<vector<int>>& grid, const int& r, const int& c,
                 set<pair<int,int>>& island, const pair<int,int>& start){
         if (!(0<=r&&r<grid.size() && 0<=c&&c<grid[0].size())) return;
         if (!grid[r][c]) return;
         island.insert(make_pair(r-start.first,c-start.second));
         grid[r][c]=0;
-        helper(grid,r-1,c,island,start); // top
-        helper(grid,r,c+1,island,start); // right
-        helper(grid,r+1,c,island,start); // bottom
-        helper(grid,r,c-1,island,start); // left
+        dfs(grid,r-1,c,island,start); // top
+        dfs(grid,r,c+1,island,start); // right
+        dfs(grid,r+1,c,island,start); // bottom
+        dfs(grid,r,c-1,island,start); // left
     }
 };
 
