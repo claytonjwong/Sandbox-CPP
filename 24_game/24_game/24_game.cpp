@@ -121,7 +121,7 @@ public:
     
     bool judgePoint24(vector<int>& nums){
         sort(nums.begin(),nums.end());
-        return NOT_24.find(nums[0]*10*10*10+nums[1]*10*10+nums[2]*10+nums[3])==NOT_24.end();
+        return NOT_24.count(nums[0]*10*10*10+nums[1]*10*10+nums[2]*10+nums[3]);
     }
     
 private:
