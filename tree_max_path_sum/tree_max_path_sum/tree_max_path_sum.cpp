@@ -49,7 +49,6 @@ public:
         helper(root,maxSum);
         return maxSum;
     }
-
 };
 
 int main(int argc, const char * argv[]) {
