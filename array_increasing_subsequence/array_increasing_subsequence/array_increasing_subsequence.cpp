@@ -2,6 +2,8 @@
  
 674. Longest Continuous Increasing Subsequence
  
+ https://leetcode.com/problems/longest-continuous-increasing-subsequence/description/
+ 
  Given an unsorted array of integers, find the length of longest continuous increasing subsequence.
  
  Example 1:
