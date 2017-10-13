@@ -39,6 +39,8 @@ using namespace std;
 class Solution {
 public:
     bool isPossible(vector<int>& nums) {
+        // key is the last number in the subarray
+        // val is a min heap of subarray sizes
         unordered_map<int,priority_queue<int,vector<int>,std::greater<int>>> m{};
         for (auto &&num: nums){
             if (m.find(num-1)==m.end() || m[num-1].empty()){
@@ -47,7 +49,7 @@ public:
                 m[num].push(1);
             } else {
                 // subarray ending in num-1 is found, pop off,
-                // and increment length by one for subarray ending in num
+                // and increment size by one for subarray ending in num
                 int sz=m[num-1].top();
                 m[num-1].pop();
                 m[num].push(sz+1);
@@ -62,7 +64,7 @@ public:
 
 int main(int argc, const char * argv[]) {
 
-    vector<int> nums { 1,2,3,3,4,5 };
+    vector<int> nums { 1,2,2,3,3,4 };
     Solution solution;
     cout << solution.isPossible(nums) << endl;
     
