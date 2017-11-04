@@ -40,9 +40,7 @@ public:
         for (int i=0; i<nums.size(); ++i){
             auto num=nums[i];
             m[num].push_back(i);
-            if (max_freq < m[num].size()){
-                max_freq=m[num].size();
-            }
+            max_freq=max(max_freq,(int)m[num].size());
         }
         int min_len=50000;
         for (auto &&x : m){
