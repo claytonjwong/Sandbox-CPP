@@ -20,77 +20,31 @@
  
  */
 
-
-
 #include <iostream>
 #include <vector>
-#include <algorithm>
-#include <cmath>
-
-
 
 using namespace std;
 
 class Solution {
 public:
     int coinChange(vector<int>& coins, int amount) {
-        
-        if (amount == 0){
-            return 0;
-        }
-        
-        // go through each amount from 0 to amount
-        // and find the smallest amount of coins for each amount
-        vector<int> amt;
-        for (int curr_amt=0; curr_amt <= amount; curr_amt++){
-            
-            int min_coin_cnt = INT_MAX;
-            
-            for (auto coin : coins){
-                
-                int coin_cnt = INT_MAX;
-                
-                if (coin == curr_amt){
-                    // one solution, this coin
-                    coin_cnt = 1;
-                }
-                
-                // index is the index of the previous solution without this coin
-                int index = (int)amt.size() - coin;
-                if (index > 0 && amt[index] > -1){
-                    
-                    // prev solution +1 (this coin)
-                    coin_cnt = 1 + amt[index];
-                }
-                
-                // exit inner loop here since the
-                // biggest coin combo that fits is found
-                if (coin_cnt < min_coin_cnt) {
-                    min_coin_cnt = coin_cnt;
-                }
-
-            }
-            
-            // add coin count for this current amount,
-            // -1 means there is no coin combo for that amount
-            if (min_coin_cnt == INT_MAX){
-                min_coin_cnt = -1;
-            }
-            amt.push_back(min_coin_cnt);
-        }
-        
-        return amt[amt.size()-1];
+        static const int INIT=-1;
+        vector<int> dp(amount+1,INIT);
+        dp[0]=0;
+        for (int i=1; i<=amount; ++i) // let i be the sub-amounts up to amount
+            for (auto &&coin: coins)
+                if (coin<=i && dp[i-coin]!=INIT)
+                    dp[i]=dp[i]==INIT ? 1+dp[i-coin] : min(dp[i],1+dp[i-coin]);
+        return dp[amount];
     }
 };
-
 
 int main(int argc, const char * argv[]) {
 
     
     Solution solution;
-    vector<int> coins { 1, 2};
-    cout << solution.coinChange(coins, 3) << endl;
-    
+    vector<int> coins { 1, 2, 5 };
+    cout << solution.coinChange(coins, 11) << endl;
     
     return 0;
 }
