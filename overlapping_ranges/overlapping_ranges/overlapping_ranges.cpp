@@ -10,17 +10,19 @@
  (-----------------------)       (---------------)
  |---|---|---|---|---|---|---|---|---|---|---|---|
  -2      0       2       4       6       8       10
- Maximum:                                  (---)
+ Maximum:                            (---)
  (7,8) with overlapCount 4
  
  */
 
-#include <iostream>
-#include <vector>
-#include <unordered_map>
-
-using namespace std;
-
+/*
+ 
+ #include <iostream>
+ #include <vector>
+ #include <unordered_map>
+ 
+ using namespace std;
+ 
 class Tuple{
 public:
     int val;
@@ -89,8 +91,39 @@ public:
 private:
     vector<Tuple> tuples;
 };
+*/
 
+#include <iostream>
+#include <vector>
+#include <map>
 
+using namespace std;
+
+class Solution {
+public:
+    pair<int,int> maxOverlappingRange(vector<pair<int,int>>& ranges){
+        map<pair<int,int>,int> m;
+        pair<int,int> maxRange={0,0};
+        int overlap=0,maxo=0;
+        for (auto &&range: ranges){
+            ++m[{range.first,  1}];
+            ++m[{range.second,-1}];
+        }
+        for (auto &&x: m){ // if multiple max overlaps, the right-most will be returned
+            if (overlap==maxo && x.first.second==-1){
+                maxRange.second=x.first.first;
+            }
+            overlap+=x.first.second*x.second;
+            if (overlap>=maxo && x.first.second==1){
+                maxo=overlap;
+                maxRange.first=x.first.first;
+            }
+        }
+        return maxRange;
+    }
+private:
+    
+};
 
 int main(int argc, const char * argv[]) {
     
@@ -98,22 +131,18 @@ int main(int argc, const char * argv[]) {
     //(-2, 4) (0, 3) (2, 8) (5, 8) (6, 10) (7, 9)
     
     Solution solution;
-    vector<vector<int>> ranges = {
+    vector<pair<int,int>> ranges = {
         { -2,  4 },
         {  0,  3 },
         {  2,  8 },
-        {  5,  8 },
+        {  6,  9 },
         {  6, 10 },
         {  7,  9 }
     };
     
-    vector<int> result = solution.rangeOverlap(ranges);
+    pair<int,int> result = solution.maxOverlappingRange(ranges);
     
-    for ( auto r : result ){
-        
-        cout << r << ",";
-    }
-    cout << endl;
+    cout << "(" << result.first << "," << result.second << ")" << endl;
     
     
     return 0;
