@@ -58,7 +58,6 @@ public:
 };
 
 int main(int argc, const char * argv[]) {
-    
     SolutionRC rc;
     SolutionDP dp;
     vector<vector<int>> grid {

@@ -25,3 +25,16 @@ create dp(size+1), return dp[size]
 1) iterate from i=1 till i==size(inclusive) to check curr (i) with prev (i-1)
   OR
 2) iterate from i=0 till i+1==size(inclusive) to check curr(i+1) with prev (i)
+
+
+for recursive solutions first come up with the recursive case.  Assume we have
+already found answers for all but the top, and create recursive formula
+
+second come up with recursive constraints and base case(s)
+
+
+
+Exceptions to top-down rec first, and bottom-up DP second.
+Sometimes it is easier to just start with bottom-up DP...
+
+https://leetcode.com/problems/paint-house/description/
