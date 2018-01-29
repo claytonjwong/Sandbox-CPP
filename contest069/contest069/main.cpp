@@ -54,7 +54,7 @@ public:
 };
  */
 
-
+/*
 class Solution {
 public:
     bool isIdealPermutation(vector<int>& A){
@@ -68,7 +68,7 @@ public:
     }
 };
 
- 
+ */
 
 /*
 class Solution {
@@ -87,25 +87,36 @@ public:
 
 
 
+#include <queue>
 
-/*
 class Solution {
 public:
     double minmaxGasDist(vector<int>& stations, int K) {
-        int n=(int)stations.size();
-        vector<double> dist(n,0.0);
-        for (int i=1; i<n; ++i){
-            dist[i-1]=double(stations[i]-stations[i-1]);
+        priority_queue<Interval> q;
+        for (int i=1; i<stations.size(); ++i)
+            q.push(Interval(stations[i]-stations[i-1]));
+        double cutoff=double(stations.back()-stations[0]) / double(K);
+        while(K){
+            auto maxi=q.top();
+            q.pop();
+            do{
+                maxi.currDist=maxi.origDist/(++maxi.stationCnt);
+            }while(--K && ( maxi.currDist >= cutoff));
+            q.push(maxi);
         }
-        for (int i=0; i<K; ++i){
-            auto maxd=max_element(dist.begin(),dist.end());
-            *maxd/=2;
-        }
-        return *max_element(dist.begin(),dist.end());
+        return q.top().currDist;
     }
+private:
+    class Interval{
+    public:
+        double origDist, currDist;
+        int stationCnt;
+        Interval(int dist) : origDist{double(dist)}, currDist{double(dist)}, stationCnt{1} {}
+        bool operator<(const Interval& rhs) const { return currDist < rhs.currDist; }
+    };
 };
 
- */
+
 
 
 int main(int argc, const char * argv[]) {
@@ -122,18 +133,22 @@ int main(int argc, const char * argv[]) {
     cout << s.isIdealPermutation(v) << endl;
     */
     
-    /*
-    Solution solution;
-    vector<int> s { 10,19,25,27,56,63,70,87,96,97 };
-    int k=3;
-    cout << solution.minmaxGasDist(s, k) << endl;
-    */
     
+    Solution solution;
+    vector<int> s { 0,2,4,6,8,10 };
+    int k=20;
+    cout << solution.minmaxGasDist(s, k) << endl;
+    
+    /*
     SolutionTLE s1;
     Solution s2;
     vector<int> v{ 1,0,2 };
     cout << s1.isIdealPermutation(v) << endl;
     cout << s2.isIdealPermutation(v) << endl;
+    */
+    
+    
+    
     
     return 0;
 }
