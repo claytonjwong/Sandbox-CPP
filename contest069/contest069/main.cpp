@@ -24,6 +24,52 @@ public:
 };
 */
 
+class SolutionTLE {
+public:
+    bool isIdealPermutation(vector<int>& A) {
+        int global=0,local=0;
+        for (int i=0; i<A.size()-1; ++i)
+            if (A[i]>A[i+1]) ++local;
+        for (int i=0; i<A.size()-1; ++i)
+            for (int j=i+1; j<A.size(); ++j)
+                if (A[i]>A[j] && ++global>local) return false;
+        return global==local;
+    }
+};
+
+/*
+class Solution {
+public:
+    bool isIdealPermutation(vector<int>& A){
+        int n=(int)A.size();
+        vector<int> dp(n,INT_MAX);
+        dp.back()=A.back();
+        for (int i=n-2; i>=0; --i)
+            dp[i]=min(A[i],dp[i+1]);
+        for (int i=2; i<n; ++i)
+            if (A[i-2] > dp[i])
+                return false;
+        return true;
+    }
+};
+ */
+
+
+class Solution {
+public:
+    bool isIdealPermutation(vector<int>& A){
+        int n=(int)A.size(),mini=A.back();
+        for (int i=n-3; i>=0; --i){
+            mini=min(mini,A[i+2]);
+            if (A[i] > mini)
+                return false;
+        }
+        return true;
+    }
+};
+
+ 
+
 /*
 class Solution {
 public:
@@ -82,6 +128,12 @@ int main(int argc, const char * argv[]) {
     int k=3;
     cout << solution.minmaxGasDist(s, k) << endl;
     */
+    
+    SolutionTLE s1;
+    Solution s2;
+    vector<int> v{ 1,0,2 };
+    cout << s1.isIdealPermutation(v) << endl;
+    cout << s2.isIdealPermutation(v) << endl;
     
     return 0;
 }
