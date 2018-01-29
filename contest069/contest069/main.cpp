@@ -24,6 +24,21 @@ public:
 };
 */
 
+/*
+#include <unordered_map>
+
+class Solution {
+public:
+    int numJewelsInStones(string J, string S) {
+        int cnt=0;
+        unordered_map<char,bool> m;
+        for (auto& j: J) m[j]=true;
+        for (auto& s: S) if (m[s]) ++cnt;
+        return cnt;
+    }
+};
+ */
+
 class SolutionTLE {
 public:
     bool isIdealPermutation(vector<int>& A) {
@@ -86,7 +101,7 @@ public:
 */
 
 
-
+/*
 #include <queue>
 
 class Solution {
@@ -116,7 +131,43 @@ private:
     };
 };
 
+*/
 
+
+
+#include <sstream>
+#include <queue>
+#include <unordered_map>
+
+class Solution{
+public:
+    string reorganizeString(string S){
+        unordered_map<char,int> m;
+        for (const auto& c: S) ++m[c];
+        priority_queue<pair<char,int>,vector<pair<char,int>>,Comp> q(m.begin(), m.end());
+        stringstream ss;
+        while(q.size() > 1){
+            auto a=q.top(); q.pop();
+            auto b=q.top(); q.pop();
+            ss << a.first << b.first;
+            --a.second; --b.second;
+            if (a.second) q.push(a);
+            if (b.second) q.push(b);
+        }
+        if (q.size()==1 && q.top().second==1 && q.top().first != ss.str().back()){
+            ss << q.top().first;
+            q.pop();
+        }
+        return q.empty() ? ss.str() : "";
+    }
+private:
+    class Comp {
+    public:
+        bool operator()(const pair<char,int>& lhs, const pair<char,int>& rhs){
+            return lhs.second < rhs.second;
+        }
+    };
+};
 
 
 int main(int argc, const char * argv[]) {
@@ -133,11 +184,12 @@ int main(int argc, const char * argv[]) {
     cout << s.isIdealPermutation(v) << endl;
     */
     
-    
+    /*
     Solution solution;
-    vector<int> s { 0,2,4,6,8,10 };
-    int k=20;
+    vector<int> s { 0,6,7,8,9,10 };
+    int k=5;
     cout << solution.minmaxGasDist(s, k) << endl;
+     */
     
     /*
     SolutionTLE s1;
@@ -147,8 +199,17 @@ int main(int argc, const char * argv[]) {
     cout << s2.isIdealPermutation(v) << endl;
     */
     
+    // "aab" ==> "aba"
+    // "aaab" ==> ""
     
     
+    Solution s;
+    while(true){
+        string str;
+        cin >> str;
+        cout << s.reorganizeString(str) << endl;
+    }
+     
     
     return 0;
 }
