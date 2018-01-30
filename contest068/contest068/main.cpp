@@ -30,36 +30,39 @@ public:
 };
 */
 
-/*
+#include <sstream>
 #include <queue>
+#include <unordered_map>
 
-class Solution {
+class Solution{
 public:
-    string reorganizeString(string S) {
-        string res;
-        priority_queue<AC> q;
-        map<char,int> m;
-        for (const auto &c: S) ++m[c];
-        for (int i='a'; i<='z'; ++i){
-            if (m[i])
-                q.push(AC(i,m[i]));
+    string reorganizeString(string S){
+        unordered_map<char,int> m;
+        for (const auto& c: S) ++m[c];
+        priority_queue<pair<char,int>,vector<pair<char,int>>,Comp> q(m.begin(), m.end());
+        stringstream ss;
+        while(q.size() > 1){
+            auto a=q.top(); q.pop();
+            auto b=q.top(); q.pop();
+            ss << a.first << b.first;
+            --a.second; --b.second;
+            if (a.second) q.push(a);
+            if (b.second) q.push(b);
         }
-        while (
-        
-        return q.empty() ? res : "";
+        if (q.size()==1 && q.top().second==1 && q.top().first != ss.str().back()){
+            ss << q.top().first;
+            q.pop();
+        }
+        return q.empty() ? ss.str() : "";
     }
 private:
-    class AC {
+    class Comp {
     public:
-        char alpha;
-        int count;
-        AC(char a, int c) : alpha{a}, count{c} {}
-        bool operator<(const AC& rhs) const {
-            return count < rhs.count;
+        bool operator()(const pair<char,int>& lhs, const pair<char,int>& rhs){
+            return lhs.second < rhs.second;
         }
     };
 };
- */
 
 /*
 class Solution {
@@ -112,7 +115,7 @@ private:
 };
 */
 
-
+/*
 class Solution {
 public:
     int maxChunksToSorted(vector<int>& A) {
@@ -125,7 +128,7 @@ public:
         return cnt;
     }
 };
-
+*/
 
 int main(int argc, const char * argv[]) {
 
@@ -149,13 +152,20 @@ int main(int argc, const char * argv[]) {
     cout << s.reorganizeString(S) << endl;
     */
     
-    
+    /*
     //vector<int> v { 1,4,3,6,0,7,8,2,5 };
     vector<int> v{1,0,2,3,4};
     Solution s;
     
     cout << s.maxChunksToSorted(v) << endl;
+    */
     
+    Solution s;
+    while(true){
+        string str;
+        cout << "s: "; cin >> str;
+        cout << s.reorganizeString(str) << endl;
+    }
     
     return 0;
 }
