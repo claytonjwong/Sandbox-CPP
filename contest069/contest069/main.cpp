@@ -1,5 +1,7 @@
 /*
  
+ https://leetcode.com/contest/weekly-contest-69
+ 
  Rank           Name            Score	Finish Time 	Q1 (2)      Q2 (5)      Q3 (7)      Q4 (7)
  1134 / 2573	claytonjwong 	2       0:05:43         0:05:43
  
@@ -39,6 +41,7 @@ public:
 };
  */
 
+/*
 class SolutionTLE {
 public:
     bool isIdealPermutation(vector<int>& A) {
@@ -51,6 +54,7 @@ public:
         return global==local;
     }
 };
+ */
 
 /*
 class Solution {
@@ -85,21 +89,6 @@ public:
 
  */
 
-/*
-class Solution {
-public:
-    bool isIdealPermutation(vector<int>& A) {
-        int global=0,local=0;
-        for (int i=1; i<A.size(); ++i)
-            if (A[i-1]>A[i]) ++local;
-        for (int i=0; i<A.size(); ++i)
-            for (int j=i+1; j<A.size(); ++j)
-                if (A[i]>A[j] && ++global>local) return false;
-        return global==local;
-    }
-};
-*/
-
 
 /*
 #include <queue>
@@ -133,44 +122,46 @@ private:
 
 */
 
-
-
-#include <sstream>
 #include <queue>
+#include <unordered_set>
+#include <string>
 #include <unordered_map>
+#include <vector>
 
-class Solution{
+
+class Solution {
 public:
-    string reorganizeString(string S){
-        unordered_map<char,int> m;
-        for (const auto& c: S) ++m[c];
-        priority_queue<pair<char,int>,vector<pair<char,int>>,Comp> q(m.begin(), m.end());
-        stringstream ss;
-        while(q.size() > 1){
-            auto a=q.top(); q.pop();
-            auto b=q.top(); q.pop();
-            ss << a.first << b.first;
-            --a.second; --b.second;
-            if (a.second) q.push(a);
-            if (b.second) q.push(b);
+    int slidingPuzzle(vector<vector<int>>& b) {
+        string target="123450",
+        begin=to_string(b[0][0])+to_string(b[0][1])+to_string(b[0][2])
+             +to_string(b[1][0])+to_string(b[1][1])+to_string(b[1][2]);
+        vector<vector<int>> nextMoves{{1,3},{0,2,4},{1,5},{0,4},{1,3,5},{2,4}};
+        unordered_set<string> visited{begin};
+        queue<string> q; q.push(begin);
+        for (int depth=0; !q.empty(); ++depth){
+            int size=(int)q.size();
+            for (int i=0; i<size; ++i){
+                auto curr=q.front(); q.pop();
+                if (curr==target) return depth;
+                int zero=(int)curr.find("0");
+                for (auto next: nextMoves[zero]){
+                    auto candidate=curr;
+                    swap(candidate[zero],candidate[next]);
+                    if (visited.find(candidate)==visited.end()){
+                        visited.insert(candidate);
+                        q.push(candidate);
+                    }
+                }
+            }
         }
-        if (q.size()==1 && q.top().second==1 && q.top().first != ss.str().back()){
-            ss << q.top().first;
-            q.pop();
-        }
-        return q.empty() ? ss.str() : "";
+        return -1;
     }
-private:
-    class Comp {
-    public:
-        bool operator()(const pair<char,int>& lhs, const pair<char,int>& rhs){
-            return lhs.second < rhs.second;
-        }
-    };
 };
 
 
 int main(int argc, const char * argv[]) {
+    
+
     
     /*
     Solution s;
@@ -202,14 +193,21 @@ int main(int argc, const char * argv[]) {
     // "aab" ==> "aba"
     // "aaab" ==> ""
     
-    
+    /*
     Solution s;
     while(true){
         string str;
         cin >> str;
         cout << s.reorganizeString(str) << endl;
     }
-     
+    */
+    
+    Solution s;
+    vector<vector<int>> board {
+        {1,2,3},
+        {5,4,0},
+    };
+    cout << s.slidingPuzzle(board) << endl;
     
     return 0;
 }
