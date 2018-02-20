@@ -83,6 +83,31 @@ private:
     }
 };
 */
+
+class Solution {
+public:
+    vector<string> letterCasePermutation(string S) {
+        vector<string> res{""};
+        go(res, S, 0, (int)S.size());
+        return res;
+    }
+private:
+    void go(vector<string>& res, const string& s, int i, int n){
+        if (i==n) return;
+        for (auto& r: res)
+            r.push_back(tolower(s[i]));
+        if (isalpha(res.back().back())){
+            vector<string> upper(res);
+            for (auto& u: upper)
+                u.back()=toupper(u.back());
+            res.insert(res.end(),upper.begin(),upper.end());
+        }
+        go(res,s,i+1,n);
+        return;
+    }
+};
+
+
 /*
  // maybe correct solution, but to the wrong problem,
  // i assumed this was the same as the "train station"
@@ -114,6 +139,8 @@ public:
 };
 */
 
+/*
+ // AC
 class Solution {
 public:
     int findCheapestPrice(int n, vector<vector<int>>& flights, int beg, int end, int K) {
@@ -138,83 +165,27 @@ public:
         return curr[end]==INT_MAX ? -1 : curr[end];
     }
 };
-
-#define mp make_pair
-#define FOR(i,a,b) for(int i=(a),_b(b);i<_b;++i)
-#define FORD(i,a,b) for(int i=(a),_b(b);i>=_b;--i)
-#define FORA(e,c) for(auto &e:c)
-#define REP(i,n) FOR(i,0,n)
-#define ALL(a) (a).begin(), (a).end()
-#define ALLR(a) (a).rbegin(), (a).rend()
-typedef const int CI;
-typedef long long ll;
-typedef unsigned long long ull;
-typedef double ld;
-typedef vector<int> VINT;
-typedef vector<ld> VLD;
-typedef vector<ll> VLL;
-typedef vector<vector<int>> VVINT;
-typedef set<int> SI;
-typedef pair<int, int> PII;
-typedef pair<int, PII> PIII;
-typedef pair<PII, PII> PIIII;
-typedef pair<ll, ll> PLL;
-typedef pair<ld, ld> PLD;
-typedef pair<ld, ld> ptp;
-typedef vector<PII> VPII;
-typedef vector<PLL> VPLL;
-typedef vector<PIII> VPIII;
-typedef vector<PLD> VPLD;
-typedef set<PII> SII;
-const int oo=0x3F3F3F3F;
-const ll ooLL=0x3F3F3F3F3F3F3F3FLL;
-#define pb push_back
-#define X first
-#define Y second
-/*
-class Solution {
-public:
-    int findCheapestPrice(int n, vector<vector<int>>& fl, int src, int dst, int K) {
-        vector<VPII> g(n);
-        FORA(x, fl) {
-            g[x[0]].push_back({x[1], x[2]});
-        }
-        VINT d(n, -1);
-        d[src] = 0;
-        REP(it, K+1) {
-            VINT f=d;
-            REP(i, n) {
-                if (d[i] == -1) continue;
-                FORA(x, g[i]) {
-                    int t=x.X, c=d[i]+x.Y;
-                    if (f[t] == -1 || f[t] > c) f[t] = c;
-                }
-            }
-            d.swap(f);
-        }
-        return d[dst];
-    }
-};
 */
+
 int main(int argc, const char * argv[]) {
     
-    /*
-    string str="ab";
+    
+    string str="12345a";
     Solution s;
     auto res=s.letterCasePermutation(str);
-    */
     
     
+    /*
     int n=4, src=0, dst=2, K=1;
     vector<vector<int>> v{
         {0,1,100},
         {1,2,100},
         {0,2,500},
     };
-    
+     
     Solution s;
     cout << s.findCheapestPrice(n,v,src,dst,K) << endl;
-    
+    */
     
     
     /*
