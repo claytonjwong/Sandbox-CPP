@@ -84,6 +84,8 @@ private:
 };
 */
 
+/*
+ // AC
 class Solution {
 public:
     vector<string> letterCasePermutation(string S) {
@@ -106,9 +108,12 @@ private:
         return;
     }
 };
-
+*/
 
 /*
+ 
+ // Wrong Answer
+ 
  // maybe correct solution, but to the wrong problem,
  // i assumed this was the same as the "train station"
  // problem in the DP book
@@ -145,7 +150,7 @@ class Solution {
 public:
     int findCheapestPrice(int n, vector<vector<int>>& flights, int beg, int end, int K) {
         unordered_map<int,vector<pair<int,int>>> umap;
-        for (auto& flight: flights){
+        for (const auto& flight: flights){
             int src=flight[0],dst=flight[1],cost=flight[2];
             umap[src].push_back({dst,cost});
         }
@@ -155,7 +160,7 @@ public:
             vector<int> next(curr);
             for (int src=0; src<n; ++src){
                 if (curr[src]==INT_MAX) continue;
-                for (auto& flight: umap[src]){
+                for (const auto& flight: umap[src]){
                     int dst=flight.first,cost=flight.second;
                     next[dst]=min(next[dst],curr[src]+cost);
                 }
@@ -167,16 +172,56 @@ public:
 };
 */
 
+#include <stack>
+class Solution {
+public:
+    bool isBipartite(vector<vector<int>>& graph) {
+        stack<int> s;
+        int n=(int)graph.size();
+        vector<int> v(n,INIT);
+        for (int i=0; i<n; ++i){
+            if (v[i]!=INIT) continue;
+            s.push(i);
+            while (!s.empty()){
+                int curr=s.top(); s.pop();
+                int value=getNeighborsValue(graph, v, curr);
+                if (value==FAIL)
+                    return false;
+                v[curr]=value^1;
+                for (auto neighbor: graph[curr]){
+                    if (v[neighbor]==INIT)
+                        s.push(neighbor);
+                    v[neighbor]=value;
+                }
+            }
+        }
+        return true;
+    }
+private:
+    const int INIT=-1,FAIL=-2;
+    int getNeighborsValue(vector<vector<int>>& graph, vector<int>& visited, int curr){
+        int value=INIT;
+        for (auto neighbor: graph[curr]){
+            if (visited[neighbor]==INIT) continue;
+            if (value==INIT)
+                value=visited[neighbor];
+            if (value!=visited[neighbor])
+                return FAIL;
+        }
+        return value==INIT ? 0 : value; // arbitrarily use 0 to start with
+    }
+};
+
 int main(int argc, const char * argv[]) {
     
-    
+    /*
     string str="12345a";
     Solution s;
     auto res=s.letterCasePermutation(str);
-    
+    */
     
     /*
-    int n=4, src=0, dst=2, K=1;
+    int n=4, src=0, dst=2, K=0;
     vector<vector<int>> v{
         {0,1,100},
         {1,2,100},
@@ -197,6 +242,16 @@ int main(int argc, const char * argv[]) {
      0
      7
      */
+    
+    vector<vector<int>> v {
+        {1,2,3},
+        {0,2},
+        {0,1,3},
+        {0,2},
+    };
+    
+    Solution s;
+    cout << s.isBipartite(v) << endl;
     
     return 0;
 }
