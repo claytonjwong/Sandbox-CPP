@@ -180,36 +180,23 @@ public:
         int n=(int)graph.size();
         vector<int> v(n,INIT);
         for (int i=0; i<n; ++i){
-            if (v[i]!=INIT) continue;
+            if (v[i]!=INIT) continue; // skip already visited nodes
             s.push(i);
             while (!s.empty()){
-                int curr=s.top(); s.pop();
-                int value=getNeighborsValue(graph, v, curr);
-                if (value==FAIL)
-                    return false;
-                v[curr]=value^1;
-                for (auto neighbor: graph[curr]){
-                    if (v[neighbor]==INIT)
-                        s.push(neighbor);
-                    v[neighbor]=value;
+                int node=s.top(),curr=v[node]==INIT ? 0 : v[node],next=curr^1; s.pop();
+                v[node]=curr;
+                for (int nei: graph[node]){
+                    if (v[nei]!=INIT && v[nei]!=next) return false;
+                    if (v[nei]==INIT)
+                        s.push(nei);
+                    v[nei]=next;
                 }
             }
         }
         return true;
     }
 private:
-    const int INIT=-1,FAIL=-2;
-    int getNeighborsValue(vector<vector<int>>& graph, vector<int>& visited, int curr){
-        int value=INIT;
-        for (auto neighbor: graph[curr]){
-            if (visited[neighbor]==INIT) continue;
-            if (value==INIT)
-                value=visited[neighbor];
-            if (value!=visited[neighbor])
-                return FAIL;
-        }
-        return value==INIT ? 0 : value; // arbitrarily use 0 to start with
-    }
+    const int INIT=-1;
 };
 
 int main(int argc, const char * argv[]) {
