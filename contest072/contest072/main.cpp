@@ -186,7 +186,7 @@ public:
                 int node=s.top(),curr=v[node]==INIT ? 0 : v[node],next=curr^1; s.pop();
                 v[node]=curr;
                 for (int nei: graph[node]){
-                    if (v[nei]!=INIT && v[nei]!=next) return false;
+                    if (v[nei]==curr) return false;
                     if (v[nei]==INIT)
                         s.push(nei);
                     v[nei]=next;
