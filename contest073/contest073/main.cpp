@@ -8,6 +8,7 @@
  */
 
 #include <iostream>
+#include <vector>
 #include <set>
 #include <sstream>
 #include <unordered_map>
@@ -29,7 +30,7 @@ public:
         return cnt;
     }
 };
-*
+*/
 
 /*
  // AC
@@ -54,7 +55,6 @@ public:
 
 /*
  // wrong answer, TODO revist this one
-#include <vector>
 class Solution {
 public:
     
@@ -76,7 +76,6 @@ private:
     }
 };
 */
-#include <vector>
 
 // AC
 class Solution {
