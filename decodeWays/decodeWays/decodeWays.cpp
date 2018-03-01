@@ -29,7 +29,7 @@ using namespace std;
 
 
 // AC
-class Solution2 {
+class Solution3 {
 public:
     int numDecodings(string s) {
         unordered_map<int,int> m;
@@ -53,7 +53,7 @@ private:
 };
 
 // AC
-class Solution {
+class Solution2 {
 public:
     int numDecodings(string s) {
         if (s.empty()) return 0;
@@ -71,11 +71,31 @@ public:
     }
 };
 
+class Solution {
+public:
+    int numDecodings(string s) {
+        if (s.empty()) return 0;
+        if (s.size()==1 && stoi(s)!=0) return 1;
+        int dn_minus_2=s[0]!='0' ? 1 : 0; // [1:9] are valid one-digit encoding
+        int dn_minus_1=s[1]!='0' ? dn_minus_2 : 0;
+        int dn=0;
+        for (int i=2; i<=s.size(); ++i){
+            int one=stoi(s.substr(i-1,1)),two=stoi(s.substr(i-2,2));
+            dn=(one!=0) ? dn_minus_1 : 0;
+            dn+=(10<=two&&two<=26) ? dn_minus_2 : 0; // [10:26] are valid two-digit encoding
+            dn_minus_2=dn_minus_1;
+            dn_minus_1=dn;
+        }
+        return dn;
+    }
+};
+
 int main(int argc, const char * argv[]) {
     
     Solution s;
     Solution2 s2;
     string str{"9371597631128776948387197132267188677349946742344217846154932859125134924241649584251978418763151253"};
+    //string str{"222"};
     cout << s.numDecodings(str) << endl;
     cout << s2.numDecodings(str) << endl;
     
