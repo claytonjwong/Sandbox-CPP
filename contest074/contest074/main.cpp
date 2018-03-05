@@ -47,7 +47,7 @@ private:
  */
 
 
-
+/*
 //AC
 class Solution {
 public:
@@ -70,7 +70,7 @@ public:
         return cnt;
     }
 };
-
+*/
 
 /*
 // AC
@@ -99,8 +99,98 @@ public:
 };
 */
 
-    
+/*
+class Solution{
+public:
+    int numMatchingSubseq(string S, vector<string>& words) {
+        vector<pair<int, int>> waiting[128];
+        for (int i = 0; i < words.size(); i++)
+            waiting[words[i][0]].emplace_back(i, 1);
+        for (char c : S) {
+            auto advance = waiting[c];
+            waiting[c].clear();
+            for (auto it : advance) {
+                int i = it.first, j = it.second;
+                waiting[words[i][j]].emplace_back(i, j + 1);
+            }
+        }
+        return waiting[0].size();
+    }
+};
+*/
 
+/*
+class Solution2{
+public:
+    int numMatchingSubseq (string S, vector<string>& words) {
+        vector<vector<int>> alpha (26);
+        for (int i = 0; i < S.size (); ++i) alpha[S[i] - 'a'].push_back (i);
+        int res = 0;
+        
+        for (const auto& word : words) {
+            int x = -1;
+            bool found = true;
+            
+            for (char c : word) {
+                auto it = upper_bound (alpha[c - 'a'].begin (), alpha[c - 'a'].end (), x);
+                if (it == alpha[c - 'a'].end ()) found = false;
+                else x = *it;
+            }
+            
+            if (found) res++;
+        }
+        
+        return res;
+    }
+};
+*/
+
+
+
+class Solution2 {
+public:
+    int numMatchingSubseq(string S, vector<string>& words) {
+        int cnt=0;
+        unordered_map<char,vector<pair<string,int>>> m;
+        for (auto& word: words) m[word[0]].push_back({word,0});
+        for (auto c: S){
+            auto bucket=m[c];
+            m[c].clear();
+            for (auto p: bucket){
+                int index=(++p.second);
+                if (index==p.first.size()){
+                    ++cnt;
+                } else {
+                    char next=p.first[index];
+                    m[next].push_back(p);
+                }
+            }
+        }
+        return cnt;
+    }
+};
+
+class Solution {
+public:
+    int numMatchingSubseq(string S, vector<string>& words) {
+        int cnt=0;
+        unordered_map<char,vector<string>> m;
+        for (auto& word: words) m[word.back()].push_back(word);
+        for (int i=(int)S.size()-1; i>=0; --i){
+            char c=S[i];
+            auto bucket=m[c];
+            m[c].clear();
+            for (auto& word: bucket){
+                word.pop_back();
+                if (word.empty())
+                    ++cnt;
+                else
+                    m[word.back()].push_back(word);
+            }
+        }
+        return cnt;
+    }
+};
 
 int main(int argc, const char * argv[]) {
     
@@ -114,6 +204,7 @@ int main(int argc, const char * argv[]) {
     cout << s.validTicTacToe(v) << endl;
     */
     
+    /*
     Solution s;
     
     //vector<int> v{2,9,2,5,6}; int L=2,R=8;
@@ -122,7 +213,18 @@ int main(int argc, const char * argv[]) {
     // output 18
     // expected 22
     cout << s.numSubarrayBoundedMax(v, L, R) << endl;
+    */
     
+    Solution s;
+    Solution s2;
+    string str="abcde";
+    vector<string> words{
+        "a", "bb", "acd", "ace"
+    };
+    
+    
+    cout << s.numMatchingSubseq(str, words) << endl;
+    cout << s2.numMatchingSubseq(str, words) << endl;
     
     return 0;
 }
