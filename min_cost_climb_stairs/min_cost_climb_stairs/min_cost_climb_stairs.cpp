@@ -30,18 +30,19 @@ using namespace std;
 class Solution {
 public:
     int minCostClimbingStairs(vector<int>& cost) {
-        int n=(int)cost.size();
-        vector<int> dp(n);
-        dp[0]=cost[0];
-        dp[1]=cost[1];
-        for (int i=2; i<n; ++i)
-            dp[i]=cost[i]+min(dp[i-2],dp[i-1]);
-        return min(dp[n-2],dp[n-1]);
+        int b=cost[1],c=cost[0];
+        for (int i=2,a; i<cost.size(); ++i,c=b,b=a) a=cost[i]+min(b,c);
+        return min(b,c);
     }
 };
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+    
+    
+    
+    vector<int> cost { 1, 100, 1, 1, 1, 100, 1, 1, 100, 1 };
+    Solution s;
+    cout << s.minCostClimbingStairs(cost) << endl;
+    
     return 0;
 }
