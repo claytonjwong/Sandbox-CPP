@@ -24,7 +24,7 @@ using namespace std;
  Insert each unique number into an unordered set to be used for O(1) lookup.  For each number in the set, see if that number is the potential beginning of a sequence.  We know that the number is a potential beginning of a sequence if there does NOT exist a number with value one less than the current number's value.  Track the longest sequence and return it.
 */
 
-
+/*
 class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {
@@ -61,7 +61,38 @@ private:
         pa->parent=pb;
     }
 };
+*/
 
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        unordered_set<int> s(nums.begin(),nums.end());
+        unordered_map<int,int> p;
+        for (int n: s) p[n]=n;
+        for (int n: s){
+            if (p.count(n-1))
+                u(p,p[n],p[n-1]);
+            if (p.count(n+1))
+                u(p,p[n],p[n+1]);
+        }
+        unordered_map<int,int> pc; // parent count
+        int maxi=0;
+        for (auto x: p)
+            maxi=max(maxi,++pc[f(p,x.second)]);
+        return maxi;
+    }
+private:
+    int f(unordered_map<int,int>& p, int x){ // find (with path compression)
+        if (x!=p[x])
+            p[x]=f(p,p[x]);
+        return p[x];
+    }
+    void u(unordered_map<int,int>& p, int a, int b){ // union (arbitrarily set a parent to b parent)
+        auto pa=f(p,a),pb=f(p,b);
+        if (pa==pb) return;
+        p[pa]=pb;
+    }
+};
 
 class Solution2 {
 public:
