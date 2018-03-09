@@ -23,6 +23,8 @@
 
 using namespace std;
 
+/*
+// AC
 class Solution {
 public:
     bool validTree(int n, vector<pair<int, int>>& e) {
@@ -40,7 +42,7 @@ private:
             p[x]=f(p,p[x]);
         return p[x];
     }
-    bool u(vector<int>& p, int a, int b){ // union (arbitrarily set parent of a to parent of b
+    bool u(vector<int>& p, int a, int b){ // union (arbitrarily set parent of a to parent of b)
         int pa=f(p,a),pb=f(p,b);
         if (pa==pb) return false; // loop detected
         p[pa]=pb;
@@ -49,6 +51,31 @@ private:
     bool go(vector<int>& p, int i, const int& n, const vector<pair<int,int>>& e){
         if (i==n) return true;
         return u(p,e[i].first,e[i].second) ? go(p,i+1,n,e) : false; // return false if loop detected
+    }
+};
+*/
+
+class Solution {
+public:
+    bool validTree(int n, vector<pair<int, int>>& e) {
+        if (n==0) return true;
+        vector<int> p(n);
+        for (int i=0; i<n; ++i) p[i]=i; // init parents to themselves (disjoint sets)
+        for (int i=0; i<e.size(); ++i) if (!u(p,e[i].first,e[i].second)) return false; // loop detected
+        int rep=f(p,p[0]); // representative of the unioned set is same if graph is connected
+        for (int i=1; i<n; ++i) if (f(p,p[i])!=rep) return false; // NOT connected graph
+        return true;
+    }
+private:
+    int f(vector<int>& p, int x){ // find (with path compression)
+        if (p[x]!=x) p[x]=f(p,p[x]);
+        return p[x];
+    }
+    bool u(vector<int>& p, int a, int b){ // union (arbitrarily set parent of a to parent of b)
+        int pa=f(p,a),pb=f(p,b);
+        if (pa==pb) return false; // loop detected
+        p[pa]=pb;
+        return true;
     }
 };
 
