@@ -146,7 +146,7 @@ public:
 */
 
 
-
+// AC
 class Solution2 {
 public:
     int numMatchingSubseq(string S, vector<string>& words) {
@@ -170,6 +170,8 @@ public:
     }
 };
 
+/*
+ // AC
 class Solution {
 public:
     int numMatchingSubseq(string S, vector<string>& words) {
@@ -186,6 +188,30 @@ public:
                     ++cnt;
                 else
                     m[word.back()].push_back(word);
+            }
+        }
+        return cnt;
+    }
+};
+ */
+
+
+class Solution {
+public:
+    int numMatchingSubseq(string S, vector<string>& words) {
+        int cnt=0;
+        vector<vector<string>> v(123);
+        for (auto& word: words) v[word.back()].push_back(word);
+        for (auto itr=S.rbegin(); itr!=S.rend(); ++itr){
+            char c=*itr;
+            auto bucket=v[c];
+            v[c].clear();
+            for (auto& word: bucket){
+                word.pop_back();
+                if (word.empty())
+                    ++cnt;
+                else
+                    v[word.back()].push_back(word);
             }
         }
         return cnt;
