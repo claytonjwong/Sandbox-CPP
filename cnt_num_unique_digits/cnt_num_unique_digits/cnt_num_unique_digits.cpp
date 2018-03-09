@@ -78,6 +78,22 @@ public:
 class Solution {
 public:
     int countNumbersWithUniqueDigits(int n) {
+        if (n==0) return 1;
+        if (n==1) return 10;
+        n=min(n,10);
+        int ca=0,cc=0;
+        for (int i=2,pc=9,pa=10; i<=n; ++i,pc=cc,pa=ca){
+            cc=pc*(9-(i-1));
+            ca=pa+(i-1)*pc+cc;
+        }
+        return ca;
+    }
+};
+
+/*
+class Solution {
+public:
+    int countNumbersWithUniqueDigits(int n) {
         return
           n==0 ? 1
         : n==1 ? 10
@@ -92,6 +108,7 @@ public:
         :        8877691;
     }
 };
+*/
 
 int main(int argc, const char * argv[]) {
     Solution s;
