@@ -36,7 +36,7 @@ private:
         if (i==m-1 && j==n-1) return memo[i][j]=g[i][j];
         if (i==m-1) return memo[i][j]=g[i][j]+helper(g,m,n,i,j+1,memo);
         if (j==n-1) return memo[i][j]=g[i][j]+helper(g,m,n,i+1,j,memo);
-        return memo[i][j]=g[i][j]+min(helper(g,m,n,i,j+1,memo),helper(g,m,n,i+1,j,memo));
+        return memo[i][j]>=0 ? memo[i][j] : memo[i][j]=g[i][j]+min(helper(g,m,n,i,j+1,memo),helper(g,m,n,i+1,j,memo));
     }
 };
 
