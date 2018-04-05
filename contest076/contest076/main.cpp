@@ -183,8 +183,8 @@ public:
     }
 private:
     bool DFS(vector<vector<int>>& g, set<int>& s, set<int>& c, set<int>& v, int i){
-        if (s.count(i)) return true;
         if (c.count(i) || v.count(i)) return false;
+        if (s.count(i)) return true;
         v.insert(i);
         for (auto nei: g[i]){
             if (!DFS(g,s,c,v,nei)){

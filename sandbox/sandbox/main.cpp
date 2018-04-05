@@ -2,7 +2,7 @@
 #include <iostream>
 
 using namespace std;
-
+/*
 int gcd(int a, int b){
     
     // gcd(a,0) = a
@@ -40,18 +40,67 @@ int maximumGcdAndSum(vector <int> a, vector <int> b) {
     
 }
 
+*/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+class TreeNode {
+public:
+    int val;
+    TreeNode *left, *right;
+    TreeNode(int val) : val(val), left(nullptr), right(nullptr) {}
+};
+
+#include<set>
+class Solution {
+public:
+    bool isValidBST(TreeNode* root) {
+        if (!root) return true;
+        vector<int> v;
+        go(root,v);
+        set<int> s(v.begin(),v.end());
+        return is_sorted(v.begin(),v.end()) && s.size()==v.size();
+    }
+private:
+    void go(TreeNode* root,vector<int>& inorder){
+        if (!root) return;
+        go(root->left,inorder);
+        inorder.push_back(root->val);
+        go(root->right,inorder);
+    }
+};
+
+        
+#include <exception>
+
+
+
 int main() {
-    int n;
-    cin >> n;
-    vector<int> A(n);
-    for(int A_i = 0; A_i < n; A_i++){
-        cin >> A[A_i];
-    }
-    vector<int> B(n);
-    for(int B_i = 0; B_i < n; B_i++){
-        cin >> B[B_i];
-    }
-    int res = maximumGcdAndSum(A, B);
-    cout << res << endl;
+    
+    Solution s;
+    TreeNode* root=new TreeNode(10);
+    root->right=new TreeNode(15);
+    root->right->left=new TreeNode(6);
+    cout << s.isValidBST(root) << endl;
+    
     return 0;
+     
 }
