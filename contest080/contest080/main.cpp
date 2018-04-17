@@ -137,12 +137,11 @@ public:
                 }
             }
         }
-        
         return -1;
     }
 private:
     struct hash {
-        inline size_t operator()(const pair<int,int>& x) const { return x.P*10001+x.S; }
+        inline size_t operator()(const pair<int,int>& x) const { return x.P*100000+x.S; }
     };
 };
 
