@@ -34,7 +34,7 @@ private:
         X L=i->left ? go(i->left) : X(true,INT_MAX,INT_MIN,0),R=i->right ? go(i->right) : X(true,INT_MAX,INT_MIN,0);
         if (L.isBST && R.isBST && L.maxv < i->val && i->val < R.minv)
             return X(true,min({L.minv,i->val,R.minv}),max({L.maxv,i->val,R.maxv}),L.size + 1 + R.size);
-        return X(false,INT_MAX,INT_MIN,max(L.size,R.size));
+        return X(false,0xDEAD,0xBEEF,max(L.size,R.size));
     }
 };
 
