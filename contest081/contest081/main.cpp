@@ -87,7 +87,7 @@ public:
 };
 */
 
-
+/*
 class Solution {
 public:
     int flipgame(vector<int>& f, vector<int>& b) {
@@ -96,6 +96,7 @@ public:
         return c.empty() ? 0 : *min_element(c.begin(), c.end());
     }
 };
+ */
 
 //int mini=INT_MAX; for (auto x: c) mini=min(mini,x);
 //return mini==INT_MAX ? 0 : mini;
@@ -131,6 +132,67 @@ public:
     }
 };
 */
+
+/*
+class Solution {
+public:
+    int minimumLengthEncoding(vector<string>& w) {
+        unordered_set<string> all(w.begin(),w.end()),can(w.begin(),w.end());
+        for (auto x: all)
+            for (int i=1; i<x.size(); ++i)
+                can.erase(x.substr(i));
+        int minlen=0;
+        for (auto x: can)
+            minlen+=(int)x.size()+1;
+        return minlen;
+    }
+};
+*/
+
+
+/*
+ 32 / 47 test cases passed.
+ Status: Wrong Answer
+ Submitted: 3 minutes ago
+ Input:
+ [45,42,2,18,23,1170,12,41,40,9,47,24,33,28,10,32,29,17,46,11,759,37,6,26,21,49,31,14,19,8,13,7,27,22,3,36,34,38,39,30,43,15,4,16,35,25,20,44,5,48]
+ Output:
+ 587
+ Expected:
+ 777
+ */
+/*
+class Solution {
+public:
+    int numFactoredBinaryTrees(vector<int>& A) {
+        set<int> S(A.begin(),A.end());
+        unordered_map<int,int> M;
+        int cnt=0;
+        for (auto x: S){
+            ++cnt;
+            cnt+=go(x,S,set<int>(S.begin(),S.upper_bound(floor(sqrt(x)))),M);
+        }
+        return cnt;
+    }
+private:
+    int go(int x, const set<int>& S, const set<int>& C, unordered_map<int,int>& M){
+        if (M.find(x)!=M.end()) return M[x];
+        int cnt=0;
+        for (int i: C){
+            if (x%i) continue;
+            int j=x/i;
+            if (S.find(j)==S.end()) continue;
+            if (i==j){
+                cnt+=go(i,S,C,M);
+            } else {
+                cnt+=2+(2*(go(i,S,C,M)+go(j,S,C,M)));
+            }
+        }
+        return M[x]=cnt;
+    }
+};
+*/
+
  
 int main(int argc, const char * argv[]) {
     
@@ -141,18 +203,26 @@ int main(int argc, const char * argv[]) {
     auto r=s.shortestToChar(S, C);
     */
     
-    
+    /*
     Solution s;
     vector<int> f={1,1};
     vector<int> b={1,1};
     auto r=s.flipgame(f, b);
-    
+    */
     
     /*
     Solution s;
-    vector<string> w={ "time", "time", "time" };
+    vector<string> w={ "time", "bell", "time", "me" };
     auto r=s.minimumLengthEncoding(w);
     */
+    
+    
+    Solution s;
+    //vector<int> A={18,3,6,2};
+    //vector<int> A={81,9,3};
+    vector<int> A={45,42,2,18,23,1170,12,41,40,9,47,24,33,28,10,32,29,17,46,11,759,37,6,26,21,49,31,14,19,8,13,7,27,22,3,36,34,38,39,30,43,15,4,16,35,25,20,44,5,48};
+    cout << s.numFactoredBinaryTrees(A) << endl;
+    
     
     return 0;
 }
