@@ -14,6 +14,9 @@
  Q3: https://leetcode.com/problems/short-encoding-of-words/description/
  A3: https://leetcode.com/problems/short-encoding-of-words/discuss/125848/Concise-C++-with-explanation
  
+ Q4: https://leetcode.com/problems/binary-trees-with-factors/description/
+ A4: https://leetcode.com/problems/binary-trees-with-factors/discuss/126261/C++-Recursion-+-Memo
+ 
  */
 
 #include <iostream>
@@ -182,7 +185,7 @@ public:
  412516964
  */
 
-
+/*
 class Solution {
 public:
     int numFactoredBinaryTrees(vector<int>& A) {
@@ -204,7 +207,7 @@ private:
         return M[x]=cnt;
     }
 };
-
+*/
 
 class Solution {
 public:
