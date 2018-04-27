@@ -92,15 +92,38 @@ private:
 #include <exception>
 
 
+struct ListNode {
+    int val;
+    ListNode* next;
+    ListNode(int val) : val{val}, next{nullptr} {}
+};
+
+ListNode* rev(ListNode* head){
+    if (!head || !head->next) return head;
+    ListNode *prev=head, *curr=prev->next;
+    while (curr){
+        prev->next=curr->next;
+        curr->next=head;
+        head=curr;
+        curr=prev->next;
+    }
+    return head;
+}
+
 
 int main() {
-    
+    /*
     Solution s;
     TreeNode* root=new TreeNode(10);
     root->right=new TreeNode(15);
     root->right->left=new TreeNode(6);
     cout << s.isValidBST(root) << endl;
+    */
     
+    ListNode* head=new ListNode(1);
+    head->next=new ListNode(2);
+    head->next->next=new ListNode(3);
+    auto r=rev(head);
     return 0;
      
 }
