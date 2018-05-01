@@ -14,6 +14,8 @@
  Q3: https://leetcode.com/contest/weekly-contest-82/problems/most-profit-assigning-work/
  A3: https://leetcode.com/problems/most-profit-assigning-work/discuss/126999/C++-map
  
+ Q4: https://leetcode.com/problems/making-a-large-island/description/
+ A4:
  
  */
 
@@ -30,6 +32,7 @@
 using namespace std;
 
 /*
+ //AC
 class Solution {
 public:
     string toGoatLatin(string S) {
@@ -48,9 +51,11 @@ public:
         return ans;
     }
 };
- */
+*/
+
 
 /*
+ //AC
 class Solution {
 public:
     int numFriendRequests(vector<int>& ages) {
@@ -67,6 +72,7 @@ public:
 */
 
 /*
+ //AC
 class Solution {
 public:
     int maxProfitAssignment(vector<int>& D, vector<int>& P, vector<int>& W) {
@@ -82,17 +88,33 @@ public:
 };
 */
 
-class Solution{
+class Solution {
 public:
-    int maxProfitAssignment(vector<int>& lv, vector<int>& profit, vector<int>& worker, int res = 0) {
-        map<int, int> m; m[0]=0;
-        for (auto i = 0; i < lv.size(); ++i) m[lv[i]] = max(m[lv[i]], profit[i]);
-        for (auto it = next(m.begin()); it != m.end(); ++it) it->second = max(it->second, prev(it)->second);
-        for (auto w : worker) res += prev(m.upper_bound(w))->second;
-        return res;
+    int largestIsland(vector<vector<int>>& G) {
+        int ans=0,M=(int)G.size(),N=(int)G[0].size(); unordered_set<int> S;
+        for (int i=0; i<M; ++i) for (int j=0; j<N; ++j){
+            unordered_set<int> V;
+            if (G[i][j]==0){
+                G[i][j]=1;
+                dfs(G,M,N,i,j,V);
+                G[i][j]=0;
+            } else if (S.find(key(i,j,N))==S.end()){
+                dfs(G,M,N,i,j,V);
+                S.insert(V.begin(),V.end());
+            }
+            ans=max(ans,(int)V.size());
+        }
+        return ans;
     }
+private:
+    vector<pair<int,int>> dirs={{0,1},{1,0},{0,-1},{-1,0}};
+    void dfs(vector<vector<int>>& G, int M, int N, int i, int j, unordered_set<int>& V){
+        if (i<0||j<0||i>=M||j>=N||G[i][j]==0||V.count(key(i,j,N))) return;
+        V.insert(key(i,j,N)); for (auto d: dirs) dfs(G,M,N,i+d.first,j+d.second,V);
+    }
+    const int key(int i, int j, int N) const { return i*N+j; }
 };
-
+ 
 int main(int argc, const char * argv[]) {
     /*
     string S="The quick brown fox jumped over the lazy dog";
@@ -112,11 +134,19 @@ int main(int argc, const char * argv[]) {
     cout << s.numFriendRequests(ages) << endl;
     */
     
+    /*
     vector<int> D = { 2, 4, 6, 8,10},
                 P = {10,20,30,40,50}, W = {4,5,6,7};
     Solution s;
     cout << s.maxProfitAssignment(D, P, W) << endl;;
+    */
     
+    vector<vector<int>> G={
+        {1,1},
+        {1,1},
+    };
+    Solution s;
+    cout << s.largestIsland(G) << endl;
     
     return 0;
 }
