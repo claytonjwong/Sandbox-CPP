@@ -36,22 +36,29 @@ using namespace std;
 class Solution {
 public:
     string toGoatLatin(string S) {
-        istringstream is(S); ostringstream os;
-        string V="aeiouAEIOU",s,a="a";
+        istringstream is(S); ostringstream os; string s,a="a";
         while (is >> s){
-            if (V.find(s[0])==string::npos)
+            if (s.substr(0,1).find_first_of("aeiouAEIOU"))
                 os << s.substr(1) << s[0];
             else
                 os << s;
-            os << "ma" << a << " ";
+            os << "ma" << a << (is.tellg()>0 ? " "  : "");
             a.push_back('a');
         }
-        string ans=os.str();
-        ans.pop_back();
-        return ans;
+        return os.str();
     }
 };
 */
+
+class Solution {
+public:
+    string toGoatLatin(string S, string s="", string a="a", ostringstream os=ostringstream()) {
+        for (stringstream is(S); is >> s; a.push_back('a'))
+            os << ((s.substr(0,1).find_first_of("aeiouAEIOU")) ? s.substr(1)+s[0] : s )
+               << "ma" << a << (is.tellg()>0 ? " "  : "");
+        return os.str();
+    }
+};
 
 
 /*
@@ -88,6 +95,7 @@ public:
 };
 */
 
+/*
 class Solution {
 public:
     int largestIsland(vector<vector<int>>& G) {
@@ -114,9 +122,10 @@ private:
     }
     const int key(int i, int j, int N) const { return i*N+j; }
 };
+ */
  
 int main(int argc, const char * argv[]) {
-    /*
+    
     string S="The quick brown fox jumped over the lazy dog";
     Solution s;
     cout << s.toGoatLatin(S) << endl;
@@ -126,7 +135,7 @@ int main(int argc, const char * argv[]) {
     
     // "heTmaa uickqmaaa rownbmaaaa oxfmaaaaa umpedjmaaaaaa overmaaaaaaa hetmaaaaaaaa azylmaaaaaaaaa ogdmaaaaaaaaaa
     // "heTmaa uickqmaaa rownbmaaaa oxfmaaaaa umpedjmaaaaaa overmaaaaaaa hetmaaaaaaaa azylmaaaaaaaaa ogdmaaaaaaaaaa"
-    */
+    
     
     /*
     vector<int> ages={16,16};
@@ -141,13 +150,14 @@ int main(int argc, const char * argv[]) {
     cout << s.maxProfitAssignment(D, P, W) << endl;;
     */
     
+    /*
     vector<vector<int>> G={
         {1,1},
         {1,1},
     };
     Solution s;
     cout << s.largestIsland(G) << endl;
-    
+    */
     return 0;
 }
 

@@ -1,5 +1,8 @@
 #include <vector>
 #include <iostream>
+#include <queue>
+#include <unordered_map>
+#include <map>
 
 using namespace std;
 /*
@@ -62,6 +65,7 @@ int maximumGcdAndSum(vector <int> a, vector <int> b) {
  * };
  */
 
+/*
 class TreeNode {
 public:
     int val;
@@ -87,7 +91,7 @@ private:
         go(root->right,inorder);
     }
 };
-
+*/
         
 #include <exception>
 
@@ -120,10 +124,48 @@ int main() {
     cout << s.isValidBST(root) << endl;
     */
     
+    /*
     ListNode* head=new ListNode(1);
     head->next=new ListNode(2);
     head->next->next=new ListNode(3);
     auto r=rev(head);
+     */
+    
+    /*
+    vector<int> v;
+    int c=(int)v.capacity(); for (int i=0; i<10000007; ++i){
+        v.push_back(i);
+        if (c < v.capacity()){
+            cout << c << endl;
+            c=(int)v.capacity();
+        }
+    }
+    cout << c << endl << endl;
+     */
+    
+    
+    struct cmp{
+        bool operator()(const pair<string,int>& lhs, pair<string,int>& rhs){
+            return lhs.second < rhs.second;
+        }
+    };
+    
+    unordered_map<string,int> M;
+    
+    while (true) {
+        string name;
+        cout << "name: "; cin >> name;
+        if (name=="exit")
+            break;
+        ++M[name];
+    }
+    priority_queue<pair<string,int>,vector<pair<string,int>>,cmp> q(M.begin(),M.end());
+    
+    while (!q.empty()){
+        auto curr=q.top(); q.pop();
+        cout << curr.first << "   " << curr.second << endl;
+    }
+    
     return 0;
      
 }
