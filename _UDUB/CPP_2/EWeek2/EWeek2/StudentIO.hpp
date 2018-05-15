@@ -31,7 +31,6 @@ private:
     void Output();
     
     std::string Strip(const std::string& s) const;
-    std::string Pad(const std::string& s, const int& len) const;
 };
 
 #endif /* StudentIO_hpp */

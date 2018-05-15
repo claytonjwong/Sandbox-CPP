@@ -92,9 +92,9 @@ private:
     }
 };
 */
-        
-#include <exception>
 
+/*
+#include <exception>
 
 struct ListNode {
     int val;
@@ -113,9 +113,57 @@ ListNode* rev(ListNode* head){
     }
     return head;
 }
+*/
 
+void ProcessStr( string && str ) // takes rvalue reference
+{
+    cout << "rval" << endl;
+}
+void ProcessStr( string & str ) // takes lvalue reference
+{
+    cout << "lval" << endl;
+}
+void Foo()
+{
+    ProcessStr( "ABC" );
+    ProcessStr( string( "123" ));
+    string myStr("XYZ");
+    ProcessStr( myStr );
+}
+
+#include <map>
+#include <set>
+#include <memory>
+
+struct X {
+    int val;
+};
+
+template<typename T>
+void sink(unique_ptr<T> releaseMe) {}
 
 int main() {
+    
+    map<int,X*> m;
+    auto r=m[10];
+    
+    unique_ptr<int> up{new int(13)};
+    int* p=up.get();    // p points towards the address owned by up
+    sink(move(up));     // sink releases the memory pointed towards by up
+    
+    /*
+     
+     i+j*N
+     
+     i j
+     0,1
+     1,0
+     
+     0+1*N=N
+     1+0*N=1
+     
+     */
+    
     /*
     Solution s;
     TreeNode* root=new TreeNode(10);
@@ -143,7 +191,7 @@ int main() {
     cout << c << endl << endl;
      */
     
-    
+    /*
     struct cmp{
         bool operator()(const pair<string,int>& lhs, pair<string,int>& rhs){
             return lhs.second < rhs.second;
@@ -165,6 +213,9 @@ int main() {
         auto curr=q.top(); q.pop();
         cout << curr.first << "   " << curr.second << endl;
     }
+    */
+    
+    
     
     return 0;
      

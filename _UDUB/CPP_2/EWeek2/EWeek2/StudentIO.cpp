@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include <unordered_map>
+#include <iomanip>
 #include "StudentIO.hpp"
 #include "Student.hpp"
 
@@ -36,7 +37,7 @@ void StudentIO::Input() {
         map[key].emplace_back(Student(name,id));
     }
     for (auto& x: map)
-        myStudents.emplace_back(move(x.second));
+        myStudents.push_back(x.second);
 }
 
 void StudentIO::Output() {
@@ -45,7 +46,7 @@ void StudentIO::Output() {
             string name=s.getName();
             if (name.empty()) continue;
             char C=toupper(name[0]);
-            cout << C << ":  " << Pad(name,20) << s.getID() << endl;
+            cout << C << ":  " << setw(20) << name << setw(5) << s.getID() << endl;
         }
     }
 }
@@ -58,9 +59,3 @@ string StudentIO::Strip(const string& s) const {
     return s.substr(i,j-i);
 }
 
-string StudentIO::Pad(const string& s, const int& len) const  {
-    int i=(int)s.size();
-    if (len < i) return s;
-    int padding=len-i;
-    return s+string(padding,' ');
-}

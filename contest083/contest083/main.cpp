@@ -43,7 +43,7 @@ public:
 */
 
 
-
+/*
 class Solution {
 public:
     string maskPII(string S) {
@@ -70,22 +70,22 @@ private:
         return ans;
     }
 };
-
+*/
 
 /*
 Submission Result: Time Limit Exceeded
 Last executed input:
 933320757
 */
-/*
- // TLE
- 
+
+ // TLE & wrong anser
+ /*
 class Solution {
 public:
     int consecutiveNumbersSum(int N) {
         if (N<3) return 1;
         int ans=1;
-        for (int i=1,j=2,sum=i+j; j<=N/2+1;){
+        for (int i=1,j=2,sum=i+j; i<=sqrt(N/2+1);){
             if (sum < N){
                 sum+=++j;
             } else {
@@ -98,25 +98,27 @@ public:
     }
 };*/
 
-/*
 class Solution {
 public:
-    int consecutiveNumbersSum(int N) {
-        return go(N,N);
-    }
-private:
-    int go(int i, const int T){
-        if (i==T)
-            return 1+go(i/2,T)+go(i/2+1,T);
-        if (i<2)
-            return i/2*(i+1)==T ? 1 : 0;
-        int sum=i+(i+1);
-        for (int j=i+1; sum<T;)
-            sum+=++j;
-        return ( sum==T ? 1 : 0 ) + go(i/2,T) + go(i/2+1,T);
+    int consecutiveNumbersSum(int N, int ans=1) {
+        for (int n=2; n*(n+1)/2<=(N); ++n){
+            if ((N-n*(n+1)/2)%n==0)
+                ++ans;
+        }
+        return ans;
     }
 };
-*/
+
+
+class Solution2{
+public:
+    int consecutiveNumbersSum(int N, int res = 0) {
+        for (auto n = 2; n * (n + 1) / 2 <= N; ++n) res += (N - n * (n + 1) / 2) % n == 0 ? 1 : 0;
+        return res + 1;
+    }
+};
+
+
 
 
 int main(int argc, const char * argv[]) {
@@ -127,15 +129,17 @@ int main(int argc, const char * argv[]) {
     auto r=s.largeGroupPositions("aaa");
     */
     
-    
-    Solution s;
-    auto r=s.maskPII("86-(10)12345678");
-    
-    
     /*
     Solution s;
-    cout << s.consecutiveNumbersSum(15) << endl;;
+    auto r=s.maskPII("86-(10)12345678");
     */
+    
+    
+    Solution s;
+    Solution2 s2;
+    cout << s.consecutiveNumbersSum(5) << endl;;
+    cout << s2.consecutiveNumbersSum(5) << endl;;
+    
     
     return 0;
 }
