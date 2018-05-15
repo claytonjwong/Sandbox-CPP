@@ -13,8 +13,8 @@
 
 class Student {
 public:
-    Student(std::string name, int id=0) : myName{name}, myID{id} {} // sq pass string by const reference
-    std::string getName() const { return myName; }  // sq Could return by const reference to avoid copy
+    Student(const std::string& name, int id=0) : myName{name}, myID{id} {}
+    const std::string& getName() const { return myName; } 
     int getID() const { return myID; }
 private:
     std::string myName;
