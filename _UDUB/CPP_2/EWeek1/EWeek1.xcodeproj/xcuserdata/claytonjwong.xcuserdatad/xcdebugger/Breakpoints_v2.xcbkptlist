@@ -42,12 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EWeek1/Circle.cpp"
-            timestampString = "546403817.3466721"
+            timestampString = "548038165.477746"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
-            landmarkName = "Circle::operator++(int)"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "Circle::setName(const char* name)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -90,12 +90,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EWeek1/Circle.cpp"
-            timestampString = "546403817.346931"
+            timestampString = "548038165.47855"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "Circle::operator==(const Circle&amp; rhs)"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
+            landmarkName = "Circle::operator=(const Circle&amp; rhs)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EWeek1/Circle.cpp"
-            timestampString = "546403817.347069"
+            timestampString = "548038165.4791811"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
             landmarkName = "Circle::operator=(const Circle&amp; rhs)"
             landmarkType = "7">
          </BreakpointContent>
