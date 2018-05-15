@@ -33,8 +33,8 @@ public:
     int getRadius() const { return mRadius; }
     std::pair<int,int> getCoord() const { return {mXCoord,mYCoord}; }
     
-    bool operator==(const Circle& rhs);
-    bool operator!=(const Circle& rhs);
+    bool operator==(const Circle& rhs);  // sq  Should declare as const method
+    bool operator!=(const Circle& rhs); // sq  Should declare as const method
     
     Circle& operator++();
     Circle operator++(int);
