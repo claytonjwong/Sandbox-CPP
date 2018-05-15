@@ -29,11 +29,11 @@ void StudentIO::Input() {
         str=Strip(str);
         auto pos=str.find(';');
         string name=str.substr(0,pos);
-        char key=name[0];
+        char key=name[0];                // sq  Do u need to tolower or toupper name[0] ?
         if (pos==string::npos)
             cout << "Student <" << str << "> did not have an ID" << endl;
         else
-            id=stoi(str.substr(str.find(';')+1));
+            id=stoi(str.substr(str.find(';')+1)); // sq why call find again, u already have pos. find is a linear search(slow)
         map[key].emplace_back(Student(name,id));
     }
     for (auto& x: map)
@@ -54,8 +54,8 @@ void StudentIO::Output() {
 // helper function used to strip leading and trailing whitespace
 string StudentIO::Strip(const string& s) const {
     int i=0,j=(int)s.size();
-    if (isspace(s[i])) ++i;
-    if (s.size() > 2 && isspace(s[j-1])) --j;
+    if (isspace(s[i])) ++i;  // sq What if more than 1 white space ?
+    if (s.size() > 2 && isspace(s[j-1])) --j;  // sq What if more than 1 white space ?
     return s.substr(i,j-i);
 }
 
