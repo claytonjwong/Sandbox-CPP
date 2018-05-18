@@ -55,11 +55,19 @@ public:
 };
  */
 
+class Solution {
+public:
+    int climbStairs(int n) {
+        int c=1; for (int a=1,b=1; 1 < n--; a=b,b=c) c=a+b;
+        return c;
+    }
+};
+
 
 int main(int argc, const char * argv[]) {
 
     Solution s;
-    cout << s.climbStairs(8) << endl;
+    cout << s.climbStairs(4) << endl;
     
     return 0;
 }
