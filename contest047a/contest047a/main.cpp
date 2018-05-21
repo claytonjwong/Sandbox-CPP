@@ -10,8 +10,6 @@
  A2: https://leetcode.com/problems/path-sum-iv/discuss/132574/C++-vector-of-size-32
  */
 
-
-
 #include <iostream>
 #include <vector>
 
@@ -32,6 +30,42 @@ public:
 };
 */
 
+/*
+class Solution {
+public:
+    int pathSum(vector<int>& A, vector<int> T=vector<int>(32,-1), int ans=0) {
+        if (A.size()==1) return A[0]%10;
+        for (auto k: A){
+            int D=k/100,P=k%100/10,V=k%10,i=(1<<(D-1))-1+P-1;
+            T[i]=V;
+        }
+        for (int i=31; i>0; --i){
+            if (isLeaf(i,T))
+                ans+=go(i,T);
+        }
+        return ans;
+    }
+private:
+    int L(int i, vector<int>& T) {
+        if (i>=15) return -1;
+        return T[(i<<1)+1];
+    }
+    int R(int i, vector<int>& T) {
+        if (i>=15) return -1;
+        return T[(i<<1)+2];
+    }
+    bool isLeaf(int i, vector<int>& T) {
+        if (T[i]==-1) return false;
+        if (L(i,T)==-1 && R(i,T)==-1) return true;
+        return false;
+    }
+    int go(int i, vector<int>& T) {
+        if (i==0) return T[0];
+        return T[i]+go(i%2==1 ? (i>>1) : (i>>1)-1, T);
+    }
+};
+*/
+
 class Solution {
 public:
     int pathSum(vector<int>& A, vector<int> T=vector<int>(32,-1), int ans=0) {
@@ -41,13 +75,13 @@ public:
         return ans;
     }
 private:
-    int L(int i, vector<int>& T) const { if (i>=15) return -1; else return T[(i<<1)+1]; }
-    int R(int i, vector<int>& T) const { if (i>=15) return -1; else return T[(i<<1)+2]; }
-    bool isLeaf(int i, vector<int>& T) const {
-        if (T[i]!=-1 && L(i,T)==-1 && R(i,T)==-1) return true; else return false;
+    int L(int i, vector<int>& T) { if (i>=15) return -1; else return T[(i<<1)+1]; }
+    int R(int i, vector<int>& T) { if (i>=15) return -1; else return T[(i<<1)+2]; }
+    bool isLeaf(int i, vector<int>& T) {
+        return (T[i]!=-1 && L(i,T)==-1 && R(i,T)==-1) ? true : false;
     }
-    int go(int i, vector<int>& T) const {
-        if (i==0) return T[0]; else return T[i]+go(i%2==1 ? (i>>1) : (i>>1)-1, T);
+    int go(int i, vector<int>& T) {
+        return (i==0) ? T[0] : T[i]+go(i%2==1 ? (i>>1) : (i>>1)-1, T);
     }
 };
 
