@@ -22,29 +22,63 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <unordered_map>
+#include <unordered_set>
 
 using namespace std;
 
+/*
 class MapSum {
 public:
-    /** Initialize your data structure here. */
-    MapSum() : _map{} {}
-    
     void insert(string key, int val) {
-        _map[key]=val;
-    }
-    
-    int sum(string prefix) {
-        int cnt=0, sz=(int)prefix.size();
-        map<string,int>::iterator itr;
-        for (itr=_map.lower_bound(prefix); itr!=_map.end(); itr++){
-            if (itr->first.substr(0,sz)==prefix){ cnt+=itr->second; } else { break; }
+        bool found=K.find(key)!=K.end();
+        K.insert(key);
+        for (int i=1; i<=(int)key.size(); ++i){
+            if (found)
+                M[key.substr(0,i)]=val;
+            else
+                M[key.substr(0,i)]+=val;
         }
-        return cnt;
+    }
+    int sum(string prefix) {
+        return M[prefix];
     }
 private:
-    map<string,int> _map;
+    unordered_map<string,int> M;
+    unordered_set<string> K;
 };
+ */
+
+
+class MapSum {
+public:
+    void insert(string key, int val) {
+        for (int i=1,N=(int)key.size(),found=!(K.insert(key).second); i<=N; ++i)
+            M[key.substr(0,i)]=found ? val : val+M[key.substr(0,i)];
+    }
+    int sum(string prefix) { return M[prefix]; }
+private:
+    unordered_map<string,int> M;
+    unordered_set<string> K;
+};
+
+
+/*
+class MapSum {
+public:
+    void insert(string key, int val) {
+        m[key]=val;
+    }
+    int sum(string prefix) {
+        int ans=0, N=(int)prefix.size();
+        for (auto itr=m.lower_bound(prefix); itr!=m.end(); itr++)
+            if (itr->first.substr(0,N)==prefix){ ans+=itr->second; } else { break; }
+        return ans;
+    }
+private:
+    map<string,int> m;
+};
+*/
 
 /**
  * Your MapSum object will be instantiated and called as such:
