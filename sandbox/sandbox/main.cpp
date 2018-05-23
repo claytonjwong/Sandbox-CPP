@@ -142,14 +142,44 @@ struct X {
 template<typename T>
 void sink(unique_ptr<T> releaseMe) {}
 
+
+//template<typename T1> // does NOT compile
+//template<typename T2>
+template<typename T1, typename T2>
+T1 add(const T1& a, const T2& b){
+    return a+b;
+}
+
+template <typename T>
+class Stack
+{
+public:
+    template < typename T2 >
+    Stack<T> & operator = (const Stack<T2> & other );
+};
+
+template <typename T>
+template <typename T2>
+//template <typename T, typename T2> // does NOT compile
+Stack<T> & Stack<T>::operator = (const Stack<T2> & other ) {
+    return *this;
+}
+
+void g(){
+    
+}
+
+void f(){
+    g();
+}
+
+#include <unordered_set>
+
+
+
 int main() {
     
-    map<int,X*> m;
-    auto r=m[10];
     
-    unique_ptr<int> up{new int(13)};
-    int* p=up.get();    // p points towards the address owned by up
-    sink(move(up));     // sink releases the memory pointed towards by up
     
     /*
      
