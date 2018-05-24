@@ -9,48 +9,29 @@
 #include "BoardInitializer.hpp"
 #include <vector>
 #include <string>
+#include <random>
 
 using namespace std;
 
-void BoardInitializer::InitializeBoardDebug(vector<string>& B, int N){
-    if (N==1){
-        vector<string> X{
-            "a",
-        };
-        B.swap(X);
-    }
-    else if (N==2){
-        vector<string> X{
-            "ba",
-            "tr",
-        };
-        B.swap(X);
-    }
-    else if (N==3){
-        vector<string> X{
-            "bac",
-            "trk",
-            "ape",
-        };
-        B.swap(X);
-    }
-    else if (N==4){
-        vector<string> X{
+void BoardInitializer::InitializeBoardDebug(vector<string>& emptyBoard, int rows, int cols){
+    if (rows==4 && cols==4){ // special board for grading this assignment
+        vector<string> filledBoard{
             "apex",
             "nots",
             "etin",
             "ryeg",
         };
-        B.swap(X);
-    }
-    else {
-        vector<string> X{
-            "baegs",
-            "trhok",
-            "apete",
-            "loopd",
-            "praio",
-        };
-        B.swap(X);
+        emptyBoard.swap(filledBoard);
+    } else {
+        vector<string> filledBoard;
+        random_device rdev;
+        while (rows--){
+            seed_seq seed{rdev()};
+            auto rand=bind(uniform_int_distribution<>('a','z'),mt19937(seed));
+            string str(cols,'\0');
+            generate_n(str.begin(),cols,rand);
+            filledBoard.emplace_back(std::move(str));
+        }
+        emptyBoard.swap(filledBoard);
     }
 }

@@ -10,8 +10,15 @@
 #include "TestHarness.h"
 #include "WordGame.hpp"
 
-TEST(one,WordGame){
+/*
+TEST(run,WordGame){
     WordGame wg;
     wg.Run();
     
+}
+*/
+
+TEST(special_4x4,WordGame){
+    WordGame wg;
+    wg.Run(4,4,4);
 }

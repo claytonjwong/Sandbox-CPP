@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <string>
 #include <set>
+#include <unordered_set>
 #include "Board.hpp"
 #include "Dictionary.hpp"
 
@@ -21,7 +22,7 @@ class WordFinder {
 public:
     WordFinder(const Board& board, const Dictionary& dic, const int len)
     : myWords{}, myBoard{board}, myDic{dic}, myMaxLength{len},
-    myDirs{ // clockwise
+    myDirs{      // next candidate letter positions in clockwise order
         {-1, 0}, // UP
         {-1, 1}, // UP + RIGHT
         { 0, 1}, // RIGHT
@@ -31,7 +32,7 @@ public:
         { 0,-1}, // LEFT
         {-1,-1}, // UP + LEFT
     } {}
-    TWordsList FindWords() const;
+    TWordsList FindWords();
 private:
     TWordsList myWords;
     const Board myBoard;
@@ -39,7 +40,8 @@ private:
     const int myMaxLength;
     const std::vector<std::pair<int,int>> myDirs;
     
-    void go(int i, int j);
+    void go(int i, int j, std::string str="", std::unordered_set<int> visited={});
+    const int key(int i, int j) const { return i*myBoard.NumCols()+j; }
 };
 
 #endif /* WordFinder_hpp */

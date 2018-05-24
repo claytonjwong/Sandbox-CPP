@@ -17,22 +17,8 @@
 
 class WordGame {
 public:
-    void Run() {
-        int boardSize, maxWordLength;
-        std::cout << "Enter size of board: ";
-        std::cin >> boardSize;
-        assert(boardSize>0);
-        std::cout << "Enter max word length: ";
-        std::cin >> maxWordLength;
-        assert(maxWordLength>0);
-        Run(boardSize,maxWordLength);
-    }
-    void Run(int sz, int len){
-        Board board(sz);
-        Dictionary dic("WordsList.txt");
-        WordFinder wf(board,dic,len);
-        auto res=wf.FindWords();
-    }
+    void Run() const;
+    void Run(int rows, int cols, int len) const;
 };
 
 #endif /* WordGame_hpp */

@@ -16,18 +16,15 @@
 
 class Board {
 public:
-    Board(int size) : mySize{size} {
-        myBoardInitializer.InitializeBoardDebug(myBoard, mySize);
+    Board(int rows, int cols) : myRowSize{rows}, myColSize{cols} {
+        myBoardInitializer.InitializeBoardDebug(myBoard, myRowSize, myColSize);
     }
-    int NumRows() const { return mySize; }
-    int NumCols() const { return mySize; };
-    
-    const std::vector<std::string>& GetBoard() const {
-        return myBoard;
-    }
-    
+    int NumRows() const { return myRowSize; }
+    int NumCols() const { return myColSize; };
+    const std::vector<std::string>& GetBoard() const { return myBoard; }
+    const std::string& operator[](int row) const { return myBoard[row]; }
 private:
-    int mySize;
+    int myRowSize, myColSize;
     std::vector<std::string> myBoard;
     BoardInitializer myBoardInitializer;
 };
