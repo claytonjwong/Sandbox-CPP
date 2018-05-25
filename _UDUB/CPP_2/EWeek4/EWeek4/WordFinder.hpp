@@ -22,7 +22,7 @@ class WordFinder {
 public:
     WordFinder(const Board& board, const Dictionary& dic, const int len)
     : myWords{}, myBoard{board}, myDic{dic}, myMaxLength{len},
-    myDirs{      // next candidate letter positions in clockwise order
+    myDirs{      // relative neighbor directions in clockwise order
         {-1, 0}, // UP
         {-1, 1}, // UP + RIGHT
         { 0, 1}, // RIGHT
@@ -39,9 +39,9 @@ private:
     const Dictionary myDic;
     const int myMaxLength;
     const std::vector<std::pair<int,int>> myDirs;
-    
     void go(int i, int j, std::string str="", std::unordered_set<int> visited={});
-    const int key(int i, int j) const { return i*myBoard.NumCols()+j; }
+    const int key(int i, int j) const { return i*myBoard.NumCols()+j; } // visisted hash
 };
 
 #endif /* WordFinder_hpp */
+

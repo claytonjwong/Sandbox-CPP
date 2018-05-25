@@ -18,7 +18,9 @@
 class WordGame {
 public:
     void Run() const;
-    void Run(int rows, int cols, int len) const;
+    void Run(int rows, int cols, int len,
+             const std::string dicFile="WordsList.txt",
+             const std::string outFile="WordsOutput.txt") const;
 };
 
 #endif /* WordGame_hpp */

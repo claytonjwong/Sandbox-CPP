@@ -6,6 +6,8 @@
 //  Copyright © 2018 Clayton Wong. All rights reserved.
 //
 
+#include <exception>
+#include <fstream>
 #include "WordGame.hpp"
 #include "Board.hpp"
 #include "BoardInitializer.hpp"
@@ -31,12 +33,16 @@ void WordGame::Run() const {
     Run(rows,cols,len);
 }
 
-void WordGame::Run(int rows, int cols, int len) const {
+void WordGame::Run(int rows, int cols, int len,
+                   const string dicFile, const string outFile) const {
+    assert(rows>0 && cols>0 && len>0);
     Board board(rows,cols);
-    Dictionary dic("WordsList.txt");
+    Dictionary dic(dicFile);
     WordFinder finder(board,dic,len);
-    auto res=finder.FindWords();
-    for (auto& x: res){
-        cout << x << endl;
-    }
+    auto words=finder.FindWords();
+    int maxlen=0; for (const auto& w: words) maxlen=max(maxlen,(int)w.size());
+    ofstream fout(outFile);
+    fout << "Max word length: " << maxlen << endl
+         << "Number of words found: " << words.size() << endl;
+    for (const auto& w: words) fout << w << " ";
 }

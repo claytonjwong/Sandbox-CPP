@@ -19,20 +19,16 @@ Dictionary::Dictionary(const char* filename) {
     fin.open(filename);
     if (!fin.is_open())
         return;
-    try{
-        string str;
-        while (getline(fin,str)){
-            istringstream ss(str);
-            string word;
-            while (ss >> word){
-                transform(word.begin(),word.end(),word.begin(),::tolower);
-                myWords.insert(word);
-            }
+    string line;
+    while (getline(fin,line)){
+        istringstream ss(line);
+        string word;
+        while (ss >> word){
+            transform(word.begin(),word.end(),word.begin(),::tolower);
+            myWords.insert(word);
         }
-        fin.close();
-    } catch(...) {
-        fin.close();
     }
+    fin.close();
 }
 
 bool Dictionary::Contains(const std::string & word) const {

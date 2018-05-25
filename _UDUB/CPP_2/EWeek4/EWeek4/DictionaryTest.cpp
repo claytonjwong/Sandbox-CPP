@@ -44,3 +44,9 @@ TEST(caseSensitivity,Dictionary){
     CHECK(dic.Contains(string("Abracadabra")));
     CHECK(dic.Contains(string("ABRACADABRA")));
 }
+
+TEST(fileNotFound,Dictionary){
+    Dictionary dic("notfound.txt");
+    CHECK(!dic.Contains("Abracadabra"));
+    CHECK(!dic.Contains("word"));
+}

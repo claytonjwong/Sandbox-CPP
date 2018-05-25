@@ -16,6 +16,7 @@
 class Dictionary {
 public:
     Dictionary(const char* filename);
+    Dictionary(const std::string& filename) : Dictionary(filename.c_str()) {}
     bool Contains(const std::string & word) const;
 private:
     std::unordered_set<std::string> myWords;

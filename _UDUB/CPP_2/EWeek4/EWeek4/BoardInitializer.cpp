@@ -13,17 +13,16 @@
 
 using namespace std;
 
-void BoardInitializer::InitializeBoardDebug(vector<string>& emptyBoard, int rows, int cols){
+void BoardInitializer::InitializeBoardDebug(vector<string>& emptyBoard, int rows, int cols) const {
+    vector<string> filledBoard;
     if (rows==4 && cols==4){ // special board for grading this assignment
-        vector<string> filledBoard{
+        filledBoard={
             "apex",
             "nots",
             "etin",
             "ryeg",
         };
-        emptyBoard.swap(filledBoard);
-    } else {
-        vector<string> filledBoard;
+    } else { // cw: Question - what is industry best practice for random letter generation???
         random_device rdev;
         while (rows--){
             seed_seq seed{rdev()};
@@ -32,6 +31,6 @@ void BoardInitializer::InitializeBoardDebug(vector<string>& emptyBoard, int rows
             generate_n(str.begin(),cols,rand);
             filledBoard.emplace_back(std::move(str));
         }
-        emptyBoard.swap(filledBoard);
     }
+    emptyBoard.swap(filledBoard);
 }
