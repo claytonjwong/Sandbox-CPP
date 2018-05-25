@@ -6,6 +6,7 @@
 //  Copyright © 2018 Clayton Wong. All rights reserved.
 //
 
+#define SPECIAL_4x4_BOARD_FOR_GRADING 1
 #define WORD_GAME_TEST_TIME 1
 
 #ifdef WORD_GAME_TEST_TIME
@@ -17,13 +18,14 @@
 #include "WordGame.hpp"
 
 
-/*
+#ifndef SPECIAL_4x4_BOARD_FOR_GRADING
 TEST(run,WordGame){ // input for rows/cols/len via console input
     WordGame wg;
     wg.Run();
 }
-*/
+#endif
 
+#ifdef SPECIAL_4x4_BOARD_FOR_GRADING
 TEST(special_4x4,WordGame){ // special 4x4 board for grading this assignment
     
     WordGame wg;
@@ -45,7 +47,7 @@ TEST(special_4x4,WordGame){ // special 4x4 board for grading this assignment
     //
     // O(D+K) space
     //
-    // is this correct?  this program takes about 10 seconds
+    // cw: Question -- is this correct?  this program takes about 10 seconds
     // to find all words of max size 9 in 4x4 board
     //
     
@@ -59,4 +61,5 @@ TEST(special_4x4,WordGame){ // special 4x4 board for grading this assignment
     std::cout << "!" << std::endl;
 #endif
 }
+#endif
 
