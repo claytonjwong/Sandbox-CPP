@@ -47,18 +47,16 @@ TEST(special_4x4,WordGame){ // special 4x4 board for grading this assignment
     //
     // O(D+K) space
     //
-    // cw: Question -- is this correct?  this program takes about 10 seconds
+    // cw: Question -- is this correct?  this program takes between 1 and 2 seconds
     // to find all words of max size 9 in 4x4 board
     //
     
-    wg.Run(rows,cols,len); // completes execution in about 10 seconds
+    wg.Run(rows,cols,len); // completes execution in about 1 second
     
 #ifdef WORD_GAME_TEST_TIME
     int end=(int)clock();
-    int time=(end-beg)/double(CLOCKS_PER_SEC);
-    std::cout << "Completed execution in " << time << " second";
-    if (time!=1) std::cout << "s";
-    std::cout << "!" << std::endl;
+    int time=(end-beg)/double(CLOCKS_PER_SEC)*1000;
+    std::cout << "Completed execution in " << time << " milliseconds!" << std::endl;
 #endif
 }
 #endif

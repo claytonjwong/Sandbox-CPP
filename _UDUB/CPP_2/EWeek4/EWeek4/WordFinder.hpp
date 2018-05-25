@@ -39,7 +39,8 @@ private:
     const Dictionary myDic;
     const int myMaxLength;
     const std::vector<std::pair<int,int>> myDirs;
-    void go(int i, int j, std::string str="", std::unordered_set<int> visited={});
+    void go(int i, int j);
+    void go(int i, int j, std::string& str, std::unordered_set<int>& visited);
     const int key(int i, int j) const { return i*myBoard.NumCols()+j; } // visisted hash
 };
 

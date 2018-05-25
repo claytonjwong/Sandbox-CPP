@@ -36,7 +36,12 @@ TWordsList WordFinder::FindWords() {
 // DFS + backtracking algo used to construct candidate words from the board
 // if the candidate word is a word in the dictionary, it is inserted into myWords
 //
-void WordFinder::go(int i, int j, string str, unordered_set<int> visited) {
+void WordFinder::go(int i, int j) { // wrapper function
+    string str;
+    unordered_set<int> visited;
+    go(i,j,str,visited);
+}
+void WordFinder::go(int i, int j, string& str, unordered_set<int>& visited) {
     if (i<0||j<0||i>=myBoard.NumRows()||j>=myBoard.NumCols()) return; // bounds check
     if (!visited.insert(key(i,j)).second) return; // try to insert, return if already visited
     str.push_back(myBoard[i][j]);
