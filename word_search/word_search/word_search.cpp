@@ -1,10 +1,9 @@
-//
-//  main.cpp
-//  word_search
-//
-//  Created by CLAYTON WONG on 5/24/18.
-//  Copyright © 2018 Clayton Wong. All rights reserved.
-//
+/*
+ 
+ Q: https://leetcode.com/problems/word-search/description/
+ A: https://leetcode.com/problems/word-search/discuss/133457/C++-DFS-+-Backtracking
+ 
+ */
 
 #include <iostream>
 #include <vector>
