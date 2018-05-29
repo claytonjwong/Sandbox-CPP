@@ -21,9 +21,9 @@ public:
         std::unordered_set<char> e; for (const auto& x: m) e.insert(x.second);
         std::stack<char> s;
         for (const auto c: str){
-            if (m.find(c)!=m.end())
+            if (m.find(c)!=m.end()){
                 s.push(m[c]);
-            if (e.find(c)!=e.end()){
+            } else if (e.find(c)!=e.end()){
                 if (s.empty() || c!=s.top()) return false;
                 s.pop();
             }
