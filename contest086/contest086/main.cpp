@@ -70,33 +70,32 @@ private:
 /*
 class Solution {
 public:
-    bool canVisitAllRooms(vector<vector<int>>& G, unordered_set<int> V={}) {
-        queue<int> q({0});
+    bool canVisitAllRooms(vector<vector<int>>& G, queue<int> q=queue<int>({0}), unordered_set<int> V={}) {
         while (!q.empty()){
             int i=q.front(); q.pop();
             if (V.insert(i).second)
-                for (auto nei: G[i]) q.push(nei);
+                for (int nei: G[i]) q.push(nei);
         }
         return V.size()==G.size();
     }
 };
 */
 
-/*
+
 class Solution {
 public:
-    bool canVisitAllRooms(vector<vector<int>>& G, unordered_set<int> V={}) {
-        stack<int> s({0});
+    bool canVisitAllRooms(vector<vector<int>>& G, stack<int> s=stack<int>({0}), unordered_set<int> V={}) {
         while (!s.empty()){
             int i=s.top(); s.pop();
             if (V.insert(i).second)
-                for (auto nei: G[i]) s.push(nei);
+                for (int nei: G[i]) s.push(nei);
         }
         return V.size()==G.size();
     }
 };
-*/
 
+
+/*
 class Solution {
 public:
     vector<int> splitIntoFibonacci(string S, vector<int> ans={}) {
@@ -119,7 +118,7 @@ private:
         return false;
     }
 };
-
+*/
 
 int main(int argc, const char * argv[]) {
     
@@ -131,17 +130,17 @@ int main(int argc, const char * argv[]) {
     cout << s.numMagicSquaresInside(G) << endl;
     */
     
-    /*
+    
     Solution s;
     vector<vector<int>> G={{1},{2},{3},{}};
     cout << s.canVisitAllRooms(G) << endl;
-    */
     
     
+    /*
     Solution s;
     string S="123456579";
     auto r=s.splitIntoFibonacci(S);
-    
+    */
     
     return 0;
 }
