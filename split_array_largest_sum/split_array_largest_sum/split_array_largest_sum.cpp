@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <vector>
-#include <unordered_set>
+#include <map>
 
 using namespace std;
 
@@ -13,24 +13,19 @@ public:
     int splitArray(vector<int>& A, int K, int ans=INT_MAX) {
         vector<int> S(A.size()+1,0);
         for (int i=1,N=(int)S.size(); i<N; ++i) S[i]=S[i-1]+A[i-1];
-        unordered_set<int> V;
-        go(ans,S,K,V);
+        
+        go(ans,S,K);
         return ans;
     }
 private:
-    void go(int& ans, const vector<int>& S, int K, unordered_set<int>& V,
-            int beg=0, int sum=0, int maxi=INT_MAX){
-        if (K==0) return;
+    int go(int& ans, const vector<int>& S, int K, int beg=0, int sum=0, int maxi=INT_MIN){
+        if (K==0) return 0;
         for (int i=1,N=(int)S.size(); beg+i<=N-K; ++i){
             sum=S[beg+i]-S[beg];
-            V.insert(sum);
-            go(ans,S,K-1,V,beg+i);
-        }
-        if (!V.empty()){
-            maxi=*max_element(V.begin(), V.end());
-            V.clear();
+            maxi=max(sum,go(ans,S,K-1,beg+i));
         }
         ans=min(ans,maxi);
+        return maxi;
     }
 };
 
