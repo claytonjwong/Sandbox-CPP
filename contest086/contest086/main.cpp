@@ -14,8 +14,6 @@
  
  */
 
-
-
 #include <iostream>
 #include <set>
 #include <map>
@@ -31,19 +29,14 @@
 
 using namespace std;
 
-/*
 using VVI=vector<vector<int>>;
 class Solution {
 public:
     int numMagicSquaresInside(VVI& G, int ans=0) {
         int M=(int)G.size(),N=(int)G[0].size();
-        if (M<3 || N<3) return 0;
-        for (int i=0; i<=M-3; ++i){
-            for (int j=0; j<=N-3; ++j){
-                if (magic(G,i,j))
-                    ++ans;
-            }
-        }
+        for (int i=0; i<=M-3; ++i)
+            for (int j=0; j<=N-3; ++j)
+                if (magic(G,i,j)) ++ans;
         return ans;
     }
 private:
@@ -65,7 +58,7 @@ private:
         return d1==d2 && d1==r;
     }
 };
-*/
+
 
 /*
 class Solution {
@@ -81,7 +74,7 @@ public:
 };
 */
 
-
+/*
 class Solution {
 public:
     bool canVisitAllRooms(vector<vector<int>>& G, stack<int> s=stack<int>({0}), unordered_set<int> V={}) {
@@ -93,7 +86,7 @@ public:
         return V.size()==G.size();
     }
 };
-
+*/
 
 /*
 class Solution {
@@ -122,19 +115,16 @@ private:
 
 int main(int argc, const char * argv[]) {
     
-    /*
-    VVI G={{4,3,8,4},
-            {9,5,1,9},
-            {2,7,6,2}};
     Solution s;
+    VVI G={{5,5,5},{5,5,5},{5,5,5}};
     cout << s.numMagicSquaresInside(G) << endl;
-    */
     
     
+    /*
     Solution s;
     vector<vector<int>> G={{1},{2},{3},{}};
     cout << s.canVisitAllRooms(G) << endl;
-    
+    */
     
     /*
     Solution s;
