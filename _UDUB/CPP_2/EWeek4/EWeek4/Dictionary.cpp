@@ -32,6 +32,7 @@ Dictionary::Dictionary(const char* filename) {
                 myWords.insert(word);
             }
         }
+        fin.close();
     } catch (...) {
         fin.close();
     }
