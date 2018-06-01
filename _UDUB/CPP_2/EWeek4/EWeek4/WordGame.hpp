@@ -18,7 +18,14 @@
 class WordGame {
 public:
     void Run() const;
-    void Run(int rows, int cols, int len,
+    
+    //
+    // real-world solution can make file IO completely the client responsibility
+    // for now, this is somewhat hidden and hardcoded.  The real-world refactoring
+    // would then allow clients of WordGame to handle exceptions when attempting to
+    // open/read/write/etc these files
+    //
+    void Run(int rows, int cols, int len, bool debug=false,
              const std::string dicFile="WordsList.txt",
              const std::string outFile="WordsOutput.txt") const;
 };

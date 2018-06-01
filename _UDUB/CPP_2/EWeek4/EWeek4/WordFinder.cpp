@@ -16,7 +16,7 @@ using namespace std;
 //
 // myWords is emptied and filled again each time this function is invoked
 // this is intended in case WordFinder is extended in the future to allow
-// modification of the board, dictionary, or word length
+// modification of the board, dictionary, word length, etc
 //
 // go() is my generic function name for recursive algorithms,
 // it is my personal preference, since my 2 year-old son always says "go! go!"
@@ -48,7 +48,7 @@ void WordFinder::go(int i, int j, string& str, unordered_set<int>& visited) {
     if (str.size()<=myMaxLength){
         if (myDic.Contains(str))
             myWords.insert(str);
-        if (str.size()<myMaxLength) for (auto& dir: myDirs) // DFS recursive constraint on str.size()
+        if (str.size()!=myMaxLength) for (auto& dir: myDirs) // DFS recursive constraint on str.size()<maxMaxLength
             go(i+dir.first,j+dir.second,str,visited);
     }
     visited.erase(key(i,j)); // backtracking

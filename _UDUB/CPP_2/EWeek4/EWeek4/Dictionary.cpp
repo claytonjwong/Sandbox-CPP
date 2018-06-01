@@ -10,6 +10,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <exception>
 #include "Dictionary.hpp"
 
 using namespace std;
@@ -17,18 +18,23 @@ using namespace std;
 Dictionary::Dictionary(const char* filename) {
     ifstream fin;
     fin.open(filename);
-    if (!fin.is_open())
+    if (!fin.is_open()){
+        cerr << "ERROR: Unable to open file: " << filename << endl;
         return;
-    string line;
-    while (getline(fin,line)){
-        istringstream ss(line);
-        string word;
-        while (ss >> word){
-            transform(word.begin(),word.end(),word.begin(),::tolower);
-            myWords.insert(word);
-        }
     }
-    fin.close();
+    try{
+        string line;
+        while (getline(fin,line)){
+            istringstream ss(line);
+            string word;
+            while (ss >> word){
+                transform(word.begin(),word.end(),word.begin(),::tolower);
+                myWords.insert(word);
+            }
+        }
+    } catch (...) {
+        fin.close();
+    }
 }
 
 bool Dictionary::Contains(const std::string & word) const {

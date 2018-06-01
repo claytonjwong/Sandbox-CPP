@@ -14,7 +14,8 @@
 
 class BoardInitializer {
 public:
-    void InitializeBoardDebug(std::vector<std::string>& B, int rows, int cols) const;
+    void InitializeBoardDebug(std::vector<std::string>& B) const;
+    void InitializeBoardRandom(std::vector<std::string>& B, int rows, int cols) const;
 };
 
 

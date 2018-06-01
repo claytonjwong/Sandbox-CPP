@@ -22,7 +22,7 @@ class WordFinder {
 public:
     WordFinder(const Board& board, const Dictionary& dic, const int len)
     : myWords{}, myBoard{board}, myDic{dic}, myMaxLength{len},
-    myDirs{      // relative neighbor directions in clockwise order
+      myDirs{      // relative neighbor directions in clockwise order
         {-1, 0}, // UP
         {-1, 1}, // UP + RIGHT
         { 0, 1}, // RIGHT

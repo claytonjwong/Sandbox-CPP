@@ -38,14 +38,14 @@ TEST(_5x8,BoardInitializer){
         CHECK(row.size()==cols);
 }
 
-TEST(_4x4,BoardInitializer){ // special board for grading this assignment
-    int rows=4,cols=4;
-    Board boardObject(rows,cols);
+TEST(hardcodedDebugBoard,BoardInitializer){ // special board for grading this assignment
+    Board boardObject(-1,-1,true); // row/col input here -1,-1 is ignored since debug flag is set
     auto board=boardObject.GetBoard();
+    int rows=4,cols=4; // expected hardcoded board size (not same as input values to Board constructor)
     CHECK(board.size()==rows);
     for (const auto& row: board)
         CHECK(row.size()==cols);
-    CHECK(board[0]=="apex");
+    CHECK(board[0]=="apex"); // hardcoded values expected in debug board
     CHECK(board[1]=="nots");
     CHECK(board[2]=="etin");
     CHECK(board[3]=="ryeg");

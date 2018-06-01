@@ -16,8 +16,11 @@
 
 class Board {
 public:
-    Board(int rows, int cols) : myRowSize{rows}, myColSize{cols} {
-        myBoardInitializer.InitializeBoardDebug(myBoard, myRowSize, myColSize);
+    Board(int rows, int cols, bool debug=false) : myRowSize{rows}, myColSize{cols} {
+        if (debug)
+            myBoardInitializer.InitializeBoardDebug(myBoard); // hardcoded board for grading this assignment
+        else
+            myBoardInitializer.InitializeBoardRandom(myBoard, myRowSize, myColSize);
     }
     int NumRows() const { return myRowSize; }
     int NumCols() const { return myColSize; };
