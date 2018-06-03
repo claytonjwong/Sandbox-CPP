@@ -80,7 +80,7 @@ TEST(exceptionEmptyFront,Queue){
     try {
         q.front();
         CHECK(false); // should jump over this statement due to ex thrown
-    } catch (const ExceptionQueueEmpty& e) {
+    } catch (const QueueEmptyException& e) {
         CHECK(true);
         cerr << "PASS! Expected exception via q.front(): " << e.what() << endl;
     }
@@ -91,7 +91,7 @@ TEST(exceptionEmptyPop,Queue){
     try {
         q.pop();
         CHECK(false); // should jump over this statement due to ex thrown
-    } catch (const ExceptionQueueEmpty& e) {
+    } catch (const QueueEmptyException& e) {
         CHECK(true);
         cerr << "PASS! Expected exception via q.pop(): " << e.what() << endl;
     }
