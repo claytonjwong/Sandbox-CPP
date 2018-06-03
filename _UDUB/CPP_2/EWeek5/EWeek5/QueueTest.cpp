@@ -96,3 +96,53 @@ TEST(exceptionEmptyPop,Queue){
         cerr << "PASS! Expected exception via q.pop(): " << e.what() << endl;
     }
 }
+
+TEST(copyCtorEmptyQueue,Queue){
+    Queue<int> q;
+    Queue<int> p(q);
+    CHECK(q==p);
+    CHECK(q==q);
+    CHECK(p==q);
+}
+
+TEST(copyCtorAndAssignmentOper123Queue,Queue){
+    Queue<int> q;
+    q.push(1);
+    q.push(2);
+    q.push(3);
+    
+    Queue<int> p(q);
+    CHECK(p==p);
+    CHECK(q==q);
+    CHECK(p==q);
+    CHECK(q==p);
+    
+    q.pop();
+    q.pop();
+    q.pop();
+    
+    q.push(1);
+    q.push(2);
+    q.push(3);
+    
+    CHECK(p==p);
+    CHECK(q==q);
+    CHECK(p==q);
+    CHECK(q==p);
+
+    Queue<int> r;
+    r=q;
+    CHECK(r==r);
+    CHECK(q==q);
+    CHECK(r==q);
+    CHECK(q==r);
+
+    CHECK(p==p);
+    CHECK(q==q);
+    CHECK(r==p);
+    CHECK(p==r);
+}
+
+TEST(diffTypeAssignment,Queue){
+    
+}
