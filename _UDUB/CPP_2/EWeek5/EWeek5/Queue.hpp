@@ -81,62 +81,29 @@ template <typename T>
 class Queue : public QueueBase {
 public:
     Queue() : QueueBase{}, myBack{std::make_shared<Node<T>>()}, myFront{std::make_shared<Node<T>>()} {
-        myBack->next=myFront;
-        myFront->prev=myBack;
+        init();
     }
     ~Queue() {
-        auto prev=myBack,curr=prev->next;
-        for (int i=0,N=(int)size(); i<N; ++i,prev=curr,curr=curr->next){
-            prev->next=nullptr;
-        }
-        prev=myFront,curr=prev->prev;
-        for (int i=0,N=(int)size(); i<N; ++i,prev=curr,curr=curr->prev){
-            prev->prev=nullptr;
-        }
-        myBack->next=nullptr;
-        myFront->prev=nullptr;
+        deinit();
     }
     
     Queue(const Queue& rhs) : Queue() {
         init(rhs);
     }
+    
     Queue& operator=(const Queue& rhs) {
-        myBack=std::make_shared<Node<T>>();
-        myFront=std::make_shared<Node<T>>();
         init(rhs);
         return *this;
     }
     
-    void init(const Queue& rhs){
-        myBack->next=myFront;
-        myFront->prev=myBack;
-        int N=(int)rhs.size();
-        for (auto i=rhs.tail(),j=myBack; N--; i=i->next,j=j->next) {
-            auto node=std::make_shared<Node<T>>(i->val);
-            node->prev=j;
-            node->next=j->next;
-            j->next=node;
-            node->next->prev=node;
-            incrementSize();
-        }
-    }
-    
-    bool operator==(const Queue& rhs) const {
-        if (size()!=rhs.size())
-            return false;
-        int N=(int)size();
-        for (auto i=tail(),j=rhs.tail(); N--; i=i->next,j=j->next)
-            if (i->val!=j->val)
-                return false;
-        return true;
-    }
-    bool operator!=(const Queue& rhs) const {
-        return !(*this==rhs);
-    }
+    bool operator==(const Queue& rhs) const;
+    bool operator!=(const Queue& rhs) const;
     
     T front() const;
     
-    void push(T x);
+    void push(T& x);
+    void push(T&& x);
+    
     void pop();
     
 private:
@@ -153,9 +120,55 @@ private:
     // The cons are that if the size is incorrect (off by one or more),
     // then these operations may attempt to dereference the nullptr
     //
-    std::shared_ptr<Node<T>> head() const { return !empty() ? myFront->prev : nullptr; }
-    std::shared_ptr<Node<T>> tail() const { return !empty() ? myBack->next : nullptr; }
+    std::shared_ptr<Node<T>> head() const { return myFront->prev; }
+    std::shared_ptr<Node<T>> tail() const { return myBack->next; }
+    
+    void init(){
+        initSentinel();
+    }
+    void init(const Queue& rhs){
+        init();
+        int N=(int)rhs.size();
+        for (auto i=rhs.head(); N--; i=i->prev)
+            insert(i->val);
+    }
+    void deinit() {
+        auto prev=myBack,curr=prev->next;
+        for (int i=0,N=(int)size(); i<N; ++i,prev=curr,curr=curr->next) // nullify next from back-to-front
+            prev->next=nullptr;
+        prev=myFront,curr=prev->prev;
+        for (int i=0,N=(int)size(); i<N; ++i,prev=curr,curr=curr->prev) // nullify prev from front-to-back
+            prev->prev=nullptr;
+        deinitSentinel();
+    }
+    
+    void initSentinel() {
+        myBack->next=myFront;
+        myFront->prev=myBack;
+    }
+    void deinitSentinel() {
+        myBack->next=nullptr;
+        myFront->prev=nullptr;
+    }
+    void insert(const T& x);
+    void remove();              
 };
+
+template <typename T>
+bool Queue<T>::operator==(const Queue& rhs) const {
+    int N=(int)size();
+    if (N!=rhs.size())
+        return false;
+    for (auto i=tail(),j=rhs.tail(); N--; i=i->next,j=j->next)
+        if (i->val!=j->val)
+            return false;
+    return true;
+}
+
+template <typename T>
+bool Queue<T>::operator!=(const Queue& rhs) const {
+    return !(*this==rhs);
+}
 
 template <typename T>
 T Queue<T>::front() const {
@@ -165,9 +178,29 @@ T Queue<T>::front() const {
 }
 
 template <typename T>
-void Queue<T>::push(T x) {
+void Queue<T>::push(T& x) {
     if (size()==std::numeric_limits<std::size_t>::max())
         throw QueueFullException(__PRETTY_FUNCTION__);
+    insert(x);
+}
+
+template <typename T>
+void Queue<T>::push(T&& x) {
+    if (size()==std::numeric_limits<std::size_t>::max())
+        throw QueueFullException(__PRETTY_FUNCTION__);
+    insert(x);
+}
+
+template <typename T>
+void Queue<T>::pop() {
+    if (empty())
+        throw QueueEmptyException(__PRETTY_FUNCTION__);
+    remove();
+}
+
+
+template<typename T>
+void Queue<T>::insert(const T& x){
     auto node=std::make_shared<Node<T>>(x);
     node->prev=myBack;
     node->next=myBack->next;
@@ -176,10 +209,8 @@ void Queue<T>::push(T x) {
     incrementSize();
 }
 
-template <typename T>
-void Queue<T>::pop() {
-    if (empty())
-        throw QueueEmptyException(__PRETTY_FUNCTION__);
+template<typename T>
+void Queue<T>::remove(){
     auto node=head();
     myFront->prev=myFront->prev->prev;
     myFront->prev->next=myFront;

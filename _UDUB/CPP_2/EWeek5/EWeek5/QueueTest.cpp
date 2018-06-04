@@ -18,6 +18,7 @@ TEST(ctor,Queue){
     CHECK(q.empty());
 }
 
+
 TEST(pushPop,Queue){
     Queue<string> q;
 
@@ -143,6 +144,22 @@ TEST(copyCtorAndAssignmentOper123Queue,Queue){
     CHECK(p==r);
 }
 
+TEST(lvaluePushAndPop,Queue){
+    int a=1,b=2,c=3;
+    Queue<int> q;
+    q.push(a);
+    q.push(b);
+    q.push(c);
+    CHECK(q.size()==3);
+    q.pop();
+    CHECK(q.size()==2);
+    q.pop();
+    CHECK(q.size()==1);
+    q.pop();
+    CHECK(q.size()==0 && q.empty());
+}
+
 TEST(diffTypeAssignment,Queue){
     
 }
+
