@@ -26,9 +26,6 @@ void BoardInitializer::InitializeBoardDebug(vector<string>& emptyBoard) const {
     emptyBoard.swap(filledBoard);
 }
 
-//
-// cw: Question - what is industry best practice for random letter generation?
-//
 void BoardInitializer::InitializeBoardRandom(vector<string>& emptyBoard, int rows, int cols) const {
     vector<string> filledBoard;
     random_device rdev;

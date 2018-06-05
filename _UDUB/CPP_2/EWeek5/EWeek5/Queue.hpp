@@ -92,7 +92,19 @@ public:
     }
     
     Queue& operator=(const Queue& rhs) {
+        if (this==&rhs)
+            return *this;
         init(rhs);
+        return *this;
+    }
+    
+    template <typename U>
+    Queue& operator=(const Queue<U>& rhs) {
+        
+        //
+        // TODO
+        //
+        
         return *this;
     }
     
@@ -107,6 +119,7 @@ public:
     void pop();
     
 private:
+    T* heldPtr;
     std::shared_ptr<Node<T>> myBack,myFront; // sentinels with dependency on q size
     //
     // Each sentinel can be uniquely identified as being the only nodes
@@ -151,7 +164,7 @@ private:
         myFront->prev=nullptr;
     }
     void insert(const T& x);
-    void remove();              
+    void remove();
 };
 
 template <typename T>
@@ -186,9 +199,7 @@ void Queue<T>::push(T& x) {
 
 template <typename T>
 void Queue<T>::push(T&& x) {
-    if (size()==std::numeric_limits<std::size_t>::max())
-        throw QueueFullException(__PRETTY_FUNCTION__);
-    insert(x);
+    push(x);
 }
 
 template <typename T>

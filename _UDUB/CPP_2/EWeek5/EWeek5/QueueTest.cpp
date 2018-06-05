@@ -144,6 +144,19 @@ TEST(copyCtorAndAssignmentOper123Queue,Queue){
     CHECK(p==r);
 }
 
+TEST (selfAssignemnt,Queue){
+    Queue<int> q;
+    q.push(1);
+    q.push(2);
+    q.push(3);
+    q=q;
+    CHECK(q.size()==3);
+    CHECK(q.front()==1);
+    q=q=q=q;
+    CHECK(q.size()==3);
+    CHECK(q.front()==1);
+}
+
 TEST(lvaluePushAndPop,Queue){
     int a=1,b=2,c=3;
     Queue<int> q;
@@ -160,6 +173,10 @@ TEST(lvaluePushAndPop,Queue){
 }
 
 TEST(diffTypeAssignment,Queue){
-    
+    class base{};
+    class derive : public base{};
+    Queue<base> b;
+    Queue<derive> d;
+    b=d;
 }
 

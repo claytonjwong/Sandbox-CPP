@@ -7,9 +7,12 @@
 //
 
 #include <iostream>
-#include <ctime>
+#include <chrono>
 #include "TestHarness.h"
 #include "WordGame.hpp"
+
+using namespace std::chrono;
+using namespace std;
 
 #define WORD_GAME__DEBUG 1
 
@@ -22,12 +25,6 @@ TEST(run,WordGame){ // input for rows/cols/len via console input
 
 #if WORD_GAME__DEBUG
 TEST(special_4x4,WordGame){ // special 4x4 board for grading this assignment
-    
-    WordGame wg;
-    
-    int rows=4, cols=4, len=9;
-
-    int beg=(int)clock();
     //
     // let M be the # rows in the board
     // let N be the # cols in the board
@@ -43,12 +40,15 @@ TEST(special_4x4,WordGame){ // special 4x4 board for grading this assignment
     // cw: Question -- is this correct?  this program takes between 1 and 2 seconds
     // to find all words of max size 9 in 4x4 board
     //
-    
-    wg.Run(rows,cols,len,true); // completes execution in about 1 second
-    
-    int end=(int)clock();
-    int time=(end-beg)/double(CLOCKS_PER_SEC)*1000;
-    std::cout << "Completed execution in " << time << " milliseconds!" << std::endl;
+    WordGame wg;
+    int rows=4, cols=4, len=9;
+    auto start=steady_clock::now();
+    wg.Run(rows,cols,len,true); // completes execution in about 1 or 2 seconds
+    auto duration=steady_clock::now()-start;
+    cout << "Completed execution in "
+         << duration_cast<milliseconds>(duration).count()
+         << " milliseconds!"
+         << endl;
 }
 #endif
 
