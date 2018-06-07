@@ -59,7 +59,7 @@ public:
     void incrementSize() { ++mySize; }
     void decrementSize() { --mySize; }
     
-private:
+protected:
     size_t mySize;
 };
 
@@ -100,11 +100,7 @@ public:
     
     template <typename U>
     Queue& operator=(const Queue<U>& rhs) {
-        
-        //
-        // TODO
-        //
-        
+        init(rhs);
         return *this;
     }
     
@@ -119,7 +115,6 @@ public:
     void pop();
     
 private:
-    T* heldPtr;
     std::shared_ptr<Node<T>> myBack,myFront; // sentinels with dependency on q size
     //
     // Each sentinel can be uniquely identified as being the only nodes
@@ -137,6 +132,7 @@ private:
     std::shared_ptr<Node<T>> tail() const { return myBack->next; }
     
     void init(){
+        mySize=0;
         initSentinel();
     }
     void init(const Queue& rhs){
@@ -144,6 +140,13 @@ private:
         int N=(int)rhs.size();
         for (auto i=rhs.head(); N--; i=i->prev)
             insert(i->val);
+    }
+    template <typename U>
+    void init(const Queue<U>& rhs){
+        init();
+        int N=(int)rhs.size();
+        for (auto i=myFront->prev; N--; i=i->prev)
+            insert((T)i->val);
     }
     void deinit() {
         auto prev=myBack,curr=prev->next;

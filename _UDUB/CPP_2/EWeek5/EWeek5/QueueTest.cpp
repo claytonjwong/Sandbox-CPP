@@ -142,6 +142,8 @@ TEST(copyCtorAndAssignmentOper123Queue,Queue){
     CHECK(q==q);
     CHECK(r==p);
     CHECK(p==r);
+    
+    CHECK(r.size()==p.size());
 }
 
 TEST (selfAssignemnt,Queue){
@@ -172,11 +174,39 @@ TEST(lvaluePushAndPop,Queue){
     CHECK(q.size()==0 && q.empty());
 }
 
+/*
 TEST(diffTypeAssignment,Queue){
     class base{};
     class derive : public base{};
     Queue<base> b;
     Queue<derive> d;
-    b=d;
+    base i,j,k;
+    b.push(i);
+    b.push(j);
+    b.push(k);
+    d=b;
+    CHECK(d.front()==i && d.size()==3);
+    d.pop();
+    CHECK(d.front()==j && d.size()==2);
+    d.pop();
+    CHECK(d.front()==k && d.size()==1);
+    d.pop();
+    CHECK(d.empty()==k && d.size()==0);
 }
 
+TEST(diffTypeAssignment2,Queue){
+    Queue<int> qi;
+    Queue<double> qd;
+    qd.push(1.0);
+    qd.push(2.0);
+    qd.push(3.0);
+    qi=qd;
+    CHECK(qi.front()==1 && qi.size()==3);
+    qi.pop();
+    CHECK(qi.front()==2 && qi.size()==2);
+    qi.pop();
+    CHECK(qi.front()==3 && qi.size()==1);
+    qi.pop();
+    CHECK(qi.empty() && qi.size()==0);
+}
+*/
