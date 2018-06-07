@@ -99,7 +99,7 @@ public:
     }
     
     template <typename U>
-    Queue& operator=(const Queue<U>& rhs) {
+    Queue& operator=(Queue<U> rhs) {
         init(rhs);
         return *this;
     }
@@ -142,12 +142,13 @@ private:
             insert(i->val);
     }
     template <typename U>
-    void init(const Queue<U>& rhs){
-        init();
-        int N=(int)rhs.size();
-        for (auto i=myFront->prev; N--; i=i->prev)
-            insert((T)i->val);
+    void init(Queue<U> rhs){
+        while (!rhs.empty()){
+            insert((T)rhs.front());
+            rhs.pop();
+        }
     }
+    
     void deinit() {
         auto prev=myBack,curr=prev->next;
         for (int i=0,N=(int)size(); i<N; ++i,prev=curr,curr=curr->next) // nullify next from back-to-front
@@ -211,7 +212,6 @@ void Queue<T>::pop() {
         throw QueueEmptyException(__PRETTY_FUNCTION__);
     remove();
 }
-
 
 template<typename T>
 void Queue<T>::insert(const T& x){

@@ -174,25 +174,26 @@ TEST(lvaluePushAndPop,Queue){
     CHECK(q.size()==0 && q.empty());
 }
 
-/*
+
 TEST(diffTypeAssignment,Queue){
-    class base{};
+    class base{ virtual void go(){} };
     class derive : public base{};
-    Queue<base> b;
-    Queue<derive> d;
-    base i,j,k;
+    Queue<base*> b;
+    Queue<derive*> d;
+    base *i=new derive(),*j=new derive(),*k=new derive();
     b.push(i);
     b.push(j);
     b.push(k);
-    d=b;
-    CHECK(d.front()==i && d.size()==3);
-    d.pop();
-    CHECK(d.front()==j && d.size()==2);
-    d.pop();
-    CHECK(d.front()==k && d.size()==1);
-    d.pop();
-    CHECK(d.empty()==k && d.size()==0);
+    b=d;
+    CHECK(b.front()==dynamic_cast<derive*>(i) && b.size()==3);
+    b.pop();
+    CHECK(b.front()==dynamic_cast<derive*>(j) && b.size()==2);
+    b.pop();
+    CHECK(b.front()==dynamic_cast<derive*>(k) && b.size()==1);
+    b.pop();
+    CHECK(b.empty() && b.size()==0);
 }
+
 
 TEST(diffTypeAssignment2,Queue){
     Queue<int> qi;
@@ -209,4 +210,19 @@ TEST(diffTypeAssignment2,Queue){
     qi.pop();
     CHECK(qi.empty() && qi.size()==0);
 }
-*/
+
+TEST(diffTypeAssignment3,Queue){
+    Queue<double> qi;
+    Queue<int> qd;
+    qi.push(1);
+    qi.push(2);
+    qi.push(3);
+    qd=qi;
+    CHECK(qd.front()==1 && qd.size()==3);
+    qd.pop();
+    CHECK(qd.front()==2 && qd.size()==2);
+    qd.pop();
+    CHECK(qd.front()==3 && qd.size()==1);
+    qd.pop();
+    CHECK(qd.empty() && qd.size()==0);
+}
