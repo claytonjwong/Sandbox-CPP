@@ -44,6 +44,8 @@ public:
 };
 */
 
+/*
+ // AC
 class Solution {
 public:
     string shiftingLetters(string S, vector<int>& T) {
@@ -52,6 +54,8 @@ public:
         return S;
     }
 };
+ */
+
 
 /*
  // AC
@@ -69,6 +73,27 @@ public:
     }
 };
 */
+
+// AC
+class Solution {
+public:
+    int maxDistToClosest(vector<int>& A, int ans=0) {
+        for (int i=0,N=(int)A.size(); i<N; ++i){
+            if (A[i]) continue;
+            queue<int> q({i}); unordered_set<int> V({i});
+            for (int found=0,depth=1,K=(int)q.size(); !found && !q.empty(); ++depth,K=(int)q.size()){
+                while (!found && K--){
+                    int j=q.front(),L=max(0,j-1),R=min(N-1,j+1); q.pop();
+                    if (A[L] || A[R]) found=true;
+                    if (V.insert(L).second) q.push(L);
+                    if (V.insert(R).second) q.push(R);
+                }
+                ans=max(ans,depth);
+            }
+        }
+        return ans;
+    }
+};
 
 /*
  
@@ -106,17 +131,17 @@ public:
 
 int main(int argc, const char * argv[]) {
     
-    
+    /*
     Solution s;
     string str="abc"; vector<int> shifts{3,5,9};
     cout << s.shiftingLetters(str, shifts) << endl;
+    */
     
     
-    /*
-    vector<int> seats{1,0,0,0,1,0,1};
+    vector<int> seats{0,1};
     Solution s;
     cout << s.maxDistToClosest(seats) << endl;
-    */
+    
     
     /*
     Solution s;
