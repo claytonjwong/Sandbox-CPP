@@ -79,8 +79,7 @@ class Solution {
 public:
     int maxDistToClosest(vector<int>& A, int ans=0) {
         for (int i=0,N=(int)A.size(); i<N; ++i){
-            if (A[i]) continue;
-            queue<int> q({i}); unordered_set<int> V({i});
+            if (A[i]) continue; queue<int> q({i}); unordered_set<int> V({i});
             for (int found=0,depth=1,K=(int)q.size(); !found && !q.empty(); ++depth,K=(int)q.size()){
                 while (!found && K--){
                     int j=q.front(),L=max(0,j-1),R=min(N-1,j+1); q.pop();
