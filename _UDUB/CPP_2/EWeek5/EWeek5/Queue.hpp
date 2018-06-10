@@ -107,7 +107,7 @@ public:
     bool operator==(const Queue& rhs) const;
     bool operator!=(const Queue& rhs) const;
     
-    T front() const;
+    const T& front() const;
     
     void push(T& x);
     void push(T&& x);
@@ -188,7 +188,7 @@ bool Queue<T>::operator!=(const Queue& rhs) const {
 }
 
 template <typename T>
-T Queue<T>::front() const {
+const T& Queue<T>::front() const {
     if (empty())
         throw QueueEmptyException(__PRETTY_FUNCTION__);
     return head()->val;
