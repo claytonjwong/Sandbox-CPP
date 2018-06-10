@@ -142,7 +142,7 @@ private:
             insert(i->val);
     }
     template <typename U>
-    void init(Queue<U> rhs){
+    void init(Queue<U> rhs){ // pass rhs by copy on purpose to pop off rhs until empty
         while (!rhs.empty()){
             insert((T)rhs.front());
             rhs.pop();
