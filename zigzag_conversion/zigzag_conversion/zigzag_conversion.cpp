@@ -20,7 +20,7 @@ public:
     string convert(string S, int M, string ans="") {
         if (M==1) return S;
         vector<string> bucket(M+1); // use [1:M]
-        for (int i=0,d=1,k=1; i<S.size(); ++i, d=(k==1)?1 : (k==M)?-1 : d, k+=d)
+        for (int i=0,d=1,k=1; i<S.size(); ++i, d=(k==1)?1:(k==M)?-1:d, k+=d)
             bucket[k].push_back(S[i]);
         return accumulate(bucket.begin(), bucket.end(), ans);
     }
