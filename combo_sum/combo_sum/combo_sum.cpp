@@ -3,7 +3,7 @@
  39. Combination Sum
  
  Q: https://leetcode.com/problems/combination-sum/description/
- A:
+ A: https://leetcode.com/problems/combination-sum/discuss/139125/Straightforward-C++-DFS-+-Backtracking-with-explanation
  
  */
 
@@ -15,27 +15,25 @@ using namespace std;
 
 using VI=vector<int>;
 using VVI=vector<VI>;
-using SVI=set<VI>;
 class Solution {
 public:
-    VVI combinationSum(VI& A, int T, VI path={}, SVI ans={}) {
+    VVI combinationSum(VI& A, int T, VI path={}, VVI ans={}) {
+        sort(A.begin(),A.end());
         return dfs(A,T,path,ans);
     }
 private:
-    VVI dfs(const VI& A, const int T, VI& path, SVI& ans, int sum=0){
+    VVI dfs(const VI& A, const int T, VI& path, VVI& ans, int beg=0, int sum=0){
         if (sum==T){
-            VI x(path);
-            sort(x.begin(),x.end());
-            ans.emplace(std::move(x));
+            ans.push_back(path);
             return VVI{};
         }
-        for (int i=0,N=(int)A.size(); i<N; ++i){
+        for (int i=beg,N=(int)A.size(); i<N; ++i){
             path.push_back(A[i]);
             if (sum+A[i]<=T)
-                dfs(A,T,path,ans,sum+A[i]);
+                dfs(A,T,path,ans,i,sum+A[i]);
             path.pop_back();
         }
-        return path.empty() ? VVI{ans.begin(),ans.end()} : VVI{};
+        return path.empty() ? ans : VVI{};
     }
 };
 
