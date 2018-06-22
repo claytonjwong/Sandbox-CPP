@@ -72,14 +72,12 @@ public:
         if (P.empty()) return 0;
         int N=(int)P.size();
         vector<Car> C;
-        for (int i=0; i<N; ++i){
+        for (int i=0; i<N; ++i)
             C.push_back({P[i],S[i]});
-        }
         sort(C.begin(),C.end(),[](const Car& lhs, const Car&rhs){ return lhs.pos > rhs.pos; });
         vector<double> A(N);
-        for (int i=0; i<N; ++i){
+        for (int i=0; i<N; ++i)
             A[i]=(target-C[i].pos) / (double)C[i].spd;
-        }
         for (int i=0,j=0; i<N; i=j){
             double moves = A[i];
             j=i+1;
