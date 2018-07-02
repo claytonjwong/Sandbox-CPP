@@ -19,7 +19,7 @@ class Solution {
 public:
     VVI subsets(VI& A, VVI prev={{}}, VVI next={}, VVI ans={{}}){
         sort(A.begin(),A.end());
-        for (int N=(int)A.size(); N--; prev=std::move(next),next.clear()){
+        for (int N=(int)A.size(); N--; swap(prev,next),next.clear()){
             for (auto num: A){
                 for (auto& vec: prev) if (vec.empty() || vec.back() < num){
                     auto tmp(vec);
