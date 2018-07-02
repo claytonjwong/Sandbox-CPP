@@ -40,6 +40,8 @@ public:
 };
  */
 
+/*
+// AC
 using VI=vector<int>;
 using VVI=vector<VI>;
 class Solution {
@@ -49,6 +51,21 @@ public:
         for (auto& row: A) if (row[0]==0) for (int j=0; j<N; row[j]^=1,++j);
         for (int j=0,cnt=0; j<N; ++j,cnt=0){
             for (int i=0; i<M; cnt=A[i][j]?cnt+1:cnt,++i);
+            ans+=max(cnt,M-cnt)*(1<<(N-j-1));
+        }
+        return ans;
+    }
+};
+ */
+
+using VI=vector<int>;
+using VVI=vector<VI>;
+class Solution {
+public:
+    int matrixScore(VVI& A, int ans=0) {
+        int M=(int)A.size(),N=(int)A[0].size();
+        for (int j=0,cnt=0; j<N; ++j,cnt=0){
+            for (int i=0; i<M; cnt=A[i][j]==A[i][0]?cnt+1:cnt,++i);
             ans+=max(cnt,M-cnt)*(1<<(N-j-1));
         }
         return ans;
