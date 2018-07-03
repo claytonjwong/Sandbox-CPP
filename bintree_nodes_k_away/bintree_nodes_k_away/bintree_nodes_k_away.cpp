@@ -21,29 +21,23 @@ struct TreeNode {
     TreeNode(int x) : val{x},left{nullptr},right{nullptr} {}
 };
 
+/*
 using VI=vector<int>;
 using VVI=vector<VI>;
+#define pb push_back
 class Solution {
 public:
     VI distanceK(TreeNode* root, TreeNode* T, int K, VVI G=VVI(501)) {
         gen(root,G);
-        return bfs(root,G,T->val,K);
+        return bfs(G,T->val,K);
     }
 private:
-    void gen(TreeNode* root, VVI& G){
-        if (!root) return;
-        if (root->left){
-            G[root->val].push_back(root->left->val);
-            G[root->left->val].push_back(root->val);
-            gen(root->left,G);
-        }
-        if (root->right){
-            G[root->val].push_back(root->right->val);
-            G[root->right->val].push_back(root->val);
-            gen(root->right,G);
-        }
+    void gen(TreeNode* x, VVI& G){
+        if (x==nullptr) return;
+        if (x->left) G[x->val].pb(x->left->val),G[x->left->val].pb(x->val),gen(x->left,G);
+        if (x->right) G[x->val].pb(x->right->val),G[x->right->val].pb(x->val),gen(x->right,G);
     }
-    VI bfs(TreeNode* root, const VVI& G, const int T, const int K){
+    VI bfs(const VVI& G, const int T, const int K){
         deque<int> q({T}); unordered_set<int> V({T});
         for (int d=0; !q.empty(); ++d){
             if (d==K)
@@ -53,12 +47,39 @@ private:
                 auto curr=q.front(); q.pop_front();
                 for (auto nei: G[curr])
                     if (V.insert(nei).second)
-                        q.push_back(nei);
+                        q.pb(nei);
             }
         }
         return {};
     }
 };
+*/
+
+
+using VI=vector<int>;
+using VVI=vector<VI>;
+#define pb push_back
+class Solution {
+public:
+    VI distanceK(TreeNode* root, TreeNode* T, int K, VVI G=VVI(501), VI ans={}) {
+        gen(root,G);
+        dfs(G,{T->val},T->val,K,ans);
+        return ans;
+    }
+private:
+    void gen(TreeNode* x, VVI& G){
+        if (x==nullptr) return;
+        if (x->left) G[x->left->val].pb(x->val),G[x->val].pb(x->left->val),gen(x->left,G);
+        if (x->right) G[x->right->val].pb(x->val),G[x->val].pb(x->right->val),gen(x->right,G);
+    }
+    void dfs(const VVI& G, unordered_set<int>&& V, int curr, int K, VI& ans){
+        if (K==0) ans.push_back(curr);
+        if (K>0) for (auto nei: G[curr])
+            if (V.insert(nei).second)
+                dfs(G,std::move(V),nei,K-1,ans);
+    }
+};
+
 
 int main(int argc, const char * argv[]) {
     
