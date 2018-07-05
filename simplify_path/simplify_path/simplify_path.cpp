@@ -15,20 +15,17 @@ using namespace std;
 
 class Solution {
 public:
-    string simplifyPath(string path, vector<string> folders={}, string s="", string ans="") {
+    string simplifyPath(string path, vector<string> folders={}, string str="", string ans="") {
         istringstream is(path);
-        while (getline(is,s,'/')){
-            if (s.empty() || s==".")
-                continue;
-            if (s==".."){
-                if (!folders.empty())
-                    folders.pop_back();
-                continue;
+        while (getline(is,str,'/'))
+            if (str.empty() || str==".")
+                ; // no-op
+            else if (str==".."){
+                if (!folders.empty()) folders.pop_back();
             }
-            folders.push_back(s);
-        }
-        for (const auto& folder: folders)
-            ans.append("/"+folder);
+            else
+                folders.emplace_back("/"+str);
+        for_each(folders.begin(),folders.end(),[&](const string& x){ans.append(x);});
         return ans.empty() ? "/" : ans;
     }
 };
