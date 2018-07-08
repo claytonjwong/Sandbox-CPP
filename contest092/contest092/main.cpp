@@ -65,7 +65,6 @@ public:
         return ans;
     }
 private:
-    
     int max_depth(TreeNode* root, int d=0){
         int l=(root->left) ? max_depth(root->left,d+1) : d;
         int r=(root->right) ? max_depth(root->right,d+1) : d;
