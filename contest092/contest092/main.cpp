@@ -1,7 +1,7 @@
 /*
  
- Rank    Name    Score    Finish Time     Q1 (2)    Q2 (5)    Q3 (7)    Q4 (9)
- 1062 / 4508    claytonjwong     7    1:08:48     0:04:58     1:03:48  1
+ Rank           Name            Score   Finish Time  Q1 (2)    Q2 (5)       Q3 (7)    Q4 (9)
+ 1062 / 4508    claytonjwong    7       1:08:48      0:04:58   1:03:48  *1
  
  Q1: https://leetcode.com/problems/transpose-matrix/description/
  A1: https://leetcode.com/problems/transpose-matrix/discuss/146769/Straightforward-C++
