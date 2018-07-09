@@ -7,11 +7,12 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
+#include <algorithm>
 
 using namespace std;
 
-/*
-void insertion_sort(vector<int>& A) {
+
+void insertion_sort1(vector<int>& A) {
     for (int j=1,N=(int)A.size(); j<N; ++j){
         int key=A[j];
         int i=j-1;
@@ -22,10 +23,8 @@ void insertion_sort(vector<int>& A) {
         A[i+1]=key;
     }
 }
-*/
 
-
-void insertion_sort(vector<int>& A) {
+void insertion_sort2(vector<int>& A) {
     
     for (int j=1,N=(int)A.size(); j<N; ++j){ // loop invariant: the subarray A[0:j) contains the original
                                              //                 elements in A[0:j) in sorted order
@@ -73,6 +72,51 @@ void insertion_sort(vector<int>& A) {
 }
 
 
+//
+// Loop Invariant: The left-most i items in A are ordered minimum values in A[0:N),
+//                 starting with i=0 ( no items ) and ending at i=N-2 ( the second to last item ).
+//
+//           Note: There is no need to iterate i all the way to N-1 ( the last item ) since A[N-1] is
+//                 the maximum value in A and is also the minimum element in the range A[N-1:N-1],
+//                 therefore, the last item A[N-1] would be swapped with itself if i were allowed
+//                 to iterate until N-1.
+//
+
+void selection_sort1(vector<int>& A){
+    for (int i=0,N=(int)A.size(); i<N-1; ++i){
+        int minj=0;
+        for (int j=i; j<N; ++j)
+            if (A[j]<A[minj])
+                minj=j;
+        swap(A[i],A[minj]);
+    }
+}
+
+void selection_sort2(vector<int>& A){
+    for (int i=0,N=(int)A.size(); i<N-1; ++i){
+        int j=(int)distance(A.begin(),min_element(A.begin()+i, A.end()));
+        swap(A[i],A[j]);
+    }
+}
+
+void selection_sort3(vector<int>& A){
+    if (A.empty()) return;
+    for (auto i=A.begin(),N=A.end(); i!=prev(N); ++i){
+        auto j=min_element(i, N);
+        iter_swap(i,j);
+    }
+}
+
+void selection_sort4(vector<int>& A){
+    if (A.empty()) return;
+    for (auto i=A.begin(),N=A.end(); i!=prev(N); ++i)
+        iter_swap(i,min_element(i, N));
+}
+
+void selection_sort5(vector<int>& A){
+    for (auto i=A.begin(),N=A.end(); i!=N && i!=prev(N); iter_swap(i,min_element(i++, N)));
+}
+
 void print(const vector<int>& A){
     ostringstream os;
     for (auto x: A)
@@ -84,9 +128,10 @@ void print(const vector<int>& A){
 
 int main(int argc, const char * argv[]) {
     
-    vector<int> A{5,2,4,6,1,3};
+    //vector<int> A{5,2,4,6,1,3};
+    vector<int> A;
     cout << "Before: "; print(A);
-    insertion_sort(A);
+    selection_sort1(A);
     cout << "After: "; print(A);
     
     return 0;
