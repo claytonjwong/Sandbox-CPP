@@ -1,6 +1,8 @@
 /*
  
- Pg. 18: INSERTION-SORT(A)
+ Pg. 18: INSERTION-SORT
+ 
+ Pg. 29: SELECTION-SORT
  
  */
 
@@ -81,7 +83,6 @@ void insertion_sort2(vector<int>& A) {
 //                 therefore, the last item A[N-1] would be swapped with itself if i were allowed
 //                 to iterate until N-1.
 //
-
 void selection_sort1(vector<int>& A){
     for (int i=0,N=(int)A.size(); i<N-1; ++i){
         int minj=0;
@@ -131,7 +132,7 @@ int main(int argc, const char * argv[]) {
     //vector<int> A{5,2,4,6,1,3};
     vector<int> A;
     cout << "Before: "; print(A);
-    selection_sort1(A);
+    selection_sort5(A);
     cout << "After: "; print(A);
     
     return 0;
