@@ -2,6 +2,9 @@
  
  867. Prime Palindrome
  
+ Q: https://leetcode.com/problems/prime-palindrome/description/
+ A: https://leetcode.com/problems/prime-palindrome/discuss/148253/Straightforward-C++-(-EASY-to-understand-)-with-explanation
+ 
  */
 
 #include <iostream>
@@ -40,16 +43,16 @@ private:
 int main(int argc, const char * argv[]) {
     
     Solution s;
-//    cout << "2==" << s.primePalindrome(1) << endl;
-//    cout << "2==" << s.primePalindrome(2) << endl;
-//    cout << "3==" << s.primePalindrome(3) << endl;
-//    cout << "5==" << s.primePalindrome(4) << endl;
-//    cout << "7==" << s.primePalindrome(6) << endl;
-//    cout << "11==" << s.primePalindrome(8) << endl;
-//    cout << "11==" << s.primePalindrome(9) << endl;
-//    cout << "11==" << s.primePalindrome(10) << endl;
-//    cout << "11==" << s.primePalindrome(11) << endl;
-//    cout << "101==" << s.primePalindrome(12) << endl;
+    cout << "2==" << s.primePalindrome(1) << endl;
+    cout << "2==" << s.primePalindrome(2) << endl;
+    cout << "3==" << s.primePalindrome(3) << endl;
+    cout << "5==" << s.primePalindrome(4) << endl;
+    cout << "7==" << s.primePalindrome(6) << endl;
+    cout << "11==" << s.primePalindrome(8) << endl;
+    cout << "11==" << s.primePalindrome(9) << endl;
+    cout << "11==" << s.primePalindrome(10) << endl;
+    cout << "11==" << s.primePalindrome(11) << endl;
+    cout << "101==" << s.primePalindrome(12) << endl;
     cout << "131==" << s.primePalindrome(102) << endl;
     cout << "100030001==" << s.primePalindrome(9989900) << endl;
     
