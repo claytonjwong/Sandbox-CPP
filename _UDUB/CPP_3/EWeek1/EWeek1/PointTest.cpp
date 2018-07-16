@@ -1,4 +1,3 @@
-/*
 //
 //  PointTest.cpp
 //  Assignment1
@@ -7,8 +6,9 @@
 //  Copyright (c) 2015 Chris Elderkin. All rights reserved.
 //
 
-#include "Point.h"
+#include "Point.hpp"
 #include "TestHarness.h"
+#include <iostream>
 
 
 TEST(equality, Point)
@@ -21,10 +21,11 @@ TEST(inequality, Point)
     CHECK(VG::Point(1, 2) != VG::Point(3, 4));
 }
 
+
 TEST(constexprPoint, Point)
 {
     constexpr int i = VG::Point{4, 5}.getX();
     
     CHECK_EQUAL(i, 4);
 }
-*/
+
