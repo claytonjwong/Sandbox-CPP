@@ -138,19 +138,30 @@ void selection_sort5(vector<int>& A){
 // loop-invariant:
 //
 // the right-most i elements are the largest i elements in A[0:N), 0<=i<N
+// sorted in ascending order
 //
 void bubble_sort1(vector<int>& A){
-    for (int i=0,N=(int)A.size(); i<N; ++i)
-        for (int j=0; j<N-1; ++j)
-            if (A[j] > A[j+1])
-                swap(A[j],A[j+1]);
+    bool swapped;
+    do {
+        swapped=false;
+        for (int i=1,N=(int)A.size(); i<N; ++i)
+            if (A[i-1] > A[i]){
+                swap(A[i-1],A[i]);
+                swapped=true;
+            }
+    } while (swapped);
 }
 
 void bubble_sort2(vector<int>& A){
-    for (int i=0,N=(int)A.size(); i<N; ++i)
-        for (auto itr=A.begin(); itr!=prev(A.end()); ++itr)
-            if (*itr > *next(itr))
+    bool swapped;
+    do {
+        swapped=false;
+        for (auto itr=A.begin(); itr!=A.end() && itr!=prev(A.end()); ++itr)
+            if (*itr > *next(itr)){
                 iter_swap(itr,next(itr));
+                swapped=true;
+            }
+    } while (swapped);
 }
 
 
