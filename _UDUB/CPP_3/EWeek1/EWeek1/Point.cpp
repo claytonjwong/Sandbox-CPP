@@ -13,22 +13,14 @@ using namespace std;
 
 namespace VG {
     
-    bool Point::operator==(const Point& rhs) const {
+    bool Point::operator==(const Point& rhs) const noexcept {
         return myX==rhs.myX && myY==rhs.myY;
     }
     
-    bool Point::operator!=(const Point& rhs) const {
+    bool Point::operator!=(const Point& rhs) const noexcept {
         return !(*this==rhs);
     }
-    
-    constexpr int Point::getX() const {
-        return myX;
-    }
-    
-    constexpr int Point::getY() const {
-        return myY;
-    }
-    
+
     ostream& operator<<(ostream& os, const Point& rhs) {
         os << "(" << rhs.getX() << "," << rhs.getY() << ")";
         return os;

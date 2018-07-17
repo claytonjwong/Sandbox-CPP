@@ -16,21 +16,14 @@ using namespace std;
 
 void Parse::trim(string& str, const string& chars){
     unordered_set<char> exclude{chars.begin(),chars.end()};
-    string trimmed;
-    trimmed.reserve(str.size());
-    for (auto c: str)
-        if (exclude.find(c)==exclude.end())
-            trimmed.push_back(c);
-    str=trimmed;
+    str.erase(remove_if(str.begin(),str.end(),
+                        [&](int val){
+                            return exclude.find(val)!=exclude.end();
+                        }),str.end());
 }
 
 void Parse::eat(std::istringstream& is, const std::string& chars){
     unordered_set<char> exclude{chars.begin(),chars.end()};
-    while (is.peek()!=EOF && exclude.find(is.peek())!=exclude.end()){
-        is.ignore(1,'\0');
-    }
+    while (is.peek()!=EOF && exclude.find(is.peek())!=exclude.end())
+        is.ignore();
 }
-
-
-
-

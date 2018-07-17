@@ -1,8 +1,9 @@
-/*
-#include "Parse.h"
-#include "VectorGraphic.h"
-#include "VectorGraphicStreamer.h"
+
+#include "Parse.hpp"
+#include "VectorGraphic.hpp"
+#include "VectorGraphicStreamer.hpp"
 #include "TestHarness.h"
+#include "Point.hpp"
 
 TEST(ctor, VectorGraphic)
 {
@@ -11,6 +12,7 @@ TEST(ctor, VectorGraphic)
     CHECK_EQUAL(true, vg.isClosed());
     CHECK_EQUAL(false, vg.isOpen());
 }
+
 
 TEST(insertPoint, VectorGraphic)
 {
@@ -21,6 +23,7 @@ TEST(insertPoint, VectorGraphic)
     vg.addPoint(VG::Point{2, 2});
     CHECK_EQUAL(2, vg.getPointCount());
 }
+
 
 TEST(removePoint, VectorGraphic)
 {
@@ -119,6 +122,7 @@ TEST(openShape, VectorGraphic)
     CHECK_EQUAL(true, vg.isOpen());
 }
 
+/*
 TEST(widthHeight, VectorGraphic)
 {
     VG::VectorGraphic vectorGraphic;
@@ -134,6 +138,7 @@ TEST(widthHeight, VectorGraphic)
     CHECK_EQUAL(2, vectorGraphic.getHeight());
 }
 
+
 // C++11 has a new "raw string literal" that is useful for
 // embedding long strings in a file for testing. Previously
 // this would have to be done with a "stringification" macro:
@@ -148,7 +153,7 @@ const std::string VectorGraphicXml = R"(
 <Point x="0" y="10"/>
 </VectorGraphic>
 )";
-
+ 
 TEST(fromXml, VectorGraphic)
 {
     std::stringstream sstr(VectorGraphicXml);

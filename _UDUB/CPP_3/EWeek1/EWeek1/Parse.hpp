@@ -13,6 +13,8 @@
 
 class Parse {
 public:
+    Parse()=delete;
+    
     static void trim(std::string& s, const std::string& chars=" \t\n");
     static void eat(std::istringstream& is, const std::string& chars=" \t\n");
 };

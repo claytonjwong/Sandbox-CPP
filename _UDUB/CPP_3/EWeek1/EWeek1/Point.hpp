@@ -16,11 +16,22 @@
 namespace VG {
     class Point{
     public:
-        Point(const int x, const int y) : myX{x},myY{y} {}
-        bool operator==(const Point& rhs) const;
-        bool operator!=(const Point& rhs) const;
-        constexpr int getX() const;
-        constexpr int getY() const;
+        constexpr Point(const int x, const int y) : myX{x},myY{y} {}
+        ~Point()=default;
+        Point(Point& src)=default;
+        Point& operator=(Point& rhs)=default;
+        Point(Point&& src)=default;
+        Point& operator=(Point&& rhs)=default;
+        
+        bool operator==(const Point& rhs) const noexcept;
+        bool operator!=(const Point& rhs) const noexcept;
+        constexpr int getX() const noexcept { return myX; }
+        constexpr int getY() const noexcept { return myY; }
+        
+        int getHash() const noexcept {
+            return (2<<20)*getX()+getY();
+        }
+                
     private:
         const int myX, myY;
     };
