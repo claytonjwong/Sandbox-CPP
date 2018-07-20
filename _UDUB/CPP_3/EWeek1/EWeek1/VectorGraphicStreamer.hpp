@@ -9,6 +9,16 @@
 #ifndef VectorGraphicStreamer_hpp
 #define VectorGraphicStreamer_hpp
 
-#include <stdio.h>
+#include <sstream>
+#include "VectorGraphic.hpp"
+
+namespace VG {
+    class VectorGraphicStreamer {
+    public:
+        static VectorGraphic fromXml(std::stringstream& sstr);
+        static void toXml(std::stringstream& ss);
+    };
+}
+
 
 #endif /* VectorGraphicStreamer_hpp */

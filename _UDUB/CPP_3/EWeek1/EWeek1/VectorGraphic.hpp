@@ -37,6 +37,8 @@ namespace VG {
 
         Point getPoint(int index) const;
         int getPointCount() const noexcept { return myPointCnt; }
+        int getHeight() const noexcept;
+        int getWidth() const noexcept;
         bool isClosed() const noexcept { return !isOpen(); }
         bool isOpen() const noexcept { return myShapeIsOpen; }
         bool operator==(const VectorGraphic& rhs);
@@ -45,8 +47,8 @@ namespace VG {
         void addPoint(Point&& rhs);
         void erasePoint(int index);
         void removePoint(const Point& rhs);
-        void openShape() { myShapeIsOpen=true; }
-        void closeShape() { myShapeIsOpen=false; }
+        void openShape() noexcept { myShapeIsOpen=true; }
+        void closeShape() noexcept { myShapeIsOpen=false; }
         
     private:
         int myPointCnt=0;

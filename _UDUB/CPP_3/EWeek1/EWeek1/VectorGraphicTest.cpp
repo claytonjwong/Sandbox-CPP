@@ -122,7 +122,7 @@ TEST(openShape, VectorGraphic)
     CHECK_EQUAL(true, vg.isOpen());
 }
 
-/*
+
 TEST(widthHeight, VectorGraphic)
 {
     VG::VectorGraphic vectorGraphic;
@@ -145,7 +145,7 @@ TEST(widthHeight, VectorGraphic)
 //   #define STR(a) #a
 
 const std::string VectorGraphicXml = R"(
-<VectorGraphic closed="true">
+<VectorGraphic closed="false">
 <Point x="0" y="0"/>
 <Point x="10" y="0">
 </Point>
@@ -153,7 +153,7 @@ const std::string VectorGraphicXml = R"(
 <Point x="0" y="10"/>
 </VectorGraphic>
 )";
- 
+
 TEST(fromXml, VectorGraphic)
 {
     std::stringstream sstr(VectorGraphicXml);
@@ -166,6 +166,7 @@ TEST(fromXml, VectorGraphic)
     CHECK_EQUAL(10, vg.getPoint(2).getY());
 }
 
+/*
 TEST(toXml, VectorGraphic)
 {
     VG::VectorGraphic vg1;

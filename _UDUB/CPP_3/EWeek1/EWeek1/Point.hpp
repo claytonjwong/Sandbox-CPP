@@ -19,8 +19,8 @@ namespace VG {
         constexpr Point(const int x, const int y) : myX{x},myY{y} {}
         ~Point()=default;
         Point(Point& src)=default;
-        Point& operator=(Point& rhs)=default;
         Point(Point&& src)=default;
+        Point& operator=(Point& rhs)=default;
         Point& operator=(Point&& rhs)=default;
         
         bool operator==(const Point& rhs) const noexcept;

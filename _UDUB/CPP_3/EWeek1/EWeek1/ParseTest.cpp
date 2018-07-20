@@ -2,6 +2,8 @@
 #include "Parse.hpp"
 #include "TestHarness.h"
 
+using namespace VG;
+
 TEST(trimBeginning, Parse)
 {
     std::string actual{"  \tHello"};
