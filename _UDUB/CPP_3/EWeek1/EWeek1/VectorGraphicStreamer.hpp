@@ -16,7 +16,7 @@ namespace VG {
     class VectorGraphicStreamer {
     public:
         static VectorGraphic fromXml(std::stringstream& sstr);
-        static void toXml(std::stringstream& ss);
+        static void toXml(const VectorGraphic& vg, std::stringstream& ss);
     };
 }
 

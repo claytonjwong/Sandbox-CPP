@@ -20,7 +20,11 @@ namespace VG {
         std::vector<std::string> attributes;
         std::string end;
         
-        bool isOpen() const { return beg!="</" && end!="/>"; }
+        //
+        // <Element/> is still considered "open" here
+        // since I only care if the beginning is open
+        //
+        bool isOpen() const { return beg!="</"; }
     };
 }
 

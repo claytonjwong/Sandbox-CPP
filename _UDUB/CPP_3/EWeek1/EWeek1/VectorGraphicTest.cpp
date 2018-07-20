@@ -145,7 +145,7 @@ TEST(widthHeight, VectorGraphic)
 //   #define STR(a) #a
 
 const std::string VectorGraphicXml = R"(
-<VectorGraphic closed="false">
+<VectorGraphic closed="true">
 <Point x="0" y="0"/>
 <Point x="10" y="0">
 </Point>
@@ -166,7 +166,7 @@ TEST(fromXml, VectorGraphic)
     CHECK_EQUAL(10, vg.getPoint(2).getY());
 }
 
-/*
+
 TEST(toXml, VectorGraphic)
 {
     VG::VectorGraphic vg1;
@@ -176,9 +176,9 @@ TEST(toXml, VectorGraphic)
     
     std::stringstream sstr;
     VG::VectorGraphicStreamer::toXml(vg1, sstr);
-    
+    std::cout << sstr.str() << std::endl;
     auto vg2 = VG::VectorGraphicStreamer::fromXml(sstr);
     
     CHECK(vg1 == vg2);
 }
-*/
+
