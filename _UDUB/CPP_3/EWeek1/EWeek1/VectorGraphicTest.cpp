@@ -176,9 +176,32 @@ TEST(toXml, VectorGraphic)
     
     std::stringstream sstr;
     VG::VectorGraphicStreamer::toXml(vg1, sstr);
-    std::cout << sstr.str() << std::endl;
     auto vg2 = VG::VectorGraphicStreamer::fromXml(sstr);
     
     CHECK(vg1 == vg2);
 }
 
+TEST(copyCtor,VectorGraphic){
+    //
+    // for some reason this doesn't compile.  I don't know why.  The failure I get is:
+    //
+    // Semantic Issue: No matching constructor for initialization of VG::Point
+    //
+    // any ideas why I am getting this compile error?
+    //
+    
+    VG::VectorGraphic vg1;
+    //VG::VectorGraphic vg2(vg1);
+    //CHECK(vg1==vg2);
+}
+
+TEST(getPoint,VectorGraphic){
+    VG::VectorGraphic vg;
+    vg.addPoint(VG::Point{10,10});
+    vg.addPoint(VG::Point{100,100});
+    vg.addPoint(VG::Point{1000,1000});
+    CHECK(vg.getPointCount()==3);
+    CHECK(vg.getPoint(0)==VG::Point(10,10));
+    CHECK(vg.getPoint(1)==VG::Point(100,100));
+    CHECK(vg.getPoint(2)==VG::Point(1000,1000));
+}

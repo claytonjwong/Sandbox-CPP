@@ -31,8 +31,8 @@ namespace VG {
         VectorGraphic()=default;
         ~VectorGraphic()=default;
         VectorGraphic(VectorGraphic& src)=default;
-        VectorGraphic& operator=(VectorGraphic& rhs)=default;
         VectorGraphic(VectorGraphic&& src)=default;
+        VectorGraphic& operator=(VectorGraphic& rhs)=default;
         VectorGraphic& operator=(VectorGraphic&& rhs)=default;
 
         Point getPoint(int index) const;

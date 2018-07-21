@@ -13,9 +13,12 @@
 #include "VectorGraphic.hpp"
 
 namespace VG {
+    
     class VectorGraphicStreamer {
     public:
+        static VectorGraphic fromFile(const std::string& filename);
         static VectorGraphic fromXml(std::stringstream& sstr);
+        static void toFile(const std::string& filename, const VectorGraphic& vg);
         static void toXml(const VectorGraphic& vg, std::stringstream& ss);
     };
 }

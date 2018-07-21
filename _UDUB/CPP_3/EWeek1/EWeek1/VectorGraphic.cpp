@@ -26,7 +26,7 @@ namespace VG {
         return Point{0,0}; // should never reach here
     }
     
-    int VectorGraphic::getHeight() const noexcept {
+    int VectorGraphic::getHeight() const noexcept { // lazy evaluation on-demand
         if (myPointCnt==0)
             return 0;
         int minh=INT_MAX,maxh=INT_MIN;
@@ -37,7 +37,7 @@ namespace VG {
         return (int)abs(minh-maxh);
     }
     
-    int VectorGraphic::getWidth() const noexcept {
+    int VectorGraphic::getWidth() const noexcept { // lazy evaluation on-demand
         if (myPointCnt==0)
             return 0;
         int minw=INT_MAX,maxw=INT_MIN;

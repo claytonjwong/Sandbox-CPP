@@ -7,39 +7,63 @@
 using namespace std;
 using namespace VG;
 
+#define UNIT_TEST   0
+
+int run_as_unit_test();
+int run_as_file_io(int argc, char* argv[]);
+
 int main(int argc, char *argv[])
 {
+    int rc;
+    
+#if UNIT_TEST==1
+    
+    rc=run_as_unit_test();
+    
+#else
+    
+    rc=run_as_file_io(argc,argv);
+    
+#endif
+    
+    return rc;
+}
 
-	// random number generator used in some tests
-	srand(::time_t(NULL));
-
-    TestResult tr;
-    TestRegistry::runAllTests(tr);
-
-	// force console screen to hold
-	char ch;
-	std::cin >> ch;
-
-/*
-    if (argc!=3){
-        cerr << "invalid params.  expected infile and outfile." << endl;
+int run_as_unit_test(){
+    try {
+        // random number generator used in some tests
+        srand(::time_t(NULL));
+        
+        TestResult tr;
+        TestRegistry::runAllTests(tr);
+        
+        // force console screen to hold
+        char ch;
+        std::cin >> ch;
+    } catch (...) {
+        cerr << "exception thrown from run_as_unit_test()" << endl;
         return -1;
     }
-    stringstream ss;
-    string infile(argv[1]),outfile(argv[2]);
-    {
-        ifstream fin(infile);
-        if (fin){
-            ss << fin.rdbuf();
-            auto vg=VectorGraphicStreamer::fromXml(ss);
-        }
+    return 0;
+}
+
+int run_as_file_io(int argc, char* argv[]){
+    if (argc!=3){
+        cerr << "invalid command line arguments: expected one infile and one outfile." << endl;
+        return -1;
     }
-    {
-        ofstream fout(outfile);
-        if (fout){
-            fout << ss.rdbuf();
-        }
+    VG::VectorGraphic vg;
+    try {
+        vg=VectorGraphicStreamer::fromFile(argv[1]);
+    } catch (...) {
+        cerr << "exception during input" << endl;
+        return -1;
     }
-*/
+    try {
+        VectorGraphicStreamer::toFile(argv[2], vg);
+    } catch (...) {
+        cerr << "exception during output" << endl;
+        return -1;
+    }
     return 0;
 }

@@ -12,16 +12,22 @@
 #include <stdio.h>
 #include <utility>
 #include <iostream>
+#include <exception>
 
 namespace VG {
+    
     class Point{
     public:
-        constexpr Point(const int x, const int y) : myX{x},myY{y} {}
+        Point()=delete;
+        constexpr Point(const int x, const int y) : myX{x},myY{y} {
+            if (x<0 || y<0)
+                throw std::out_of_range("point values cannot be negative");
+        }
         ~Point()=default;
         Point(Point& src)=default;
         Point(Point&& src)=default;
-        Point& operator=(Point& rhs)=default;
-        Point& operator=(Point&& rhs)=default;
+        Point& operator=(Point& rhs)=delete;
+        Point& operator=(Point&& rhs)=delete;
         
         bool operator==(const Point& rhs) const noexcept;
         bool operator!=(const Point& rhs) const noexcept;
@@ -35,7 +41,9 @@ namespace VG {
     private:
         const int myX, myY;
     };
+    
     std::ostream& operator<<(std::ostream& os, const Point& rhs);
+    
 }
 
 #endif /* Point_hpp */

@@ -2,11 +2,12 @@
 #include "Parse.hpp"
 #include "TestHarness.h"
 
+using namespace std;
 using namespace VG;
 
 TEST(trimBeginning, Parse)
 {
-    std::string actual{"  \tHello"};
+    string actual{"  \tHello"};
     Parse::trim(actual, " \t\n");
     
     CHECK_EQUAL("Hello", actual);
@@ -14,7 +15,7 @@ TEST(trimBeginning, Parse)
 
 TEST(trimEnd, Parse)
 {
-    std::string actual{"Hello  \n\n\n\t"};
+    string actual{"Hello  \n\n\n\t"};
     Parse::trim(actual, " \t\n");
     
     CHECK_EQUAL("Hello", actual);
@@ -22,7 +23,7 @@ TEST(trimEnd, Parse)
 
 TEST(trimBeginningAndEnd, Parse)
 {
-    std::string actual{"  Hello\n\t"};
+    string actual{"  Hello\n\t"};
     Parse::trim(actual, " \t\n");
     
     CHECK_EQUAL("Hello", actual);
@@ -30,7 +31,7 @@ TEST(trimBeginningAndEnd, Parse)
 
 TEST(trimNone, Parse)
 {
-    std::string actual{"Hello"};
+    string actual{"Hello"};
     Parse::trim(actual);
     
     CHECK_EQUAL("Hello", actual);
@@ -38,7 +39,7 @@ TEST(trimNone, Parse)
 
 TEST(trimEmpty, Parse)
 {
-    std::string actual;
+    string actual;
     Parse::trim(actual);
     
     CHECK_EQUAL("", actual);
@@ -46,7 +47,7 @@ TEST(trimEmpty, Parse)
 
 TEST(trimDefaultWhitespace, Parse)
 {
-    std::string actual{"   Hello\t\n   "};
+    string actual{"   Hello\t\n   "};
     Parse::trim(actual);
     
     CHECK_EQUAL("Hello", actual);
@@ -54,8 +55,8 @@ TEST(trimDefaultWhitespace, Parse)
 
 TEST(trimEverything, Parse)
 {
-    std::string actual{"Hello 1234"};
-    std::string trimmables{"Hello 0123456789"};
+    string actual{"Hello 1234"};
+    string trimmables{"Hello 0123456789"};
     Parse::trim(actual, trimmables);
     
     CHECK_EQUAL("", actual);
@@ -63,10 +64,10 @@ TEST(trimEverything, Parse)
 
 TEST(eatNothing, Parse)
 {
-    std::istringstream stream{"Hello"};
+    istringstream stream{"Hello"};
     Parse::eat(stream, "123456789");
     
-    std::ostringstream actual;
+    ostringstream actual;
     actual << stream.rdbuf();
     
     CHECK_EQUAL("Hello", actual.str());
@@ -74,10 +75,10 @@ TEST(eatNothing, Parse)
 
 TEST(eatSomething, Parse)
 {
-    std::istringstream stream{"4320Hello"};
+    istringstream stream{"4320Hello"};
     Parse::eat(stream, "1234567890");
     
-    std::ostringstream actual;
+    ostringstream actual;
     actual << stream.rdbuf();
     
     CHECK_EQUAL("Hello", actual.str());
@@ -85,12 +86,53 @@ TEST(eatSomething, Parse)
 
 TEST(eatSomeLeadingWhitespace, Parse)
 {
-    std::istringstream stream{"   I had leading whitespace"};
+    istringstream stream{"   I had leading whitespace"};
     Parse::eat(stream);
     
-    std::ostringstream actual;
+    ostringstream actual;
     actual << stream.rdbuf();
     
     CHECK_EQUAL("I had leading whitespace", actual.str());
+}
+
+TEST(tokenize,Parse){
+    string element="<VectorGraphic closed=\"true\">";
+    auto tok=Parse::tokenize(element);
+    CHECK(tok.orig==element);
+    CHECK(tok.name=="VectorGraphic");
+}
+
+TEST(to_keyval,Parse){
+    string attribute="this=\"that\"";
+    auto res=Parse::to_keyval(attribute);
+    CHECK(res.first=="this");
+    CHECK(res.second=="that");
+}
+
+TEST(process_token1,Parse){
+    string element="<VectorGraphic closed=\"true\">";
+    auto tok=Parse::tokenize(element);
+    VectorGraphic vg;
+    Parse::process_token(vg, tok);
+    CHECK(vg.isClosed());
+    CHECK(!vg.isOpen());
+    CHECK(vg.getPointCount()==0);
+}
+
+TEST(process_token2,Parse){
+    string vg_element="<VectorGraphic closed=\"false\">";
+    auto tok=Parse::tokenize(vg_element);
+    VectorGraphic vg;
+    Parse::process_token(vg, tok);
+    string pt_element="<Point x=\"13\" y=\"21\">";
+    tok=Parse::tokenize(pt_element);
+    auto attrX=Parse::to_keyval(tok.attributes[0]);
+    auto attrY=Parse::to_keyval(tok.attributes[1]);
+    CHECK(attrX.second=="13");
+    CHECK(attrY.second=="21");
+    vg.addPoint(VG::Point{stoi(attrX.second),stoi(attrY.second)});
+    CHECK(!vg.isClosed());
+    CHECK(vg.isOpen());
+    CHECK(vg.getPointCount()==1);
 }
 
