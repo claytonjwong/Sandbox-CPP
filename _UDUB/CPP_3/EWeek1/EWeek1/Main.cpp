@@ -7,7 +7,7 @@
 using namespace std;
 using namespace VG;
 
-#define UNIT_TEST   0
+#define UNIT_TEST   1
 
 int run_as_unit_test();
 int run_as_file_io(int argc, char* argv[]);

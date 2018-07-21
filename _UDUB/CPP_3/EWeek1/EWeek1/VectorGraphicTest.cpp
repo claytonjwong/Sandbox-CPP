@@ -182,6 +182,7 @@ TEST(toXml, VectorGraphic)
 }
 
 TEST(copyCtor,VectorGraphic){
+    
     //
     // for some reason this doesn't compile.  I don't know why.  The failure I get is:
     //
@@ -192,6 +193,21 @@ TEST(copyCtor,VectorGraphic){
     
     VG::VectorGraphic vg1;
     //VG::VectorGraphic vg2(vg1);
+    //CHECK(vg1==vg2);
+}
+
+TEST(assignment,VectorGraphic){
+    
+    //
+    // for some reason this doesn't compile.  I don't know why.  The failure I get is:
+    //
+    // Semantic Issue: No matching constructor for initialization of VG::Point
+    //
+    // any ideas why I am getting this compile error?
+    //
+    
+    VG::VectorGraphic vg1,vg2;
+    //vg2=vg1;
     //CHECK(vg1==vg2);
 }
 

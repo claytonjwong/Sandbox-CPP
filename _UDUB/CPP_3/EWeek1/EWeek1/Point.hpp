@@ -18,7 +18,7 @@ namespace VG {
     
     class Point{
     public:
-        Point()=delete;
+        Point()=default;
         constexpr Point(const int x, const int y) : myX{x},myY{y} {
             if (x<0 || y<0)
                 throw std::out_of_range("point values cannot be negative");
@@ -26,8 +26,8 @@ namespace VG {
         ~Point()=default;
         Point(Point& src)=default;
         Point(Point&& src)=default;
-        Point& operator=(Point& rhs)=delete;
-        Point& operator=(Point&& rhs)=delete;
+        Point& operator=(Point& rhs)=default;
+        Point& operator=(Point&& rhs)=default;
         
         bool operator==(const Point& rhs) const noexcept;
         bool operator!=(const Point& rhs) const noexcept;
