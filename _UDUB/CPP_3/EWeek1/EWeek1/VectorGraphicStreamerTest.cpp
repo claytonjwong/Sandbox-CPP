@@ -7,12 +7,22 @@
 //
 
 #include "TestHarness.h"
+#include "VectorGraphicStreamer.hpp"
 
-TEST(fromFile,VectorGraphicStreamer){
-    
+using namespace std;
+using namespace VG;
+
+TEST(fromFileExists,VectorGraphicStreamer){
+    VectorGraphic vg;
+    VectorGraphicStreamer::fromFile("inout.xml", vg);
+    CHECK(vg.getPointCount()==4);
 }
 
-TEST(toFile,VectorGraphicStreamer){
-    
+TEST(toFileDefault,VectorGraphicStreamer){
+    string filename="default.xml";
+    VectorGraphic vg1,vg2;
+    VectorGraphicStreamer::toFile(filename, vg1);
+    VectorGraphicStreamer::fromFile(filename, vg2);
+    CHECK(vg1==vg2);
 }
 

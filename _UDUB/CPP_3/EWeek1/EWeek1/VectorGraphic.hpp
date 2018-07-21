@@ -32,8 +32,8 @@ namespace VG {
         ~VectorGraphic()=default;
         VectorGraphic(VectorGraphic& src)=default;
         VectorGraphic(VectorGraphic&& src)=default;
-        VectorGraphic& operator=(VectorGraphic& rhs)=default;
-        VectorGraphic& operator=(VectorGraphic&& rhs)=default;
+        VectorGraphic& operator=(VectorGraphic& rhs)=delete;
+        VectorGraphic& operator=(VectorGraphic&& rhs)=delete;
 
         Point getPoint(int index) const;
         int getPointCount() const noexcept { return myPointCnt; }
@@ -56,6 +56,7 @@ namespace VG {
         bool myShapeIsOpen=false;
     };
     
+    std::ostream& operator<<(std::ostream& os, const VectorGraphic& rhs);
 }
 
 #endif /* VectorGraphic_hpp */

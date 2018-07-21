@@ -60,3 +60,4 @@ TEST(moveCtor, Point){
     CHECK(p1.getX()==3);
     CHECK(p1.getY()==4);
 }
+

@@ -158,7 +158,8 @@ TEST(fromXml, VectorGraphic)
 {
     std::stringstream sstr(VectorGraphicXml);
     
-    auto vg = VG::VectorGraphicStreamer::fromXml(sstr);
+    VG::VectorGraphic vg;
+    VG::VectorGraphicStreamer::fromStream(sstr,vg);
     
     CHECK_EQUAL(true, vg.isClosed());
     CHECK_EQUAL(4, vg.getPointCount());
@@ -169,14 +170,14 @@ TEST(fromXml, VectorGraphic)
 
 TEST(toXml, VectorGraphic)
 {
-    VG::VectorGraphic vg1;
+    VG::VectorGraphic vg1,vg2;
     vg1.addPoint(VG::Point(1, 1));
     vg1.addPoint(VG::Point(2, 2));
     vg1.addPoint(VG::Point(3, 3));
     
     std::stringstream sstr;
-    VG::VectorGraphicStreamer::toXml(vg1, sstr);
-    auto vg2 = VG::VectorGraphicStreamer::fromXml(sstr);
+    VG::VectorGraphicStreamer::toStream(sstr,vg1);
+    VG::VectorGraphicStreamer::fromStream(sstr,vg2);
     
     CHECK(vg1 == vg2);
 }

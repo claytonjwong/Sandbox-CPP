@@ -15,14 +15,12 @@ using namespace std;
 
 namespace VG {
     
-    Point VectorGraphic::getPoint(int index) const {
+    Point VectorGraphic::getPoint(int index) const { // O(n) find
         if (index<0 || index>=myPointCnt)
             throw out_of_range{"invalid index"};
         for (auto& p: myPoints)
-            if (index==0)
+            if (index--==0)
                 return Point{p.getX(),p.getY()};
-            else
-                --index;
         return Point{0,0}; // should never reach here
     }
     
@@ -47,7 +45,6 @@ namespace VG {
         }
         return (int)abs(minw-maxw);
     }
-
     
     bool VectorGraphic::operator==(const VectorGraphic& rhs){
         if (myPointCnt!=rhs.myPointCnt)
@@ -61,12 +58,12 @@ namespace VG {
         return !(*this==rhs);
     }
     
-    void VectorGraphic::addPoint(Point&& rhs){
+    void VectorGraphic::addPoint(Point&& rhs){ // O(1) insertion
         myPoints.emplace_back(std::move(rhs));
         ++myPointCnt;
     }
     
-    void VectorGraphic::erasePoint(int index){
+    void VectorGraphic::erasePoint(int index){ // O(n) removal
         if (index<0 || index>=myPointCnt)
             throw out_of_range{"invalid index"};
         auto itr=myPoints.begin();
@@ -75,12 +72,20 @@ namespace VG {
         --myPointCnt;
     }
     
-    void VectorGraphic::removePoint(const Point& rhs){
+    void VectorGraphic::removePoint(const Point& rhs){ // O(n) removal
         for (auto itr=myPoints.begin(); itr!=myPoints.end(); ++itr)
             if (*itr==rhs){
                 myPoints.erase(itr);
                 --myPointCnt;
                 return;
             }
+    }
+    
+    ostream& operator<<(ostream& os, const VectorGraphic& rhs){
+        os << "<VectorGraphic closed=\"" << (rhs.isClosed() ? "true" : "false") << "\">" << endl;
+        for (int i=0,N=(int)rhs.getPointCount(); i<N; ++i) // extremely inefficient O(n^2) due to list
+            os << "  " << rhs.getPoint(i) << endl;
+        os << "</VectorGraphic>";
+        return os;
     }
 }

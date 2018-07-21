@@ -16,10 +16,10 @@ namespace VG {
     
     class VectorGraphicStreamer {
     public:
-        static VectorGraphic fromFile(const std::string& filename);
-        static VectorGraphic fromXml(std::stringstream& sstr);
+        static void fromFile(const std::string& filename, VectorGraphic& vg);
+        static void fromStream(std::stringstream& sstr, VectorGraphic& vg);
         static void toFile(const std::string& filename, const VectorGraphic& vg);
-        static void toXml(const VectorGraphic& vg, std::stringstream& ss);
+        static void toStream(std::stringstream& ss,const VectorGraphic& vg);
     };
 }
 

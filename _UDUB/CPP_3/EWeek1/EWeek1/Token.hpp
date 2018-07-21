@@ -13,6 +13,7 @@
 #include <vector>
 
 namespace VG {
+    
     struct Token {
         std::string orig;
         std::string beg;

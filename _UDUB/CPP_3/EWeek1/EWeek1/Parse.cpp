@@ -39,8 +39,11 @@ namespace VG {
             is.ignore();
     }
     
-    VectorGraphic Parse::tokenize(stringstream& ss){
-        VectorGraphic res;
+    void Parse::serialize(stringstream& ss, const VectorGraphic& vg){
+        ss << vg;
+    }
+    
+    void Parse::tokenize(stringstream& ss, VectorGraphic& res){
         string line;
         while (getline(ss,line)){
             if (!line.empty()){
@@ -48,7 +51,6 @@ namespace VG {
                 Parse::process_token(res,tok);
             }
         }
-        return res;
     }
     
     //
@@ -165,15 +167,6 @@ namespace VG {
                  vg.addPoint(Point{stoi(attrX.second),stoi(attrY.second)});
              }
          }
-    }
-    
-    void Parse::serialize(const VectorGraphic& vg, stringstream& ss){
-        ss << "<VectorGraphic closed=\"" << (vg.isClosed() ? "true" : "false") << "\">" << endl;
-        for (int i=0,N=(int)vg.getPointCount(); i<N; ++i){
-            auto pt=vg.getPoint(i);
-            ss << "  <Point x=\"" << pt.getX() << "\" y=\"" << pt.getY() << "\"/>" << endl;
-        }
-        ss << "</VectorGraphic>";
     }
 }
 

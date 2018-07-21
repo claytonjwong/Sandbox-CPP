@@ -7,7 +7,7 @@
 using namespace std;
 using namespace VG;
 
-#define UNIT_TEST   1
+#define UNIT_TEST   0
 
 int run_as_unit_test();
 int run_as_file_io(int argc, char* argv[]);
@@ -54,7 +54,7 @@ int run_as_file_io(int argc, char* argv[]){
     }
     VG::VectorGraphic vg;
     try {
-        vg=VectorGraphicStreamer::fromFile(argv[1]);
+        VectorGraphicStreamer::fromFile(argv[1], vg);
     } catch (...) {
         cerr << "exception during input" << endl;
         return -1;

@@ -16,33 +16,32 @@ using namespace std;
 
 namespace VG {
     
-    VectorGraphic VectorGraphicStreamer::fromFile(const string& filename){
-        ifstream fin(filename);
+    void VectorGraphicStreamer::fromFile(const string& filename, VectorGraphic& vg){
         stringstream ss;
+        ifstream fin(filename);
         if (fin){
             ss << fin.rdbuf();
-            return VectorGraphicStreamer::fromXml(ss);
-        } else {
-            throw invalid_argument("input file not found");
+            VectorGraphicStreamer::fromStream(ss,vg);
         }
+        else
+            throw invalid_argument("input file not found");
     }
     
-    VectorGraphic VectorGraphicStreamer::fromXml(stringstream& ss){
-        return Parse::tokenize(ss);
+    void VectorGraphicStreamer::fromStream(stringstream& ss, VectorGraphic& vg){
+        Parse::tokenize(ss,vg);
     }
     
     void VectorGraphicStreamer::toFile(const string& filename, const VectorGraphic& vg){
         stringstream ss;
         ofstream fout(filename);
-        VectorGraphicStreamer::toXml(vg, ss);
-        if (fout){
+        VectorGraphicStreamer::toStream(ss,vg);
+        if (fout)
             fout << ss.rdbuf();
-        } else {
+        else
             throw invalid_argument("output file not found");
-        }
     }
     
-    void VectorGraphicStreamer::toXml(const VectorGraphic& vg, stringstream& ss){
-        Parse::serialize(vg,ss);
+    void VectorGraphicStreamer::toStream(stringstream& ss, const VectorGraphic& vg){
+        Parse::serialize(ss,vg);
     }
 }

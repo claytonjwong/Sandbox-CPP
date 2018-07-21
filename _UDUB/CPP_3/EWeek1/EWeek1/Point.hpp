@@ -10,7 +10,6 @@
 #define Point_hpp
 
 #include <stdio.h>
-#include <utility>
 #include <iostream>
 #include <exception>
 
@@ -26,8 +25,8 @@ namespace VG {
         ~Point()=default;
         Point(Point& src)=default;
         Point(Point&& src)=default;
-        Point& operator=(Point& rhs)=default;
-        Point& operator=(Point&& rhs)=default;
+        Point& operator=(Point& rhs)=delete;
+        Point& operator=(Point&& rhs)=delete;
         
         bool operator==(const Point& rhs) const noexcept;
         bool operator!=(const Point& rhs) const noexcept;
@@ -43,7 +42,6 @@ namespace VG {
     };
     
     std::ostream& operator<<(std::ostream& os, const Point& rhs);
-    
 }
 
 #endif /* Point_hpp */

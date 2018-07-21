@@ -136,3 +136,37 @@ TEST(process_token2,Parse){
     CHECK(vg.getPointCount()==1);
 }
 
+TEST(invalid_closed_spelling,Parse){
+    string vg_element="<VectorGraphic closde=\"false\">"; // ignore "closde", no need to over design parser
+    auto tok=Parse::tokenize(vg_element);
+    VectorGraphic vg;
+    Parse::process_token(vg, tok);
+}
+
+TEST(invalid_order_coords,Parse){
+    string pt_element="<Point y=\"13\" x=\"21\">"; // assume x comes first, no need to over design parser
+    VectorGraphic vg;
+    auto tok=Parse::tokenize(pt_element);
+    Parse::process_token(vg, tok);
+    auto attrX=Parse::to_keyval(tok.attributes[0]);
+    auto attrY=Parse::to_keyval(tok.attributes[1]);
+    CHECK(attrX.second=="13");
+    CHECK(attrY.second=="21");
+    vg.addPoint(VG::Point{stoi(attrX.second),stoi(attrY.second)});
+    CHECK(vg.getPoint(0).getX()==13);
+    CHECK(vg.getPoint(0).getY()==21);
+}
+
+TEST(invalid_x_y_spelling,Parse){
+    string pt_element="<Point foo=\"13\" bar=\"21\">"; // assume x comes first, no need to over design parser
+    VectorGraphic vg;
+    auto tok=Parse::tokenize(pt_element);
+    Parse::process_token(vg, tok);
+    auto attrX=Parse::to_keyval(tok.attributes[0]);
+    auto attrY=Parse::to_keyval(tok.attributes[1]);
+    CHECK(attrX.second=="13");
+    CHECK(attrY.second=="21");
+    vg.addPoint(VG::Point{stoi(attrX.second),stoi(attrY.second)});
+    CHECK(vg.getPoint(0).getX()==13);
+    CHECK(vg.getPoint(0).getY()==21);
+}

@@ -34,11 +34,11 @@ namespace VG{
         Parse()=delete;
         static void trim(std::string& s, const std::string& chars=" \t\n");
         static void eat(std::istringstream& is, const std::string& chars=" \t\n");
-        static VectorGraphic tokenize(std::stringstream& ss);
+        static void serialize(std::stringstream& ss, const VectorGraphic& vg);
+        static void tokenize(std::stringstream& ss, VectorGraphic& vg);
         static Token tokenize(const std::string& str);
         static std::pair<std::string,std::string> to_keyval(const std::string& attribute);
         static void process_token(VectorGraphic& vg, const Token& tok);
-        static void serialize(const VectorGraphic& vg, std::stringstream& ss);
     };
 }
 
