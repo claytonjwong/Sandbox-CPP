@@ -67,7 +67,7 @@ void Controller::processState_WAITING(){
 
     myWaitDuration+=myWaitTime.asSeconds();
     
-    if (myWaitDuration > 50.0f)
+    if (myWaitDuration > 30.0f)
         changeState_MOVING();
 }
 
@@ -82,7 +82,7 @@ void Controller::processState_MOVING(){
 
     myMoveDuration+=myMoveTime.asSeconds();
     
-    if (myMoveDuration > 50.0f){
+    if (myMoveDuration > 30.0f){
         if (myCurrMove.diskID==Move::DONE){ // *** DONE ***
             changeState_DONE();
         } else {
