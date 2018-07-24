@@ -1,4 +1,3 @@
-#include <iostream>
 #include <vector>
 
 using namespace std;
@@ -16,6 +15,7 @@ void go2(int N, VI& S, VI& D, VI& A){
     if (N==0) return; else go2(N-1,S,A,D),D.push_back(S.back()),S.pop_back(),go2(N-1,A,D,S);
 }
 
+#include <iostream>
 int main(){
     int N; cout << "N: ";
     while (cin>>N && N>0){
