@@ -208,7 +208,7 @@ TEST(assignment,VectorGraphic){
     //
     
     VG::VectorGraphic vg1,vg2;
-    //vg2=vg1;
+    vg2=vg1;
     //CHECK(vg1==vg2);
 }
 

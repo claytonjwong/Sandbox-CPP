@@ -9,7 +9,7 @@
 #ifndef VectorGraphic_hpp
 #define VectorGraphic_hpp
 
-#include <list>
+#include <vector>
 #include "Point.hpp"
 
 /*
@@ -32,8 +32,8 @@ namespace VG {
         ~VectorGraphic()=default;
         VectorGraphic(VectorGraphic& src)=default;
         VectorGraphic(VectorGraphic&& src)=default;
-        VectorGraphic& operator=(VectorGraphic& rhs)=delete;
-        VectorGraphic& operator=(VectorGraphic&& rhs)=delete;
+        VectorGraphic& operator=(VectorGraphic& rhs)=default;
+        VectorGraphic& operator=(VectorGraphic&& rhs)=default;
 
         Point getPoint(int index) const;
         int getPointCount() const noexcept { return myPointCnt; }
@@ -52,7 +52,7 @@ namespace VG {
         
     private:
         int myPointCnt=0;
-        std::list<Point> myPoints;
+        std::vector<Point> myPoints;
         bool myShapeIsOpen=false;
     };
     

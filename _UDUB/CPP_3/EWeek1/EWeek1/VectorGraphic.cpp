@@ -18,10 +18,7 @@ namespace VG {
     Point VectorGraphic::getPoint(int index) const { // O(n) find
         if (index<0 || index>=myPointCnt)
             throw out_of_range{"invalid index"};
-        for (auto& p: myPoints)
-            if (index--==0)
-                return Point{p.getX(),p.getY()};
-        return Point{0,0}; // should never reach here
+        return Point{myPoints[index].getX(),myPoints[index].getY()};
     }
     
     int VectorGraphic::getHeight() const noexcept { // lazy evaluation on-demand
@@ -83,7 +80,7 @@ namespace VG {
     
     ostream& operator<<(ostream& os, const VectorGraphic& rhs){
         os << "<VectorGraphic closed=\"" << (rhs.isClosed() ? "true" : "false") << "\">" << endl;
-        for (int i=0,N=(int)rhs.getPointCount(); i<N; ++i) // extremely inefficient O(n^2) due to list
+        for (int i=0,N=(int)rhs.getPointCount(); i<N; ++i)
             os << "  " << rhs.getPoint(i) << endl;
         os << "</VectorGraphic>";
         return os;
