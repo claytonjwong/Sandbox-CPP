@@ -193,8 +193,8 @@ TEST(copyCtor,VectorGraphic){
     //
     
     VG::VectorGraphic vg1;
-    //VG::VectorGraphic vg2(vg1);
-    //CHECK(vg1==vg2);
+    VG::VectorGraphic vg2(vg1);
+    CHECK(vg1==vg2);
 }
 
 TEST(assignment,VectorGraphic){
@@ -209,7 +209,7 @@ TEST(assignment,VectorGraphic){
     
     VG::VectorGraphic vg1,vg2;
     vg2=vg1;
-    //CHECK(vg1==vg2);
+    CHECK(vg1==vg2);
 }
 
 TEST(getPoint,VectorGraphic){
