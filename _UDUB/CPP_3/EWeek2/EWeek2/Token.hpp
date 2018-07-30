@@ -6,8 +6,7 @@
 //  Copyright © 2018 Clayton Wong. All rights reserved.
 //
 
-#ifndef Token_hpp
-#define Token_hpp
+#pragma once
 
 #include <string>
 #include <vector>
@@ -29,4 +28,3 @@ namespace VG {
     };
 }
 
-#endif /* Token_hpp */

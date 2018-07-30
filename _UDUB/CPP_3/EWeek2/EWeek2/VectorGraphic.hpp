@@ -6,26 +6,15 @@
 //  Copyright © 2018 Clayton Wong. All rights reserved.
 //
 
-#ifndef VectorGraphic_hpp
-#define VectorGraphic_hpp
+#pragma once
 
 #include <vector>
 #include "Point.hpp"
 
-/*
- TEST(removePoint, VectorGraphic)
- {
- VG::VectorGraphic vg;
- vg.addPoint(VG::Point{1, 1});
- vg.addPoint(VG::Point{2, 2});
- vg.removePoint(VG::Point{1, 1});
- 
- CHECK_EQUAL(1, vg.getPointCount());
- CHECK_EQUAL(VG::Point(2, 2), vg.getPoint(0));
- }
- */
-
 namespace VG {
+    
+    using Points = std::vector<Point>;
+    
     class VectorGraphic {
     public:
         VectorGraphic()=default;
@@ -36,7 +25,7 @@ namespace VG {
         VectorGraphic& operator=(VectorGraphic&& rhs)=default;
 
         Point getPoint(int index) const;
-        int getPointCount() const noexcept { return myPointCnt; }
+        size_t getPointCount() const noexcept { return myPoints.size(); }
         int getHeight() const noexcept;
         int getWidth() const noexcept;
         bool isClosed() const noexcept { return !isOpen(); }
@@ -51,12 +40,10 @@ namespace VG {
         void closeShape() noexcept { myShapeIsOpen=false; }
         
     private:
-        int myPointCnt=0;
-        std::vector<Point> myPoints;
+        Points myPoints;
         bool myShapeIsOpen=false;
     };
     
     std::ostream& operator<<(std::ostream& os, const VectorGraphic& rhs);
 }
 
-#endif /* VectorGraphic_hpp */
