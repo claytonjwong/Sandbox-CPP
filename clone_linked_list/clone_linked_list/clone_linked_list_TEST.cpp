@@ -30,9 +30,8 @@ TEST(one_two_three_example,clone_linked_list){
     ListNode* in_one=new ListNode(nullptr),*in=in_one;
     ListNode* in_two=new ListNode(nullptr);
     ListNode* in_three=new ListNode(nullptr);
-    in_one->next=in_two;
+    in_one->next=in_two; in_two->next=in_three;
     in_one->val=in_three;
-    in_two->next=in_three;
     in_two->val=in_two;
     in_three->val=in_one;
     
@@ -52,12 +51,15 @@ TEST(one_two_three_example,clone_linked_list){
     CHECK(in_two->val==in_two);
     CHECK(in_three->val==in_one);
     
-    auto out=s.clone(in),out_one=out,out_two=out->next,out_three=out->next->next;
+    auto out=s.clone(in),
+         out_one=out,
+         out_two=out_one->next,
+         out_three=out_two->next;
     
     //
     // 1 ---> 2 ---> 3 ---> NULL
     //
-    CHECK(out_one->next==out_two && out_two->next==out_three);
+    CHECK(out_one->next==out_two && out_two->next==out_three && out_three->next==nullptr);
     
     //
     //    ---------------
@@ -69,4 +71,48 @@ TEST(one_two_three_example,clone_linked_list){
     CHECK(out_one->val==out_three);
     CHECK(out_two->val==out_two);
     CHECK(out_three->val==out_one);
+}
+
+TEST(one_two_three_four,clone_linked_list){
+    Solution s;
+    ListNode* in_one=new ListNode(nullptr),*in=in_one;
+    ListNode* in_two=new ListNode(nullptr);
+    ListNode* in_three=new ListNode(nullptr);
+    ListNode* in_four=new ListNode(nullptr);
+    in_one->next=in_two; in_two->next=in_three; in_three->next=in_four;
+    in_one->val=in_two; in_two->val=in_three; in_three->val=in_four; in_four->val=in_one;
+    
+    //
+    // 1 ---> 2 ---> 3 ---> 4 ---> NULL
+    //
+    CHECK(in_one->next==in_two && in_two->next==in_three && in_three->next==in_four && in_four->next==nullptr);
+
+    //
+    //   ------------------------
+    //   |  -----  -----  ----- |
+    //   | |    | |    | |    | |
+    //   V |    V |    V |    V |
+    //    1 ---> 2 ---> 3 ---> 4 ---> NULL
+    //
+    CHECK(in_one->val==in_two && in_two->val==in_three && in_three->val==in_four && in_four->val==in_one);
+ 
+    auto out=s.clone(in),
+         out_one=out,
+         out_two=out_one->next,
+         out_three=out_two->next,
+         out_four=out_three->next;
+    
+    //
+    // 1 ---> 2 ---> 3 ---> 4 ---> NULL
+    //
+    CHECK(out_one->next==out_two && out_two->next==out_three && out_three->next==out_four && out_four->next==nullptr);
+
+    //
+    //   ------------------------
+    //   |  -----  -----  ----- |
+    //   | |    | |    | |    | |
+    //   V |    V |    V |    V |
+    //    1 ---> 2 ---> 3 ---> 4 ---> NULL
+    //
+    CHECK(out_one->val==out_two && out_two->val==out_three && out_three->val==out_four && out_four->val==out_one);
 }
