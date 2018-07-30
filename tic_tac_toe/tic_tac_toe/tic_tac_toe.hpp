@@ -4,6 +4,8 @@
  
  */
 
+#pragma once
+
 #include <string>
 #include <unordered_map>
 #include <utility>
@@ -12,7 +14,6 @@ namespace TicTacToe{
     
     enum class Player{X,O};
 
-    
     class Model {
     public:
         
