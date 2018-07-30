@@ -16,7 +16,7 @@ namespace TicTacToe{
     class Model {
     public:
         
-        Model(int N, int K) : mySize{std::min(N,getMaxSize())},myWinLen{K} {}
+        Model(int N, int K) : mySize{std::min(N,getMaxSize())},myWinLen{std::min(K,mySize)} {}
         
         bool makeMove(int i, int j, Player player){
             if (i<0||i>=mySize||j<0||j>=mySize)
