@@ -34,6 +34,8 @@
 
 #pragma once
 
+#include <queue>
+
 struct ListNode {
     ListNode *val,*next;
     ListNode(ListNode* x) : val{x},next{nullptr} {}
@@ -50,16 +52,22 @@ struct ListNode {
 //
 // ( i.e. out ---> previous in ---> out "clone" )
 //
+// Note: "in" is clobbered unless the previous values of "in" are restored
+// perform this as step #4
+//
 class Solution {
 public:
     ListNode* clone(ListNode* head) {
         if (head==nullptr)
             return nullptr;
+        std::queue<ListNode*> prev;
         ListNode* sentinel=new ListNode(nullptr);
         for (auto in=head,out=sentinel; in; in=in->next,out=out->next) // step #1 and step #2
-            in->val=out->next=new ListNode(in->val);
+            prev.push(in->val),in->val=out->next=new ListNode(in->val);
         for (auto out=sentinel->next; out; out=out->next) // step #3
             out->val=(out->val)->val;
+        for (auto in=head; in; in=in->next) // step #4 restore prev
+            in->val=prev.front(),prev.pop();
         return sentinel->next;
     }
 };
