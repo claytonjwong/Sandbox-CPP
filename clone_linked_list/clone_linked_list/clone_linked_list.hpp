@@ -34,7 +34,7 @@
 
 #pragma once
 
-#include <queue>
+#include <unordered_map>
 
 struct ListNode {
     ListNode *val,*next;
@@ -42,32 +42,22 @@ struct ListNode {
 };
 
 //
-// 1) create out "clone" with val equal to in's val
-// 2) update in val to to point towards its corresponding out "clone"
-// 3) iterate through out and update the out value to the node two-hops away
-//
-// Note: at step #3 above, out's val points to in's previous val
-// and in's previous value points to its corresponding out "clone",
-// therefore, update out's val to the node two-hops away
+// use a map to track the vals to clone
 //
 // ( i.e. out ---> previous in ---> out "clone" )
 //
-// Note: "in" is clobbered unless the previous values of "in" are restored
-// perform this as step #4
 //
 class Solution {
 public:
     ListNode* clone(ListNode* head) {
         if (head==nullptr)
             return nullptr;
-        std::queue<ListNode*> prev;
+        std::unordered_map<ListNode*,ListNode*> m;
         ListNode* sentinel=new ListNode(nullptr);
-        for (auto in=head,out=sentinel; in; in=in->next,out=out->next) // step #1 and step #2
-            prev.push(in->val),in->val=out->next=new ListNode(in->val);
-        for (auto out=sentinel->next; out; out=out->next) // step #3
-            out->val=(out->val)->val;
-        for (auto in=head; in; in=in->next) // step #4 restore prev
-            in->val=prev.front(),prev.pop();
+        for (auto in=head,out=sentinel; in; in=in->next,out=out->next)
+            m[in]=out->next=new ListNode(in->val);
+        for (auto out=sentinel->next; out; out=out->next)
+            out->val=m[out->val];
         return sentinel->next;
     }
 };
