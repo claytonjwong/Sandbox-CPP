@@ -46,7 +46,7 @@ public:
         if (head==nullptr)
             return nullptr;
         std::unordered_map<ListNode*,ListNode*> m;
-        ListNode* sentinel=new ListNode(nullptr);
+        auto sentinel=new ListNode(nullptr);
         for (auto in=head,out=sentinel; in; in=in->next,out=out->next)
             m[in]=out->next=new ListNode(in->val);
         for (auto out=sentinel->next; out; out=out->next)
