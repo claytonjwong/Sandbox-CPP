@@ -28,13 +28,13 @@ namespace TicTacToe{
             }
         }
         
-        bool isWin(int i, int j) {
-            auto key=hash(i,j);
-            if (myBoard.find(key)==myBoard.end()) return false;
+        bool isWin(int i, int j) const {
+            auto key=hash(i,j); auto curr_pos=myBoard.find(key);
+            if (curr_pos==myBoard.end()) return false;
             //
             // try to find player's myWinLen
             //
-            Player player=myBoard[key];
+            Player player=curr_pos->second;
             auto col_cnt=0,row_cnt=0,beg=std::max(0,j-myWinLen+1),end=std::min(j+myWinLen,mySize-1);
             for (auto k=beg; k<=end; ++k){
                 //
