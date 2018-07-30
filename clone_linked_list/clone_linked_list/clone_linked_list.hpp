@@ -40,13 +40,6 @@ struct ListNode {
     ListNode *val,*next;
     ListNode(ListNode* x) : val{x},next{nullptr} {}
 };
-
-//
-// use a map to track the vals to clone
-//
-// ( i.e. out ---> previous in ---> out "clone" )
-//
-//
 class Solution {
 public:
     ListNode* clone(ListNode* head) {
