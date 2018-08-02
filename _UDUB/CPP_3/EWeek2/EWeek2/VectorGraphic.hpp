@@ -6,8 +6,7 @@
 //  Copyright © 2018 Clayton Wong. All rights reserved.
 //
 
-#ifndef VectorGraphic_hpp
-#define VectorGraphic_hpp
+#pragma once
 
 #include <vector>
 #include "Point.hpp"
@@ -68,4 +67,4 @@ namespace VG {
     std::ostream& operator<<(std::ostream& os, const VectorGraphic& rhs);
 }
 
-#endif /* VectorGraphic_hpp */
+

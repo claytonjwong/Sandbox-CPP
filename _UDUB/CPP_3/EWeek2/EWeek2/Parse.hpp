@@ -6,8 +6,7 @@
 //  Copyright © 2018 Clayton Wong. All rights reserved.
 //
 
-#ifndef Parse_hpp
-#define Parse_hpp
+#pragma once
 
 #include <vector>
 #include <string>
@@ -42,4 +41,3 @@ namespace VG{
     };
 }
 
-#endif /* Parse_hpp */

@@ -6,8 +6,7 @@
 //  Copyright © 2018 Clayton Wong. All rights reserved.
 //
 
-#ifndef VectorGraphicStreamer_hpp
-#define VectorGraphicStreamer_hpp
+#pragma once
 
 #include <sstream>
 #include "VectorGraphic.hpp"
@@ -24,4 +23,3 @@ namespace VG {
 }
 
 
-#endif /* VectorGraphicStreamer_hpp */

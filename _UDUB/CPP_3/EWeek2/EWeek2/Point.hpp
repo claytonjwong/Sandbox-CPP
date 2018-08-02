@@ -6,8 +6,7 @@
 //  Copyright © 2018 Clayton Wong. All rights reserved.
 //
 
-#ifndef Point_hpp
-#define Point_hpp
+#pragma once
 
 #include <stdio.h>
 #include <iostream>
@@ -45,4 +44,4 @@ namespace VG {
     std::ostream& operator<<(std::ostream& os, const Point& rhs);
 }
 
-#endif /* Point_hpp */
+
