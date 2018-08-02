@@ -15,68 +15,107 @@ using namespace std;
 
 namespace VG {
     
-    Point VectorGraphic::getPoint(int index) const { // O(n) find
-        if (index<0 || index>=myPointCnt)
-            throw out_of_range{"invalid index"};
-        return Point{myPoints[index].getX(),myPoints[index].getY()};
+    void VectorGraphic::addPoint(const Point& point)
+    {
+        myPath.push_back(point);
     }
     
-    int VectorGraphic::getHeight() const noexcept { // lazy evaluation on-demand
-        if (myPointCnt==0)
-            return 0;
-        int minh=INT_MAX,maxh=INT_MIN;
-        for (auto& p: myPoints){
-            minh=min(minh,p.getY());
-            maxh=max(maxh,p.getY());
-        }
-        return (int)abs(minh-maxh);
+    void VectorGraphic::addPoint(Point&& point)
+    {
+        myPath.emplace_back(std::forward<Point>(point));
     }
     
-    int VectorGraphic::getWidth() const noexcept { // lazy evaluation on-demand
-        if (myPointCnt==0)
-            return 0;
-        int minw=INT_MAX,maxw=INT_MIN;
-        for (auto& p: myPoints){
-            minw=min(minw,p.getX());
-            maxw=max(maxw,p.getX());
+    void VectorGraphic::erasePoint(int index)
+    {
+        if ( index >= 0 && static_cast<size_t>(index) < getPointCount() )
+        {
+            auto pos = myPath.begin() + index;
+            myPath.erase(pos);
         }
-        return (int)abs(minw-maxw);
+        else
+        {
+            throw out_of_range{"index out of range"};
+        }
+    }
+    
+    void VectorGraphic::removePoint(const Point& point)
+    {
+        auto end_pos = remove(myPath.begin(), myPath.end(), point);
+        if ( end_pos != myPath.end() )
+        {
+            myPath.erase(end_pos, myPath.end());
+        }
+        else
+        {
+            throw invalid_argument("the point to remove does not appear in the vectorgraphic.");
+        }
+    }
+    
+    void VectorGraphic::openShape() noexcept
+    {
+        myShapeStyle = ShapeStyle::Open;
+    }
+    
+    void VectorGraphic::closeShape() noexcept
+    {
+         myShapeStyle = ShapeStyle::Close;
+    }
+    
+    bool VectorGraphic::isClosed() const noexcept
+    {
+        return !isOpen();
+        
+    }
+    bool VectorGraphic::isOpen() const noexcept
+    {
+        return myShapeStyle==ShapeStyle::Open;
+    }
+
+    
+    Point VectorGraphic::getPoint(int index) const
+    {
+        return myPath.at(index); // throws std::out_of_range if index out of range
+    }
+    
+    int VectorGraphic::getHeight() const noexcept
+    {
+        if ( getPointCount() > 0 )
+        {
+            auto [minIt, maxIt] = minmax_element(myPath.begin(), myPath.end(),
+                [](const Point& lhs, const Point& rhs) {return lhs.getY() < rhs.getY();  });
+            return maxIt->getY() - minIt->getY();
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    
+    int VectorGraphic::getWidth() const noexcept
+    {
+        if ( getPointCount() > 0 )
+        {
+            auto [minIt, maxIt] = minmax_element(myPath.begin(), myPath.end(),
+                [](const Point& lhs, const Point& rhs) {return lhs.getX() < rhs.getX();  });
+            return maxIt->getX() - minIt->getX();
+        }
+        else
+        {
+            return 0;
+        }
     }
     
     bool VectorGraphic::operator==(const VectorGraphic& rhs){
-        if (myPointCnt!=rhs.myPointCnt)
-            return false;
-        if (myShapeIsOpen!=rhs.myShapeIsOpen)
-            return false;
-        return equal(myPoints.begin(),myPoints.end(),rhs.myPoints.begin());
+        return myShapeStyle==rhs.myShapeStyle
+            && getPointCount()==rhs.getPointCount()
+            && equal(myPath.begin(),myPath.end(),rhs.myPath.begin());
     }
     
     bool VectorGraphic::operator!=(const VectorGraphic& rhs){
         return !(*this==rhs);
     }
     
-    void VectorGraphic::addPoint(Point&& rhs){ // O(1) insertion
-        myPoints.emplace_back(std::move(rhs));
-        ++myPointCnt;
-    }
-    
-    void VectorGraphic::erasePoint(int index){ // O(n) removal
-        if (index<0 || index>=myPointCnt)
-            throw out_of_range{"invalid index"};
-        auto itr=myPoints.begin();
-        advance(itr,index);
-        myPoints.erase(itr);
-        --myPointCnt;
-    }
-    
-    void VectorGraphic::removePoint(const Point& rhs){ // O(n) removal
-        for (auto itr=myPoints.begin(); itr!=myPoints.end(); ++itr)
-            if (*itr==rhs){
-                myPoints.erase(itr);
-                --myPointCnt;
-                return;
-            }
-    }
+
     
     ostream& operator<<(ostream& os, const VectorGraphic& rhs){
         os << "<VectorGraphic closed=\"" << (rhs.isClosed() ? "true" : "false") << "\">" << endl;
