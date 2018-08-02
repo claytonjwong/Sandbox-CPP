@@ -24,7 +24,7 @@ namespace VG {
         VectorGraphic& operator=(VectorGraphic& rhs)=default;
         VectorGraphic& operator=(VectorGraphic&& rhs)=default;
 
-        Point getPoint(int index) const;
+        const Point& getPoint(int index) const;
         size_t getPointCount() const noexcept { return myPoints.size(); }
         int getHeight() const noexcept;
         int getWidth() const noexcept;

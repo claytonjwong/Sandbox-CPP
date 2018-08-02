@@ -15,19 +15,17 @@ using namespace std;
 
 namespace VG {
     
-    Point VectorGraphic::getPoint(int index) const { // O(n) find
-        if (index<0 || index>=getPointCount())
-            throw out_of_range{"invalid index"};
-        return Point{myPoints[index].getX(),myPoints[index].getY()};
+    const Point& VectorGraphic::getPoint(int index) const {
+        return myPoints.at(index); // throws out_of_range
     }
     
-    int VectorGraphic::getHeight() const noexcept { // lazy evaluation on-demand
+    int VectorGraphic::getHeight() const noexcept {
         auto [minIt,maxIt]=minmax_element(myPoints.begin(),myPoints.end(),
             [](const Point& lhs, const Point& rhs) {return lhs.getY() < rhs.getY(); });
         return myPoints.empty() ? 0 : maxIt->getY() - minIt->getY();
     }
     
-    int VectorGraphic::getWidth() const noexcept { // lazy evaluation on-demand
+    int VectorGraphic::getWidth() const noexcept {
         auto [minIt,maxIt]=minmax_element(myPoints.begin(),myPoints.end(),
             [](const Point& lhs, const Point& rhs) {return lhs.getX() < rhs.getX(); });
         return myPoints.empty() ? 0 : maxIt->getX() - minIt->getX();
@@ -48,17 +46,16 @@ namespace VG {
     void VectorGraphic::erasePoint(int index){
         if (index<0 || index>=getPointCount())
             throw out_of_range{"invalid index"};
-        auto itr=myPoints.begin();
-        advance(itr,index);
-        myPoints.erase(itr);
+        auto pos=myPoints.begin() + index;
+        myPoints.erase(pos);
     }
     
-    void VectorGraphic::removePoint(const Point& rhs){
-        for (auto itr=myPoints.begin(); itr!=myPoints.end(); ++itr)
-            if (*itr==rhs){
-                myPoints.erase(itr);
-                return;
-            }
+    void VectorGraphic::removePoint(const Point& point){
+        auto newEnd=remove(myPoints.begin(),myPoints.end(),point);
+        if (newEnd==myPoints.end())
+            throw invalid_argument("unable to remove point");
+        else
+            myPoints.erase(newEnd,myPoints.end());
     }
     
     ostream& operator<<(ostream& os, const VectorGraphic& rhs){
