@@ -6,7 +6,8 @@
 //  Copyright © 2018 Clayton Wong. All rights reserved.
 //
 
-#pragma once
+#ifndef Point_hpp
+#define Point_hpp
 
 #include <stdio.h>
 #include <iostream>
@@ -16,30 +17,32 @@ namespace VG {
     
     class Point{
     public:
-        Point();
-        constexpr Point(const int x, const int y) : myX{x},myY{y} {
+    
+        constexpr Point(int x, int y) : myX{x},myY{y} {
             if (x<0 || y<0)
                 throw std::out_of_range("point values cannot be negative");
         }
+        
         ~Point()=default;
-        Point(Point& src)=default;
+        
+        Point(const Point& src)=default;
         Point(Point&& src)=default;
+        
         Point& operator=(const Point& rhs)=default;
         Point& operator=(Point&& rhs)=default;
         
-        bool operator==(const Point& rhs) const noexcept;
-        bool operator!=(const Point& rhs) const noexcept;
         constexpr int getX() const noexcept { return myX; }
         constexpr int getY() const noexcept { return myY; }
-        
-        int getHash() const noexcept {
-            return (2<<20)*getX()+getY();
-        }
+        size_t getHash() const noexcept { return (2<<20)*myX+myY; }
                 
     private:
-        int myX, myY;
+        int myX{ 0 };
+        int myY{ 0 };
     };
     
+    bool operator==(const Point& lhs, const Point& rhs);
+    bool operator!=(const Point& lhs, const Point& rhs);
     std::ostream& operator<<(std::ostream& os, const Point& rhs);
 }
 
+#endif /* Point_hpp */
