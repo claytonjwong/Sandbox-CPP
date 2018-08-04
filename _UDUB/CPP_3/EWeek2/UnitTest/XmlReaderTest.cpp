@@ -50,7 +50,7 @@ TEST(loadXml, XmlReader)
     CHECK_EQUAL(2, attributes.size());
     CHECK_EQUAL("800", attributes["width"])
     CHECK_EQUAL("600", attributes["height"])
-/*
+
     Xml::ElementList children = root->getChildElements();
     CHECK(!children.empty());
     CHECK_EQUAL(2, children.size());
@@ -61,7 +61,7 @@ TEST(loadXml, XmlReader)
     CHECK(!attributes.empty());
     CHECK_EQUAL(1, attributes.size());
     CHECK_EQUAL("sky", layer0->getAttribute("alias"));
-
+/*
     Xml::ElementList layerChildren = layer0->getChildElements();
     CHECK(!layerChildren.empty());
     CHECK_EQUAL(2, layerChildren.size());

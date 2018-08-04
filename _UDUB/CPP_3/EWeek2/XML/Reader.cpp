@@ -10,20 +10,22 @@
 #include "tinyxml2.h"
 #include <sstream>
 
+using namespace std;
+
 namespace Xml
 {
-    HElement Reader::loadXml(std::stringstream& ss)
+    HElement Reader::loadXml(stringstream& ss)
     {
         static tinyxml2::XMLDocument xmlDocument;
-        const auto& str=ss.str();
-        auto result=xmlDocument.Parse(str.c_str());
+        const auto& str = ss.str();
+        auto result = xmlDocument.Parse( str.c_str() );
         if ( result == tinyxml2::XML_SUCCESS )
         {
-            return new Element{ xmlDocument.RootElement() };
+            return make_shared<Element>( xmlDocument.RootElement() );
         }
         else
         {
-            throw std::runtime_error("failed to parse XML input");
+            throw runtime_error( "failed to parse XML input" );
         }
     }
 }

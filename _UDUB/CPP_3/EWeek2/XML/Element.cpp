@@ -7,12 +7,13 @@
 //
 
 #include "Element.hpp"
+#include <iostream>
 
 using namespace std;
 
 namespace Xml
 {
-    string Element::getName() const
+    string Element::getName() const noexcept
     {
         auto result = myRoot->Name();
         if ( result != nullptr )
@@ -25,7 +26,7 @@ namespace Xml
         }
     }
     
-    string Element::getAttribute(const string& name) const
+    string Element::getAttribute(const string& name) const noexcept
     {
         auto result = myRoot->Attribute(name.c_str());
         if ( result != nullptr )
@@ -38,7 +39,7 @@ namespace Xml
         }
     }
     
-    AttributeMap Element::getAttributes() const
+    AttributeMap Element::getAttributes() const noexcept
     {
         AttributeMap result;
         for ( auto attribute = myRoot->FirstAttribute();
@@ -47,6 +48,20 @@ namespace Xml
         {
             result[ attribute->Name() ] = attribute->Value();
         }
+        return result;
+    }
+    
+    ElementList Element::getChildElements() const noexcept
+    {
+        ElementList result;
+        
+        for ( auto child = myRoot->FirstChildElement("Layer");
+              child != nullptr;
+              child = child->NextSiblingElement() )
+        {
+            result.push_back( make_shared<Element>( child ) );
+        }
+        
         return result;
     }
 }
