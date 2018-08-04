@@ -9,15 +9,19 @@
 #pragma once
 
 #include "tinyxml2.h"
-#include <iostream>
+#include <string>
+#include <unordered_map>
+
 
 namespace Xml
 {
+    using AttributeMap=std::unordered_map<std::string,std::string>;
+
     class Element
     {
     public:
         
-        Element(tinyxml2::XMLElement* root) : myXMLElement{root} {}
+        Element(tinyxml2::XMLElement* root) : myRoot{root} {}
         
         Element(const Element& src)=delete;
         Element(const Element&& src)=delete;
@@ -28,6 +32,7 @@ namespace Xml
         std::string getName() const;
         std::string getAttribute(const std::string& name) const;
         
+        AttributeMap getAttributes() const;
 /*
 
     Xml::AttributeMap attributes = root->getAttributes();
@@ -41,7 +46,7 @@ namespace Xml
         
         
     private:
-        tinyxml2::XMLElement* myXMLElement;
+        tinyxml2::XMLElement* myRoot;
     };
     
     using HElement=Element*;

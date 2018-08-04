@@ -14,7 +14,7 @@ namespace Xml
 {
     string Element::getName() const
     {
-        auto result = myXMLElement->Name();
+        auto result = myRoot->Name();
         if ( result != nullptr )
         {
             return string{ result };
@@ -27,7 +27,7 @@ namespace Xml
     
     string Element::getAttribute(const string& name) const
     {
-        auto result = myXMLElement->Attribute(name.c_str());
+        auto result = myRoot->Attribute(name.c_str());
         if ( result != nullptr )
         {
             return string{ result };
@@ -36,5 +36,17 @@ namespace Xml
         {
             return {};
         }
+    }
+    
+    AttributeMap Element::getAttributes() const
+    {
+        AttributeMap result;
+        for ( auto attribute = myRoot->FirstAttribute();
+              attribute != nullptr;
+              attribute = attribute->Next() )
+        {
+            result[ attribute->Name() ] = attribute->Value();
+        }
+        return result;
     }
 }
