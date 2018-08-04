@@ -11,7 +11,7 @@
 #include <exception>
 #include <list>
 
-using namespace std;
+    using namespace std;
 
 namespace VG {
     
