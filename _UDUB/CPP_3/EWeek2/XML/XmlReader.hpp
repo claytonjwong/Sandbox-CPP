@@ -21,5 +21,9 @@ namespace Xml
     public:
         
         static HElement loadXml(std::stringstream& ss);
+        
+    private:
+    
+        static HElement make_HElement(HXMLNode root);
     };
 }

@@ -1,4 +1,4 @@
-#include "Reader.hpp"
+#include "XmlReader.hpp"
 #include "VectorGraphic.hpp"
 #include "TestHarness.h"
 #include <sstream>

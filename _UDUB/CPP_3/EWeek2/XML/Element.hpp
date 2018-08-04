@@ -41,13 +41,10 @@ namespace Xml
         AttributeMap getAttributes() const noexcept;
         
         ElementList getChildElements() const noexcept;
-/*
-
-
-*/
         
         
     private:
+    
         HXMLNode myRoot;
     };
 

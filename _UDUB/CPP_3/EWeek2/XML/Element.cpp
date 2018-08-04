@@ -59,7 +59,7 @@ namespace Xml
               child != nullptr;
               child = child->NextSiblingElement() )
         {
-            result.push_back( make_shared<Element>( child ) );
+            result.push_back(  make_shared<Element>( child )  );
         }
         
         return result;

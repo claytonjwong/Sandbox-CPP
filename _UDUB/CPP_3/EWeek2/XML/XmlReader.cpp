@@ -6,7 +6,7 @@
 //  Copyright © 2018 Clayton Wong. All rights reserved.
 //
 
-#include "Reader.hpp"
+#include "XmlReader.hpp"
 #include "tinyxml2.h"
 #include <sstream>
 
@@ -21,11 +21,16 @@ namespace Xml
         auto result = xmlDocument.Parse( str.c_str() );
         if ( result == tinyxml2::XML_SUCCESS )
         {
-            return make_shared<Element>( xmlDocument.RootElement() );
+            return make_HElement( xmlDocument.RootElement() );
         }
         else
         {
             throw runtime_error( "failed to parse XML input" );
         }
+    }
+    
+    HElement Reader::make_HElement(HXMLNode root)
+    {
+        return make_shared<Element>( root );
     }
 }
