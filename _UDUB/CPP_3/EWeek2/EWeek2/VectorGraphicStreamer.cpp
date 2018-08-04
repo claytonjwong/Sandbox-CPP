@@ -6,11 +6,11 @@
 //  Copyright © 2018 Clayton Wong. All rights reserved.
 //
 
-#include <fstream>
-#include <sstream>
 #include "VectorGraphicStreamer.hpp"
 #include "VectorGraphic.hpp"
 #include "Parse.hpp"
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 

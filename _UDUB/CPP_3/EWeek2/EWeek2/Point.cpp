@@ -6,13 +6,13 @@
 //  Copyright © 2018 Clayton Wong. All rights reserved.
 //
 
-#include "Point.hpp"
 #include <iostream>
+#include "Point.hpp"
 
 using namespace std;
 
-namespace VG {
-
+namespace VG
+{
     bool operator==(const Point& lhs, const Point& rhs)
     {
         return lhs.getX() == rhs.getX()

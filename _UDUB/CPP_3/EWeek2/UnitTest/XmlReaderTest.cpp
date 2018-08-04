@@ -1,6 +1,7 @@
-//#include "XmlReader.h"
+#include "Reader.hpp"
 #include "VectorGraphic.hpp"
 #include "TestHarness.h"
+#include <sstream>
 
 #define STR(a) #a
 
@@ -35,15 +36,15 @@ const char* const SceneXml = STR(
 
 TEST(loadXml, XmlReader)
 {
-    //std::stringstream xmlStream(SceneXml);
-/*
+    std::stringstream xmlStream(SceneXml);
+
     Xml::HElement root = Xml::Reader::loadXml(xmlStream);
 
     CHECK_EQUAL("Scene", root->getName());
     CHECK_EQUAL("800", root->getAttribute("width"));
     CHECK_EQUAL("600", root->getAttribute("height"));
     CHECK(root->getAttribute("depth").empty());
-
+/*
     Xml::AttributeMap attributes = root->getAttributes();
     CHECK(!attributes.empty());
     CHECK_EQUAL(2, attributes.size());

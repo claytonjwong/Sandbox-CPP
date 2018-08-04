@@ -6,10 +6,10 @@
 //  Copyright © 2018 Clayton Wong. All rights reserved.
 //
 
-#include <exception>
-#include <list>
 #include "VectorGraphic.hpp"
 #include "Point.hpp"
+#include <exception>
+#include <list>
 
 using namespace std;
 

@@ -8,8 +8,8 @@
 
 #pragma once
 
-#include <vector>
 #include "Point.hpp"
+#include <vector>
 
 /*
  TEST(removePoint, VectorGraphic)

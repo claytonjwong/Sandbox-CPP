@@ -8,8 +8,8 @@
 
 #pragma once
 
-#include <sstream>
 #include "VectorGraphic.hpp"
+#include <sstream>
 
 namespace VG {
     

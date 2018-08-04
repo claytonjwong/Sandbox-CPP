@@ -6,14 +6,14 @@
 //  Copyright © 2018 Clayton Wong. All rights reserved.
 //
 
+#include "VectorGraphic.hpp"
+#include "Parse.hpp"
+#include "Token.hpp"
 #include <string>
 #include <unordered_set>
 #include <iostream>
 #include <sstream>
 #include <regex>
-#include "Parse.hpp"
-#include "Token.hpp"
-#include "VectorGraphic.hpp"
 
 using namespace std;
 

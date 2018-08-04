@@ -8,11 +8,11 @@
 
 #pragma once
 
+#include "Token.hpp"
+#include "VectorGraphic.hpp"
 #include <vector>
 #include <string>
 #include <exception>
-#include "Token.hpp"
-#include "VectorGraphic.hpp"
 
 namespace VG{
     

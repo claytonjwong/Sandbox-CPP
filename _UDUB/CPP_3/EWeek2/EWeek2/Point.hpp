@@ -11,9 +11,10 @@
 #include <iostream>
 #include <exception>
 
-namespace VG {
-    
-    class Point{
+namespace VG
+{
+    class Point
+    {
     public:
     
         constexpr Point(int x, int y) : myX{x},myY{y}
