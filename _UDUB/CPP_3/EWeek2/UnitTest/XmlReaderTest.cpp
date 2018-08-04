@@ -61,7 +61,7 @@ TEST(loadXml, XmlReader)
     CHECK(!attributes.empty());
     CHECK_EQUAL(1, attributes.size());
     CHECK_EQUAL("sky", layer0->getAttribute("alias"));
-/*
+
     Xml::ElementList layerChildren = layer0->getChildElements();
     CHECK(!layerChildren.empty());
     CHECK_EQUAL(2, layerChildren.size());
@@ -72,6 +72,6 @@ TEST(loadXml, XmlReader)
     CHECK_EQUAL(2, attributes.size());
     CHECK_EQUAL("0", placedGraphic->getAttribute("x"));
     CHECK_EQUAL("0", placedGraphic->getAttribute("y"));
-*/
+
 }
 

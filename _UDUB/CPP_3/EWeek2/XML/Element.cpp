@@ -55,7 +55,7 @@ namespace Xml
     {
         ElementList result;
         
-        for ( auto child = myRoot->FirstChildElement("Layer");
+        for ( auto child = myRoot->FirstChildElement();
               child != nullptr;
               child = child->NextSiblingElement() )
         {
