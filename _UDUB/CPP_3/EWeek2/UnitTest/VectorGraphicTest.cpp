@@ -1,5 +1,5 @@
 
-#include "Parse.hpp"
+
 #include "VectorGraphic.hpp"
 #include "VectorGraphicStreamer.hpp"
 #include "TestHarness.h"
@@ -177,6 +177,7 @@ TEST(toXml, VectorGraphic)
     
     std::stringstream sstr;
     VG::VectorGraphicStreamer::toStream(sstr,vg1);
+    std::cout << sstr.str() << std::endl;
     VG::VectorGraphicStreamer::fromStream(sstr,vg2);
     
     CHECK(vg1 == vg2);

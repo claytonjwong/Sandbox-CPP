@@ -26,7 +26,7 @@
 
 namespace VG {
 
-    using Points=std::vector<Point>;
+    using Points = std::vector<Point>;
 
     class VectorGraphic {
     public:
@@ -39,7 +39,7 @@ namespace VG {
         VectorGraphic& operator=(VectorGraphic&& rhs)=default;
 
         Point getPoint(int index) const;
-        size_t getPointCount() const noexcept { return myPath.size(); }
+        size_t getPointCount() const noexcept;
 
         bool operator==(const VectorGraphic& rhs);
         bool operator!=(const VectorGraphic& rhs);

@@ -17,12 +17,12 @@ namespace VG {
     
     void VectorGraphic::addPoint(const Point& point)
     {
-        myPath.push_back(point);
+        myPath.push_back( point );
     }
     
     void VectorGraphic::addPoint(Point&& point)
     {
-        myPath.emplace_back(std::forward<Point>(point));
+        myPath.emplace_back(  std::forward<Point>( point )  );
     }
     
     void VectorGraphic::erasePoint(int index)
@@ -30,24 +30,24 @@ namespace VG {
         if ( index >= 0 && static_cast<size_t>(index) < getPointCount() )
         {
             auto pos = myPath.begin() + index;
-            myPath.erase(pos);
+            myPath.erase( pos );
         }
         else
         {
-            throw out_of_range{"index out of range"};
+            throw out_of_range{ "index out of range" };
         }
     }
     
     void VectorGraphic::removePoint(const Point& point)
     {
-        auto end_pos = remove(myPath.begin(), myPath.end(), point);
+        auto end_pos = remove( myPath.begin(), myPath.end(), point );
         if ( end_pos != myPath.end() )
         {
-            myPath.erase(end_pos, myPath.end());
+            myPath.erase( end_pos, myPath.end() );
         }
         else
         {
-            throw invalid_argument("the point to remove does not appear in the vectorgraphic.");
+            throw invalid_argument{ "the point to remove does not appear in the vectorgraphic." };
         }
     }
     
@@ -74,15 +74,20 @@ namespace VG {
     
     Point VectorGraphic::getPoint(int index) const
     {
-        return myPath.at(index); // throws std::out_of_range if index out of range
+        return myPath.at( index ); // throws std::out_of_range if index out of range
+    }
+    
+    size_t VectorGraphic::getPointCount() const noexcept
+    {
+        return myPath.size();
     }
     
     int VectorGraphic::getHeight() const noexcept
     {
         if ( getPointCount() > 0 )
         {
-            auto [minIt, maxIt] = minmax_element(myPath.begin(), myPath.end(),
-                [](const Point& lhs, const Point& rhs) {return lhs.getY() < rhs.getY();  });
+            auto [minIt, maxIt] = minmax_element( myPath.begin(), myPath.end(),
+                []( const Point& lhs, const Point& rhs ) {return lhs.getY() < rhs.getY();  });
             return maxIt->getY() - minIt->getY();
         }
         else
@@ -95,8 +100,8 @@ namespace VG {
     {
         if ( getPointCount() > 0 )
         {
-            auto [minIt, maxIt] = minmax_element(myPath.begin(), myPath.end(),
-                [](const Point& lhs, const Point& rhs) {return lhs.getX() < rhs.getX();  });
+            auto [minIt, maxIt] = minmax_element( myPath.begin(), myPath.end(),
+                []( const Point& lhs, const Point& rhs ) {return lhs.getX() < rhs.getX();  });
             return maxIt->getX() - minIt->getX();
         }
         else
@@ -106,21 +111,21 @@ namespace VG {
     }
     
     bool VectorGraphic::operator==(const VectorGraphic& rhs){
-        return (myPath == rhs.myPath) && (myShapeStyle == rhs.myShapeStyle);
+        return ( myPath == rhs.myPath ) && ( myShapeStyle == rhs.myShapeStyle );
     }
     
     bool VectorGraphic::operator!=(const VectorGraphic& rhs){
-        return ! (*this == rhs);
+        return ! ( *this == rhs );
     }
     
     // TODO: remove this, cool to use operator <<, but not cool
     // for VectorGraphic to track each file format ( XML, HTML, etc etc )
     // which it can be output as
-    ostream& operator<<(ostream& os, const VectorGraphic& rhs){
-        os << "<VectorGraphic closed=\"" << (rhs.isClosed() ? "true" : "false") << "\">" << endl;
-        for (int i=0,N=(int)rhs.getPointCount(); i<N; ++i)
-            os << "  " << rhs.getPoint(i) << endl;
-        os << "</VectorGraphic>";
-        return os;
-    }
+//    ostream& operator<<(ostream& os, const VectorGraphic& rhs){
+//        os << "<VectorGraphic closed=\"" << ( rhs.isClosed() ? "true" : "false" ) << "\">" << endl;
+//        for (int i=0,N=(int)rhs.getPointCount(); i<N; ++i)
+//            os << "  " << rhs.getPoint(i) << endl;
+//        os << "</VectorGraphic>";
+//        return os;
+//    }
 }

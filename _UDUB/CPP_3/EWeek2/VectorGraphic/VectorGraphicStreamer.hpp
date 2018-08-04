@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include "Element.hpp"
 #include "VectorGraphic.hpp"
 #include <sstream>
 
@@ -17,6 +18,8 @@ namespace VG {
     public:
         static void fromFile(const std::string& filename, VectorGraphic& vg);
         static void fromStream(std::stringstream& sstr, VectorGraphic& vg);
+        static void fromHandle(Xml::HElement handle, VectorGraphic& vg);
+        
         static void toFile(const std::string& filename, const VectorGraphic& vg);
         static void toStream(std::stringstream& ss,const VectorGraphic& vg);
     };

@@ -1,8 +1,8 @@
-/*
-#include "PlacedGraphic.h"
-#include "VectorGraphic.h"
-#include "TestHarness.h"
 
+//#include "PlacedGraphic.hpp"
+#include "VectorGraphic.hpp"
+#include "TestHarness.h"
+/*
 TEST(ctor, PlacedGraphic)
 {
     VG::HVectorGraphic vg(new VG::VectorGraphic);

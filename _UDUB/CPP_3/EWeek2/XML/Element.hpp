@@ -16,7 +16,7 @@
 
 namespace Xml
 {
-    class Element; // forward declaration for HElement definition
+    class Element; // forward declaration for HElement using-declaration
     
     using HElement = std::shared_ptr<Element>;
     using HXMLNode = tinyxml2::XMLElement*;
