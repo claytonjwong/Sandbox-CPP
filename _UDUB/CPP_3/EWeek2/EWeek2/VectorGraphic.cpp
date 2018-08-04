@@ -68,7 +68,7 @@ namespace VG {
     }
     bool VectorGraphic::isOpen() const noexcept
     {
-        return myShapeStyle==ShapeStyle::Open;
+        return myShapeStyle == ShapeStyle::Open;
     }
 
     
@@ -106,17 +106,16 @@ namespace VG {
     }
     
     bool VectorGraphic::operator==(const VectorGraphic& rhs){
-        return myShapeStyle==rhs.myShapeStyle
-            && getPointCount()==rhs.getPointCount()
-            && equal(myPath.begin(),myPath.end(),rhs.myPath.begin());
+        return (myPath == rhs.myPath) && (myShapeStyle == rhs.myShapeStyle);
     }
     
     bool VectorGraphic::operator!=(const VectorGraphic& rhs){
-        return !(*this==rhs);
+        return ! (*this == rhs);
     }
     
-
-    
+    // TODO: remove this, cool to use operator <<, but not cool
+    // for VectorGraphic to track each file format ( XML, HTML, etc etc )
+    // which it can be output as
     ostream& operator<<(ostream& os, const VectorGraphic& rhs){
         os << "<VectorGraphic closed=\"" << (rhs.isClosed() ? "true" : "false") << "\">" << endl;
         for (int i=0,N=(int)rhs.getPointCount(); i<N; ++i)

@@ -20,7 +20,7 @@ namespace VG {
     }
     
     bool operator!=(const Point& lhs, const Point& rhs) {
-        return !( lhs == rhs );
+        return ! ( lhs == rhs );
     }
 
     ostream& operator<<(ostream& os, const Point& rhs) {

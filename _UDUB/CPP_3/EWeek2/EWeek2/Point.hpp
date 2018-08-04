@@ -8,7 +8,6 @@
 
 #pragma once
 
-#include <stdio.h>
 #include <iostream>
 #include <exception>
 
@@ -17,9 +16,12 @@ namespace VG {
     class Point{
     public:
     
-        constexpr Point(int x, int y) : myX{x},myY{y} {
+        constexpr Point(int x, int y) : myX{x},myY{y}
+        {
             if (x<0 || y<0)
+            {
                 throw std::out_of_range("point values cannot be negative");
+            }
         }
         
         ~Point()=default;
@@ -32,7 +34,6 @@ namespace VG {
         
         constexpr int getX() const noexcept { return myX; }
         constexpr int getY() const noexcept { return myY; }
-        size_t getHash() const noexcept { return (2<<20)*myX+myY; }
                 
     private:
         int myX{ 0 };

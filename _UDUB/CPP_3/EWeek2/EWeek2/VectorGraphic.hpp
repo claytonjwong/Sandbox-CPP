@@ -30,6 +30,7 @@ namespace VG {
 
     class VectorGraphic {
     public:
+    
         VectorGraphic() : myShapeStyle{ShapeStyle::Close} {}
         ~VectorGraphic()=default;
         VectorGraphic(VectorGraphic& src)=default;
@@ -43,11 +44,11 @@ namespace VG {
         bool operator==(const VectorGraphic& rhs);
         bool operator!=(const VectorGraphic& rhs);
         
-        void addPoint(const Point& rhs);
-        void addPoint(Point&& rhs);
+        void addPoint(const Point& point);
+        void addPoint(Point&& point);
         
         void erasePoint(int index);
-        void removePoint(const Point& rhs);
+        void removePoint(const Point& point);
         
         void openShape() noexcept;
         void closeShape() noexcept;
@@ -59,6 +60,7 @@ namespace VG {
         int getWidth() const noexcept;
 
     private:
+    
         Points myPath;
         
         enum class ShapeStyle { Open, Close } myShapeStyle;
