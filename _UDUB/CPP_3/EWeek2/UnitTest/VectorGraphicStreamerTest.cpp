@@ -25,3 +25,10 @@ TEST(toFileDefault,VectorGraphicStreamer){
     CHECK(vg1==vg2);
 }
 
+TEST(toFileInXml,VectorGraphicStreamer){
+    string filename="in.xml";
+    auto vg1 = VectorGraphicStreamer::getVectorGraphicFromFile(filename);
+    VectorGraphicStreamer::setVectorGraphicToFile(vg1, filename);
+    auto vg2 = VectorGraphicStreamer::getVectorGraphicFromFile(filename);
+    CHECK(vg1==vg2);
+}
