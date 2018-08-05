@@ -14,7 +14,7 @@ using namespace std;
 
 namespace Xml
 {
-    void Writer::writeXml(const HElement root, ostream& os, int&& depth)
+    void Writer::writeXml(const HElement root, ostream& os, int&& depth) // default value depth=0
     {
         if ( root != nullptr )
         {
