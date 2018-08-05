@@ -32,4 +32,9 @@ namespace Framework
     {
         myPlacementPoint = point;
     }
+    
+    void PlacedGraphic::setGraphic(const VG::HVectorGraphic& vg) noexcept
+    {
+        myGraphic = vg.get();
+    }
 }

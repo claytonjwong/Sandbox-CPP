@@ -24,7 +24,7 @@ TEST(setPlacementPoint, PlacedGraphic)
     CHECK_EQUAL(expected, graphic.getPlacementPoint());
 }
 
-/*
+
 TEST(setGraphic, PlacedGraphic)
 {
     Framework::PlacedGraphic pg;
@@ -33,4 +33,4 @@ TEST(setGraphic, PlacedGraphic)
 
     CHECK_EQUAL(vg.get(), &pg.getGraphic());
 }
-*/
+

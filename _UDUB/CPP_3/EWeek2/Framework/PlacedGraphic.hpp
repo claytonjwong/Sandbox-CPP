@@ -32,7 +32,8 @@ namespace Framework
         const VG::VectorGraphic& getGraphic() const noexcept;
     
         void setPlacementPoint(const VG::Point&& point) noexcept;
-    
+        void setGraphic(const VG::HVectorGraphic& vg) noexcept;
+        
     private:
         
         VG::Point myPlacementPoint;

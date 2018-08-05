@@ -28,7 +28,7 @@
 namespace VG {
 
     class VectorGraphic; // forward declaration for HVectorGraphic using-declaration
-    using HVectorGraphic = std::shared_ptr<VectorGraphic>;
+    using HVectorGraphic = std::unique_ptr<VectorGraphic>;
     using Points = std::vector<Point>;
     
 
