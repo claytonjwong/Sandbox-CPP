@@ -17,8 +17,11 @@ namespace Xml
     const HElement Reader::loadXml(stringstream& ss)
     {
         HElement element_handle = make_shared<Element>();
+        
         const auto& xml = ss.str();
+        
         auto return_code = element_handle->parseXML( xml ); // TODO: expose API & update myRoot here!
+        
         if ( return_code == tinyxml2::XML_SUCCESS )
         {
             return element_handle;

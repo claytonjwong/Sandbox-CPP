@@ -17,7 +17,6 @@
 namespace Xml
 {
     class Element; // forward declaration for HElement using-declaration
-    
     using HElement = std::shared_ptr<Element>;
     
     using HXMLElement = tinyxml2::XMLElement*;
@@ -61,6 +60,21 @@ namespace Xml
         }
     
     private:
+        
+        void updateOriginalRoot() const
+        {
+            //
+            // is myRoot is null, then update myRoot to point towards
+            // the beginning of the original copy of the document
+            //
+            // otherwise no-op if myRoot is NOT null, because this element
+            // was constructed by pointing myRoot towards some node in the original document
+            //
+            if ( myRoot == nullptr )
+            {
+                myRoot = const_cast<HXMLElement>( myDocument.RootElement() );
+            }
+        }
         
         mutable HXMLElement myRoot;
         ElementDocument myDocument;
