@@ -11,18 +11,6 @@ TEST(ctor, PlacedGraphic)
 
     constexpr VG::Point expected(44, 55);
     CHECK_EQUAL(expected, pg.getPlacementPoint());
-    CHECK_EQUAL(vg.get(), &*vg);
-
-    auto test1 = vg.get();
-    auto test2 = *vg;
-    auto test3 = &*vg;
-    auto test4 = &*(vg.get());
-    
-    std::cout << &*vg << std::endl;
-    std::cout << test1 << std::endl;
-    std::cout << test3 << std::endl;
-    std::cout << test4 << std::endl;
-
     CHECK_EQUAL(vg.get(), &pg.getGraphic());
 }
 
