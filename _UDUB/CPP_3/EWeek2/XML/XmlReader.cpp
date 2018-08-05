@@ -20,7 +20,7 @@ namespace Xml
         
         const auto& xml = ss.str();
         
-        auto return_code = element_handle->parseXML( xml ); // TODO: expose API & update myRoot here!
+        auto return_code = element_handle->parseXML( xml );
         
         if ( return_code == tinyxml2::XML_SUCCESS )
         {

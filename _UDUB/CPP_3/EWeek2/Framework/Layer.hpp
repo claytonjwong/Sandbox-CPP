@@ -13,14 +13,20 @@
 
 namespace Framework
 {
-    using PlacedGraphicCollection = std::list<PlacedGraphic>;
-    using PlacedGraphicIterator = std::list<PlacedGraphic>::const_iterator;
 
     class Layer
     {
     public:
-    
+
+        using PlacedGraphicCollection = std::list<PlacedGraphic>;
+        using PlacedGraphicIterator = std::list<PlacedGraphic>::const_iterator;
+
         Layer(const std::string& alias) : myAlias{ alias } {}
+        
+        const std::string& getAlias() const noexcept
+        {
+            return myAlias;
+        }
         
         PlacedGraphicIterator begin() const noexcept
         {
@@ -30,6 +36,11 @@ namespace Framework
         PlacedGraphicIterator end() const noexcept
         {
             return myGraphics.end();
+        }
+        
+        void addGraphic(const PlacedGraphic& graphic) noexcept
+        {
+            myGraphics.push_back( graphic );
         }
         
     private:

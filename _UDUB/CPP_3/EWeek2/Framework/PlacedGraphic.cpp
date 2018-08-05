@@ -13,10 +13,10 @@ using namespace VG;
 namespace Framework
 {
     PlacedGraphic::PlacedGraphic()
-    : myPlacementPoint{ VG::Point{0,0} }, myGraphic{ nullptr } {}
+    : myPlacementPoint{ VG::Point{0,0} }, myGraphic{ nullptr }, myGraphicHandle{ nullptr } {}
     
-    PlacedGraphic::PlacedGraphic(const VG::Point&& point, const VG::HVectorGraphic& vg)
-    : myPlacementPoint{ point }, myGraphic{ vg.get() } {}
+    PlacedGraphic::PlacedGraphic(const VG::Point&& point, const VG::HVectorGraphic& hvg)
+    : myPlacementPoint{ point }, myGraphic{ hvg.get() }, myGraphicHandle{ hvg } {}
 
     Point PlacedGraphic::getPlacementPoint() const noexcept
     {
@@ -26,6 +26,7 @@ namespace Framework
     const VG::VectorGraphic& PlacedGraphic::getGraphic() const noexcept
     {
         return *myGraphic;
+        
     }
     
     void PlacedGraphic::setPlacementPoint(const VG::Point&& point) noexcept
@@ -33,8 +34,9 @@ namespace Framework
         myPlacementPoint = point;
     }
     
-    void PlacedGraphic::setGraphic(const VG::HVectorGraphic& vg) noexcept
+    void PlacedGraphic::setGraphic(const VG::HVectorGraphic& hvg) noexcept
     {
-        myGraphic = vg.get();
+        myGraphic = hvg.get();
+        myGraphicHandle = hvg;
     }
 }

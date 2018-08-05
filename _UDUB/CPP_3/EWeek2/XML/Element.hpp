@@ -46,6 +46,7 @@ namespace Xml
         const std::string getAttribute(const std::string& name) const noexcept;
         const AttributeMap getAttributes() const noexcept;
         const ElementList getChildElements() const noexcept;
+        const HElement getFirstChild() const;
         
         ElementError parseXML(const std::string& xml);
         HXMLElement createXMLNode(const std::string& name);
@@ -55,6 +56,7 @@ namespace Xml
         
         HXMLElement myRoot;
         ElementDocument myDocument;
+        ElementList myChildren;
     };
 
 }

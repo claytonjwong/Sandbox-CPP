@@ -29,7 +29,7 @@ namespace Xml
             root->InsertEndChild( node );
         }
         
-        result->insertFirstChild( root ); // TODO: does this work?
+        result->insertFirstChild( root ); // TODO: does this work to update myRoot in here?
         
         return result;
     }
@@ -82,10 +82,19 @@ namespace Xml
               child != nullptr;
               child = child->NextSiblingElement() )
         {
+            //
+            // TODO: dive deep to also include child's children here
+            // then push_back onto the result, so that Scene children are Layers and Layer children are PlacedGraphics
+            //
             result.push_back(  make_shared<Element>( child )  );
         }
         
         return result;
+    }
+    
+    const HElement Element::getFirstChild() const
+    {
+        return make_shared<Element>( myRoot->FirstChildElement() );
     }
     
     ElementError Element::parseXML(const std::string& xml)

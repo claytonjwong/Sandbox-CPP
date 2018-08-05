@@ -38,6 +38,6 @@ namespace Framework
         
         VG::Point myPlacementPoint;
         VG::VectorGraphic* myGraphic;
-        
+        VG::HVectorGraphic myGraphicHandle;
     };
 }

@@ -28,7 +28,7 @@
 namespace VG {
 
     class VectorGraphic; // forward declaration for HVectorGraphic using-declaration
-    using HVectorGraphic = std::unique_ptr<VectorGraphic>;
+    using HVectorGraphic = std::shared_ptr<VectorGraphic>;
     using Points = std::vector<Point>;
     
 
@@ -38,10 +38,10 @@ namespace VG {
         VectorGraphic() : myShapeStyle{ ShapeStyle::Close } {}
         ~VectorGraphic()=default;
         
-        VectorGraphic(VectorGraphic& src)=default;
+        VectorGraphic(const VectorGraphic& src)=default;
         VectorGraphic(VectorGraphic&& src)=default;
         
-        VectorGraphic& operator=(VectorGraphic& rhs)=default;
+        VectorGraphic& operator=(const VectorGraphic& rhs)=default;
         VectorGraphic& operator=(VectorGraphic&& rhs)=default;
 
         Point getPoint(int index) const;

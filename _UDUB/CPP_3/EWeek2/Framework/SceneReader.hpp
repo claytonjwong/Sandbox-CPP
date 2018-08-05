@@ -11,6 +11,9 @@
 #include "Element.hpp"
 #include "Layer.hpp"
 #include "Scene.hpp"
+#include "VectorGraphic.hpp"
+#include "VectorGraphicStreamer.hpp"
+#include <memory>
 
 /*
 
@@ -60,17 +63,43 @@ namespace Framework
                 auto width = root.getAttribute( "width" );
                 s.setWidth(  stoi( width )  );
                 
-                for ( const auto& child: root.getChildElements() )
+                for ( const auto& scene_child: root.getChildElements() )
                 {
-                    auto name = child->getName();
-                    if ( name == "Layer" )
+                    auto scene_child_name = scene_child->getName();
+                    if ( scene_child_name == "Layer" )
                     {
-                        auto alias = child->getAttribute( "alias" );
+                        auto alias = scene_child->getAttribute( "alias" );
                         Layer layer{ alias };
-                        s.push_back( layer );
-//                        auto x = stoi(  child->getAttribute( "x" )  );
-//                        auto y = stoi(  child->getAttribute( "y" )  );
-//                        vg.addPoint(  Point{ x, y }  );
+                        
+                        for ( const auto& layer_child: scene_child->getChildElements() )
+                        {
+                            auto layer_child_name = layer_child->getName();
+                            if ( layer_child_name == "PlacedGraphic" )
+                            {
+                                PlacedGraphic graphic;
+                                
+                                auto x = stoi (  layer_child->getAttribute( "x" )  );
+                                auto y = stoi (  layer_child->getAttribute( "y" )  );
+                                
+                                graphic.setPlacementPoint( VG::Point{ x,y } );
+                                
+                                auto placed_graphic_child = layer_child->getFirstChild();
+                                if ( placed_graphic_child->getName() == "VectorGraphic" )
+                                {                                    
+                                    const auto handle_VG =
+                                        std::make_shared<VG::VectorGraphic>(
+                                            VG::VectorGraphicStreamer::
+                                                getVectorGraphicFromHandle( placed_graphic_child )
+                                        );
+                                        
+                                    graphic.setGraphic( handle_VG );
+                                }
+                                
+                                layer.addGraphic( graphic );
+                            }
+                        }
+                        
+                        s.addLayer( layer );
                     }
                 }
 

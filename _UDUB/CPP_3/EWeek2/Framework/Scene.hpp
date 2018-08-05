@@ -13,19 +13,20 @@
 
 namespace Framework
 {
-    using LayerCollection = std::list<Layer>;
-    using LayerIterator = std::list<Layer>::const_iterator;
 
     class Scene
     {
     public:
-        
-        void setHeight(const int height)
+
+        using LayerCollection = std::list<Layer>;
+        using LayerIterator = std::list<Layer>::const_iterator;
+
+        void setHeight(const int height) noexcept
         {
             myHeight = height;
         }
         
-        void setWidth(const int width)
+        void setWidth(const int width) noexcept
         {
             myWidth = width;
         }
@@ -50,7 +51,7 @@ namespace Framework
             return myLayers.end();
         }
         
-        void push_back(const Layer& layer) noexcept
+        void addLayer(const Layer& layer) noexcept
         {
             myLayers.push_back( layer );
         }
