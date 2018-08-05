@@ -9,6 +9,7 @@
 #pragma once
 
 #include "Element.hpp"
+#include "Layer.hpp"
 #include "Scene.hpp"
 
 /*
@@ -58,6 +59,21 @@ namespace Framework
             
                 auto width = root.getAttribute( "width" );
                 s.setWidth(  stoi( width )  );
+                
+                for ( const auto& child: root.getChildElements() )
+                {
+                    auto name = child->getName();
+                    if ( name == "Layer" )
+                    {
+                        auto alias = child->getAttribute( "alias" );
+                        Layer layer{ alias };
+                        s.push_back( layer );
+//                        auto x = stoi(  child->getAttribute( "x" )  );
+//                        auto y = stoi(  child->getAttribute( "y" )  );
+//                        vg.addPoint(  Point{ x, y }  );
+                    }
+                }
+
             }
             return s;
         }

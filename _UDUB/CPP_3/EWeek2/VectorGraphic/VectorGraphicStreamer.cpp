@@ -59,22 +59,14 @@ namespace VG
         VectorGraphic vg;
         if ( root != nullptr && root->getName() == "VectorGraphic" )
         {
-            for ( const auto& attribute: root->getAttributes() )
+            auto closed_value = root->getAttribute("closed");
+            if ( closed_value == "true" )
             {
-                auto name = attribute.first;
-                auto value = attribute.second;
-                
-                if ( name == "closed" )
-                {
-                    if ( value == "true" )
-                    {
-                        vg.closeShape();
-                    }
-                    else
-                    {
-                        vg.openShape();
-                    }
-                }
+                vg.closeShape();
+            }
+            else if ( closed_value == "false" )
+            {
+                vg.openShape();
             }
             
             for ( const auto& child: root->getChildElements() )
