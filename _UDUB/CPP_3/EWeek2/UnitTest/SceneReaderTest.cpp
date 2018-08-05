@@ -1,8 +1,7 @@
-/*
-#include "XmlReader.h"
-#include "Element.h"
-#include "Scene.h"
-#include "SceneReader.h"
+#include "XmlReader.hpp"
+#include "Element.hpp"
+#include "Scene.hpp"
+#include "SceneReader.hpp"
 #include "TestHarness.h"
 
 const std::string TestXml = R"(
@@ -37,11 +36,13 @@ const std::string TestXml = R"(
   </Layer>
 </Scene>)";
 
+
 TEST(ReadScene, SceneReader)
 {
     std::stringstream xmlStream(TestXml);
     auto root = Xml::Reader::loadXml(xmlStream);
 
+    /*
     auto s = Framework::SceneReader::readScene(*root);
 
     CHECK_EQUAL(800, s.getWidth());
@@ -96,5 +97,6 @@ TEST(ReadScene, SceneReader)
 
     // Expect 2 layers
     CHECK_EQUAL(2, numberOfLayers);
+    */
 }
-*/
+

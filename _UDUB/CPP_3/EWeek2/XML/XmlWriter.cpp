@@ -62,25 +62,4 @@ namespace Xml
         
         os << whitespace;
     }
-    
-    const HElement Writer::make_HElement(const VG::VectorGraphic& vg)
-    {
-        HElement result = make_shared<Element>();
-        auto root = result->createXMLNode( "VectorGraphic" );
-        
-        root->SetAttribute(  "closed", ( vg.isClosed() ? "true" : "false" )  );
-        
-        for (  int i=0, N=static_cast<int>( vg.getPointCount() ); i < N; ++i  )
-        {
-            auto point = vg.getPoint( i );
-            auto node = result->createXMLNode( "Point" );
-            node->SetAttribute( "x", point.getX() );
-            node->SetAttribute( "y", point.getY() );
-            root->InsertEndChild( node );
-        }
-        
-        result->insertFirstChild( root ); // TODO: does this work?
-        
-        return result;
-    }
 }

@@ -93,7 +93,7 @@ namespace VG
 
     const Xml::HElement VectorGraphicStreamer::getHandleFromVectorGraphic(const VectorGraphic& vg)
     {
-        auto root = Xml::Writer::make_HElement( vg );
+        auto root = Xml::Element::make_HElement( vg );
         return root;
     }
     

@@ -21,7 +21,6 @@ namespace Xml
     public:
 
         static void writeXml(HElement root, ostream& os, int&& depth=0);
-        const static HElement make_HElement(const VG::VectorGraphic& vg);
     
     private:
     

@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include "VectorGraphic.hpp"
 #include "tinyxml2.h"
 #include <string>
 #include <unordered_map>
@@ -38,6 +39,8 @@ namespace Xml
         
         Element& operator=(const Element& rhs) = delete;
         Element& operator=(Element&& rhs) = delete;
+        
+        const static HElement make_HElement(const VG::VectorGraphic& vg);
         
         const std::string getName() const noexcept;
         const std::string getAttribute(const std::string& name) const noexcept;
