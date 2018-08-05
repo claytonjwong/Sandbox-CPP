@@ -44,39 +44,13 @@ namespace Xml
         const AttributeMap getAttributes() const noexcept;
         const ElementList getChildElements() const noexcept;
         
-        ElementError parseXML(const std::string& xml)
-        {
-            return myDocument.Parse( xml.c_str() );
-        }
-        
-        HXMLElement createXMLNode(const std::string& name)
-        {
-            return myDocument.NewElement( name.c_str() );
-        }
-        
-        HXMLNode insertFirstChild( HXMLNode child )
-        {
-            return myDocument.InsertFirstChild( child );
-        }
+        ElementError parseXML(const std::string& xml);
+        HXMLElement createXMLNode(const std::string& name);
+        HXMLNode insertFirstChild( HXMLNode child );
     
     private:
         
-        void updateOriginalRoot() const
-        {
-            //
-            // is myRoot is null, then update myRoot to point towards
-            // the beginning of the original copy of the document
-            //
-            // otherwise no-op if myRoot is NOT null, because this element
-            // was constructed by pointing myRoot towards some node in the original document
-            //
-            if ( myRoot == nullptr )
-            {
-                myRoot = const_cast<HXMLElement>( myDocument.RootElement() );
-            }
-        }
-        
-        mutable HXMLElement myRoot;
+        HXMLElement myRoot;
         ElementDocument myDocument;
     };
 

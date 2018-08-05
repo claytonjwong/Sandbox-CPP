@@ -15,8 +15,6 @@ namespace Xml
 {
     const string Element::getName() const noexcept
     {
-        updateOriginalRoot();
-        
         auto result = myRoot->Name();
         
         if ( result != nullptr )
@@ -31,8 +29,6 @@ namespace Xml
     
     const string Element::getAttribute(const string& name) const noexcept
     {
-        updateOriginalRoot();
-
         auto result = myRoot->Attribute(name.c_str());
         
         if ( result != nullptr )
@@ -47,8 +43,6 @@ namespace Xml
     
     const AttributeMap Element::getAttributes() const noexcept
     {
-        updateOriginalRoot();
-
         AttributeMap result;
         
         for ( auto attribute = myRoot->FirstAttribute();
@@ -62,8 +56,6 @@ namespace Xml
     
     const ElementList Element::getChildElements() const noexcept
     {
-        updateOriginalRoot();
-
         ElementList result;
         for ( auto child = myRoot->FirstChildElement();
               child != nullptr;
@@ -71,6 +63,29 @@ namespace Xml
         {
             result.push_back(  make_shared<Element>( child )  );
         }
+        
+        return result;
+    }
+    
+    ElementError Element::parseXML(const std::string& xml)
+    {
+        auto result = myDocument.Parse( xml.c_str() );
+        
+        myRoot = myDocument.RootElement();
+        
+        return result;
+    }
+
+    HXMLElement Element::createXMLNode(const std::string& name)
+    {
+        return myDocument.NewElement( name.c_str() );
+    }
+
+    HXMLNode Element::insertFirstChild( HXMLNode child )
+    {
+        auto result = myDocument.InsertFirstChild( child );
+        
+        myRoot = myDocument.RootElement(); // TODO: double check if I want to update myRoot here or not
         
         return result;
     }
