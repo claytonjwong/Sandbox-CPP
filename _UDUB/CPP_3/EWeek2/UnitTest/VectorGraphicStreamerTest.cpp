@@ -13,16 +13,15 @@ using namespace std;
 using namespace VG;
 
 TEST(fromFileExists,VectorGraphicStreamer){
-    VectorGraphic vg;
-    VectorGraphicStreamer::fromFile("inout.xml", vg);
+    VectorGraphic vg=VectorGraphicStreamer::getVectorGraphicFromFile("inout.xml");
     CHECK(vg.getPointCount()==4);
 }
 
 TEST(toFileDefault,VectorGraphicStreamer){
     string filename="default.xml";
     VectorGraphic vg1,vg2;
-    VectorGraphicStreamer::toFile(filename, vg1);
-    VectorGraphicStreamer::fromFile(filename, vg2);
+    VectorGraphicStreamer::setVectorGraphicToFile(vg1, filename);
+    VectorGraphicStreamer::getVectorGraphicFromFile(filename);
     CHECK(vg1==vg2);
 }
 

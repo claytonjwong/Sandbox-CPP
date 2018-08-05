@@ -5,6 +5,8 @@
 #include "TestHarness.h"
 #include "Point.hpp"
 
+using namespace std;
+
 TEST(ctor, VectorGraphic)
 {
     VG::VectorGraphic vg;
@@ -144,7 +146,7 @@ TEST(widthHeight, VectorGraphic)
 // this would have to be done with a "stringification" macro:
 //   #define STR(a) #a
 
-const std::string VectorGraphicXml = R"(
+const string VectorGraphicXml = R"(
 <VectorGraphic closed="true">
 <Point x="0" y="0"/>
 <Point x="10" y="0">
@@ -156,10 +158,11 @@ const std::string VectorGraphicXml = R"(
 
 TEST(fromXml, VectorGraphic)
 {
-    std::stringstream sstr(VectorGraphicXml);
+    stringstream sstr(VectorGraphicXml);
     
-    VG::VectorGraphic vg;
-    VG::VectorGraphicStreamer::fromStream(sstr,vg);
+    
+    auto root = VG::VectorGraphicStreamer::getHandleFromStream( sstr );
+    VG::VectorGraphic vg = VG::VectorGraphicStreamer::getVectorGraphicFromHandle( root );
     
     CHECK_EQUAL(true, vg.isClosed());
     CHECK_EQUAL(4, vg.getPointCount());
@@ -170,15 +173,15 @@ TEST(fromXml, VectorGraphic)
 
 TEST(toXml, VectorGraphic)
 {
-    VG::VectorGraphic vg1,vg2;
+    VG::VectorGraphic vg1;
     vg1.addPoint(VG::Point(1, 1));
     vg1.addPoint(VG::Point(2, 2));
     vg1.addPoint(VG::Point(3, 3));
     
-    std::stringstream sstr;
-    VG::VectorGraphicStreamer::toStream(sstr,vg1);
-    std::cout << sstr.str() << std::endl;
-    VG::VectorGraphicStreamer::fromStream(sstr,vg2);
+    auto root = VG::VectorGraphicStreamer::getHandleFromVectorGraphic( vg1 );
+    auto ss = VG::VectorGraphicStreamer::getStreamFromHandle( root );
+    cout << ss.str() << endl;
+    auto vg2 = VG::VectorGraphicStreamer::getVectorGraphicFromHandle( root );
     
     CHECK(vg1 == vg2);
 }

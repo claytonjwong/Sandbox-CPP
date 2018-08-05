@@ -9,6 +9,7 @@
 #pragma once
 
 #include "Element.hpp"
+#include "VectorGraphic.hpp"
 #include <iostream>
 
 using namespace std;
@@ -20,12 +21,12 @@ namespace Xml
     public:
 
         static void writeXml(HElement root, ostream& os, int&& depth=0);
+        static HElement make_HElement(const VG::VectorGraphic& vg);
     
     private:
     
         static void writeXmlNodeHead(HElement root, ostream& os, int depth=0);
         static void writeXmlNodeTail(HElement root, ostream& os, int depth=0);
-        
         static void writeLeadingWhitespace(ostream& os, int depth);
     };
 }

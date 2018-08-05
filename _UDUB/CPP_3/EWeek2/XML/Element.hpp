@@ -18,10 +18,10 @@ namespace Xml
 {
     class Element; // forward declaration for HElement using-declaration
     
-    using HElement = std::shared_ptr<Element>;
-    using HXMLNode = tinyxml2::XMLElement*;
+    using HElement = std::shared_ptr<const Element>;
+    using HXMLNode = const tinyxml2::XMLElement* const;
     using AttributeMap = std::unordered_map<std::string,std::string>;
-    using ElementList = std::vector<HElement>;
+    using ElementList = std::vector<const HElement>;
 
     class Element
     {
@@ -37,11 +37,8 @@ namespace Xml
         
         std::string getName() const noexcept;
         std::string getAttribute(const std::string& name) const noexcept;
-        
         AttributeMap getAttributes() const noexcept;
-        
         ElementList getChildElements() const noexcept;
-        
         
     private:
     

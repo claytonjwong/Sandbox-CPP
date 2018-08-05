@@ -8,6 +8,9 @@
 
 
 #include "XmlWriter.hpp"
+#include "VectorGraphic.hpp"
+
+using namespace std;
 
 namespace Xml
 {
@@ -55,5 +58,27 @@ namespace Xml
         string whitespace( static_cast<size_t>( depth << 1 ), ' ' );
         
         os << whitespace;
+    }
+    
+    HElement Writer::make_HElement(const VG::VectorGraphic& vg)
+    {
+        static tinyxml2::XMLDocument xmlDocument;
+        
+        auto root = xmlDocument.NewElement( "VectorGraphic" );
+        
+        root->SetAttribute(  "closed", ( vg.isClosed() ? "true" : "false" )  );
+        
+        for (int i=0,N=static_cast<int>( vg.getPointCount() ); i<N; ++i)
+        {
+            auto point = vg.getPoint( i );
+            auto node = xmlDocument.NewElement( "Point" );
+            node->SetAttribute( "x", point.getX() );
+            node->SetAttribute( "y", point.getY() );
+            root->InsertEndChild( node );
+        }
+        
+        xmlDocument.InsertFirstChild( root );
+        
+        return make_shared<Element>( xmlDocument.RootElement() );
     }
 }
