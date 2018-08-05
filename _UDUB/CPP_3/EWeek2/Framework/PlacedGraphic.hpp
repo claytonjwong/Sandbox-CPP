@@ -17,12 +17,9 @@ namespace Framework
     {
     public:
         
-//        PlacedGraphic()=default; // TODO change VG::VectorGraphic& myGraphic; to work for 2 TCs
-                                   // this means remove the reference, dummmy!  Use ptr instead?
+        PlacedGraphic();
+        PlacedGraphic(const VG::Point&& point, const VG::HVectorGraphic& vg);
 
-        PlacedGraphic(const VG::Point&& point, const VG::HVectorGraphic& vg)
-        : myPlacementPoint{ point }, myGraphic{ vg.get() } {}
-        
         ~PlacedGraphic()=default;
         
         PlacedGraphic(const PlacedGraphic& src)=default;

@@ -12,6 +12,12 @@ using namespace VG;
 
 namespace Framework
 {
+    PlacedGraphic::PlacedGraphic()
+    : myPlacementPoint{ VG::Point{0,0} }, myGraphic{ nullptr } {}
+    
+    PlacedGraphic::PlacedGraphic(const VG::Point&& point, const VG::HVectorGraphic& vg)
+    : myPlacementPoint{ point }, myGraphic{ vg.get() } {}
+
     Point PlacedGraphic::getPlacementPoint() const noexcept
     {
         return myPlacementPoint;
