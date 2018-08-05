@@ -65,23 +65,22 @@ namespace Xml
     
     const HElement Writer::make_HElement(const VG::VectorGraphic& vg)
     {
-        static tinyxml2::XMLDocument xmlDocument;
-        
-        auto root = xmlDocument.NewElement( "VectorGraphic" );
+        HElement result = make_shared<Element>();
+        auto root = result->xmlDocument.NewElement( "VectorGraphic" ); // TODO: expose API & update myRoot in there
         
         root->SetAttribute(  "closed", ( vg.isClosed() ? "true" : "false" )  );
         
         for (  int i=0, N=static_cast<int>( vg.getPointCount() ); i < N; ++i  )
         {
             auto point = vg.getPoint( i );
-            auto node = xmlDocument.NewElement( "Point" );
+            auto node = result->xmlDocument.NewElement( "Point" );
             node->SetAttribute( "x", point.getX() );
             node->SetAttribute( "y", point.getY() );
             root->InsertEndChild( node );
         }
         
-        xmlDocument.InsertFirstChild( root );
+        result->xmlDocument.InsertFirstChild( root ); // TODO: expose API & update myRoot in there (continued)
         
-        return make_shared<const Element>( xmlDocument.RootElement() );
+        return result;
     }
 }

@@ -18,32 +18,35 @@ namespace Xml
 {
     class Element; // forward declaration for HElement using-declaration
     
-    using HElement = std::shared_ptr<const Element>;
-    using HXMLNode = const tinyxml2::XMLElement* const;
+    using HElement = std::shared_ptr<Element>;
+    using HXMLNode = tinyxml2::XMLElement*;
+    using HXMLDoc = tinyxml2::XMLDocument;
     using AttributeMap = std::unordered_map<std::string,std::string>;
-    using ElementList = std::vector<const HElement>;
+    using ElementList = std::vector<HElement>;
 
     class Element
     {
     public:
         
-        Element(HXMLNode root) : myRoot{root} {}
+        HXMLDoc xmlDocument;
+        
+        Element(HXMLNode root = nullptr) : myRoot{ root } {}
         ~Element() = default;
         
         Element(const Element& src) = delete;
-        Element(const Element&& src) = delete;
+        Element(Element&& src) = delete;
         
         Element& operator=(const Element& rhs) = delete;
-        Element& operator=(const Element&& rhs) = delete;
+        Element& operator=(Element&& rhs) = delete;
         
         const std::string getName() const noexcept;
         const std::string getAttribute(const std::string& name) const noexcept;
         const AttributeMap getAttributes() const noexcept;
         const ElementList getChildElements() const noexcept;
-        
-    private:
     
-        const HXMLNode myRoot;
+    private:
+        
+        mutable HXMLNode myRoot;
     };
 
 }

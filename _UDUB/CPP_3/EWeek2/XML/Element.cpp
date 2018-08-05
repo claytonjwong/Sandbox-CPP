@@ -15,6 +15,10 @@ namespace Xml
 {
     const string Element::getName() const noexcept
     {
+        if ( myRoot == nullptr )
+        {
+            myRoot = const_cast<HXMLNode>( xmlDocument.RootElement() );
+        }
         auto result = myRoot->Name();
         if ( result != nullptr )
         {
@@ -28,6 +32,10 @@ namespace Xml
     
     const string Element::getAttribute(const string& name) const noexcept
     {
+        if ( myRoot == nullptr )
+        {
+            myRoot = const_cast<HXMLNode>( xmlDocument.RootElement() );
+        }
         auto result = myRoot->Attribute(name.c_str());
         if ( result != nullptr )
         {
@@ -41,6 +49,10 @@ namespace Xml
     
     const AttributeMap Element::getAttributes() const noexcept
     {
+        if ( myRoot == nullptr )
+        {
+            myRoot = const_cast<HXMLNode>( xmlDocument.RootElement() );
+        }
         AttributeMap result;
         for ( auto attribute = myRoot->FirstAttribute();
               attribute != nullptr;
@@ -53,13 +65,16 @@ namespace Xml
     
     const ElementList Element::getChildElements() const noexcept
     {
+        if ( myRoot == nullptr )
+        {
+            myRoot = const_cast<HXMLNode>( xmlDocument.RootElement() );
+        }
         ElementList result;
-        
         for ( auto child = myRoot->FirstChildElement();
               child != nullptr;
               child = child->NextSiblingElement() )
         {
-            result.push_back(  make_shared<const Element>( child )  );
+            result.push_back(  make_shared<Element>( child )  );
         }
         
         return result;

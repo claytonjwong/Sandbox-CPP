@@ -16,21 +16,16 @@ namespace Xml
 {
     const HElement Reader::loadXml(stringstream& ss)
     {
-        static tinyxml2::XMLDocument xmlDocument;
+        HElement element_handle = make_shared<Element>();
         const auto& str = ss.str();
-        auto result = xmlDocument.Parse( str.c_str() );
-        if ( result == tinyxml2::XML_SUCCESS )
+        auto return_code = element_handle->xmlDocument.Parse( str.c_str() ); // TODO: expose API & update myRoot here!
+        if ( return_code == tinyxml2::XML_SUCCESS )
         {
-            return make_HElement( xmlDocument.RootElement() );
+            return element_handle;
         }
         else
         {
             throw runtime_error( "failed to parse XML input" );
         }
-    }
-    
-    const HElement Reader::make_HElement(HXMLNode root)
-    {
-        return make_shared<const Element>( root );
     }
 }
