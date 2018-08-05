@@ -22,7 +22,7 @@ namespace Xml
             
             for ( const auto& child: root->getChildElements() )
             {
-                writeXml( child, os, ( depth + 1 ) );
+                writeXml(  child, os, ( depth + 1 )  );
             }
             
             writeXmlNodeTail( root, os, depth );
@@ -35,7 +35,7 @@ namespace Xml
         
         os << "<" << root->getName();
     
-        for ( const auto& attribute: root->getAttributes())
+        for ( const auto& attribute: root->getAttributes() )
         {
             auto name = attribute.first;
             auto value = attribute.second;
@@ -55,7 +55,10 @@ namespace Xml
 
     void Writer::writeLeadingWhitespace(ostream& os, int depth)
     {
-        string whitespace( static_cast<size_t>( depth << 1 ), ' ' );
+        //
+        // leading whitespace indentation increases by 2 * depth
+        //
+        string whitespace(  static_cast<size_t>( depth << 1 ), 0x20  );
         
         os << whitespace;
     }

@@ -18,21 +18,6 @@ namespace VG {
     {
     public:
     
-    /*
-        static void fromFile(const std::string& filename, VectorGraphic& vg);
-        static void toFile(const std::string& filename, const VectorGraphic& vg);
-        
-        static void fromStream(std::stringstream& sstr, VectorGraphic& vg);
-        static void toStream(std::stringstream& sstr, const VectorGraphic& vg);
-        
-        
-        static void fromHandle(Xml::HElement root, VectorGraphic& vg);
-        
-        static Xml::HElement getHandle(const VectorGraphic& vg);
-        static void getStream(const std::string& filename, const Xml::HElement root);
-        static void toFile(const std::string& filename, std::stringstream& ss);
-    */
-    
         static VectorGraphic getVectorGraphicFromFile(const std::string& filename);
         static void setVectorGraphicToFile(const VectorGraphic& vg, const std::string& filename);
     
