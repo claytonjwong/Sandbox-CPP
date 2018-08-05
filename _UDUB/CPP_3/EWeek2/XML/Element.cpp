@@ -17,7 +17,7 @@ namespace Xml
     {
         if ( myRoot == nullptr )
         {
-            myRoot = const_cast<HXMLNode>( xmlDocument.RootElement() );
+            myRoot = const_cast<HXMLElement>( myDocument.RootElement() );
         }
         auto result = myRoot->Name();
         if ( result != nullptr )
@@ -34,7 +34,7 @@ namespace Xml
     {
         if ( myRoot == nullptr )
         {
-            myRoot = const_cast<HXMLNode>( xmlDocument.RootElement() );
+            myRoot = const_cast<HXMLElement>( myDocument.RootElement() );
         }
         auto result = myRoot->Attribute(name.c_str());
         if ( result != nullptr )
@@ -51,7 +51,7 @@ namespace Xml
     {
         if ( myRoot == nullptr )
         {
-            myRoot = const_cast<HXMLNode>( xmlDocument.RootElement() );
+            myRoot = const_cast<HXMLElement>( myDocument.RootElement() );
         }
         AttributeMap result;
         for ( auto attribute = myRoot->FirstAttribute();
@@ -67,7 +67,7 @@ namespace Xml
     {
         if ( myRoot == nullptr )
         {
-            myRoot = const_cast<HXMLNode>( xmlDocument.RootElement() );
+            myRoot = const_cast<HXMLElement>( myDocument.RootElement() );
         }
         ElementList result;
         for ( auto child = myRoot->FirstChildElement();

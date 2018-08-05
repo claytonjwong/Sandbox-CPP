@@ -19,18 +19,19 @@ namespace Xml
     class Element; // forward declaration for HElement using-declaration
     
     using HElement = std::shared_ptr<Element>;
-    using HXMLNode = tinyxml2::XMLElement*;
-    using HXMLDoc = tinyxml2::XMLDocument;
+    
+    using HXMLElement = tinyxml2::XMLElement*;
+    using HXMLNode = tinyxml2::XMLNode*;
+    using ElementDocument = tinyxml2::XMLDocument;
     using AttributeMap = std::unordered_map<std::string,std::string>;
     using ElementList = std::vector<HElement>;
+    using ElementError = tinyxml2::XMLError;
 
     class Element
     {
     public:
         
-        HXMLDoc xmlDocument;
-        
-        Element(HXMLNode root = nullptr) : myRoot{ root } {}
+        Element(HXMLElement root = nullptr) : myRoot{ root } {}
         ~Element() = default;
         
         Element(const Element& src) = delete;
@@ -43,10 +44,26 @@ namespace Xml
         const std::string getAttribute(const std::string& name) const noexcept;
         const AttributeMap getAttributes() const noexcept;
         const ElementList getChildElements() const noexcept;
+        
+        ElementError parseXML(const std::string& xml)
+        {
+            return myDocument.Parse( xml.c_str() );
+        }
+        
+        HXMLElement createXMLNode(const std::string& name)
+        {
+            return myDocument.NewElement( name.c_str() );
+        }
+        
+        HXMLNode insertFirstChild( HXMLNode child )
+        {
+            return myDocument.InsertFirstChild( child );
+        }
     
     private:
         
-        mutable HXMLNode myRoot;
+        mutable HXMLElement myRoot;
+        ElementDocument myDocument;
     };
 
 }

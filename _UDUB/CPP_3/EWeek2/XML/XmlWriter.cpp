@@ -66,20 +66,20 @@ namespace Xml
     const HElement Writer::make_HElement(const VG::VectorGraphic& vg)
     {
         HElement result = make_shared<Element>();
-        auto root = result->xmlDocument.NewElement( "VectorGraphic" ); // TODO: expose API & update myRoot in there
+        auto root = result->createXMLNode( "VectorGraphic" );
         
         root->SetAttribute(  "closed", ( vg.isClosed() ? "true" : "false" )  );
         
         for (  int i=0, N=static_cast<int>( vg.getPointCount() ); i < N; ++i  )
         {
             auto point = vg.getPoint( i );
-            auto node = result->xmlDocument.NewElement( "Point" );
+            auto node = result->createXMLNode( "Point" );
             node->SetAttribute( "x", point.getX() );
             node->SetAttribute( "y", point.getY() );
             root->InsertEndChild( node );
         }
         
-        result->xmlDocument.InsertFirstChild( root ); // TODO: expose API & update myRoot in there (continued)
+        result->insertFirstChild( root ); // TODO: does this work?
         
         return result;
     }
