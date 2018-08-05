@@ -14,7 +14,7 @@ using namespace std;
 
 namespace Xml
 {
-    void Writer::writeXml(HElement root, ostream& os, int&& depth)
+    void Writer::writeXml(const HElement root, ostream& os, int&& depth)
     {
         if ( root != nullptr )
         {
@@ -29,7 +29,7 @@ namespace Xml
         }
     }
     
-    void Writer::writeXmlNodeHead(HElement root, ostream& os, int depth)
+    void Writer::writeXmlNodeHead(const HElement root, ostream& os, const int depth)
     {
         writeLeadingWhitespace( os, depth );
         
@@ -46,14 +46,14 @@ namespace Xml
         os << ">" << endl;
     }
     
-    void Writer::writeXmlNodeTail(HElement root, ostream& os, int depth)
+    void Writer::writeXmlNodeTail(const HElement root, ostream& os, const int depth)
     {
         writeLeadingWhitespace( os, depth );
         
         os << "</" << root->getName() << ">" << endl;
     }
 
-    void Writer::writeLeadingWhitespace(ostream& os, int depth)
+    void Writer::writeLeadingWhitespace(ostream& os, const int depth)
     {
         //
         // leading whitespace indentation increases by 2 * depth
@@ -63,7 +63,7 @@ namespace Xml
         os << whitespace;
     }
     
-    HElement Writer::make_HElement(const VG::VectorGraphic& vg)
+    const HElement Writer::make_HElement(const VG::VectorGraphic& vg)
     {
         static tinyxml2::XMLDocument xmlDocument;
         
@@ -71,7 +71,7 @@ namespace Xml
         
         root->SetAttribute(  "closed", ( vg.isClosed() ? "true" : "false" )  );
         
-        for (int i=0,N=static_cast<int>( vg.getPointCount() ); i<N; ++i)
+        for (  int i=0, N=static_cast<int>( vg.getPointCount() ); i < N; ++i  )
         {
             auto point = vg.getPoint( i );
             auto node = xmlDocument.NewElement( "Point" );
@@ -82,6 +82,6 @@ namespace Xml
         
         xmlDocument.InsertFirstChild( root );
         
-        return make_shared<Element>( xmlDocument.RootElement() );
+        return make_shared<const Element>( xmlDocument.RootElement() );
     }
 }

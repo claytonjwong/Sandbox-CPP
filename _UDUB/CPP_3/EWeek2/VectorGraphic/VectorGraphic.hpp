@@ -33,8 +33,10 @@ namespace VG {
     
         VectorGraphic() : myShapeStyle{ShapeStyle::Close} {}
         ~VectorGraphic()=default;
+        
         VectorGraphic(VectorGraphic& src)=default;
         VectorGraphic(VectorGraphic&& src)=default;
+        
         VectorGraphic& operator=(VectorGraphic& rhs)=default;
         VectorGraphic& operator=(VectorGraphic&& rhs)=default;
 

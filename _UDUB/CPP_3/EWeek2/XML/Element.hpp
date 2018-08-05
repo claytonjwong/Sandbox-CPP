@@ -28,6 +28,7 @@ namespace Xml
     public:
         
         Element(HXMLNode root) : myRoot{root} {}
+        ~Element() = default;
         
         Element(const Element& src) = delete;
         Element(const Element&& src) = delete;
@@ -35,14 +36,14 @@ namespace Xml
         Element& operator=(const Element& rhs) = delete;
         Element& operator=(const Element&& rhs) = delete;
         
-        std::string getName() const noexcept;
-        std::string getAttribute(const std::string& name) const noexcept;
-        AttributeMap getAttributes() const noexcept;
-        ElementList getChildElements() const noexcept;
+        const std::string getName() const noexcept;
+        const std::string getAttribute(const std::string& name) const noexcept;
+        const AttributeMap getAttributes() const noexcept;
+        const ElementList getChildElements() const noexcept;
         
     private:
     
-        HXMLNode myRoot;
+        const HXMLNode myRoot;
     };
 
 }

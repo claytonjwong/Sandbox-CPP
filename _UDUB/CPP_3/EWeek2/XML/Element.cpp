@@ -13,7 +13,7 @@ using namespace std;
 
 namespace Xml
 {
-    string Element::getName() const noexcept
+    const string Element::getName() const noexcept
     {
         auto result = myRoot->Name();
         if ( result != nullptr )
@@ -26,7 +26,7 @@ namespace Xml
         }
     }
     
-    string Element::getAttribute(const string& name) const noexcept
+    const string Element::getAttribute(const string& name) const noexcept
     {
         auto result = myRoot->Attribute(name.c_str());
         if ( result != nullptr )
@@ -39,7 +39,7 @@ namespace Xml
         }
     }
     
-    AttributeMap Element::getAttributes() const noexcept
+    const AttributeMap Element::getAttributes() const noexcept
     {
         AttributeMap result;
         for ( auto attribute = myRoot->FirstAttribute();
@@ -51,7 +51,7 @@ namespace Xml
         return result;
     }
     
-    ElementList Element::getChildElements() const noexcept
+    const ElementList Element::getChildElements() const noexcept
     {
         ElementList result;
         
@@ -59,7 +59,7 @@ namespace Xml
               child != nullptr;
               child = child->NextSiblingElement() )
         {
-            result.push_back(  make_shared<Element>( child )  );
+            result.push_back(  make_shared<const Element>( child )  );
         }
         
         return result;

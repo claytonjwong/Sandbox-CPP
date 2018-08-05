@@ -14,7 +14,7 @@ using namespace std;
 
 namespace Xml
 {
-    HElement Reader::loadXml(stringstream& ss)
+    const HElement Reader::loadXml(stringstream& ss)
     {
         static tinyxml2::XMLDocument xmlDocument;
         const auto& str = ss.str();
@@ -29,8 +29,8 @@ namespace Xml
         }
     }
     
-    HElement Reader::make_HElement(HXMLNode root)
+    const HElement Reader::make_HElement(HXMLNode root)
     {
-        return make_shared<Element>( root );
+        return make_shared<const Element>( root );
     }
 }

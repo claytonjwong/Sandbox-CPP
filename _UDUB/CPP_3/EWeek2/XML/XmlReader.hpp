@@ -20,7 +20,7 @@ namespace Xml
     {
     public:
         
-        static HElement loadXml(std::stringstream& ss);
-        static HElement make_HElement(HXMLNode root);
+        static const HElement loadXml(std::stringstream& ss);
+        static const HElement make_HElement(HXMLNode root);
     };
 }

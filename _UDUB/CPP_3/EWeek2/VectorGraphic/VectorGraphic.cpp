@@ -117,15 +117,4 @@ namespace VG {
     bool VectorGraphic::operator!=(const VectorGraphic& rhs){
         return ! ( *this == rhs );
     }
-    
-    // TODO: remove this, cool to use operator <<, but not cool
-    // for VectorGraphic to track each file format ( XML, HTML, etc etc )
-    // which it can be output as
-//    ostream& operator<<(ostream& os, const VectorGraphic& rhs){
-//        os << "<VectorGraphic closed=\"" << ( rhs.isClosed() ? "true" : "false" ) << "\">" << endl;
-//        for (int i=0,N=(int)rhs.getPointCount(); i<N; ++i)
-//            os << "  " << rhs.getPoint(i) << endl;
-//        os << "</VectorGraphic>";
-//        return os;
-//    }
 }

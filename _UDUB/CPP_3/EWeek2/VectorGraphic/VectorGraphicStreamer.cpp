@@ -18,7 +18,7 @@ using namespace std;
 
 namespace VG
 {    
-    VectorGraphic VectorGraphicStreamer::getVectorGraphicFromFile(const std::string& filename)
+    const VectorGraphic VectorGraphicStreamer::getVectorGraphicFromFile(const std::string& filename)
     {
         auto ss = getStreamFromFile( filename );
         auto root = getHandleFromStream( ss );
@@ -48,13 +48,13 @@ namespace VG
         return ss;
     }
     
-    Xml::HElement VectorGraphicStreamer::getHandleFromStream(std::stringstream& ss)
+    const Xml::HElement VectorGraphicStreamer::getHandleFromStream(std::stringstream& ss)
     {
         auto root = Xml::Reader::loadXml( ss );
         return root;
     }
     
-    VectorGraphic VectorGraphicStreamer::getVectorGraphicFromHandle(const Xml::HElement root)
+    const VectorGraphic VectorGraphicStreamer::getVectorGraphicFromHandle(const Xml::HElement root)
     {
         VectorGraphic vg;
         if ( root != nullptr && root->getName() == "VectorGraphic" )
@@ -91,7 +91,7 @@ namespace VG
         return vg;
     }
 
-    Xml::HElement VectorGraphicStreamer::getHandleFromVectorGraphic(const VectorGraphic& vg)
+    const Xml::HElement VectorGraphicStreamer::getHandleFromVectorGraphic(const VectorGraphic& vg)
     {
         auto root = Xml::Writer::make_HElement( vg );
         return root;

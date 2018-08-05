@@ -18,14 +18,14 @@ namespace VG {
     {
     public:
     
-        static VectorGraphic getVectorGraphicFromFile(const std::string& filename);
+        const static VectorGraphic getVectorGraphicFromFile(const std::string& filename);
         static void setVectorGraphicToFile(const VectorGraphic& vg, const std::string& filename);
     
         static std::stringstream getStreamFromFile(const std::string& filename);
-        static Xml::HElement getHandleFromStream(std::stringstream& ss);
-        static VectorGraphic getVectorGraphicFromHandle(const Xml::HElement root);
+        const static Xml::HElement getHandleFromStream(std::stringstream& ss);
+        const static VectorGraphic getVectorGraphicFromHandle(const Xml::HElement root);
         
-        static Xml::HElement getHandleFromVectorGraphic(const VectorGraphic& vg);
+        const static Xml::HElement getHandleFromVectorGraphic(const VectorGraphic& vg);
         static std::stringstream getStreamFromHandle(const Xml::HElement root);
         static void writeToFileFromStream(const std::string& filename, std::stringstream& ss);
     };

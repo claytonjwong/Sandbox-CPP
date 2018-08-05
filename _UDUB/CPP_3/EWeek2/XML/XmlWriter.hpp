@@ -21,12 +21,12 @@ namespace Xml
     public:
 
         static void writeXml(HElement root, ostream& os, int&& depth=0);
-        static HElement make_HElement(const VG::VectorGraphic& vg);
+        const static HElement make_HElement(const VG::VectorGraphic& vg);
     
     private:
     
-        static void writeXmlNodeHead(HElement root, ostream& os, int depth=0);
-        static void writeXmlNodeTail(HElement root, ostream& os, int depth=0);
-        static void writeLeadingWhitespace(ostream& os, int depth);
+        static void writeXmlNodeHead(HElement root, ostream& os, const int depth=0);
+        static void writeXmlNodeTail(HElement root, ostream& os, const int depth=0);
+        static void writeLeadingWhitespace(ostream& os, const int depth=0);
     };
 }
