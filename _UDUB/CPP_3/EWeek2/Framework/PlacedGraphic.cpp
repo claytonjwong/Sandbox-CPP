@@ -21,4 +21,9 @@ namespace Framework
     {
         return myGraphic;
     }
+    
+    void PlacedGraphic::setPlacementPoint(const VG::Point&& point) noexcept
+    {
+        myPlacementPoint = point;
+    }
 }

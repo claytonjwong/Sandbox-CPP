@@ -17,16 +17,28 @@ namespace Framework
     {
     public:
         
+//        PlacedGraphic()=default; // TODO change VG::VectorGraphic& myGraphic; to work for 2 TCs
+
         PlacedGraphic(const VG::Point&& point, const VG::HVectorGraphic& vg)
         : myPlacementPoint{ point }, myGraphic{ *vg } {}
+        
+        ~PlacedGraphic()=default;
+        
+        PlacedGraphic(const PlacedGraphic& src)=default;
+        PlacedGraphic(PlacedGraphic&& src)=default;
+        
+        PlacedGraphic& operator=(const PlacedGraphic& rhs)=default;
+        PlacedGraphic& operator=(PlacedGraphic&& rhs)=default;
 
         VG::Point getPlacementPoint() const noexcept;
         const VG::VectorGraphic& getGraphic() const noexcept;
-        
+    
+        void setPlacementPoint(const VG::Point&& point) noexcept;
+    
     private:
         
-        const VG::Point myPlacementPoint;
-        const VG::VectorGraphic& myGraphic;
+        VG::Point myPlacementPoint;
+        VG::VectorGraphic& myGraphic;
         
     };
 }
