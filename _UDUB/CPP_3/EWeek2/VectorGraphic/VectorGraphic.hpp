@@ -10,6 +10,7 @@
 
 #include "Point.hpp"
 #include <vector>
+#include <memory>
 
 /*
  TEST(removePoint, VectorGraphic)
@@ -26,12 +27,15 @@
 
 namespace VG {
 
+    class VectorGraphic; // forward declaration for HVectorGraphic using-declaration
+    using HVectorGraphic = std::shared_ptr<VectorGraphic>;
     using Points = std::vector<Point>;
+    
 
     class VectorGraphic {
     public:
     
-        VectorGraphic() : myShapeStyle{ShapeStyle::Close} {}
+        VectorGraphic() : myShapeStyle{ ShapeStyle::Close } {}
         ~VectorGraphic()=default;
         
         VectorGraphic(VectorGraphic& src)=default;
