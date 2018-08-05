@@ -21,7 +21,7 @@ namespace Framework
                                    // this means remove the reference, dummmy!  Use ptr instead?
 
         PlacedGraphic(const VG::Point&& point, const VG::HVectorGraphic& vg)
-        : myPlacementPoint{ point }, myGraphic{ *vg } {}
+        : myPlacementPoint{ point }, myGraphic{ vg.get() } {}
         
         ~PlacedGraphic()=default;
         
@@ -39,7 +39,7 @@ namespace Framework
     private:
         
         VG::Point myPlacementPoint;
-        VG::VectorGraphic& myGraphic;
+        VG::VectorGraphic* myGraphic;
         
     };
 }

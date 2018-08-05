@@ -19,7 +19,7 @@ namespace Framework
     
     const VG::VectorGraphic& PlacedGraphic::getGraphic() const noexcept
     {
-        return myGraphic;
+        return *myGraphic;
     }
     
     void PlacedGraphic::setPlacementPoint(const VG::Point&& point) noexcept
