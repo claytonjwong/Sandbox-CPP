@@ -25,6 +25,7 @@ namespace VG {
         const static Xml::HElement getHandleFromStream(std::stringstream& ss);
         const static VectorGraphic getVectorGraphicFromHandle(const Xml::HElement root);
         
+        
         const static Xml::HElement getHandleFromVectorGraphic(const VectorGraphic& vg);
         static std::stringstream getStreamFromHandle(const Xml::HElement root);
         static void writeToFileFromStream(const std::string& filename, std::stringstream& ss);

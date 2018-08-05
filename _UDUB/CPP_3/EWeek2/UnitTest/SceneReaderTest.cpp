@@ -40,8 +40,8 @@ const std::string TestXml = R"(
 TEST(ReadScene, SceneReader)
 {
     std::stringstream xmlStream(TestXml);
+    
     auto root = Xml::Reader::loadXml(xmlStream);
-
     
     auto s = Framework::SceneReader::readScene(*root);
 

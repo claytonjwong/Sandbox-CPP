@@ -9,6 +9,9 @@
 #pragma once
 
 #include "VectorGraphic.hpp"
+#include "PlacedGraphic.hpp"
+#include "Layer.hpp"
+#include "Scene.hpp"
 #include "tinyxml2.h"
 #include <string>
 #include <unordered_map>
@@ -40,6 +43,9 @@ namespace Xml
         Element& operator=(const Element& rhs) = delete;
         Element& operator=(Element&& rhs) = delete;
         
+        const static HElement make_HElement(const Framework::Scene& scene);
+        const static HElement make_HElement(const Framework::Layer& layer);
+        const static HElement make_HElement(const Framework::PlacedGraphic& graphic);
         const static HElement make_HElement(const VG::VectorGraphic& vg);
         
         const std::string getName() const noexcept;

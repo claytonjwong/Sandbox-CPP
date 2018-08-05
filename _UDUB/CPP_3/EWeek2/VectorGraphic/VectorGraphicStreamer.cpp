@@ -43,7 +43,7 @@ namespace VG
         }
         else
         {
-            throw invalid_argument( "input file not found" );
+            throw invalid_argument{ "input file not found" };
         }
         return ss;
     }
@@ -105,7 +105,7 @@ namespace VG
         }
         else
         {
-            throw invalid_argument( "output file not found" );
+            throw invalid_argument{ "output file not found" };
         }
     }
 }

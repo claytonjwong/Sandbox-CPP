@@ -13,6 +13,38 @@ using namespace std;
 
 namespace Xml
 {
+    const HElement Element::make_HElement(const Framework::Scene& scene)
+    {
+        HElement result = make_shared<Element>();
+        auto scene_root = result->createXMLNode( "Scene" );
+        
+        scene_root->SetAttribute( "height", scene.getHeight() );
+        scene_root->SetAttribute( "width", scene.getWidth() );
+        
+        for ( const auto& layer: scene )
+        {
+            auto layer_root = result->createXMLNode( "Layer" );
+            
+        }
+        
+        result->insertFirstChild( scene_root );
+        return result;
+    }
+    
+    const HElement Element::make_HElement(const Framework::Layer& layer)
+    {
+        HElement result = make_shared<Element>();
+        
+        return result;
+    }
+    
+    const HElement Element::make_HElement(const Framework::PlacedGraphic& graphic)
+    {
+        HElement result = make_shared<Element>();
+        
+        return result;
+    }
+
     const HElement Element::make_HElement(const VG::VectorGraphic& vg)
     {
         HElement result = make_shared<Element>();
