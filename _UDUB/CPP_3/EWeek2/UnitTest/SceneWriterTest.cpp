@@ -49,7 +49,7 @@ TEST(WriteScene, SceneWriter)
     Framework::Scene scene = Framework::SceneReader::readScene(*readRoot);
 
     // Go back the other way and construct another DOM from the Scene
-    Xml::HElement root = Framework::SceneWriter::writeScene(scene);
+    Xml::HElement root = Framework::SceneWriter::writeScene(scene); // TODO make_HElement from scene
 
     // Now verify some things in the new DOM...
     

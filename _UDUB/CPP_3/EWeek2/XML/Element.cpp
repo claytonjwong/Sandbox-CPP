@@ -92,7 +92,7 @@ namespace Xml
     {
         auto result = myDocument.Parse( xml.c_str() );
         
-        myRoot = myDocument.RootElement();
+        myRoot = myDocument.RootElement(); // TODO: double check if I want to update myRoot here or not
         
         return result;
     }

@@ -14,6 +14,29 @@ namespace Framework
     {
     public:
         
+        void setHeight(const int height)
+        {
+            myHeight = height;
+        }
         
+        void setWidth(const int width)
+        {
+            myWidth = width;
+        }
+        
+        int getHeight() const noexcept
+        {
+            return myHeight;
+        }
+        
+        int getWidth() const noexcept
+        {
+            return myWidth;
+        }
+        
+    private:
+    
+        int myHeight{ 0 };
+        int myWidth{ 0 };
     };
 }

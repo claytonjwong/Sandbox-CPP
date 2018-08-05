@@ -42,12 +42,12 @@ TEST(ReadScene, SceneReader)
     std::stringstream xmlStream(TestXml);
     auto root = Xml::Reader::loadXml(xmlStream);
 
-    /*
+    
     auto s = Framework::SceneReader::readScene(*root);
 
     CHECK_EQUAL(800, s.getWidth());
     CHECK_EQUAL(600, s.getHeight());
-
+/*
     int numberOfLayers = 0;
     for (auto pos = s.begin(); pos != s.end(); ++numberOfLayers, ++pos)
     {
