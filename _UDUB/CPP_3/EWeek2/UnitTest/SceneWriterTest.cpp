@@ -56,7 +56,7 @@ TEST(WriteScene, SceneWriter)
     
     auto ss = VG::VectorGraphicStreamer::getStreamFromHandle( root );
     
-    
+    VG::VectorGraphicStreamer::writeToFileFromStream( "clayton_dude.xml", ss );
     
 //
 //    // Now verify some things in the new DOM...

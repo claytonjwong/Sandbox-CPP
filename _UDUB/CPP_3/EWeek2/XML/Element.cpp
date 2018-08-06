@@ -25,9 +25,33 @@ namespace Xml
         {
             auto layer_root = result->createXMLNode( "Layer" );
             
+            layer_root->SetAttribute( "alias", layer.getAlias().c_str() );
+            
+            for ( const auto& graphic: layer )
+            {
+                auto graphic_root = result->createXMLNode( "PlacedGraphic" );
+                
+                auto placement_point = graphic.getPlacementPoint();
+                
+                graphic_root->SetAttribute( "x", placement_point.getX() );
+                graphic_root->SetAttribute( "y", placement_point.getY() );
+                
+                auto vg = graphic.getGraphic();
+                
+                auto vg_root = result->createXMLNode( "VectorGraphic" );
+                vg_root->SetAttribute(  "closed", ( vg.isClosed() ? "true" : "false" )  );
+                
+                
+                
+                graphic_root->InsertEndChild( vg_root );
+                
+                layer_root->InsertEndChild( graphic_root );
+            }
+            
+            scene_root->InsertEndChild( layer_root );
         }
         
-        result->insertFirstChild( scene_root );
+        result->insertChild( scene_root );
         return result;
     }
     
@@ -61,7 +85,7 @@ namespace Xml
             root->InsertEndChild( node );
         }
         
-        result->insertFirstChild( root ); // TODO: does this work to update myRoot in here?
+        result->insertChild( root ); // TODO: does this work to update myRoot in here?
         
         return result;
     }
@@ -114,10 +138,6 @@ namespace Xml
               child != nullptr;
               child = child->NextSiblingElement() )
         {
-            //
-            // TODO: dive deep to also include child's children here
-            // then push_back onto the result, so that Scene children are Layers and Layer children are PlacedGraphics
-            //
             result.push_back(  make_shared<Element>( child )  );
         }
         
@@ -143,9 +163,9 @@ namespace Xml
         return myDocument.NewElement( name.c_str() );
     }
 
-    HXMLNode Element::insertFirstChild( HXMLNode child )
+    HXMLNode Element::insertChild( HXMLNode child )
     {
-        auto result = myDocument.InsertFirstChild( child );
+        auto result = myDocument.InsertEndChild( child );
         
         myRoot = myDocument.RootElement(); // TODO: double check if I want to update myRoot here or not
         

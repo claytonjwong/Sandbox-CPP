@@ -56,7 +56,7 @@ namespace Xml
         
         ElementError parseXML(const std::string& xml);
         HXMLElement createXMLNode(const std::string& name);
-        HXMLNode insertFirstChild( HXMLNode child );
+        HXMLNode insertChild( HXMLNode child );
     
     private:
         
