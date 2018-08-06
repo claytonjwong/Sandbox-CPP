@@ -12,23 +12,26 @@
 using namespace std;
 using namespace VG;
 
-TEST(fromFileExists,VectorGraphicStreamer){
-    VectorGraphic vg=VectorGraphicStreamer::getVectorGraphicFromFile("inout.xml");
-    CHECK(vg.getPointCount()==4);
-}
 
-TEST(toFileDefault,VectorGraphicStreamer){
-    string filename="default.xml";
-    VectorGraphic vg1,vg2;
-    VectorGraphicStreamer::setVectorGraphicToFile(vg1, filename);
-    VectorGraphicStreamer::getVectorGraphicFromFile(filename);
-    CHECK(vg1==vg2);
-}
+// how to test file system without touching it?  we can only test till stringstream / string?
 
-TEST(toFileInXml,VectorGraphicStreamer){
-    string filename="in.xml";
-    auto vg1 = VectorGraphicStreamer::getVectorGraphicFromFile(filename);
-    VectorGraphicStreamer::setVectorGraphicToFile(vg1, filename);
-    auto vg2 = VectorGraphicStreamer::getVectorGraphicFromFile(filename);
-    CHECK(vg1==vg2);
-}
+//TEST(fromFileExists,VectorGraphicStreamer){
+//    VectorGraphic vg=VectorGraphicStreamer::getVectorGraphicFromFile("inout.xml");
+//    CHECK(vg.getPointCount()==4);
+//}
+//
+//TEST(toFileDefault,VectorGraphicStreamer){
+//    string filename="default.xml";
+//    VectorGraphic vg1,vg2;
+//    VectorGraphicStreamer::setVectorGraphicToFile(vg1, filename);
+//    VectorGraphicStreamer::getVectorGraphicFromFile(filename);
+//    CHECK(vg1==vg2);
+//}
+//
+//TEST(toFileInXml,VectorGraphicStreamer){
+//    string filename="in.xml";
+//    auto vg1 = VectorGraphicStreamer::getVectorGraphicFromFile(filename);
+//    VectorGraphicStreamer::setVectorGraphicToFile(vg1, filename);
+//    auto vg2 = VectorGraphicStreamer::getVectorGraphicFromFile(filename);
+//    CHECK(vg1==vg2);
+//}
