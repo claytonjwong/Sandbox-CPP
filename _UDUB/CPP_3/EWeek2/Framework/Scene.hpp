@@ -36,51 +36,17 @@ namespace Framework
         Scene() = default;
         Scene(int width, int height) : myWidth{ width }, myHeight{ height } {}
 
-        void setHeight(const int height) noexcept
-        {
-            myHeight = height;
-        }
+        void setHeight(const int height) noexcept;
+        void setWidth(const int width) noexcept;
         
-        void setWidth(const int width) noexcept
-        {
-            myWidth = width;
-        }
+        int getHeight() const noexcept;
+        int getWidth() const noexcept;
         
-        int getHeight() const noexcept
-        {
-            return myHeight;
-        }
+        LayerIterator begin() const noexcept;
+        LayerIterator end() const noexcept;
         
-        int getWidth() const noexcept
-        {
-            return myWidth;
-        }
-        
-        LayerIterator begin() const noexcept
-        {
-            return myLayers.begin();
-        }
-        
-        LayerIterator end() const noexcept
-        {
-            return myLayers.end();
-        }
-        
-        void pushBack(const Layer& layer) noexcept
-        {
-            myLayers.push_back( layer );
-        }
-        
-        void remove(const Layer& target) noexcept
-        {
-            auto new_end = std::remove_if( myLayers.begin(), myLayers.end(),
-                [&](const Layer& x){ return x.getAlias() == target.getAlias(); });
-            
-            if ( new_end != myLayers.end() )
-            {
-                myLayers.erase( new_end, myLayers.end() );
-            }
-        }
+        void pushBack(const Layer& layer) noexcept;
+        void remove(const Layer& target) noexcept;
         
     private:
     
