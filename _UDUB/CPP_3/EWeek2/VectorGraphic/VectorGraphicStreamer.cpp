@@ -57,7 +57,7 @@ namespace VG
     const VectorGraphic VectorGraphicStreamer::getVectorGraphicFromHandle(const Xml::HElement root)
     {
         VectorGraphic vg;
-        if ( root != nullptr && root->getName() == "VectorGraphic" )
+        if ( root->getName() == "VectorGraphic" )
         {
             auto closed_value = root->getAttribute("closed");
             if ( closed_value == "true" )

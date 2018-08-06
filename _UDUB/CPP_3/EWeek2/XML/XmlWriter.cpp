@@ -56,7 +56,7 @@ namespace Xml
     void Writer::writeLeadingWhitespace(ostream& os, const int depth)
     {
         //
-        // leading whitespace indentation increases by 2 * depth
+        // leading whitespace char (0x20) indentation increases by 2x depth
         //
         string whitespace(  static_cast<size_t>( depth << 1 ), 0x20  );
         
