@@ -59,8 +59,6 @@ namespace Xml
         HXMLElement createXMLNode(const std::string& name);
         HXMLNode insertXMLNode( HXMLNode child );
         
-        
-    
     private:
         
         HXMLElement myRoot;

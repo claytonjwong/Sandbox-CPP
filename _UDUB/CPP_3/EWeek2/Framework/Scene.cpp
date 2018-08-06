@@ -10,14 +10,9 @@
 
 namespace Framework
 {
-    void Scene::setHeight(const int height) noexcept
+    int Scene::getWidth() const noexcept
     {
-        myHeight = height;
-    }
-
-    void Scene::setWidth(const int width) noexcept
-    {
-        myWidth = width;
+        return myWidth;
     }
 
     int Scene::getHeight() const noexcept
@@ -25,9 +20,14 @@ namespace Framework
         return myHeight;
     }
 
-    int Scene::getWidth() const noexcept
+    void Scene::setWidth(const int width) noexcept
     {
-        return myWidth;
+        myWidth = width;
+    }
+
+    void Scene::setHeight(const int height) noexcept
+    {
+        myHeight = height;
     }
 
     Scene::LayerIterator Scene::begin() const noexcept

@@ -36,11 +36,11 @@ namespace Framework
         Scene() = default;
         Scene(int width, int height) : myWidth{ width }, myHeight{ height } {}
 
-        void setHeight(const int height) noexcept;
-        void setWidth(const int width) noexcept;
-        
-        int getHeight() const noexcept;
         int getWidth() const noexcept;
+        int getHeight() const noexcept;
+
+        void setWidth(const int width) noexcept;
+        void setHeight(const int height) noexcept;
         
         LayerIterator begin() const noexcept;
         LayerIterator end() const noexcept;
@@ -50,8 +50,8 @@ namespace Framework
         
     private:
     
-        int myHeight{ 0 };
         int myWidth{ 0 };
+        int myHeight{ 0 };
         LayerCollection myLayers;
         
     };

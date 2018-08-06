@@ -14,6 +14,11 @@ TEST(ctor, PlacedGraphic)
     CHECK_EQUAL(vg.get(), &pg.getGraphic());
 }
 
+TEST(ctor2, PlacedGraphic)
+{
+    
+}
+
 
 TEST(setPlacementPoint, PlacedGraphic)
 {
@@ -33,4 +38,5 @@ TEST(setGraphic, PlacedGraphic)
 
     CHECK_EQUAL(vg.get(), &pg.getGraphic());
 }
+
 
