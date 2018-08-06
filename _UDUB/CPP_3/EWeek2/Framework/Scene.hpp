@@ -11,6 +11,18 @@
 #include "Layer.hpp"
 #include <list>
 
+//TEST(pushBack, Scene)
+//{
+//    Framework::Scene scene(800, 600);
+//    scene.pushBack(Framework::Layer("Mountains"));
+//    scene.pushBack(Framework::Layer("Sea"));
+//    scene.pushBack(Framework::Layer("Sky"));
+//
+//    LayerMatcher matcher = std::for_each(scene.begin(), scene.end(), LayerMatcher());
+//    CHECK(matcher.allLayersFound());
+//}
+
+
 namespace Framework
 {
 
@@ -20,6 +32,9 @@ namespace Framework
 
         using LayerCollection = std::list<Layer>;
         using LayerIterator = LayerCollection::const_iterator;
+
+        Scene() = default;
+        Scene(int width, int height) : myWidth{ width }, myHeight{ height } {}
 
         void setHeight(const int height) noexcept
         {
@@ -51,9 +66,20 @@ namespace Framework
             return myLayers.end();
         }
         
-        void addLayer(const Layer& layer) noexcept
+        void pushBack(const Layer& layer) noexcept
         {
             myLayers.push_back( layer );
+        }
+        
+        void remove(const Layer& target) noexcept
+        {
+            auto new_end = std::remove_if( myLayers.begin(), myLayers.end(),
+                [&](const Layer& x){ return x.getAlias() == target.getAlias(); });
+            
+            if ( new_end != myLayers.end() )
+            {
+                myLayers.erase( new_end, myLayers.end() );
+            }
         }
         
     private:

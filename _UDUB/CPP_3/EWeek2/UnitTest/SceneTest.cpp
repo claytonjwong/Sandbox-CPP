@@ -1,5 +1,4 @@
-/*
-#include "Scene.h"
+#include "Scene.hpp"
 #include "TestHarness.h"
 #include <algorithm>
 
@@ -47,9 +46,9 @@ private:
 TEST(pushBack, Scene)
 {
     Framework::Scene scene(800, 600);
-	scene.pushBack(Framework::Layer("Mountains"));
-	scene.pushBack(Framework::Layer("Sea"));
-	scene.pushBack(Framework::Layer("Sky"));
+    scene.pushBack(Framework::Layer("Mountains"));
+    scene.pushBack(Framework::Layer("Sea"));
+    scene.pushBack(Framework::Layer("Sky"));
     
     LayerMatcher matcher = std::for_each(scene.begin(), scene.end(), LayerMatcher());
     CHECK(matcher.allLayersFound());
@@ -67,4 +66,4 @@ TEST(remove, Scene)
     LayerMatcher matcher = std::for_each(scene.begin(), scene.end(), LayerMatcher());
     CHECK(matcher.onlyMountainsSkyFound());
 }
-*/
+

@@ -91,15 +91,12 @@ namespace Framework
                                             VG::VectorGraphicStreamer::
                                                 getVectorGraphicFromHandle( placed_graphic_child )
                                         );
-                                        
                                     graphic.setGraphic( handle_VG );
                                 }
-                                
                                 layer.addGraphic( graphic );
                             }
                         }
-                        
-                        s.addLayer( layer );
+                        s.pushBack( layer );
                     }
                 }
 
@@ -109,13 +106,3 @@ namespace Framework
         
     };
 }
-
-/*
-
-    auto s = Framework::SceneReader::readScene(*root);
-
-    CHECK_EQUAL(800, s.getWidth());
-    CHECK_EQUAL(600, s.getHeight());
-
-
-*/
