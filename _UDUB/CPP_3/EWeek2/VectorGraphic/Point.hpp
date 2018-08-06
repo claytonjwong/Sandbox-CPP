@@ -17,9 +17,9 @@ namespace VG
     {
     public:
     
-        constexpr Point(int x, int y) : myX{x},myY{y}
+        constexpr Point(int x, int y) : myX{ x }, myY{ y }
         {
-            if (x<0 || y<0)
+            if (  x < 0  ||  y < 0  )
             {
                 throw std::out_of_range("point values cannot be negative");
             }
