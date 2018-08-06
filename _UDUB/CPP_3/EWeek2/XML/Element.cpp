@@ -15,65 +15,78 @@ namespace Xml
 {
     const HElement Element::make_HElement(const Framework::Scene& scene)
     {
-        HElement result = make_shared<Element>();
-        auto scene_root = result->createXMLNode( "Scene" );
+        HElement handle = make_shared<Element>();
+        auto scene_root = handle->createXMLNode( "Scene" );
         
         scene_root->SetAttribute( "height", scene.getHeight() );
         scene_root->SetAttribute( "width", scene.getWidth() );
         
         for ( const auto& layer: scene )
         {
-            auto layer_root = result->createXMLNode( "Layer" );
-            
-            layer_root->SetAttribute( "alias", layer.getAlias().c_str() );
-            
-            for ( const auto& graphic: layer )
-            {
-                auto graphic_root = result->createXMLNode( "PlacedGraphic" );
-                
-                auto placement_point = graphic.getPlacementPoint();
-                
-                graphic_root->SetAttribute( "x", placement_point.getX() );
-                graphic_root->SetAttribute( "y", placement_point.getY() );
-                
-                auto vg = graphic.getGraphic();
-                
-                auto vg_root = result->createXMLNode( "VectorGraphic" );
-                vg_root->SetAttribute(  "closed", ( vg.isClosed() ? "true" : "false" )  );
-
-
-                for ( const auto& point: vg )
-                {
-                    auto point_root = result->createXMLNode( "Point" );
-                    point_root->SetAttribute( "x", point.getX() );
-                    point_root->SetAttribute( "y", point.getY() );
-                    vg_root->InsertEndChild( point_root );
-                }
-                
-                graphic_root->InsertEndChild( vg_root );
-                
-                layer_root->InsertEndChild( graphic_root );
-            }
-            
+            auto layer_root = make_HXMLNode( handle, layer );
             scene_root->InsertEndChild( layer_root );
         }
         
-        result->insertChild( scene_root );
-        return result;
+        handle->insertXMLNode( scene_root );
+        return handle;
     }
     
-    const HElement Element::make_HElement(const Framework::Layer& layer)
+    HXMLNode Element::make_HXMLNode(HElement handle, const Framework::Layer& layer)
     {
-        HElement result = make_shared<Element>();
+        auto layer_root = handle->createXMLNode( "Layer" );
         
-        return result;
+        layer_root->SetAttribute( "alias", layer.getAlias().c_str() );
+        
+        for ( const auto& graphic: layer )
+        {
+            auto graphic_root = make_HXMLNode( handle, graphic );
+            layer_root->InsertEndChild( graphic_root );
+        }
+        
+        return layer_root;
     }
     
-    const HElement Element::make_HElement(const Framework::PlacedGraphic& graphic)
+    HXMLNode Element::make_HXMLNode(HElement handle, const Framework::PlacedGraphic& graphic)
     {
-        HElement result = make_shared<Element>();
+        auto graphic_root = handle->createXMLNode( "PlacedGraphic" );
         
-        return result;
+        auto placement_point = graphic.getPlacementPoint();
+
+        graphic_root->SetAttribute( "x", placement_point.getX() );
+        graphic_root->SetAttribute( "y", placement_point.getY() );
+
+        auto vg = graphic.getGraphic();
+
+        auto vg_root = make_HXMLNode( handle, vg );
+
+        graphic_root->InsertEndChild( vg_root );
+
+        return graphic_root;
+    }
+    
+    HXMLNode Element::make_HXMLNode(HElement handle, const VG::VectorGraphic& vg)
+    {
+        auto vg_root = handle->createXMLNode( "VectorGraphic" );
+        
+        vg_root->SetAttribute(  "closed", ( vg.isClosed() ? "true" : "false" )  );
+        
+        for ( const auto& point: vg )
+        {
+            auto point_root = make_HXMLNode( handle, point );
+            vg_root->InsertEndChild( point_root );
+        }
+        
+        return vg_root;
+    }
+    
+    HXMLNode Element::make_HXMLNode(HElement handle, const VG::Point& point)
+    {
+        auto point_root = handle->createXMLNode( "Point" );
+        
+        point_root->SetAttribute( "x", point.getX() );
+        point_root->SetAttribute( "y", point.getY() );
+        
+        return point_root;
     }
 
     const HElement Element::make_HElement(const VG::VectorGraphic& vg)
@@ -83,7 +96,7 @@ namespace Xml
         
         root->SetAttribute(  "closed", ( vg.isClosed() ? "true" : "false" )  );
         
-        for (  int i=0, N=static_cast<int>( vg.getPointCount() ); i < N; ++i  )
+        for (  int i=0, N=static_cast<int>( vg.getPointCount() );  i < N;  ++i  )
         {
             auto point = vg.getPoint( i );
             auto node = result->createXMLNode( "Point" );
@@ -92,7 +105,7 @@ namespace Xml
             root->InsertEndChild( node );
         }
         
-        result->insertChild( root ); // TODO: does this work to update myRoot in here?
+        result->insertXMLNode( root ); // TODO: does this work to update myRoot in here?
         
         return result;
     }
@@ -150,12 +163,7 @@ namespace Xml
         
         return result;
     }
-    
-    const HElement Element::getFirstChild() const
-    {
-        return make_shared<Element>( myRoot->FirstChildElement() );
-    }
-    
+        
     ElementError Element::parseXML(const std::string& xml)
     {
         auto result = myDocument.Parse( xml.c_str() );
@@ -170,9 +178,9 @@ namespace Xml
         return myDocument.NewElement( name.c_str() );
     }
 
-    HXMLNode Element::insertChild(HXMLNode child)
+    HXMLNode Element::insertXMLNode(HXMLNode node)
     {
-        auto result = myDocument.InsertEndChild( child );
+        auto result = myDocument.InsertEndChild( node );
         
         myRoot = myDocument.RootElement(); // TODO: double check if I want to update myRoot here or not
         

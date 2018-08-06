@@ -44,19 +44,22 @@ namespace Xml
         Element& operator=(Element&& rhs) = delete;
         
         const static HElement make_HElement(const Framework::Scene& scene);
-        const static HElement make_HElement(const Framework::Layer& layer);
-        const static HElement make_HElement(const Framework::PlacedGraphic& graphic);
+        static HXMLNode make_HXMLNode(HElement handle, const Framework::Layer& layer);
+        static HXMLNode make_HXMLNode(HElement handle, const Framework::PlacedGraphic& graphic);
+        static HXMLNode make_HXMLNode(HElement handle, const VG::VectorGraphic& vg);
+        static HXMLNode make_HXMLNode(HElement handle, const VG::Point& point);
         const static HElement make_HElement(const VG::VectorGraphic& vg);
         
         const std::string getName() const noexcept;
         const std::string getAttribute(const std::string& name) const noexcept;
         const AttributeMap getAttributes() const noexcept;
         const ElementList getChildElements() const noexcept;
-        const HElement getFirstChild() const;
         
         ElementError parseXML(const std::string& xml);
         HXMLElement createXMLNode(const std::string& name);
-        HXMLNode insertChild( HXMLNode child );
+        HXMLNode insertXMLNode( HXMLNode child );
+        
+        
     
     private:
         
@@ -64,5 +67,4 @@ namespace Xml
         ElementDocument myDocument;
         ElementList myChildren;
     };
-
 }
