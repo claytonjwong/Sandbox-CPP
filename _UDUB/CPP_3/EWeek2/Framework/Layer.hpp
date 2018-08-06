@@ -21,27 +21,14 @@ namespace Framework
         using PlacedGraphicCollection = std::list<PlacedGraphic>;
         using PlacedGraphicIterator = PlacedGraphicCollection::const_iterator;
 
-        Layer(const std::string& alias) : myAlias{ alias } {}
+        Layer(const std::string& alias);
         
-        const std::string& getAlias() const noexcept
-        {
-            return myAlias;
-        }
+        const std::string& getAlias() const noexcept;
         
-        PlacedGraphicIterator begin() const noexcept
-        {
-            return myGraphics.begin();
-        }
+        PlacedGraphicIterator begin() const noexcept;
+        PlacedGraphicIterator end() const noexcept;
         
-        PlacedGraphicIterator end() const noexcept
-        {
-            return myGraphics.end();
-        }
-        
-        void addGraphic(const PlacedGraphic& graphic) noexcept
-        {
-            myGraphics.push_back( graphic );
-        }
+        void addGraphic(const PlacedGraphic& graphic) noexcept;
         
     private:
     

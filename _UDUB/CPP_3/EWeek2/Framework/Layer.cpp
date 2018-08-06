@@ -10,5 +10,25 @@
 
 namespace Framework
 {
+    Layer::Layer(const std::string& alias) : myAlias{ alias } {}
 
+    const std::string& Layer::getAlias() const noexcept
+    {
+        return myAlias;
+    }
+
+    Layer::PlacedGraphicIterator Layer::begin() const noexcept
+    {
+        return myGraphics.begin();
+    }
+
+    Layer::PlacedGraphicIterator Layer::end() const noexcept
+    {
+        return myGraphics.end();
+    }
+
+    void Layer::addGraphic(const PlacedGraphic& graphic) noexcept
+    {
+        myGraphics.push_back( graphic );
+    }
 }
