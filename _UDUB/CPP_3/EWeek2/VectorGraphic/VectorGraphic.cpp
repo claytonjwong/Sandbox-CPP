@@ -15,6 +15,8 @@
 
 namespace VG {
     
+    VectorGraphic::VectorGraphic() : myShapeStyle{ ShapeStyle::Close } {}
+    
     void VectorGraphic::addPoint(const Point& point)
     {
         myPath.push_back( point );
@@ -27,7 +29,7 @@ namespace VG {
     
     void VectorGraphic::erasePoint(int index)
     {
-        if ( index >= 0 && static_cast<size_t>(index) < getPointCount() )
+        if (  ( index >= 0 )  &&  ( static_cast<size_t>(index) < getPointCount() )  )
         {
             auto pos = myPath.begin() + index;
             myPath.erase( pos );
@@ -116,5 +118,15 @@ namespace VG {
     
     bool VectorGraphic::operator!=(const VectorGraphic& rhs){
         return ! ( *this == rhs );
+    }
+    
+    PathIterator VectorGraphic::begin() const noexcept
+    {
+        return myPath.begin();
+    }
+
+    PathIterator VectorGraphic::end() const noexcept
+    {
+        return myPath.end();
     }
 }

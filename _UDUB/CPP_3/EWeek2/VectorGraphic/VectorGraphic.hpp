@@ -27,7 +27,7 @@
 
 namespace VG {
 
-    class VectorGraphic; // forward declaration for HVectorGraphic using-declaration
+    class VectorGraphic; // forward-declaration for HVectorGraphic using-declaration
     using HVectorGraphic = std::shared_ptr<VectorGraphic>;
     using Path = std::vector<Point>;
     using PathIterator = Path::const_iterator;
@@ -35,7 +35,7 @@ namespace VG {
     class VectorGraphic {
     public:
     
-        VectorGraphic() : myShapeStyle{ ShapeStyle::Close } {}
+        VectorGraphic();
         ~VectorGraphic()=default;
         
         VectorGraphic(const VectorGraphic& src)=default;
@@ -65,15 +65,8 @@ namespace VG {
         int getHeight() const noexcept;
         int getWidth() const noexcept;
         
-        PathIterator begin() const noexcept
-        {
-            return myPath.begin();
-        }
-        
-        PathIterator end() const noexcept
-        {
-            return myPath.end();
-        }
+        PathIterator begin() const noexcept;
+        PathIterator end() const noexcept;
 
     private:
     
@@ -81,8 +74,6 @@ namespace VG {
         
         enum class ShapeStyle { Open, Close } myShapeStyle;
     };
-    
-    std::ostream& operator<<(std::ostream& os, const VectorGraphic& rhs);
 }
 
 
