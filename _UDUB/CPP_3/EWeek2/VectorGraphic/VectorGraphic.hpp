@@ -65,7 +65,15 @@ namespace VG {
         int getHeight() const noexcept;
         int getWidth() const noexcept;
         
+        PathIterator begin() const noexcept
+        {
+            return myPath.begin();
+        }
         
+        PathIterator end() const noexcept
+        {
+            return myPath.end();
+        }
 
     private:
     

@@ -88,20 +88,20 @@ TEST(WriteScene, SceneWriter)
     Xml::Element& vectorGraphic = *placedGraphicElements[0];
     CHECK_EQUAL(1, vectorGraphic.getAttributes().size());
     CHECK_EQUAL("true", vectorGraphic.getAttribute("closed"));
-//
-//    Xml::ElementList pointElements = vectorGraphic.getChildElements();
-//    CHECK_EQUAL(3, pointElements.size());
-//
-//    CHECK_EQUAL("Point", pointElements[0]->getName());
-//    CHECK_EQUAL("1", pointElements[0]->getAttribute("x"));
-//    CHECK_EQUAL("2", pointElements[0]->getAttribute("y"));
-//
-//    CHECK_EQUAL("Point", pointElements[1]->getName());
-//    CHECK_EQUAL("3", pointElements[1]->getAttribute("x"));
-//    CHECK_EQUAL("4", pointElements[1]->getAttribute("y"));
-//
-//    CHECK_EQUAL("Point", pointElements[2]->getName());
-//    CHECK_EQUAL("5", pointElements[2]->getAttribute("x"));
-//    CHECK_EQUAL("6", pointElements[2]->getAttribute("y"));
+
+    Xml::ElementList pointElements = vectorGraphic.getChildElements();
+    CHECK_EQUAL(3, pointElements.size());
+
+    CHECK_EQUAL("Point", pointElements[0]->getName());
+    CHECK_EQUAL("1", pointElements[0]->getAttribute("x"));
+    CHECK_EQUAL("2", pointElements[0]->getAttribute("y"));
+
+    CHECK_EQUAL("Point", pointElements[1]->getName());
+    CHECK_EQUAL("3", pointElements[1]->getAttribute("x"));
+    CHECK_EQUAL("4", pointElements[1]->getAttribute("y"));
+
+    CHECK_EQUAL("Point", pointElements[2]->getName());
+    CHECK_EQUAL("5", pointElements[2]->getAttribute("x"));
+    CHECK_EQUAL("6", pointElements[2]->getAttribute("y"));
 }
 

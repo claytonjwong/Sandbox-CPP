@@ -41,11 +41,14 @@ namespace Xml
                 auto vg_root = result->createXMLNode( "VectorGraphic" );
                 vg_root->SetAttribute(  "closed", ( vg.isClosed() ? "true" : "false" )  );
 
-// TODO: add begin() end() onto VectorGraphic
-//                for ( const auto& point: graphic )
-//                {
-//
-//                }
+
+                for ( const auto& point: vg )
+                {
+                    auto point_root = result->createXMLNode( "Point" );
+                    point_root->SetAttribute( "x", point.getX() );
+                    point_root->SetAttribute( "y", point.getY() );
+                    vg_root->InsertEndChild( point_root );
+                }
                 
                 graphic_root->InsertEndChild( vg_root );
                 
