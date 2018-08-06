@@ -46,6 +46,7 @@ namespace Framework
         LayerIterator end() const noexcept;
         
         void pushBack(const Layer& layer) noexcept;
+        void pushBack(Layer&& layer) noexcept;
         void remove(const Layer& target) noexcept;
         
     private:
