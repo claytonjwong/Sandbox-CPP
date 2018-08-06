@@ -18,7 +18,9 @@ namespace Framework
     public:
         
         PlacedGraphic();
-        PlacedGraphic(const VG::Point&& point, const VG::HVectorGraphic& vg);
+        PlacedGraphic(const VG::Point& point, const VG::HVectorGraphic& hvg);
+        PlacedGraphic(VG::Point&& point, const VG::HVectorGraphic& hvg);
+        
 
         ~PlacedGraphic()=default;
         
@@ -31,8 +33,10 @@ namespace Framework
         VG::Point getPlacementPoint() const noexcept;
         const VG::VectorGraphic& getGraphic() const noexcept;
     
-        void setPlacementPoint(const VG::Point&& point) noexcept;
-        void setGraphic(const VG::HVectorGraphic& vg) noexcept;
+        void setPlacementPoint(const VG::Point& point) noexcept;
+        void setPlacementPoint(VG::Point&& point) noexcept;
+        void setGraphic(const VG::HVectorGraphic& hvg) noexcept;
+        void setGraphic(VG::HVectorGraphic&& hvg) noexcept;
         
     private:
         
