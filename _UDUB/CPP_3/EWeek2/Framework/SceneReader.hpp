@@ -52,57 +52,93 @@ namespace Framework
     {
     public:
         
-        static Scene readScene(const Xml::Element& root)
+        static Scene readScene(const Xml::Element& scene_root)
         {
-            Scene s;
-            if ( root.getName() == "Scene" )
+            if ( scene_root.getName() == "Scene" )
             {
-                auto height = root.getAttribute( "height" );
-                s.setHeight(  stoi( height )  );
-            
-                auto width = root.getAttribute( "width" );
-                s.setWidth(  stoi( width )  );
+                Scene scene;
                 
-                for ( const auto& scene_child: root.getChildElements() )
+                auto width = scene_root.getAttribute( "width" );
+                auto height = scene_root.getAttribute( "height" );
+                
+                scene.setWidth(  stoi( width )  );
+                scene.setHeight(  stoi( height )  );
+                
+                for ( const auto& layer_root: scene_root.getChildElements() )
                 {
-                    auto scene_child_name = scene_child->getName();
-                    if ( scene_child_name == "Layer" )
-                    {
-                        auto alias = scene_child->getAttribute( "alias" );
-                        Layer layer{ alias };
-                        
-                        for ( const auto& layer_child: scene_child->getChildElements() )
-                        {
-                            auto layer_child_name = layer_child->getName();
-                            if ( layer_child_name == "PlacedGraphic" )
-                            {
-                                PlacedGraphic graphic;
-                                
-                                auto x = stoi (  layer_child->getAttribute( "x" )  );
-                                auto y = stoi (  layer_child->getAttribute( "y" )  );
-                                
-                                graphic.setPlacementPoint( VG::Point{ x,y } );
-                                
-                                auto placed_graphic_child = layer_child->getFirstChild();
-                                if ( placed_graphic_child->getName() == "VectorGraphic" )
-                                {                                    
-                                    const auto handle_VG =
-                                        std::make_shared<VG::VectorGraphic>(
-                                            VG::VectorGraphicStreamer::
-                                                getVectorGraphicFromHandle( placed_graphic_child )
-                                        );
-                                    graphic.setGraphic( handle_VG );
-                                }
-                                layer.addGraphic( graphic );
-                            }
-                        }
-                        s.pushBack( layer );
-                    }
+                    auto layer = readLayer( layer_root );
+                    scene.pushBack( layer );
                 }
-
+                return scene;
             }
-            return s;
+            else
+            {
+                throw std::runtime_error{ "unable to find Scene in Xml::Element" };
+            }
+        }
+
+        static Layer readLayer(const Xml::HElement layer_root)
+        {
+            auto name = layer_root->getName();
+            if ( name == "Layer" )
+            {
+                auto alias = layer_root->getAttribute( "alias" );
+                Layer layer{ alias };
+                for ( const auto& placed_graphic_root: layer_root->getChildElements() )
+                {
+                    auto placed_graphic = readPlacedGraphic( placed_graphic_root );
+                    layer.addGraphic( placed_graphic );
+                }
+                return layer;
+            }
+            else
+            {
+                throw std::runtime_error{ "unable to find Layer int Xml::Element" };
+            }
         }
         
+        static PlacedGraphic readPlacedGraphic(const Xml::HElement placed_graphic_root)
+        {
+            auto name = placed_graphic_root->getName();
+            if ( name == "PlacedGraphic" )
+            {
+                PlacedGraphic placed_graphic;
+                
+                auto x = stoi (  placed_graphic_root->getAttribute( "x" )  );
+                auto y = stoi (  placed_graphic_root->getAttribute( "y" )  );
+                
+                placed_graphic.setPlacementPoint(  VG::Point{ x,y }  );
+                
+                for ( const auto& vector_graphic_root: placed_graphic_root->getChildElements() )
+                {
+                        const auto handle_VG = readVectorGraphic( vector_graphic_root );
+                        placed_graphic.setGraphic( handle_VG );
+                }
+                
+                return placed_graphic;
+            }
+            else
+            {
+                throw std::runtime_error{ "unable to find PlacedGraphic in Xml::Element" };
+            }
+        }
+        
+        static VG::HVectorGraphic readVectorGraphic(const Xml::HElement vector_graphic_root )
+        {
+            auto name = vector_graphic_root->getName();
+            if ( name == "VectorGraphic" )
+            {
+                const auto handle_VG =
+                    std::make_shared<VG::VectorGraphic>(
+                        VG::VectorGraphicStreamer::
+                            getVectorGraphicFromHandle( vector_graphic_root )
+                    );
+                return handle_VG;
+            }
+            else
+            {
+                throw std::runtime_error{ "unable to find VectorGraphic in Xml::Element" };
+            }
+        }
     };
 }
