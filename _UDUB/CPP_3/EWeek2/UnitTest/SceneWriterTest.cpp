@@ -58,36 +58,36 @@ TEST(WriteScene, SceneWriter)
     
     VG::VectorGraphicStreamer::writeToFileFromStream( "clayton_dude.xml", ss );
     
-//
-//    // Now verify some things in the new DOM...
-//    
-//    CHECK_EQUAL("Scene", root->getName());
-//    Xml::AttributeMap attributes = root->getAttributes();
-//    CHECK_EQUAL(2, attributes.size());
-//    CHECK_EQUAL("800", root->getAttribute("width"));
-//    CHECK_EQUAL("600", root->getAttribute("height"));
-//
-//    Xml::ElementList childElements = root->getChildElements();
-//    CHECK_EQUAL(2, childElements.size());
-//    Xml::HElement child = childElements[0];
-//
-//    CHECK_EQUAL("Layer", child->getName());
-//    CHECK_EQUAL(1, child->getAttributes().size());
-//    CHECK_EQUAL("sky", child->getAttribute("alias"));
-//
-//    Xml::ElementList layerElements = child->getChildElements();
-//    CHECK_EQUAL(2, layerElements.size());
-//
-//    Xml::AttributeMap placedGraphicAttributes = layerElements[0]->getAttributes();
-//    CHECK_EQUAL(2, placedGraphicAttributes.size());
-//    CHECK_EQUAL("86", layerElements[0]->getAttribute("x"));
-//    CHECK_EQUAL("99", layerElements[0]->getAttribute("y"));
-//
-//    Xml::ElementList placedGraphicElements = layerElements[0]->getChildElements();
-//    CHECK_EQUAL(1, placedGraphicElements.size());
-//    Xml::Element& vectorGraphic = *placedGraphicElements[0];
-//    CHECK_EQUAL(1, vectorGraphic.getAttributes().size());
-//    CHECK_EQUAL("true", vectorGraphic.getAttribute("closed"));
+
+    // Now verify some things in the new DOM...
+    
+    CHECK_EQUAL("Scene", root->getName());
+    Xml::AttributeMap attributes = root->getAttributes();
+    CHECK_EQUAL(2, attributes.size());
+    CHECK_EQUAL("800", root->getAttribute("width"));
+    CHECK_EQUAL("600", root->getAttribute("height"));
+
+    Xml::ElementList childElements = root->getChildElements();
+    CHECK_EQUAL(2, childElements.size());
+    Xml::HElement child = childElements[0];
+
+    CHECK_EQUAL("Layer", child->getName());
+    CHECK_EQUAL(1, child->getAttributes().size());
+    CHECK_EQUAL("sky", child->getAttribute("alias"));
+
+    Xml::ElementList layerElements = child->getChildElements();
+    CHECK_EQUAL(2, layerElements.size());
+
+    Xml::AttributeMap placedGraphicAttributes = layerElements[0]->getAttributes();
+    CHECK_EQUAL(2, placedGraphicAttributes.size());
+    CHECK_EQUAL("86", layerElements[0]->getAttribute("x"));
+    CHECK_EQUAL("99", layerElements[0]->getAttribute("y"));
+
+    Xml::ElementList placedGraphicElements = layerElements[0]->getChildElements();
+    CHECK_EQUAL(1, placedGraphicElements.size());
+    Xml::Element& vectorGraphic = *placedGraphicElements[0];
+    CHECK_EQUAL(1, vectorGraphic.getAttributes().size());
+    CHECK_EQUAL("true", vectorGraphic.getAttribute("closed"));
 //
 //    Xml::ElementList pointElements = vectorGraphic.getChildElements();
 //    CHECK_EQUAL(3, pointElements.size());

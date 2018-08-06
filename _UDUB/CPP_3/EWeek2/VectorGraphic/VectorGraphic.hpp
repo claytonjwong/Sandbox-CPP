@@ -29,8 +29,8 @@ namespace VG {
 
     class VectorGraphic; // forward declaration for HVectorGraphic using-declaration
     using HVectorGraphic = std::shared_ptr<VectorGraphic>;
-    using Points = std::vector<Point>;
-    
+    using Path = std::vector<Point>;
+    using PathIterator = Path::const_iterator;
 
     class VectorGraphic {
     public:
@@ -64,10 +64,12 @@ namespace VG {
 
         int getHeight() const noexcept;
         int getWidth() const noexcept;
+        
+        
 
     private:
     
-        Points myPath;
+        Path myPath;
         
         enum class ShapeStyle { Open, Close } myShapeStyle;
     };

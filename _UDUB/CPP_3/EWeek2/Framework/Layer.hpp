@@ -19,7 +19,7 @@ namespace Framework
     public:
 
         using PlacedGraphicCollection = std::list<PlacedGraphic>;
-        using PlacedGraphicIterator = std::list<PlacedGraphic>::const_iterator;
+        using PlacedGraphicIterator = PlacedGraphicCollection::const_iterator;
 
         Layer(const std::string& alias) : myAlias{ alias } {}
         

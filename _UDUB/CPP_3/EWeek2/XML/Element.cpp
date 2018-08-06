@@ -40,8 +40,12 @@ namespace Xml
                 
                 auto vg_root = result->createXMLNode( "VectorGraphic" );
                 vg_root->SetAttribute(  "closed", ( vg.isClosed() ? "true" : "false" )  );
-                
-                
+
+// TODO: add begin() end() onto VectorGraphic
+//                for ( const auto& point: graphic )
+//                {
+//
+//                }
                 
                 graphic_root->InsertEndChild( vg_root );
                 
@@ -163,7 +167,7 @@ namespace Xml
         return myDocument.NewElement( name.c_str() );
     }
 
-    HXMLNode Element::insertChild( HXMLNode child )
+    HXMLNode Element::insertChild(HXMLNode child)
     {
         auto result = myDocument.InsertEndChild( child );
         

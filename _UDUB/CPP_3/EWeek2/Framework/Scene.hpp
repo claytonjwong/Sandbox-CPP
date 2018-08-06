@@ -19,7 +19,7 @@ namespace Framework
     public:
 
         using LayerCollection = std::list<Layer>;
-        using LayerIterator = std::list<Layer>::const_iterator;
+        using LayerIterator = LayerCollection::const_iterator;
 
         void setHeight(const int height) noexcept
         {
