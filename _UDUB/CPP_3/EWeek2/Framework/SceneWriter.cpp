@@ -7,3 +7,12 @@
 //
 
 #include "SceneWriter.hpp"
+
+namespace Framework
+{
+    Xml::HElement SceneWriter::writeScene(const Scene& scene)
+    {
+        Xml::HElement result = Xml::Element::make_HElement( scene );
+        return result;
+    }
+}

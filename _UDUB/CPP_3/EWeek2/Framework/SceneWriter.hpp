@@ -19,10 +19,6 @@ namespace Framework
     {
     public:
         
-        static Xml::HElement writeScene(const Scene& scene)
-        {
-            Xml::HElement result = Xml::Element::make_HElement( scene );
-            return result;
-        }
+        static Xml::HElement writeScene(const Scene& scene);
     };
 }
