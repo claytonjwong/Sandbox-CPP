@@ -29,11 +29,11 @@ namespace VG
         
         ~Point()=default;
         
-        Point(const Point& src)=default;
-        Point(Point&& src)=default;
+        Point ( const Point& src ) = default;
+        Point ( Point&& src ) = default;
         
-        Point& operator=(const Point& rhs)=default;
-        Point& operator=(Point&& rhs)=default;
+        Point& operator= ( const Point& rhs ) = default;
+        Point& operator= ( Point&& rhs ) = default;
         
         constexpr int getX() const noexcept { return myX; }
         constexpr int getY() const noexcept { return myY; }
@@ -43,10 +43,10 @@ namespace VG
         int myY{ 0 };
     };
     
-    bool operator==(const Point& lhs, const Point& rhs);
-    bool operator!=(const Point& lhs, const Point& rhs);
+    bool operator== ( const Point& lhs, const Point& rhs );
+    bool operator!= ( const Point& lhs, const Point& rhs );
     
-    std::ostream& operator<<(std::ostream& os, const Point& rhs);
+    std::ostream& operator<< ( std::ostream& os, const Point& rhs );
 }
 
 

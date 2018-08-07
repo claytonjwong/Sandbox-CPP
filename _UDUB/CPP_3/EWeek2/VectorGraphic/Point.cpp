@@ -19,12 +19,12 @@ namespace VG
             && ( lhs.getY() == rhs.getY() );
     }
     
-    bool operator!=(const Point& lhs, const Point& rhs)
+    bool operator!= ( const Point& lhs, const Point& rhs )
     {
         return ! ( lhs == rhs );
     }
 
-    ostream& operator<<(ostream& os, const Point& rhs) {
+    ostream& operator<< ( ostream& os, const Point& rhs ) {
         os << "(" << rhs.getX() << "," << rhs.getY() << ")";
         return os;
     }
