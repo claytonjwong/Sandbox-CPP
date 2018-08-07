@@ -19,12 +19,12 @@ namespace Framework
     {
     public:
         
-        static Scene readScene ( const Xml::Element& scene_root );
+        static Scene readScene ( const Xml::Element& sceneRoot );
 
-        static Layer readLayer (const Xml::HElement layer_root );
+        static Layer readLayer (const Xml::HElement layerRoot );
         
-        static PlacedGraphic readPlacedGraphic ( const Xml::HElement placed_graphic_root );
+        static PlacedGraphic readPlacedGraphic ( const Xml::HElement placedGraphicRoot );
         
-        static VG::HVectorGraphic readVectorGraphic ( const Xml::HElement vector_graphic_root );
+        static VG::HVectorGraphic readVectorGraphic ( const Xml::HElement vectorGraphicRoot );
     };
 }

@@ -99,10 +99,10 @@ namespace Framework
         auto name = vectorGraphicRoot->getName();
         if ( name == "VectorGraphic" )
         {
-            const auto graphic =
+            const auto vectorGraphic =
                 make_shared<VG::VectorGraphic>(
                     VG::VectorGraphicStreamer::getVectorGraphicFromHandle( vectorGraphicRoot )  );
-            return graphic;
+            return vectorGraphic;
         }
         else
         {
