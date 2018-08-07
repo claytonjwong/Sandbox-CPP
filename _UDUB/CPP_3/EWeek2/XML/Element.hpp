@@ -43,6 +43,7 @@ namespace Xml
         Element& operator=(const Element& rhs) = delete;
         Element& operator=(Element&& rhs) = delete;
         
+        // TODO: consider moving this stuff into the scene writer...
         const static HElement make_HElement(const Framework::Scene& scene);
         static HXMLNode make_HXMLNode(HElement handle, const Framework::Layer& layer);
         static HXMLNode make_HXMLNode(HElement handle, const Framework::PlacedGraphic& graphic);
@@ -55,6 +56,7 @@ namespace Xml
         const AttributeMap getAttributes() const noexcept;
         const ElementList getChildElements() const noexcept;
         
+        // TODO: consider moving this stuff into the scene writer...
         ElementError parseXML(const std::string& xml);
         HXMLElement createXMLNode(const std::string& name);
         HXMLNode insertXMLNode( HXMLNode child );

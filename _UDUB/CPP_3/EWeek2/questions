@@ -15,3 +15,30 @@ void Scene::pushBack ( Layer&& layer ) noexcept
     myLayers.emplace_back(  std::forward<Layer>( layer )  );
 }
 
+
+General questions:
+
+Which is preferred and why...
+
+	function1()
+	{
+        if (  << expected >> )
+        {
+            << do stuff >>
+        }
+        else
+        {
+            << throw execption >>
+        }
+    }
+
+	function2()
+	{
+        if ( ! << expected >> )
+        {
+            << throw execption >>
+        }
+        
+        << do stuff >>
+    }
+    
