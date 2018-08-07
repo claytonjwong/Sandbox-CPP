@@ -17,9 +17,11 @@ namespace VG
     {
     public:
     
-        constexpr Point(int x, int y) : myX{ x }, myY{ y }
+        constexpr Point ( int x=0, int y=0 ) :
+        myX{ x },
+        myY{ y }
         {
-            if (  x < 0  ||  y < 0  )
+            if ( x < 0 || y < 0 )
             {
                 throw std::out_of_range("point values cannot be negative");
             }
@@ -43,6 +45,7 @@ namespace VG
     
     bool operator==(const Point& lhs, const Point& rhs);
     bool operator!=(const Point& lhs, const Point& rhs);
+    
     std::ostream& operator<<(std::ostream& os, const Point& rhs);
 }
 
