@@ -16,19 +16,25 @@ namespace Framework
 
     class Layer
     {
-    public:
-
+    private:
+    
         using PlacedGraphicCollection = std::list<PlacedGraphic>;
+        
+    public:
+        
         using PlacedGraphicIterator = PlacedGraphicCollection::const_iterator;
 
-        Layer(const std::string& alias);
+        Layer ( const std::string& alias );
         
         const std::string& getAlias() const noexcept;
         
         PlacedGraphicIterator begin() const noexcept;
         PlacedGraphicIterator end() const noexcept;
         
-        void addGraphic(const PlacedGraphic& graphic) noexcept;
+        void addGraphic ( const PlacedGraphic& graphic ) noexcept;
+        
+        bool operator== ( const Layer& rhs ) const noexcept;
+        bool operator!= ( const Layer& rhs ) const noexcept;
         
     private:
     

@@ -26,12 +26,12 @@ namespace Framework
         return myHeight;
     }
 
-    void Scene::setWidth(const int width) noexcept
+    void Scene::setWidth ( const int width ) noexcept
     {
         myWidth = width;
     }
 
-    void Scene::setHeight(const int height) noexcept
+    void Scene::setHeight ( const int height ) noexcept
     {
         myHeight = height;
     }
@@ -46,24 +46,18 @@ namespace Framework
         return myLayers.end();
     }
 
-    void Scene::pushBack(const Layer& layer) noexcept
+    void Scene::pushBack ( const Layer& layer ) noexcept
     {
         myLayers.push_back( layer );
     }
     
-    void Scene::pushBack(Layer&& layer) noexcept
+    void Scene::pushBack ( Layer&& layer ) noexcept
     {
         myLayers.emplace_back(  std::forward<Layer>( layer )  );
     }
 
-    void Scene::remove(const Layer& target) noexcept
+    void Scene::remove ( const Layer& target ) noexcept
     {
-        auto new_end = std::remove_if( myLayers.begin(), myLayers.end(),
-            [&](const Layer& x){ return x.getAlias() == target.getAlias(); });
-        
-        if ( new_end != myLayers.end() )
-        {
-            myLayers.erase( new_end, myLayers.end() );
-        }
+        myLayers.remove( target );
     }
 }

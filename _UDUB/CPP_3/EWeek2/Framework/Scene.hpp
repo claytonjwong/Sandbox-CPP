@@ -34,20 +34,20 @@ namespace Framework
         using LayerIterator = LayerCollection::const_iterator;
 
         Scene() = default;
-        Scene(int width, int height) : myWidth{ width }, myHeight{ height } {}
+        Scene ( int width, int height );
 
         int getWidth() const noexcept;
         int getHeight() const noexcept;
 
-        void setWidth(const int width) noexcept;
-        void setHeight(const int height) noexcept;
+        void setWidth ( const int width ) noexcept;
+        void setHeight ( const int height ) noexcept;
         
         LayerIterator begin() const noexcept;
         LayerIterator end() const noexcept;
         
-        void pushBack(const Layer& layer) noexcept;
-        void pushBack(Layer&& layer) noexcept;
-        void remove(const Layer& target) noexcept;
+        void pushBack ( const Layer& layer ) noexcept;
+        void pushBack ( Layer&& layer ) noexcept;
+        void remove ( const Layer& target ) noexcept;
         
     private:
     

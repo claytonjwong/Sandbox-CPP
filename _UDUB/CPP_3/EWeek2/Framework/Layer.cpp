@@ -31,4 +31,15 @@ namespace Framework
     {
         myGraphics.push_back( graphic );
     }
+    
+    bool Layer::operator== ( const Layer& rhs ) const noexcept
+    {
+        return ( myAlias == rhs.myAlias )
+            && ( myGraphics == rhs.myGraphics );
+    }
+
+    bool Layer::operator!= ( const Layer& rhs ) const noexcept
+    {
+        return ! ( *this == rhs );
+    }
 }

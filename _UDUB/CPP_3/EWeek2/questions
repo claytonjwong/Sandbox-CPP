@@ -1,0 +1,17 @@
+
+Scene questions:
+
+
+Q1: Why are Scene's parameters references?  "const int&"  Wouldn't "const int" be preferred for integral type?
+
+Scene(const int& width, const int& height);
+
+
+Q2: I created an additional pushBack method which takes a r-value which is forwarded to emplace_back(),
+however in the solution, only pushBack ( Layer& layer ) is defined.  What are your thoughts on this?
+
+void Scene::pushBack ( Layer&& layer ) noexcept
+{
+    myLayers.emplace_back(  std::forward<Layer>( layer )  );
+}
+
