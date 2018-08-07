@@ -8,95 +8,105 @@
 
 #include "SceneReader.hpp"
 #include "VectorGraphicStreamer.hpp"
+#include <string>
+#include <sstream>
+
+using namespace std;
 
 namespace Framework
 {
-    Scene SceneReader::readScene(const Xml::Element& scene_root)
+    int toInt ( const string& str )
     {
-        if ( scene_root.getName() == "Scene" )
+        int value{ 0 };
+        stringstream stream{ str };
+        stream >> value;
+        return value;
+    }
+
+    Scene SceneReader::readScene ( const Xml::Element& sceneRoot )
+    {
+        if ( sceneRoot.getName() == "Scene" )
         {
             Scene scene;
             
-            auto width = scene_root.getAttribute( "width" );
-            auto height = scene_root.getAttribute( "height" );
+            auto width = sceneRoot.getAttribute( "width" );
+            auto height = sceneRoot.getAttribute( "height" );
             
-            scene.setWidth(  stoi( width )  );
-            scene.setHeight(  stoi( height )  );
+            scene.setWidth(  toInt( width )  );
+            scene.setHeight(  toInt( height )  );
             
-            for ( const auto& layer_root: scene_root.getChildElements() )
+            for ( const auto& layerRoot: sceneRoot.getChildElements() )
             {
-                auto layer = readLayer( layer_root );
+                auto layer = readLayer( layerRoot );
                 scene.pushBack( layer );
             }
             return scene;
         }
         else
         {
-            throw std::runtime_error{ "unable to find Scene in Xml::Element" };
+            throw runtime_error{ "unable to create Scene from XML" };
         }
     }
 
-    Layer SceneReader::readLayer(const Xml::HElement layer_root)
+    Layer SceneReader::readLayer ( const Xml::HElement layerRoot )
     {
-        auto name = layer_root->getName();
+        auto name = layerRoot->getName();
         if ( name == "Layer" )
         {
-            auto alias = layer_root->getAttribute( "alias" );
+            auto alias = layerRoot->getAttribute( "alias" );
             Layer layer{ alias };
-            for ( const auto& placed_graphic_root: layer_root->getChildElements() )
+            for ( const auto& placedGraphicRoot: layerRoot->getChildElements() )
             {
-                auto placed_graphic = readPlacedGraphic( placed_graphic_root );
-                layer.addGraphic( placed_graphic );
+                auto placedGraphic = readPlacedGraphic( placedGraphicRoot );
+                layer.addGraphic( placedGraphic );
             }
             return layer;
         }
         else
         {
-            throw std::runtime_error{ "unable to find Layer int Xml::Element" };
+            throw runtime_error{ "unable to create Layer from XML" };
         }
     }
 
-    PlacedGraphic SceneReader::readPlacedGraphic(const Xml::HElement placed_graphic_root)
+    PlacedGraphic SceneReader::readPlacedGraphic ( const Xml::HElement placedGraphicRoot )
     {
-        auto name = placed_graphic_root->getName();
+        auto name = placedGraphicRoot->getName();
         if ( name == "PlacedGraphic" )
         {
-            PlacedGraphic placed_graphic;
+            PlacedGraphic placedGraphic;
             
-            auto x = stoi (  placed_graphic_root->getAttribute( "x" )  );
-            auto y = stoi (  placed_graphic_root->getAttribute( "y" )  );
+            auto x = toInt(  placedGraphicRoot->getAttribute( "x" )  );
+            auto y = toInt(  placedGraphicRoot->getAttribute( "y" )  );
             
-            placed_graphic.setPlacementPoint(  VG::Point{ x,y }  );
+            placedGraphic.setPlacementPoint(  VG::Point{ x,y }  );
             
-            for ( const auto& vector_graphic_root: placed_graphic_root->getChildElements() )
+            for ( const auto& vectorGraphicRoot: placedGraphicRoot->getChildElements() )
             {
-                    const auto handle_VG = readVectorGraphic( vector_graphic_root );
-                    placed_graphic.setGraphic( handle_VG );
+                const auto graphic = readVectorGraphic( vectorGraphicRoot );
+                placedGraphic.setGraphic( graphic );
             }
             
-            return placed_graphic;
+            return placedGraphic;
         }
         else
         {
-            throw std::runtime_error{ "unable to find PlacedGraphic in Xml::Element" };
+            throw runtime_error{ "unable to create PlacedGraphic from XML" };
         }
     }
 
-    VG::HVectorGraphic SceneReader::readVectorGraphic(const Xml::HElement vector_graphic_root )
+    VG::HVectorGraphic SceneReader::readVectorGraphic ( const Xml::HElement vectorGraphicRoot )
     {
-        auto name = vector_graphic_root->getName();
+        auto name = vectorGraphicRoot->getName();
         if ( name == "VectorGraphic" )
         {
-            const auto handle_VG =
-                std::make_shared<VG::VectorGraphic>(
-                    VG::VectorGraphicStreamer::
-                        getVectorGraphicFromHandle( vector_graphic_root )
-                );
-            return handle_VG;
+            const auto graphic =
+                make_shared<VG::VectorGraphic>(
+                    VG::VectorGraphicStreamer::getVectorGraphicFromHandle( vectorGraphicRoot )  );
+            return graphic;
         }
         else
         {
-            throw std::runtime_error{ "unable to find VectorGraphic in Xml::Element" };
+            throw runtime_error{ "unable to create VectorGraphic from XML" };
         }
     }
 }
