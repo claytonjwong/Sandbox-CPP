@@ -11,7 +11,9 @@
 namespace Framework
 {
     Layer::Layer ( const std::string& alias ) :
-    myAlias{ alias } {}
+    myAlias{ alias }
+    {
+    }
 
     const std::string& Layer::getAlias() const noexcept
     {
