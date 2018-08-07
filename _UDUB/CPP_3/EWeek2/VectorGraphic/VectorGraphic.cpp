@@ -11,23 +11,26 @@
 #include <exception>
 #include <list>
 
-    using namespace std;
+using namespace std;
 
 namespace VG {
     
-    VectorGraphic::VectorGraphic() : myShapeStyle{ ShapeStyle::Close } {}
+    VectorGraphic::VectorGraphic() :
+    myShapeStyle{ ShapeStyle::Close }
+    {
+    }
     
-    void VectorGraphic::addPoint(const Point& point)
+    void VectorGraphic::addPoint ( const Point& point )
     {
         myPath.push_back( point );
     }
     
-    void VectorGraphic::addPoint(Point&& point)
+    void VectorGraphic::addPoint ( Point&& point )
     {
-        myPath.emplace_back(  std::forward<Point>( point )  );
+        myPath.emplace_back(  forward<Point>( point )  );
     }
     
-    void VectorGraphic::erasePoint(int index)
+    void VectorGraphic::erasePoint ( int index )
     {
         if (  ( index >= 0 )  &&  ( static_cast<size_t>( index ) < getPointCount() )  )
         {
@@ -40,9 +43,9 @@ namespace VG {
         }
     }
     
-    void VectorGraphic::removePoint(const Point& point)
+    void VectorGraphic::removePoint ( const Point& target )
     {
-        auto newEnd = remove( myPath.begin(), myPath.end(), point );
+        auto newEnd = remove( myPath.begin(), myPath.end(), target );
         if ( newEnd != myPath.end() )
         {
             myPath.erase( newEnd, myPath.end() );
@@ -74,7 +77,7 @@ namespace VG {
     }
 
     
-    Point VectorGraphic::getPoint(int index) const
+    Point VectorGraphic::getPoint ( int index ) const
     {
         return myPath.at( index ); // throws std::out_of_range if index out of range
     }
@@ -89,7 +92,7 @@ namespace VG {
         if ( getPointCount() > 0 )
         {
             auto [minIt, maxIt] = minmax_element( myPath.begin(), myPath.end(),
-                []( const Point& lhs, const Point& rhs ) {return lhs.getY() < rhs.getY();  });
+                []( const Point& lhs, const Point& rhs ){return lhs.getY() < rhs.getY();  });
             return maxIt->getY() - minIt->getY();
         }
         else
@@ -103,7 +106,7 @@ namespace VG {
         if ( getPointCount() > 0 )
         {
             auto [minIt, maxIt] = minmax_element( myPath.begin(), myPath.end(),
-                []( const Point& lhs, const Point& rhs ) {return lhs.getX() < rhs.getX();  });
+                []( const Point& lhs, const Point& rhs ){return lhs.getX() < rhs.getX();  });
             return maxIt->getX() - minIt->getX();
         }
         else
@@ -122,11 +125,14 @@ namespace VG {
         return myPath.end();
     }
     
-    bool operator==(const VectorGraphic& lhs, const VectorGraphic& rhs){
-        return ( lhs.myPath == rhs.myPath ) && ( lhs.myShapeStyle == rhs.myShapeStyle );
+    bool operator== ( const VectorGraphic& lhs, const VectorGraphic& rhs )
+    {
+        return ( lhs.myPath == rhs.myPath )
+            && ( lhs.myShapeStyle == rhs.myShapeStyle );
     }
     
-    bool operator!=(const VectorGraphic& lhs, const VectorGraphic& rhs){
+    bool operator!= ( const VectorGraphic& lhs, const VectorGraphic& rhs )
+    {
         return ! ( lhs == rhs );
     }
 

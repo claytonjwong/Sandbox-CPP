@@ -27,7 +27,7 @@
 
 namespace VG {
 
-    class VectorGraphic; // forward-declaration for HVectorGraphic using-declaration
+    class VectorGraphic;
     using HVectorGraphic = std::shared_ptr<VectorGraphic>;
     using Path = std::vector<Point>;
     using PathIterator = Path::const_iterator;
@@ -35,27 +35,27 @@ namespace VG {
     class VectorGraphic {
     public:
     
-        friend bool operator==(const VectorGraphic& lhs, const VectorGraphic& rhs);
-        friend bool operator!=(const VectorGraphic& lhs, const VectorGraphic& rhs);
+        friend bool operator== ( const VectorGraphic& lhs, const VectorGraphic& rhs );
+        friend bool operator!= ( const VectorGraphic& lhs, const VectorGraphic& rhs );
 
     
         VectorGraphic();
-        ~VectorGraphic()=default;
+        ~VectorGraphic() = default;
         
-        VectorGraphic(const VectorGraphic& src)=default;
-        VectorGraphic(VectorGraphic&& src)=default;
+        VectorGraphic ( const VectorGraphic& src ) = default;
+        VectorGraphic ( VectorGraphic&& src ) = default;
         
-        VectorGraphic& operator=(const VectorGraphic& rhs)=default;
-        VectorGraphic& operator=(VectorGraphic&& rhs)=default;
+        VectorGraphic& operator= ( const VectorGraphic& rhs ) = default;
+        VectorGraphic& operator= ( VectorGraphic&& rhs ) = default;
 
-        Point getPoint(int index) const;
+        Point getPoint ( int index ) const;
         size_t getPointCount() const noexcept;
         
-        void addPoint(const Point& point);
-        void addPoint(Point&& point);
+        void addPoint ( const Point& point );
+        void addPoint ( Point&& point );
         
-        void erasePoint(int index);
-        void removePoint(const Point& point);
+        void erasePoint ( int index );
+        void removePoint ( const Point& target );
         
         void openShape() noexcept;
         void closeShape() noexcept;
