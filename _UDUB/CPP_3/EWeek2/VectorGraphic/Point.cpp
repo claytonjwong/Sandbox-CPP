@@ -25,7 +25,7 @@ namespace VG
     }
 
     ostream& operator<<(ostream& os, const Point& rhs) {
-        os << "<Point x=\"" << rhs.getX() << "\" y=\"" << rhs.getY() << "\"/>";
+        os << "(" << rhs.getX() << "," << rhs.getY() << ")";
         return os;
     }
 }
