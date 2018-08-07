@@ -10,6 +10,12 @@
 
 namespace Framework
 {
+    Scene::Scene(int width, int height) :
+    myWidth{ width },
+    myHeight{ height }
+    {
+    }
+
     int Scene::getWidth() const noexcept
     {
         return myWidth;

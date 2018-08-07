@@ -29,7 +29,7 @@ namespace VG {
     
     void VectorGraphic::erasePoint(int index)
     {
-        if (  ( index >= 0 )  &&  ( static_cast<size_t>(index) < getPointCount() )  )
+        if (  ( index >= 0 )  &&  ( static_cast<size_t>( index ) < getPointCount() )  )
         {
             auto pos = myPath.begin() + index;
             myPath.erase( pos );
@@ -42,10 +42,10 @@ namespace VG {
     
     void VectorGraphic::removePoint(const Point& point)
     {
-        auto end_pos = remove( myPath.begin(), myPath.end(), point );
-        if ( end_pos != myPath.end() )
+        auto newEnd = remove( myPath.begin(), myPath.end(), point );
+        if ( newEnd != myPath.end() )
         {
-            myPath.erase( end_pos, myPath.end() );
+            myPath.erase( newEnd, myPath.end() );
         }
         else
         {
@@ -65,7 +65,7 @@ namespace VG {
     
     bool VectorGraphic::isClosed() const noexcept
     {
-        return !isOpen();
+        return ! ( isOpen() );
         
     }
     bool VectorGraphic::isOpen() const noexcept
@@ -112,14 +112,6 @@ namespace VG {
         }
     }
     
-    bool VectorGraphic::operator==(const VectorGraphic& rhs){
-        return ( myPath == rhs.myPath ) && ( myShapeStyle == rhs.myShapeStyle );
-    }
-    
-    bool VectorGraphic::operator!=(const VectorGraphic& rhs){
-        return ! ( *this == rhs );
-    }
-    
     PathIterator VectorGraphic::begin() const noexcept
     {
         return myPath.begin();
@@ -129,4 +121,13 @@ namespace VG {
     {
         return myPath.end();
     }
+    
+    bool operator==(const VectorGraphic& lhs, const VectorGraphic& rhs){
+        return ( lhs.myPath == rhs.myPath ) && ( lhs.myShapeStyle == rhs.myShapeStyle );
+    }
+    
+    bool operator!=(const VectorGraphic& lhs, const VectorGraphic& rhs){
+        return ! ( lhs == rhs );
+    }
+
 }

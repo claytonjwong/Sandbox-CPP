@@ -9,19 +9,25 @@
 #include "PlacedGraphic.hpp"
 
 using namespace VG;
+using namespace std;
 
 namespace Framework
 {
-    PlacedGraphic::PlacedGraphic()
-    : myPlacementPoint{ VG::Point{0,0} }, myGraphicHandle{ nullptr } {}
+    PlacedGraphic::PlacedGraphic() :
+    myPlacementPoint{ Point{0,0} },
+    myGraphic{ make_shared<VectorGraphic>() }
+    {
+    }
 
-    PlacedGraphic::PlacedGraphic(const VG::Point& point, const VG::HVectorGraphic& hvg)
-    : myPlacementPoint{ point }, myGraphicHandle{ hvg } {}
-
-    PlacedGraphic::PlacedGraphic(VG::Point&& point, const VG::HVectorGraphic& hvg)
-    : myPlacementPoint{ point }, myGraphicHandle{ hvg } {}
-
-
+    PlacedGraphic::PlacedGraphic ( const Point& placement, const HVectorGraphic& graphic ) :
+    myPlacementPoint{ placement },
+    myGraphic{ graphic }
+    {
+        if ( myGraphic.get() == nullptr )
+        {
+            throw runtime_error{ "null vector graphic not allowed" };
+        }
+    }
 
     Point PlacedGraphic::getPlacementPoint() const noexcept
     {
@@ -30,27 +36,45 @@ namespace Framework
     
     const VG::VectorGraphic& PlacedGraphic::getGraphic() const noexcept
     {
-        return *myGraphicHandle.get();
-        
+        return *myGraphic;
     }
 
-    void PlacedGraphic::setPlacementPoint(const VG::Point& point) noexcept
+    void PlacedGraphic::setPlacementPoint ( const Point& placement ) noexcept
     {
-        myPlacementPoint = point;
+        myPlacementPoint = placement;
     }
 
-    void PlacedGraphic::setPlacementPoint(VG::Point&& point) noexcept
+    void PlacedGraphic::setPlacementPoint ( Point&& placement ) noexcept
     {
-        myPlacementPoint = point;
+        myPlacementPoint = placement;
     }
     
-    void PlacedGraphic::setGraphic(const VG::HVectorGraphic& hvg) noexcept
+    void PlacedGraphic::setGraphic ( const HVectorGraphic& graphic ) noexcept
     {
-        myGraphicHandle = hvg;
+        if ( graphic.get() != nullptr )
+        {
+            myGraphic = graphic;
+        }
+        else
+        {
+            throw runtime_error{ "null vector graphic not allowed" };
+        }
     }
     
-    void PlacedGraphic::setGraphic(VG::HVectorGraphic&& hvg) noexcept
+    void PlacedGraphic::setGraphic ( HVectorGraphic&& graphic ) noexcept
     {
-        myGraphicHandle = hvg;
+        myGraphic = graphic;
     }
+    
+    bool operator== ( const PlacedGraphic& lhs, const PlacedGraphic& rhs )
+    {
+        return ( lhs.getPlacementPoint() == rhs.getPlacementPoint() )
+            && ( lhs.getGraphic() == rhs.getGraphic() );
+    }
+    
+    bool operator!= ( const PlacedGraphic& lhs, const PlacedGraphic& rhs )
+    {
+        return ! ( lhs == rhs );
+    }
+
 }

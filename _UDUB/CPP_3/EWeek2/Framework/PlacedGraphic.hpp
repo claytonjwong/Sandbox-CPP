@@ -18,29 +18,30 @@ namespace Framework
     public:
         
         PlacedGraphic();
-        PlacedGraphic(const VG::Point& point, const VG::HVectorGraphic& hvg);
-        PlacedGraphic(VG::Point&& point, const VG::HVectorGraphic& hvg);
-        
+        PlacedGraphic ( const VG::Point& point, const VG::HVectorGraphic& graphic );
 
-        ~PlacedGraphic()=default;
+        ~PlacedGraphic() = default;
         
-        PlacedGraphic(const PlacedGraphic& src)=default;
-        PlacedGraphic(PlacedGraphic&& src)=default;
+        PlacedGraphic ( const PlacedGraphic& src ) = default;
+        PlacedGraphic ( PlacedGraphic&& src ) = default;
         
-        PlacedGraphic& operator=(const PlacedGraphic& rhs)=default;
-        PlacedGraphic& operator=(PlacedGraphic&& rhs)=default;
+        PlacedGraphic& operator= ( const PlacedGraphic& rhs ) = default;
+        PlacedGraphic& operator= ( PlacedGraphic&& rhs ) = default;
 
         VG::Point getPlacementPoint() const noexcept;
         const VG::VectorGraphic& getGraphic() const noexcept;
     
-        void setPlacementPoint(const VG::Point& point) noexcept;
-        void setPlacementPoint(VG::Point&& point) noexcept;
-        void setGraphic(const VG::HVectorGraphic& hvg) noexcept;
-        void setGraphic(VG::HVectorGraphic&& hvg) noexcept;
+        void setPlacementPoint ( const VG::Point& point ) noexcept;
+        void setPlacementPoint ( VG::Point&& point ) noexcept;
+        void setGraphic ( const VG::HVectorGraphic& graphic ) noexcept;
+        void setGraphic ( VG::HVectorGraphic&& graphic ) noexcept;
         
     private:
         
         VG::Point myPlacementPoint;
-        VG::HVectorGraphic myGraphicHandle;
+        VG::HVectorGraphic myGraphic;
     };
+    
+    bool operator== ( const PlacedGraphic& lhs, const PlacedGraphic& rhs );
+    bool operator!= ( const PlacedGraphic& lhs, const PlacedGraphic& rhs );
 }

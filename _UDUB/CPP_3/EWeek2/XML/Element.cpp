@@ -126,7 +126,7 @@ namespace Xml
     
     const string Element::getAttribute(const string& name) const noexcept
     {
-        auto result = myRoot->Attribute(name.c_str());
+        auto result = myRoot->Attribute( name.c_str() );
         
         if ( result != nullptr )
         {

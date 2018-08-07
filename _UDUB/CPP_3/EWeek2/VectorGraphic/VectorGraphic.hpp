@@ -35,6 +35,10 @@ namespace VG {
     class VectorGraphic {
     public:
     
+        friend bool operator==(const VectorGraphic& lhs, const VectorGraphic& rhs);
+        friend bool operator!=(const VectorGraphic& lhs, const VectorGraphic& rhs);
+
+    
         VectorGraphic();
         ~VectorGraphic()=default;
         
@@ -46,9 +50,6 @@ namespace VG {
 
         Point getPoint(int index) const;
         size_t getPointCount() const noexcept;
-
-        bool operator==(const VectorGraphic& rhs);
-        bool operator!=(const VectorGraphic& rhs);
         
         void addPoint(const Point& point);
         void addPoint(Point&& point);
@@ -74,6 +75,8 @@ namespace VG {
         
         enum class ShapeStyle { Open, Close } myShapeStyle;
     };
+    
+
 }
 
 
