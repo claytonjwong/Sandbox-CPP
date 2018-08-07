@@ -10,7 +10,8 @@
 
 namespace Framework
 {
-    Layer::Layer(const std::string& alias) : myAlias{ alias } {}
+    Layer::Layer ( const std::string& alias ) :
+    myAlias{ alias } {}
 
     const std::string& Layer::getAlias() const noexcept
     {
@@ -27,7 +28,7 @@ namespace Framework
         return myGraphics.end();
     }
 
-    void Layer::addGraphic(const PlacedGraphic& graphic) noexcept
+    void Layer::addGraphic ( const PlacedGraphic& graphic ) noexcept
     {
         myGraphics.push_back( graphic );
     }
