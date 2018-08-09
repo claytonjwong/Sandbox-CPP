@@ -43,6 +43,9 @@ namespace Xml
         Element& operator=(const Element& rhs) = delete;
         Element& operator=(Element&& rhs) = delete;
         
+        // TODO: significantly refactor Element such that is it simply a "copy"
+        // of the original XML structure, instead of having a real copy of the xmlDocument
+        
         // TODO: consider moving this stuff into the scene writer...
         const static HElement make_HElement(const Framework::Scene& scene);
         static HXMLNode make_HXMLNode(HElement handle, const Framework::Layer& layer);

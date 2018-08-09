@@ -41,4 +41,14 @@ Which is preferred and why...
         
         << do stuff >>
     }
-    
+
+
+Element / overall strategy for storing the XML info
+
+I stored one copy of the xmlDocument in the root Element, then created shared pointers
+towards different sub-roots of the xmlDocument.  This creates a high-coupling between Element
+and the XMLDocument API for getting the nodes.
+
+TODO: instead create elements and link them up like XML nodes, no need to store the xmlDocument in this case then
+simply parse XML nodes and create the HElement structure accordingly... duh!
+
