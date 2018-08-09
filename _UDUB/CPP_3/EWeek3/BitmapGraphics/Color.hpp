@@ -21,7 +21,15 @@ namespace BitmapGraphics
         
         static Color read ( std::istringstream& is ) noexcept;
         
+        Color() = default;
         Color ( Component red, Component green, Component blue );
+        
+        
+        Color ( const Color & src ) = default;
+        Color ( Color&& src ) = default;
+        
+        Color& operator= ( const Color& rhs ) = default;
+        Color& operator= ( Color&& rhs ) = default;
         
         Component getRed() const noexcept;
         Component getGreen() const noexcept;

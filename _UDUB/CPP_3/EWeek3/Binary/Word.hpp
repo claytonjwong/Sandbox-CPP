@@ -22,7 +22,7 @@ namespace Binary
         static Word readLittleEndian ( std::stringstream& ss );
         static Word readBigEndian ( std::stringstream& ss );
 
-        Word();
+        Word() = delete;
         Word ( WordType value );
         
         Word ( const Word& src ) = default;

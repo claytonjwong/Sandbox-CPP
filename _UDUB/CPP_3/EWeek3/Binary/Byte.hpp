@@ -22,7 +22,7 @@ namespace Binary
         
         static ByteType read ( std::istream& is ) noexcept;
         
-        Byte();
+        Byte() = default;
         Byte ( ByteType value );
 
         Byte ( const Byte& src ) = default;

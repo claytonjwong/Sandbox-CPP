@@ -8,8 +8,10 @@
 
 #pragma once
 
+#include <stdexcept>
+
 template <typename T>
-void verifyEquality ( const T& expected, const T& actual, const char* failure)
+void verifyEquality ( const T& expected, const T& actual, const char* failure )
 {
     if (  !( expected == actual )  )
     {

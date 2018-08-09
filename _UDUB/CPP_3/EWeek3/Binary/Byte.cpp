@@ -26,12 +26,7 @@ namespace Binary
             return {};
         }
     }
-    
-    Byte::Byte() :
-    myValue{ 0 }
-    {
-    }
-    
+        
     Byte::Byte ( ByteType value ) :
     myValue{ value }
     {

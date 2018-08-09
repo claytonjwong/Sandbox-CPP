@@ -22,7 +22,7 @@ namespace Binary
         static DoubleWord readLittleEndian ( std::stringstream& ss );
         static DoubleWord readBigEndian ( std::stringstream& ss );
         
-        DoubleWord();
+        DoubleWord() = default;
         DoubleWord ( DoubleWordType value );
         
         DoubleWord ( const DoubleWord& src ) = default;
@@ -37,6 +37,6 @@ namespace Binary
         
     private:
     
-        DoubleWordType myValue;
+        DoubleWordType myValue{ 0 };
     };
 }

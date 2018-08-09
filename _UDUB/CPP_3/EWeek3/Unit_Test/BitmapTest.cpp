@@ -1,8 +1,8 @@
-/*
+
 #include "TestHarness.h"
-#include "Bitmap.h"
-#include "WindowsBitmapHeader.h"
-#include "binary_ostream_iterator.h"
+//#include "Bitmap.h"
+#include "WindowsBitmapHeader.hpp"
+//#include "binary_ostream_iterator.h"
 #include <fstream>
 
 using namespace BitmapGraphics;
@@ -11,14 +11,14 @@ TEST(BitmapSizeTest, Bitmap)
 {
     std::ifstream bitmapStream{"basic.bmp", std::ios::binary};
     CHECK(bitmapStream.is_open());
-    
+
     WindowsBitmapHeader bitmapHeader{bitmapStream};
-    Bitmap bitmap{bitmapHeader.getBitmapWidth(), bitmapHeader.getBitmapHeight(), bitmapStream};
-
-    CHECK_EQUAL(100, bitmap.getWidth());
-    CHECK_EQUAL(100, bitmap.getHeight());
+//    Bitmap bitmap{bitmapHeader.getBitmapWidth(), bitmapHeader.getBitmapHeight(), bitmapStream};
+//
+//    CHECK_EQUAL(100, bitmap.getWidth());
+//    CHECK_EQUAL(100, bitmap.getHeight());
 }
-
+/*
 TEST(BitmapScanLinesTest, Bitmap)
 {
     std::ifstream bitmapStream{"basic.bmp", std::ios::binary};

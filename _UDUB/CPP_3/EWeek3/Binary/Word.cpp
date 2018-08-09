@@ -28,11 +28,6 @@ namespace Binary
         };
     }
 
-    Word::Word() :
-    myValue{ 0 }
-    {
-    }
-
     Word::Word ( WordType value ) :
     myValue{ value }
     {

@@ -52,11 +52,6 @@ namespace Binary
 //        };
     }
 
-    DoubleWord::DoubleWord() :
-    myValue{ 0 }
-    {
-    }
-
     DoubleWord::DoubleWord( DoubleWordType value ) :
     myValue{ value }
     {
