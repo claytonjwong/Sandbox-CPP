@@ -1,8 +1,8 @@
 
 #include "TestHarness.h"
-//#include "DoubleWord.h"
+#include "DoubleWord.hpp"
 #include "Byte.hpp"
-//#include "Word.h"
+#include "Word.hpp"
 #include <sstream>
 
 TEST(readByte, Byte)
@@ -57,7 +57,7 @@ TEST(assign, Byte)
     CHECK_EQUAL('a', byte5);
 }
 
-/*
+
 TEST(readWordLittleEndian, Binary)
 {
     unsigned char carray[]{ 0xb1, 0xb2, 0 };
@@ -81,6 +81,7 @@ TEST(readWordBigEndian, Binary)
     CHECK_EQUAL(expected, actual);
 }
 
+
 TEST(readDoubleWordLittleEndian, Binary)
 {
     unsigned char carray[]{ 0xb1, 0xb2, 0xb3, 0xb4, 0 };
@@ -92,6 +93,7 @@ TEST(readDoubleWordLittleEndian, Binary)
     CHECK_EQUAL(expected, actual);
 }
 
+
 TEST(readDoubleWordBigEndian, Binary)
 {
     unsigned char carray[]{ 0xb1, 0xb2, 0xb3, 0xb4, 0 };
@@ -102,5 +104,5 @@ TEST(readDoubleWordBigEndian, Binary)
     
     CHECK_EQUAL(expected, actual);
 }
-*/
+
 

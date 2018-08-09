@@ -37,7 +37,7 @@ namespace Binary
     {
     }
     
-    Byte::operator unsigned char()
+    Byte::operator ByteType()
     {
         return myValue;
     }

@@ -29,7 +29,7 @@ namespace Binary
         Byte& operator= ( const Byte& rhs ) = default;
         Byte& operator= ( Byte&& rhs ) = default;
         
-        operator unsigned char();
+        operator ByteType();
         
         ByteType getValue ( ) const noexcept;
 
