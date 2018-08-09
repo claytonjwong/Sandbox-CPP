@@ -66,4 +66,9 @@ namespace Binary
     {
         return myValue;
     }
+    
+    bool DoubleWord::operator== ( const DoubleWord& rhs ) const noexcept
+    {
+        return myValue == rhs.myValue;
+    }
 }

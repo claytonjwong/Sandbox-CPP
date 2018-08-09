@@ -1,10 +1,10 @@
-/*
 #include "TestHarness.h"
-#include "VerifyEquality.h"
-#include "Word.h"
+#include "Common.hpp"
+#include "Word.hpp"
 #include <iostream>
 
-TEST(verifyEquality, Word)
+
+TEST(verifyEqualityTest, Word)
 {
     const unsigned char input[]{ 0xAB, 0xCD, 0 };
     std::stringstream ss{reinterpret_cast<const char*>(input)};
@@ -23,5 +23,5 @@ TEST(verifyEquality, Word)
         CHECK(true);
     }
 }
-*/
+
 

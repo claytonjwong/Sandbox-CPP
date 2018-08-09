@@ -23,9 +23,17 @@ namespace Binary
         static DoubleWord readBigEndian ( std::stringstream& ss );
         
         DoubleWord();
-        DoubleWord( DoubleWordType value );
+        DoubleWord ( DoubleWordType value );
+        
+        DoubleWord ( const DoubleWord& src ) = default;
+        DoubleWord ( DoubleWord&& src ) = default;
+        
+        DoubleWord& operator= ( const DoubleWord& rhs ) = default;
+        DoubleWord& operator= ( DoubleWord&& rhs ) = default;
         
         operator DoubleWordType();
+        
+        bool operator== ( const DoubleWord& rhs ) const noexcept;
         
     private:
     

@@ -13,21 +13,33 @@
 
 namespace Binary
 {
+    using WordType = uint16_t;
+    
     class Word
     {
     public:
     
-        using WordType = uint16_t;
-        
         static Word readLittleEndian ( std::stringstream& ss );
         static Word readBigEndian ( std::stringstream& ss );
 
+        Word();
         Word ( WordType value );
         
-        operator WordType();
+        Word ( const Word& src ) = default;
+        Word ( Word&& src ) = default;
+        
+        Word& operator= ( const Word& rhs ) = default;
+        Word& operator= ( Word&& rhs ) = default;
+        
+        WordType getValue() const noexcept;
+        
+        operator WordType() const noexcept;
+        
+        bool operator== ( const Word& rhs ) const noexcept;
         
     private:
     
         WordType myValue;
     };
+    
 }

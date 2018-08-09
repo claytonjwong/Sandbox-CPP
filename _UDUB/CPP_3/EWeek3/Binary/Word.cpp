@@ -28,13 +28,28 @@ namespace Binary
         };
     }
 
+    Word::Word() :
+    myValue{ 0 }
+    {
+    }
+
     Word::Word ( WordType value ) :
     myValue{ value }
     {
     }
-
-    Word::operator WordType()
+    
+    WordType Word::getValue() const noexcept
     {
         return myValue;
+    }
+
+    Word::operator WordType() const noexcept
+    {
+        return myValue;
+    }
+    
+    bool Word::operator== ( const Word& rhs ) const noexcept
+    {
+        return myValue == rhs.myValue;
     }
 }
