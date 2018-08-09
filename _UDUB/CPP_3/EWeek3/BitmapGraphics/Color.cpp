@@ -8,34 +8,18 @@
 
 #include "Byte.hpp"
 #include "Color.hpp"
-#
-
-//TEST(createColor, Color)
-//{
-//    Color color{0xAA, 0xBB, 0xCC};
-//
-//    CHECK_EQUAL(0xAA, color.getRed());
-//    CHECK_EQUAL(0xBB, color.getGreen());
-//    CHECK_EQUAL(0xCC, color.getBlue());
-//}
-//
-//TEST(readColor, Color)
-//{
-//    unsigned char colorData[]{ 0x23, 0x24, 0x25, 0 };
-//    std::istringstream colorStream{reinterpret_cast<char*>(colorData)};
-//
-//    Color color{Color::read(colorStream)};
-//
-//    CHECK_EQUAL(0x23, color.getBlue());
-//    CHECK_EQUAL(0x24, color.getGreen());
-//    CHECK_EQUAL(0x25, color.getRed());
-//}
 
 using namespace std;
 
 namespace BitmapGraphics
 {
-    
+    Color Color::read ( std::istringstream& is ) noexcept
+    {
+        Component blue = Binary::Byte::read( is );
+        Component green = Binary::Byte::read( is );
+        Component red = Binary::Byte::read( is );
+        return Color{ red, green, blue };
+    }
 
     Color::Color ( Component red, Component green, Component blue ) :
     myRed{ red },
@@ -59,11 +43,27 @@ namespace BitmapGraphics
         return myRed;
     }
     
+    bool Color::operator== ( const Color& rhs )
+    {
+        return myRed == rhs.getRed()
+            && myGreen == rhs.getGreen()
+            && myBlue == rhs.getBlue();
+    }
+    
     std::ostream& operator<< ( std::ostream& os, const Color::Component& rhs )
     {
         os << rhs.getValue();
         return os;
     }
-
+    
+    std::ostream& operator<< ( std::ostream& os, const Color& rhs )
+    {
+        os << "Color{"
+           << rhs.getBlue() << ", "
+           << rhs.getGreen() << ", "
+           << rhs.getRed()
+           << "}";
+        return os;
+    }
 }
 

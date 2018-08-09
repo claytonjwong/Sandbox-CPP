@@ -37,7 +37,7 @@ TEST(readColor, Color)
     CHECK_EQUAL(0x24, color.getGreen());
     CHECK_EQUAL(0x25, color.getRed());
 }
-/*
+
 TEST(readScanLines, Color)
 {
     unsigned char colorData[]{
@@ -72,4 +72,4 @@ TEST(readScanLines, Color)
 
     CHECK_EQUAL(expected, actual);
 }
-*/
+

@@ -31,7 +31,7 @@ namespace Binary
         
         operator unsigned char();
         
-        ByteType getValue() const noexcept;
+        ByteType getValue ( ) const noexcept;
 
         void write ( std::ostream& os );
         
