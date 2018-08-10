@@ -22,9 +22,9 @@ namespace BitmapGraphics
 
     WindowsBitmapHeader::WindowsBitmapHeader ( std::istream& is )
     {
-        verifyEquality( firstIdentifier.getValue(), Binary::Byte::read( is ), "myFirstIdentifier" );
-        verifyEquality( secondIdentifier.getValue(), Binary::Byte::read( is ), "mySecondIdentifier");
+        verifyEquality( firstIdentifier, Binary::Byte::read( is ), "myFirstIdentifier" );
+        verifyEquality( secondIdentifier, Binary::Byte::read( is ), "mySecondIdentifier");
         myFileSize = Binary::DoubleWord::readLittleEndian( is );
-        
+        verifyEquality( reserved, Binary::DoubleWord::readLittleEndian( is ), "reserved" );
     }
 }

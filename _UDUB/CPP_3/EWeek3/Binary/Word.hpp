@@ -19,8 +19,8 @@ namespace Binary
     {
     public:
     
-        static Word readLittleEndian ( std::stringstream& ss );
-        static Word readBigEndian ( std::stringstream& ss );
+        static Word readLittleEndian ( std::istream& ss );
+        static Word readBigEndian ( std::istream& ss );
 
         Word() = delete;
         Word ( WordType value );

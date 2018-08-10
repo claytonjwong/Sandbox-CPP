@@ -19,7 +19,7 @@ namespace BitmapGraphics
     
         using Component = Binary::Byte;
         
-        static Color read ( std::istringstream& is ) noexcept;
+        static Color read ( std::istream& is ) noexcept;
         
         Color() = default;
         Color ( Component red, Component green, Component blue );

@@ -13,7 +13,7 @@ using namespace std;
 
 namespace BitmapGraphics
 {
-    Color Color::read ( std::istringstream& is ) noexcept
+    Color Color::read ( std::istream& is ) noexcept
     {
         Component blue = Binary::Byte::read( is );
         Component green = Binary::Byte::read( is );

@@ -33,6 +33,8 @@ namespace Binary
         
         operator DoubleWordType();
         
+        DoubleWordType getValue() const noexcept;
+        
         bool operator== ( const DoubleWord& rhs ) const noexcept;
         
     private:

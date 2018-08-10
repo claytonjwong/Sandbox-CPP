@@ -20,7 +20,7 @@ namespace Binary
         
         static constexpr int BITS = 8;
         
-        static ByteType read ( std::istream& is ) noexcept;
+        static Byte read ( std::istream& is ) noexcept;
         
         Byte() = default;
         Byte ( ByteType value );
@@ -36,6 +36,8 @@ namespace Binary
         ByteType getValue ( ) const noexcept;
 
         void write ( std::ostream& os );
+        
+        bool operator== ( const Byte& rhs ) const noexcept;
         
     private:
         

@@ -10,12 +10,12 @@
 
 namespace Binary
 {
-    DoubleWord DoubleWord::readLittleEndian ( std::istream& ss )
+    DoubleWord DoubleWord::readLittleEndian ( std::istream& is )
     {
-        auto first  = Byte::read( ss );
-        auto second = Byte::read( ss );
-        auto third  = Byte::read( ss );
-        auto fourth = Byte::read( ss );
+        auto first  = Byte::read( is );
+        auto second = Byte::read( is );
+        auto third  = Byte::read( is );
+        auto fourth = Byte::read( is );
         
         auto size = Byte::BITS * sizeof( ByteType );
         return DoubleWord{
@@ -31,12 +31,12 @@ namespace Binary
 //        };
     }
 
-    DoubleWord DoubleWord::readBigEndian ( std::istream& ss )
+    DoubleWord DoubleWord::readBigEndian ( std::istream& is )
     {
-        auto first  = Byte::read( ss );
-        auto second = Byte::read( ss );
-        auto third  = Byte::read( ss );
-        auto fourth = Byte::read( ss );
+        auto first  = Byte::read( is );
+        auto second = Byte::read( is );
+        auto third  = Byte::read( is );
+        auto fourth = Byte::read( is );
         
         auto size = Byte::BITS * sizeof( ByteType );
         return DoubleWord{
@@ -58,6 +58,11 @@ namespace Binary
     }
 
     DoubleWord::operator DoubleWordType()
+    {
+        return myValue;
+    }
+    
+    DoubleWordType DoubleWord::getValue() const noexcept
     {
         return myValue;
     }

@@ -11,11 +11,11 @@
 
 namespace Binary
 {
-    ByteType Byte::read ( std::istream& is ) noexcept
+    Byte Byte::read ( std::istream& is ) noexcept
     {
-        ByteType value;
+        Byte value;
         
-        is >> value;
+        is >> value.myValue;
         
         if ( is )
         {
@@ -50,5 +50,10 @@ namespace Binary
         {
             throw std::runtime_error{ "unable to write Byte to output stream" };
         }
+    }
+    
+    bool Byte::operator== ( const Byte& rhs ) const noexcept
+    {
+        return myValue == rhs.myValue;
     }
 }

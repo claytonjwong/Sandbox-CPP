@@ -10,19 +10,19 @@
 
 namespace Binary
 {
-    Word Word::readLittleEndian ( std::stringstream& ss )
+    Word Word::readLittleEndian ( std::istream& is )
     {
-        auto first = Byte::read( ss );
-        auto second = Byte::read( ss );
+        auto first = Byte::read( is );
+        auto second = Byte::read( is );
         return Word{
             static_cast<WordType>( first | second << 8 )
         };
     }
 
-    Word Word::readBigEndian ( std::stringstream& ss )
+    Word Word::readBigEndian ( std::istream& is )
     {
-        auto first = Byte::read( ss );
-        auto second = Byte::read( ss );
+        auto first = Byte::read( is );
+        auto second = Byte::read( is );
         return Word{
             static_cast<WordType>( first << 8 | second )
         };
