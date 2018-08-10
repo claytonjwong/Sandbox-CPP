@@ -19,11 +19,22 @@ namespace Binary
     {
     public:
         
-        static DoubleWord readLittleEndian ( std::istream& ss );
-        static DoubleWord readBigEndian ( std::istream& ss );
+        static DoubleWord readAnyEndian ( std::istream& is );
+        static DoubleWord readLittleEndian ( std::istream& is );
+        static DoubleWord readBigEndian ( std::istream& is );
         
+    private:
+    
+        static void read ( std::istream& is,
+                           Byte& first, Byte& second,
+                           Byte& third, Byte& fourth );
+                           
+    public:
+    
         DoubleWord() = default;
         DoubleWord ( DoubleWordType value );
+        DoubleWord ( const Byte& first, const Byte& second,
+                     const Byte& third, const Byte& fourth );
         
         DoubleWord ( const DoubleWord& src ) = default;
         DoubleWord ( DoubleWord&& src ) = default;

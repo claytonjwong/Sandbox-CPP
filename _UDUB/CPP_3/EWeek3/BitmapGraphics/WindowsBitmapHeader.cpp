@@ -73,7 +73,7 @@ namespace BitmapGraphics
         verifyEquality( compressionMethod, DoubleWord::readLittleEndian( is ), "compressionMethod" );
         myImageSize = DoubleWord::readLittleEndian( is );
         
-        DoubleWord ignoreValue;
+        DoubleWord ignoreValue{ 0 };
         ignoreValue = DoubleWord::readLittleEndian( is ); // horizontalPixelsPerMeter
         ignoreValue = DoubleWord::readLittleEndian( is ); // verticalPixelsPerMeter
         ignoreValue = DoubleWord::readLittleEndian( is ); // numberOfColors

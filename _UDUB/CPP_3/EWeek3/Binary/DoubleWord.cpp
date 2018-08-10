@@ -11,63 +11,76 @@
 
 namespace Binary
 {
+    DoubleWord DoubleWord::readAnyEndian ( std::istream& is )
+    {
+        Byte first, second, third, fourth;
+        read ( is, first, second, third, fourth );
+        
+        if ( Binary::IS__LITTLE__ENDIAN() )
+        {
+            return DoubleWord{ fourth, third, second, first };
+        }
+        else
+        {
+            return DoubleWord{ first, second, third, fourth };
+        }
+    }
+
     DoubleWord DoubleWord::readLittleEndian ( std::istream& is )
     {
-        auto first  = Byte::read( is );
-        auto second = Byte::read( is );
-        auto third  = Byte::read( is );
-        auto fourth = Byte::read( is );
-//
-// question: which is preferrable?  "magic" numbers below was easier to write,
-// but maybe calculating the size here is more idiomatic self-documenting code?
-//
-        return DoubleWord{
-            static_cast<DoubleWord>(
-                first  << ( 0 * Byte::BIT_COUNT ) |
-                second << ( 1 * Byte::BIT_COUNT ) |
-                third  << ( 2 * Byte::BIT_COUNT ) |
-                fourth << ( 3 * Byte::BIT_COUNT )
-            )
-        };
-//
-// "magic" numbers...
-//
-
-//        return DoubleWord{
-//            static_cast<DoubleWord>( first | second << 8 | third << 16 | fourth << 24 )
-//        };
+        Byte first, second, third, fourth;
+        read ( is, first, second, third, fourth );
+        return DoubleWord{ fourth, third, second, first };
     }
 
     DoubleWord DoubleWord::readBigEndian ( std::istream& is )
     {
-        auto first  = Byte::read( is );
-        auto second = Byte::read( is );
-        auto third  = Byte::read( is );
-        auto fourth = Byte::read( is );
-//
-// question: which is preferrable?  "magic" numbers below was easier to write,
-// but maybe below is more dynamic, flexible, idiomatic self-documenting code?
-//
-        return DoubleWord{
-            static_cast<DoubleWord>(
-                first  << ( 3 * Byte::BIT_COUNT ) |
-                second << ( 2 * Byte::BIT_COUNT ) |
-                third  << ( 1 * Byte::BIT_COUNT ) |
-                fourth << ( 0 * Byte::BIT_COUNT )
-            )
-        };
-//
-// "magic" numbers...
-//
-
-//        return DoubleWord{
-//            static_cast<DoubleWord>( first << 24 | second << 16 | third << 8 | fourth )
-//        };
+        Byte first, second, third, fourth;
+        read ( is, first, second, third, fourth );
+        return DoubleWord{ first, second, third, fourth };
     }
+    
+    void DoubleWord::read ( std::istream& is,
+                            Byte& first, Byte& second, Byte& third, Byte& fourth )
+    {
+        first = Byte::read( is );
+        if ( ! is )
+        {
+            throw std::runtime_error{ "unable to read DoubleWord's first byte from istream" };
+        }
+        
+        second = Byte::read( is );
+        if ( ! is )
+        {
+            throw std::runtime_error{ "unable to read DoubleWord's second byte from istream" };
+        }
 
+        third = Byte::read( is );
+        if ( ! is )
+        {
+            throw std::runtime_error{ "unable to read DoubleWord's third byte from istream" };
+        }
+
+        fourth = Byte::read( is );
+        if ( ! is )
+        {
+            throw std::runtime_error{ "unable to read DoubleWord's fourth byte from istream" };
+        }
+    }
+    
     DoubleWord::DoubleWord( DoubleWordType value ) :
     myValue{ value }
     {
+    }
+    
+    DoubleWord::DoubleWord ( const Byte& first, const Byte& second,
+                             const Byte& third, const Byte& fourth )
+    {
+        myValue =
+            first.getValue()  << ( 3 * Byte::BIT_COUNT ) |
+            second.getValue() << ( 2 * Byte::BIT_COUNT ) |
+            third.getValue()  << ( 1 * Byte::BIT_COUNT ) |
+            fourth.getValue() << ( 0 * Byte::BIT_COUNT );
     }
     
     DoubleWordType DoubleWord::getValue() const noexcept
@@ -77,24 +90,12 @@ namespace Binary
 
     void DoubleWord::write ( std::ostream& os ) const
     {
-//
-// question: which is preferrable?  "magic" numbers below was easier to write,
-// but maybe below is more dynamic, flexible, idiomatic self-documenting code?
-//
         Binary::ByteType allBitsSet = static_cast<Binary::ByteType>(  1 <<  ( Byte::BIT_COUNT + 1 )  ) - 1;
         Byte mask{ allBitsSet };
         Byte first =  ( myValue & mask << ( 3 * Byte::BIT_COUNT ) )  >> ( 3 * Byte::BIT_COUNT );
         Byte second = ( myValue & mask << ( 2 * Byte::BIT_COUNT ) )  >> ( 2 * Byte::BIT_COUNT );
         Byte third =  ( myValue & mask << ( 1 * Byte::BIT_COUNT ) )  >> ( 1 * Byte::BIT_COUNT );
         Byte fourth = ( myValue & mask << ( 0 * Byte::BIT_COUNT ) )  >> ( 0 * Byte::BIT_COUNT );
-//
-// "magic" numbers...
-//
-
-//        Byte first =  ( myValue & 0xFF000000 ) >> 24;
-//        Byte second = ( myValue & 0x00FF0000 ) >> 16;
-//        Byte third =  ( myValue & 0x0000FF00 ) >> 8;
-//        Byte fourth = ( myValue & 0x000000FF );
 
         if ( IS__LITTLE__ENDIAN() )
         {

@@ -58,10 +58,10 @@ namespace BitmapGraphics
     
     std::ostream& operator<< ( std::ostream& os, const Color& rhs )
     {
-        os << "Color{ "
-           << rhs.getBlue() << ", "
+        os << "Color RGB{ "
+           << rhs.getRed() << ", "
            << rhs.getGreen() << ", "
-           << rhs.getRed()
+           << rhs.getBlue()
            << " }";
         return os;
     }

@@ -11,55 +11,60 @@
 
 namespace Binary
 {
+    Word Word::readAnyEndian ( std::istream& is )
+    {
+        Byte first, second;
+        read( is, first, second );
+        
+        if ( Binary::IS__LITTLE__ENDIAN() )
+        {
+            return Word{ second, first };
+        }
+        else
+        {
+            return Word{ first, second };
+        }
+    }
+    
     Word Word::readLittleEndian ( std::istream& is )
     {
-        auto first = Byte::read( is );
-        auto second = Byte::read( is );
-//
-// question: which is preferrable?  "magic" numbers below was easier to write,
-// but maybe calculating the size here is more idiomatic self-documenting code?
-//
-        return Word{
-            static_cast<Word>(
-                first  << ( 0 * Byte::BIT_COUNT ) |
-                second << ( 1 * Byte::BIT_COUNT )
-            )
-        };
-//
-// "magic" numbers...
-//
-
-//        return Word{
-//            static_cast<WordType>( first | second << 8 )
-//        };
+        Byte first, second;
+        read( is, first, second );
+        return Word{ second, first };
     }
 
     Word Word::readBigEndian ( std::istream& is )
     {
-        auto first = Byte::read( is );
-        auto second = Byte::read( is );
-//
-// question: which is preferrable?  "magic" numbers below was easier to write,
-// but maybe calculating the size here is more idiomatic self-documenting code?
-//
-        return Word{
-            static_cast<Word>(
-                first  << ( 1 * Byte::BIT_COUNT ) |
-                second << ( 0 * Byte::BIT_COUNT )
-            )
-        };
-//
-// "magic" numbers...
-//
-
-//        return Word{
-//            static_cast<WordType>( first << 8 | second )
-//        };
+        Byte first, second;
+        read( is, first, second );
+        return Word{ first, second };
     }
+    
+    void Word::read ( std::istream& is, Byte& first, Byte& second )
+    {
+        first = Byte::read( is );
+        if ( ! is )
+        {
+            throw std::runtime_error{ "unable to read Word's first byte from istream" };
+        }
 
+        second = Byte::read( is );
+        if ( ! is )
+        {
+            throw std::runtime_error{ "unable to read Word's second byte from istream" };
+        }
+    }
+    
     Word::Word ( WordType value ) :
     myValue{ value }
     {
+    }
+    
+    Word::Word ( const Byte& first, const Byte& second )
+    {
+        myValue =
+            first.getValue()  << ( 1 * Byte::BIT_COUNT ) |
+            second.getValue() << ( 0 * Byte::BIT_COUNT );
     }
     
     WordType Word::getValue() const noexcept
@@ -69,8 +74,10 @@ namespace Binary
     
     void Word::write ( std::ostream& os ) const
     {
-        Byte first =  ( myValue & 0xFF00 ) >> 8;
-        Byte second = ( myValue & 0x00FF ) >> 0;
+        Binary::ByteType allBitsSet = static_cast<Binary::ByteType>(  1 <<  ( Byte::BIT_COUNT + 1 )  ) - 1;
+        Byte mask{ allBitsSet };
+        Byte first =  ( myValue & mask << ( 1 * Byte::BIT_COUNT ) )  >> ( 1 * Byte::BIT_COUNT );
+        Byte second = ( myValue & mask << ( 0 * Byte::BIT_COUNT ) )  >> ( 0 * Byte::BIT_COUNT );
     
         if ( Binary::IS__LITTLE__ENDIAN() )
         {
@@ -94,7 +101,6 @@ namespace Binary
         {
             throw std::runtime_error{ "unable to write Word's second byte to ostream" };
         }
-
     }
 
     Word::operator WordType() const noexcept

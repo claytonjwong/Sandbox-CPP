@@ -21,12 +21,19 @@ namespace Binary
         }
     }
 
-    constexpr bool IS__LITTLE__ENDIAN ()
+    static bool IS__LITTLE__ENDIAN ()
     {
-        return 0xAA00 == 43520;
+        union
+        {
+            uint16_t word;
+            uint8_t byte[2];
+            
+        } binaryWord{ 0xFF00 };
+        
+        return binaryWord.byte[1] == 0x00FF;
     }
     
-    constexpr bool IS__BIG__ENDIAN ()
+    static bool IS__BIG__ENDIAN ()
     {
         return ! (  IS__LITTLE__ENDIAN()  );
     }

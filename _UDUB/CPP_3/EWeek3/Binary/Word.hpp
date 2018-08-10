@@ -19,11 +19,19 @@ namespace Binary
     {
     public:
     
-        static Word readLittleEndian ( std::istream& ss );
-        static Word readBigEndian ( std::istream& ss );
+        static Word readAnyEndian ( std::istream& is );
+        static Word readLittleEndian ( std::istream& is );
+        static Word readBigEndian ( std::istream& is );
 
-        Word() = delete;
+    private:
+    
+        static void read ( std::istream& is, Byte& first, Byte& second );
+        
+    public:
+
+        Word() = default;
         Word ( WordType value );
+        Word ( const Byte& first, const Byte& second );
         
         Word ( const Word& src ) = default;
         Word ( Word&& src ) = default;
@@ -37,7 +45,7 @@ namespace Binary
         
     private:
     
-        static void write( std::ostream& os, const Byte& first, const Byte& second );
+        static void write ( std::ostream& os, const Byte& first, const Byte& second );
 
     public:
         
@@ -46,6 +54,6 @@ namespace Binary
         
     private:
     
-        WordType myValue;
+        WordType myValue{ 0 };
     };
 }
