@@ -33,7 +33,15 @@ namespace BitmapGraphics
         myWidth{ width },
         myHeight{ height }
         {
-            
+            for ( int i = 0;  i < height;  ++i )
+            {
+                ScanLine scanLine;
+                for ( int j = 0;  j < width;  ++j )
+                {
+                    scanLine.emplace_back( Color::read( is ) );
+                }
+                myScanLines.emplace_back( scanLine );
+            }
         }
         
         Bitmap ( const Bitmap& src ) = default;

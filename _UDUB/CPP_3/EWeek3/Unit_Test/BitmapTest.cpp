@@ -19,7 +19,7 @@ TEST(BitmapSizeTest, Bitmap)
     CHECK_EQUAL(100, bitmap.getHeight());
 }
 
-/*
+
 TEST(BitmapScanLinesTest, Bitmap)
 {
     std::ifstream bitmapStream{"basic.bmp", std::ios::binary};
@@ -40,7 +40,7 @@ TEST(BitmapScanLinesTest, Bitmap)
     CHECK_EQUAL(100, numberOfScanLines);
 }
 
-
+/*
 TEST(BitmapReadWrite, Bitmap)
 {
     // Read in the bitmap
@@ -77,6 +77,7 @@ TEST(BitmapReadWrite, Bitmap)
     }
     CHECK_EQUAL(100, numberOfScanLines);
 }
+
 
 TEST(BinaryOstreamIterator, Bitmap)
 {
