@@ -38,9 +38,10 @@ namespace BitmapGraphics
                 ScanLine scanLine;
                 for ( int j = 0;  j < width;  ++j )
                 {
-                    scanLine.emplace_back( Color::read( is ) );
+                    auto color = Color::read( is );
+                    scanLine.emplace_back(  std::move( color )  );
                 }
-                myScanLines.emplace_back( scanLine );
+                myScanLines.emplace_back(  std::move( scanLine )  );
             }
         }
         
