@@ -79,11 +79,26 @@ namespace Binary
 
     void DoubleWord::write ( std::ostream& os ) const
     {
-        Byte first =  ( myValue & 0xFF000000 ) >> ( 8 * 3 );
-        Byte second = ( myValue & 0x00FF0000 ) >> ( 8 * 2 );
-        Byte third =  ( myValue & 0x0000FF00 ) >> ( 8 * 1 );
-        Byte fourth = ( myValue & 0x000000FF ) >> ( 8 * 0 );
-        
+//
+// question: which is preferrable?  "magic" numbers below was easier to write,
+// but maybe calculating the size here is more idiomatic self-documenting code?
+//
+        auto bitsPerByte = Byte::BITS * sizeof( ByteType );
+        Binary::ByteType allBitsSet = static_cast<Binary::ByteType>(  1 << (Byte::BITS+1)  ) - 1;
+        Byte mask{ allBitsSet };
+        Byte first =  ( myValue & mask << ( 3 * bitsPerByte ) )  >> ( 3 * bitsPerByte );
+        Byte second = ( myValue & mask << ( 2 * bitsPerByte ) )  >> ( 2 * bitsPerByte );
+        Byte third =  ( myValue & mask << ( 1 * bitsPerByte ) )  >> ( 1 * bitsPerByte );
+        Byte fourth = ( myValue & mask << ( 0 * bitsPerByte ) )  >> ( 0 * bitsPerByte );
+//
+// "magic" numbers...
+//
+
+//        Byte first =  ( myValue & 0xFF000000 ) >> ( 8 * 3 );
+//        Byte second = ( myValue & 0x00FF0000 ) >> ( 8 * 2 );
+//        Byte third =  ( myValue & 0x0000FF00 ) >> ( 8 * 1 );
+//        Byte fourth = ( myValue & 0x000000FF ) >> ( 8 * 0 );
+
         if ( IS__LITTLE__ENDIAN() )
         {
             write( os, fourth, third, second, first );
