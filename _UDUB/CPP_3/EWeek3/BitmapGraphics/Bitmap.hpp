@@ -28,22 +28,8 @@ namespace BitmapGraphics
     
         using ScanLineIterator = ScanLineCollection::const_iterator;
     
-        Bitmap() = delete;
-        Bitmap ( int width, int height, std::istream& is ) :
-        myWidth{ width },
-        myHeight{ height }
-        {
-            for ( int i = 0;  i < height;  ++i )
-            {
-                ScanLine scanLine;
-                for ( int j = 0;  j < width;  ++j )
-                {
-                    auto color = Color::read( is );
-                    scanLine.emplace_back(  std::move( color )  );
-                }
-                myScanLines.emplace_back(  std::move( scanLine )  );
-            }
-        }
+        Bitmap() = default;
+        Bitmap ( int width, int height, std::istream& is );
         
         Bitmap ( const Bitmap& src ) = default;
         Bitmap ( Bitmap&& src ) = default;
@@ -51,33 +37,13 @@ namespace BitmapGraphics
         Bitmap& operator= ( const Bitmap& rhs ) = default;
         Bitmap& operator= ( Bitmap&& rhs ) = default;
         
-        int getWidth() const noexcept
-        {
-            return myWidth;
-        }
+        int getWidth() const noexcept;
+        int getHeight() const noexcept;
         
-        int getHeight() const noexcept
-        {
-            return myHeight;
-        }
-        
-        ScanLineIterator begin() const noexcept
-        {
-            return myScanLines.begin();
-        }
-        
-        ScanLineIterator end() const noexcept
-        {
-            return myScanLines.end();
-        }
+        ScanLineIterator begin() const noexcept;
+        ScanLineIterator end() const noexcept;
     
-        void write ( std::ostream& os )
-        {
-            if ( ! os )
-            {
-                throw std::runtime_error{ "unable to write to ostream" };
-            }
-        }
+        void write ( std::ostream& os );
     
     private:
         

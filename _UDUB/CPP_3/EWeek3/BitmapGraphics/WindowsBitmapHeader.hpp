@@ -86,15 +86,7 @@ namespace BitmapGraphics
         int getBitmapHeight() const noexcept;
         int getFileSize() const noexcept;
         
-        void write ( std::ostream& os )
-        {
-            if ( ! os )
-            {
-                throw std::runtime_error{ "unable to write to ostream" };
-            }
-            writeFileHeader( os );
-            writeInfoHeader( os );
-        }
+        void write ( std::ostream& os );
         
     private:
         

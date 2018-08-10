@@ -94,4 +94,10 @@ namespace BitmapGraphics
     {
         return myFileSize;
     }
+    
+    void WindowsBitmapHeader::write ( std::ostream& os )
+    {
+        writeFileHeader( os );
+        writeInfoHeader( os );
+    }
 }
