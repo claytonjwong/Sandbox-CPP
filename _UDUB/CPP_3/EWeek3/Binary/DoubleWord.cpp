@@ -10,7 +10,7 @@
 
 namespace Binary
 {
-    DoubleWord DoubleWord::readLittleEndian ( std::stringstream& ss )
+    DoubleWord DoubleWord::readLittleEndian ( std::istream& ss )
     {
         auto first  = Byte::read( ss );
         auto second = Byte::read( ss );
@@ -31,7 +31,7 @@ namespace Binary
 //        };
     }
 
-    DoubleWord DoubleWord::readBigEndian ( std::stringstream& ss )
+    DoubleWord DoubleWord::readBigEndian ( std::istream& ss )
     {
         auto first  = Byte::read( ss );
         auto second = Byte::read( ss );

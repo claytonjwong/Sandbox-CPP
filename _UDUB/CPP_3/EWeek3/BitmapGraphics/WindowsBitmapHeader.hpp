@@ -21,17 +21,14 @@ namespace BitmapGraphics
     {
     private:
             
-        static const Binary::Byte myFirstIdentifier;
-        static const Binary::Byte myFecondIdentifier;
-        static const Binary::DoubleWord myReserved;
-        static const Binary::DoubleWord myRawImageOffset;
+        static const Binary::Byte firstIdentifier;
+        static const Binary::Byte secondIdentifier;
+        static const Binary::DoubleWord reserved;
+        static const Binary::DoubleWord rawImageOffset;
 
     public:
     
-        WindowsBitmapHeader ( std::istream& is )
-        {
-            verifyEquality( 1,1,"one" );
-        }
+        WindowsBitmapHeader ( std::istream& is );
         
     private:
     

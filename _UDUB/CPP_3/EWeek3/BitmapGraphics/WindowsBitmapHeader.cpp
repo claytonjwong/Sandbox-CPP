@@ -7,6 +7,7 @@
 //
 
 #include "WindowsBitmapHeader.hpp"
+#include <sstream>
 
 namespace BitmapGraphics
 {
@@ -14,9 +15,16 @@ namespace BitmapGraphics
     // file header: https://en.wikipedia.org/wiki/BMP_file_format#Bitmap_file_header
     // info header: https://en.wikipedia.org/wiki/BMP_file_format#DIB_header_(bitmap_information_header)
     //
-    static const Binary::Byte myFirstIdentifier{ 'B' };
-    static const Binary::Byte mySecondIdentifier{ 'M' };
-    static const Binary::DoubleWord myReserved{ 0 };
-    static const Binary::DoubleWord myRawImageOffset{ 14 + 40 }; // file header size + info header size
+    const Binary::Byte WindowsBitmapHeader::firstIdentifier{ 'B' };
+    const Binary::Byte WindowsBitmapHeader::secondIdentifier{ 'M' };
+    const Binary::DoubleWord WindowsBitmapHeader::reserved{ 0 };
+    const Binary::DoubleWord WindowsBitmapHeader::rawImageOffset{ 14 + 40 }; // file header size + info header size
 
+    WindowsBitmapHeader::WindowsBitmapHeader ( std::istream& is )
+    {
+        verifyEquality( firstIdentifier.getValue(), Binary::Byte::read( is ), "myFirstIdentifier" );
+        verifyEquality( secondIdentifier.getValue(), Binary::Byte::read( is ), "mySecondIdentifier");
+        myFileSize = Binary::DoubleWord::readLittleEndian( is );
+        
+    }
 }
