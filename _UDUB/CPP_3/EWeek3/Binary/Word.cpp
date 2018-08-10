@@ -7,6 +7,7 @@
 //
 
 #include "Word.hpp"
+#include "Common.hpp"
 
 namespace Binary
 {
@@ -14,7 +15,10 @@ namespace Binary
     {
         auto first = Byte::read( is );
         auto second = Byte::read( is );
-        
+//
+// question: which is preferrable?  "magic" numbers below was easier to write,
+// but maybe calculating the size here is more idiomatic self-documenting code?
+//
         auto size = Byte::BITS * sizeof( ByteType );
         return Word{
             static_cast<Word>(
@@ -22,6 +26,10 @@ namespace Binary
                 second << ( 1 * size)
             )
         };
+//
+// "magic" numbers...
+//
+
 //        return Word{
 //            static_cast<WordType>( first | second << 8 )
 //        };
@@ -31,7 +39,10 @@ namespace Binary
     {
         auto first = Byte::read( is );
         auto second = Byte::read( is );
-        
+//
+// question: which is preferrable?  "magic" numbers below was easier to write,
+// but maybe calculating the size here is more idiomatic self-documenting code?
+//
         auto size = Byte::BITS * sizeof( ByteType );
         return Word{
             static_cast<Word>(
@@ -39,6 +50,10 @@ namespace Binary
                 second << ( 0 * size)
             )
         };
+//
+// "magic" numbers...
+//
+
 //        return Word{
 //            static_cast<WordType>( first << 8 | second )
 //        };
@@ -52,6 +67,36 @@ namespace Binary
     WordType Word::getValue() const noexcept
     {
         return myValue;
+    }
+    
+    void Word::write ( std::ostream& os ) const
+    {
+        Byte first =  ( myValue & 0xFF00 ) >> 8;
+        Byte second = ( myValue & 0x00FF ) >> 0;
+    
+        if ( Binary::IS__LITTLE__ENDIAN() )
+        {
+            write( os, second, first );
+        }
+        else
+        {
+            write( os, first, second );
+        }
+    }
+    
+    void Word::write( std::ostream& os, const Byte& first, const Byte& second )
+    {
+        first.write( os );
+        if ( ! os )
+        {
+            throw std::runtime_error{ "unable to write Word's first byte to ostream" };
+        }
+        second.write( os );
+        if ( ! os )
+        {
+            throw std::runtime_error{ "unable to write Word's second byte to ostream" };
+        }
+
     }
 
     Word::operator WordType() const noexcept

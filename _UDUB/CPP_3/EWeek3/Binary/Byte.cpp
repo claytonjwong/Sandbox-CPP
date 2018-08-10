@@ -32,17 +32,12 @@ namespace Binary
     {
     }
     
-    Byte::operator ByteType()
-    {
-        return myValue;
-    }
-
     ByteType Byte::getValue() const noexcept
     {
         return myValue;
     }
     
-    void Byte::write ( std::ostream& os )
+    void Byte::write ( std::ostream& os ) const
     {
         os << myValue;
         
@@ -50,6 +45,11 @@ namespace Binary
         {
             throw std::runtime_error{ "unable to write Byte to output stream" };
         }
+    }
+    
+    Byte::operator ByteType()
+    {
+        return myValue;
     }
     
     bool Byte::operator== ( const Byte& rhs ) const noexcept

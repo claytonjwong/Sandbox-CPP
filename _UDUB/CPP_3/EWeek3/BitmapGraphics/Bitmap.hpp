@@ -71,6 +71,14 @@ namespace BitmapGraphics
             return myScanLines.end();
         }
     
+        void write ( std::ostream& os )
+        {
+            if ( ! os )
+            {
+                throw std::runtime_error{ "unable to write to ostream" };
+            }
+        }
+    
     private:
         
         int myWidth{ 0 };

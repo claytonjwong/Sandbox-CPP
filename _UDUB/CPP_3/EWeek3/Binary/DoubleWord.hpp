@@ -31,10 +31,18 @@ namespace Binary
         DoubleWord& operator= ( const DoubleWord& rhs ) = default;
         DoubleWord& operator= ( DoubleWord&& rhs ) = default;
         
-        operator DoubleWordType() const noexcept;
-        
         DoubleWordType getValue() const noexcept;
         
+        void write ( std::ostream& os ) const;
+    
+    private:
+    
+        static void write ( std::ostream& os,
+            const Byte& first, const Byte& second, const Byte& third, const Byte& fourth);
+    
+    public:
+    
+        operator DoubleWordType() const noexcept;
         bool operator== ( const DoubleWord& rhs ) const noexcept;
         
     private:

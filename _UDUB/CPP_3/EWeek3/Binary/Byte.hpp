@@ -31,12 +31,11 @@ namespace Binary
         Byte& operator= ( const Byte& rhs ) = default;
         Byte& operator= ( Byte&& rhs ) = default;
         
-        operator ByteType();
-        
         ByteType getValue ( ) const noexcept;
 
-        void write ( std::ostream& os );
+        void write ( std::ostream& os ) const;
         
+        operator ByteType();
         bool operator== ( const Byte& rhs ) const noexcept;
         
     private:

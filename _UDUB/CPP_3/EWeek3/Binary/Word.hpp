@@ -32,9 +32,16 @@ namespace Binary
         Word& operator= ( Word&& rhs ) = default;
         
         WordType getValue() const noexcept;
+
+        void write ( std::ostream& os ) const;
+        
+    private:
+    
+        static void write( std::ostream& os, const Byte& first, const Byte& second );
+
+    public:
         
         operator WordType() const noexcept;
-        
         bool operator== ( const Word& rhs ) const noexcept;
         
     private:

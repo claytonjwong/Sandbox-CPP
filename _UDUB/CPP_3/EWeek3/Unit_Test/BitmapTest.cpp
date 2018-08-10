@@ -40,7 +40,7 @@ TEST(BitmapScanLinesTest, Bitmap)
     CHECK_EQUAL(100, numberOfScanLines);
 }
 
-/*
+
 TEST(BitmapReadWrite, Bitmap)
 {
     // Read in the bitmap
@@ -78,7 +78,7 @@ TEST(BitmapReadWrite, Bitmap)
     CHECK_EQUAL(100, numberOfScanLines);
 }
 
-
+/*
 TEST(BinaryOstreamIterator, Bitmap)
 {
     // Read in the bitmap
