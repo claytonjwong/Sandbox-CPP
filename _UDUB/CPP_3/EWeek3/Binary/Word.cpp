@@ -19,11 +19,10 @@ namespace Binary
 // question: which is preferrable?  "magic" numbers below was easier to write,
 // but maybe calculating the size here is more idiomatic self-documenting code?
 //
-        auto size = Byte::BITS * sizeof( ByteType );
         return Word{
             static_cast<Word>(
-                first  << ( 0 * size) |
-                second << ( 1 * size)
+                first  << ( 0 * Byte::BIT_COUNT ) |
+                second << ( 1 * Byte::BIT_COUNT )
             )
         };
 //
@@ -43,11 +42,10 @@ namespace Binary
 // question: which is preferrable?  "magic" numbers below was easier to write,
 // but maybe calculating the size here is more idiomatic self-documenting code?
 //
-        auto size = Byte::BITS * sizeof( ByteType );
         return Word{
             static_cast<Word>(
-                first  << ( 1 * size) |
-                second << ( 0 * size)
+                first  << ( 1 * Byte::BIT_COUNT ) |
+                second << ( 0 * Byte::BIT_COUNT )
             )
         };
 //

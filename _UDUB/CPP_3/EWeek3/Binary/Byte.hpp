@@ -18,7 +18,7 @@ namespace Binary
     {
     public:
         
-        static constexpr int BITS = 8;
+        static constexpr int BIT_COUNT = 8;
         
         static Byte read ( std::istream& is ) noexcept;
         

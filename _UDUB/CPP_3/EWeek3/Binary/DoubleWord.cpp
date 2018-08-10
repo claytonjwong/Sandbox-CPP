@@ -21,13 +21,12 @@ namespace Binary
 // question: which is preferrable?  "magic" numbers below was easier to write,
 // but maybe calculating the size here is more idiomatic self-documenting code?
 //
-        auto bitsPerByte = Byte::BITS * sizeof( ByteType );
         return DoubleWord{
             static_cast<DoubleWord>(
-                first  << ( 0 * bitsPerByte ) |
-                second << ( 1 * bitsPerByte ) |
-                third  << ( 2 * bitsPerByte ) |
-                fourth << ( 3 * bitsPerByte )
+                first  << ( 0 * Byte::BIT_COUNT ) |
+                second << ( 1 * Byte::BIT_COUNT ) |
+                third  << ( 2 * Byte::BIT_COUNT ) |
+                fourth << ( 3 * Byte::BIT_COUNT )
             )
         };
 //
@@ -47,15 +46,14 @@ namespace Binary
         auto fourth = Byte::read( is );
 //
 // question: which is preferrable?  "magic" numbers below was easier to write,
-// but maybe calculating the size here is more idiomatic self-documenting code?
+// but maybe below is more dynamic, flexible, idiomatic self-documenting code?
 //
-        auto bitsPerByte = Byte::BITS * sizeof( ByteType );
         return DoubleWord{
             static_cast<DoubleWord>(
-                first  << ( 3 * bitsPerByte ) |
-                second << ( 2 * bitsPerByte ) |
-                third  << ( 1 * bitsPerByte ) |
-                fourth << ( 0 * bitsPerByte )
+                first  << ( 3 * Byte::BIT_COUNT ) |
+                second << ( 2 * Byte::BIT_COUNT ) |
+                third  << ( 1 * Byte::BIT_COUNT ) |
+                fourth << ( 0 * Byte::BIT_COUNT )
             )
         };
 //
@@ -81,23 +79,22 @@ namespace Binary
     {
 //
 // question: which is preferrable?  "magic" numbers below was easier to write,
-// but maybe calculating the size here is more idiomatic self-documenting code?
+// but maybe below is more dynamic, flexible, idiomatic self-documenting code?
 //
-        auto bitsPerByte = Byte::BITS * sizeof( ByteType );
-        Binary::ByteType allBitsSet = static_cast<Binary::ByteType>(  1 << (Byte::BITS+1)  ) - 1;
+        Binary::ByteType allBitsSet = static_cast<Binary::ByteType>(  1 <<  ( Byte::BIT_COUNT + 1 )  ) - 1;
         Byte mask{ allBitsSet };
-        Byte first =  ( myValue & mask << ( 3 * bitsPerByte ) )  >> ( 3 * bitsPerByte );
-        Byte second = ( myValue & mask << ( 2 * bitsPerByte ) )  >> ( 2 * bitsPerByte );
-        Byte third =  ( myValue & mask << ( 1 * bitsPerByte ) )  >> ( 1 * bitsPerByte );
-        Byte fourth = ( myValue & mask << ( 0 * bitsPerByte ) )  >> ( 0 * bitsPerByte );
+        Byte first =  ( myValue & mask << ( 3 * Byte::BIT_COUNT ) )  >> ( 3 * Byte::BIT_COUNT );
+        Byte second = ( myValue & mask << ( 2 * Byte::BIT_COUNT ) )  >> ( 2 * Byte::BIT_COUNT );
+        Byte third =  ( myValue & mask << ( 1 * Byte::BIT_COUNT ) )  >> ( 1 * Byte::BIT_COUNT );
+        Byte fourth = ( myValue & mask << ( 0 * Byte::BIT_COUNT ) )  >> ( 0 * Byte::BIT_COUNT );
 //
 // "magic" numbers...
 //
 
-//        Byte first =  ( myValue & 0xFF000000 ) >> ( 8 * 3 );
-//        Byte second = ( myValue & 0x00FF0000 ) >> ( 8 * 2 );
-//        Byte third =  ( myValue & 0x0000FF00 ) >> ( 8 * 1 );
-//        Byte fourth = ( myValue & 0x000000FF ) >> ( 8 * 0 );
+//        Byte first =  ( myValue & 0xFF000000 ) >> 24;
+//        Byte second = ( myValue & 0x00FF0000 ) >> 16;
+//        Byte third =  ( myValue & 0x0000FF00 ) >> 8;
+//        Byte fourth = ( myValue & 0x000000FF );
 
         if ( IS__LITTLE__ENDIAN() )
         {
