@@ -1,6 +1,6 @@
 
 #include "TestHarness.h"
-//#include "Bitmap.h"
+#include "Bitmap.hpp"
 #include "WindowsBitmapHeader.hpp"
 //#include "binary_ostream_iterator.h"
 #include <fstream>
@@ -13,11 +13,12 @@ TEST(BitmapSizeTest, Bitmap)
     CHECK(bitmapStream.is_open());
 
     WindowsBitmapHeader bitmapHeader{bitmapStream};
-//    Bitmap bitmap{bitmapHeader.getBitmapWidth(), bitmapHeader.getBitmapHeight(), bitmapStream};
-//
-//    CHECK_EQUAL(100, bitmap.getWidth());
-//    CHECK_EQUAL(100, bitmap.getHeight());
+    Bitmap bitmap{bitmapHeader.getBitmapWidth(), bitmapHeader.getBitmapHeight(), bitmapStream};
+
+    CHECK_EQUAL(100, bitmap.getWidth());
+    CHECK_EQUAL(100, bitmap.getHeight());
 }
+
 /*
 TEST(BitmapScanLinesTest, Bitmap)
 {
@@ -38,6 +39,7 @@ TEST(BitmapScanLinesTest, Bitmap)
     }
     CHECK_EQUAL(100, numberOfScanLines);
 }
+
 
 TEST(BitmapReadWrite, Bitmap)
 {
@@ -184,6 +186,7 @@ TEST(BitmapReadWrite_101, Bitmap)
     CHECK_EQUAL(101, numberOfScanLines);
 }
 
+
 TEST(BinaryOstreamIterator_101, Bitmap)
 {
     // Read in the bitmap
@@ -230,4 +233,3 @@ TEST(BinaryOstreamIterator_101, Bitmap)
     CHECK_EQUAL(101, numberOfScanLines);
 }
 */
-

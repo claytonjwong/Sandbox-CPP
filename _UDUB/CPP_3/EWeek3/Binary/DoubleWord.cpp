@@ -57,7 +57,7 @@ namespace Binary
     {
     }
 
-    DoubleWord::operator DoubleWordType()
+    DoubleWord::operator DoubleWordType() const noexcept
     {
         return myValue;
     }

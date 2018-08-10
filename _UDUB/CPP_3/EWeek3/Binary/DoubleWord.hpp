@@ -31,7 +31,7 @@ namespace Binary
         DoubleWord& operator= ( const DoubleWord& rhs ) = default;
         DoubleWord& operator= ( DoubleWord&& rhs ) = default;
         
-        operator DoubleWordType();
+        operator DoubleWordType() const noexcept;
         
         DoubleWordType getValue() const noexcept;
         
