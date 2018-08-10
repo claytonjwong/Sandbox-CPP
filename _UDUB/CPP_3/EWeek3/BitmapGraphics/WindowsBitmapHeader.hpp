@@ -28,7 +28,7 @@ namespace BitmapGraphics
         static constexpr int INFO_HEADER_SIZE { 40 };
         static const Binary::Byte firstIdentifier;
         static const Binary::Byte secondIdentifier;
-        // myFileSize
+        // << myFileSize >>
         static const Binary::DoubleWord reserved;
         static const Binary::DoubleWord rawImageOffset;
         
@@ -36,12 +36,12 @@ namespace BitmapGraphics
         // info header: https://en.wikipedia.org/wiki/BMP_file_format#DIB_header_(bitmap_information_header)
         //
         static const Binary::DoubleWord infoHeaderSize;
-        // myWidth
-        // myHeight
+        // << myWidth >>
+        // << myHeight >>
         static const Binary::Word colorPlanes;
         static const Binary::Word colorDepth;
         static const Binary::DoubleWord compressionMethod;
-        // myImageSize
+        // << myImageSize >>
         static const Binary::DoubleWord horizontalPixelsPerMeter;
         static const Binary::DoubleWord verticalPixelsPerMeter;
         static const Binary::DoubleWord numberOfColors;

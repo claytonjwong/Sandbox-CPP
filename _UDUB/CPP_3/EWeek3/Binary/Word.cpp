@@ -14,18 +14,34 @@ namespace Binary
     {
         auto first = Byte::read( is );
         auto second = Byte::read( is );
+        
+        auto size = Byte::BITS * sizeof( ByteType );
         return Word{
-            static_cast<WordType>( first | second << 8 )
+            static_cast<Word>(
+                first  << ( 0 * size) |
+                second << ( 1 * size)
+            )
         };
+//        return Word{
+//            static_cast<WordType>( first | second << 8 )
+//        };
     }
 
     Word Word::readBigEndian ( std::istream& is )
     {
         auto first = Byte::read( is );
         auto second = Byte::read( is );
+        
+        auto size = Byte::BITS * sizeof( ByteType );
         return Word{
-            static_cast<WordType>( first << 8 | second )
+            static_cast<Word>(
+                first  << ( 1 * size) |
+                second << ( 0 * size)
+            )
         };
+//        return Word{
+//            static_cast<WordType>( first << 8 | second )
+//        };
     }
 
     Word::Word ( WordType value ) :

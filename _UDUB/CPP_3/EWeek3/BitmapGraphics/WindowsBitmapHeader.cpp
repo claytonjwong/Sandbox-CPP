@@ -18,7 +18,7 @@ namespace BitmapGraphics
     //
     const Byte WindowsBitmapHeader::firstIdentifier{ 'B' };
     const Byte WindowsBitmapHeader::secondIdentifier{ 'M' };
-    // myFileSize
+    // << myFileSize >>
     const DoubleWord WindowsBitmapHeader::reserved{ 0 };
     const DoubleWord WindowsBitmapHeader::rawImageOffset{ FILE_HEADER_SIZE + INFO_HEADER_SIZE };
     
@@ -26,12 +26,12 @@ namespace BitmapGraphics
     // info header: https://en.wikipedia.org/wiki/BMP_file_format#DIB_header_(bitmap_information_header)
     //
     const DoubleWord WindowsBitmapHeader::infoHeaderSize{ INFO_HEADER_SIZE };
-    // myWidth
-    // myHeight
+    // << myWidth >>
+    // << myHeight >>
     const Word WindowsBitmapHeader::colorPlanes{ 1 };
     const Word WindowsBitmapHeader::colorDepth{ 24 };
     const DoubleWord WindowsBitmapHeader::compressionMethod{ 0 };
-    // myImageSize
+    // << myImageSize >>
     const Binary::DoubleWord WindowsBitmapHeader::horizontalPixelsPerMeter{ 0 };
     const Binary::DoubleWord WindowsBitmapHeader::verticalPixelsPerMeter{ 0 };
     const Binary::DoubleWord WindowsBitmapHeader::numberOfColors{ 0 };
