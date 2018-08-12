@@ -43,6 +43,13 @@ namespace BitmapGraphics
         return myRed;
     }
     
+    void Color::write ( std::ostream& os ) const
+    {
+        myBlue.write( os );
+        myGreen.write( os );
+        myRed.write( os );
+    }
+    
     bool Color::operator== ( const Color& rhs ) const noexcept
     {
         return myRed == rhs.getRed()
@@ -50,19 +57,20 @@ namespace BitmapGraphics
             && myBlue == rhs.getBlue();
     }
     
+    bool Color::operator!= ( const Color& rhs ) const noexcept
+    {
+        return ! ( *this == rhs );
+    }
+    
     std::ostream& operator<< ( std::ostream& os, const Color::Component& rhs ) noexcept
     {
-        os << rhs.getValue();
+        rhs.write( os );
         return os;
     }
     
     std::ostream& operator<< ( std::ostream& os, const Color& rhs ) noexcept
     {
-        os << "Color RGB{ "
-           << rhs.getRed() << ", "
-           << rhs.getGreen() << ", "
-           << rhs.getBlue()
-           << " }";
+        rhs.write( os );
         return os;
     }
 }

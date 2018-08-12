@@ -4,6 +4,7 @@
 #include "WindowsBitmapHeader.hpp"
 //#include "binary_ostream_iterator.h"
 #include <fstream>
+#include <vector>
 
 using namespace BitmapGraphics;
 
@@ -79,16 +80,16 @@ TEST(BitmapReadWrite, Bitmap)
     
     auto scanLine1 = *bitmap.begin(), scanLine2 = *bitmap2.begin();
     
-    std::cout << "scanLine1: " << std::endl;
-    int i=0;
+    std::vector<Color> v1,v2;
     for (auto& color: scanLine1)
-        std::cout << ++i << ": " << color << std::endl;
+        v1.push_back(color);
     
-    std::cout << "scanLine2: " << std::endl;
-    i=0;
     for (auto& color: scanLine2)
-        std::cout << ++i << ": " << color << std::endl;
+        v2.push_back(color);
 
+    for ( int i=0; i < scanLine1.size(); ++i)
+        if ( v1[i] != v2[i] )
+            CHECK(false);
 }
 
 /*

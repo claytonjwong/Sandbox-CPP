@@ -37,7 +37,10 @@ namespace BitmapGraphics
         Component getGreen() const noexcept;
         Component getBlue() const noexcept;
         
+        void write ( std::ostream& os ) const;
+        
         bool operator== ( const Color& rhs ) const noexcept;
+        bool operator!= ( const Color& rhs ) const noexcept;
         
     private:
     
