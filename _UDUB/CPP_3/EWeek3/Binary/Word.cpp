@@ -11,7 +11,7 @@
 
 namespace Binary
 {
-    Word Word::readAnyEndian ( std::istream& is )
+    Word Word::readProperEndian ( std::istream& is )
     {
         Byte first, second;
         read( is, first, second );
@@ -72,14 +72,14 @@ namespace Binary
         return myValue;
     }
     
-    void Word::write ( std::ostream& os ) const
+    void Word::write ( std::ostream& os, bool forceBigEndian ) const
     {
         Binary::ByteType allBitsSet = static_cast<Binary::ByteType>(  1 <<  ( Byte::BIT_COUNT + 1 )  ) - 1;
         Byte mask{ allBitsSet };
         Byte first =  ( myValue & mask << ( 1 * Byte::BIT_COUNT ) )  >> ( 1 * Byte::BIT_COUNT );
         Byte second = ( myValue & mask << ( 0 * Byte::BIT_COUNT ) )  >> ( 0 * Byte::BIT_COUNT );
     
-        if ( Binary::IS__LITTLE__ENDIAN() )
+        if ( !forceBigEndian && Binary::IS__LITTLE__ENDIAN() )
         {
             write( os, second, first );
         }
@@ -87,6 +87,16 @@ namespace Binary
         {
             write( os, first, second );
         }
+    }
+    
+    void Word::writeLittleEndian ( std::ostream& os ) const
+    {
+        write( os );
+    }
+    
+    void Word::writeBigEndian ( std::ostream& os ) const
+    {
+        write( os, true );
     }
     
     void Word::write( std::ostream& os, const Byte& first, const Byte& second )
@@ -111,5 +121,11 @@ namespace Binary
     bool Word::operator== ( const Word& rhs ) const noexcept
     {
         return myValue == rhs.myValue;
+    }
+    
+    std::ostream& operator<< ( std::ostream& os, const Word& rhs )
+    {
+        rhs.write( os );
+        return os;
     }
 }

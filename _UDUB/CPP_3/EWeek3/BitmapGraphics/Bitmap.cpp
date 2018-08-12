@@ -51,7 +51,19 @@ namespace BitmapGraphics
 
     void Bitmap::write ( std::ostream& os ) const
     {
-        int paddingSize = ( Color::BYTE_COUNT * myWidth ) % Binary::DoubleWord::BYTE_COUNT;
+        for ( const auto& scanLine: myScanLines )
+        {
+            for ( const auto& color: scanLine )
+            {
+                os << color;
+            }
+            int paddingSize = ( Color::BYTE_COUNT * myWidth ) % Binary::DoubleWord::BYTE_COUNT;
+            Binary::Byte padding;
+            for ( int i = 0; i < paddingSize; ++i )
+            {
+                os << padding;
+            }
+        }
     
         if ( ! os )
         {

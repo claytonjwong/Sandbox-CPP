@@ -15,15 +15,13 @@ namespace Binary
 {
     using WordType = uint16_t;
     
-    
-    
     class Word
     {
     public:
     
         static constexpr int BYTE_COUNT = 3;
     
-        static Word readAnyEndian ( std::istream& is );
+        static Word readProperEndian ( std::istream& is );
         static Word readLittleEndian ( std::istream& is );
         static Word readBigEndian ( std::istream& is );
 
@@ -45,7 +43,9 @@ namespace Binary
         
         WordType getValue() const noexcept;
 
-        void write ( std::ostream& os ) const;
+        void write ( std::ostream& os, bool forceBigEndian=false ) const;
+        void writeLittleEndian ( std::ostream& os ) const;
+        void writeBigEndian ( std::ostream& os ) const;
         
     private:
     
@@ -60,4 +60,6 @@ namespace Binary
     
         WordType myValue{ 0 };
     };
+    
+    std::ostream& operator<< ( std::ostream& os, const Word& rhs );
 }
