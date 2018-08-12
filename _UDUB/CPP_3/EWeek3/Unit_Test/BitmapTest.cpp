@@ -60,7 +60,7 @@ TEST(BitmapReadWrite, Bitmap)
     bitmapHeader.write(outputStream);
     bitmap.write(outputStream);
     outputStream.close();
-
+    
     // Read that one back in and check sizes
     
     std::ifstream bitmapStream2{"output.bmp", std::ios::binary};
@@ -76,6 +76,19 @@ TEST(BitmapReadWrite, Bitmap)
         ++numberOfScanLines;
     }
     CHECK_EQUAL(100, numberOfScanLines);
+    
+    auto scanLine1 = *bitmap.begin(), scanLine2 = *bitmap2.begin();
+    
+    std::cout << "scanLine1: " << std::endl;
+    int i=0;
+    for (auto& color: scanLine1)
+        std::cout << ++i << ": " << color << std::endl;
+    
+    std::cout << "scanLine2: " << std::endl;
+    i=0;
+    for (auto& color: scanLine2)
+        std::cout << ++i << ": " << color << std::endl;
+
 }
 
 /*

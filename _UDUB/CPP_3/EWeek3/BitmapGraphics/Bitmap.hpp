@@ -43,7 +43,7 @@ namespace BitmapGraphics
         ScanLineIterator begin() const noexcept;
         ScanLineIterator end() const noexcept;
     
-        void write ( std::ostream& os );
+        void write ( std::ostream& os ) const;
     
     private:
         

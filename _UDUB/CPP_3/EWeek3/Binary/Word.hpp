@@ -15,9 +15,13 @@ namespace Binary
 {
     using WordType = uint16_t;
     
+    
+    
     class Word
     {
     public:
+    
+        static constexpr int BYTE_COUNT = 3;
     
         static Word readAnyEndian ( std::istream& is );
         static Word readLittleEndian ( std::istream& is );

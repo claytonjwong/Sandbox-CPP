@@ -31,15 +31,6 @@ namespace BitmapGraphics
         // << myFileSize >>
         static const Binary::DoubleWord reserved;
         static const Binary::DoubleWord rawImageOffset;
-        
-        void writeFileHeader ( std::ostream& os ) const noexcept
-        {
-            firstIdentifier.write( os );
-            secondIdentifier.write( os );
-            myFileSize.write( os );
-            reserved.write( os );
-            rawImageOffset.write( os );
-        }
 
         //
         // info header: https://en.wikipedia.org/wiki/BMP_file_format#DIB_header_(bitmap_information_header)
@@ -58,22 +49,6 @@ namespace BitmapGraphics
         static const Binary::DoubleWord numberOfColors;
         static const Binary::DoubleWord numberOfImportantColors;
 
-        void writeInfoHeader ( std::ostream& os )
-        {
-            infoHeaderSize.write( os );
-            myWidth.write( os );
-            myHeight.write( os );
-            colorPlanes.write( os );
-            colorDepth.write( os );
-            compressionMethod.write( os );
-            myImageSize.write( os );
-            horizontalPixelsPerMeter.write( os );
-            verticalPixelsPerMeter.write( os );
-            numberOfColors.write( os );
-            numberOfImportantColors.write( os );
-        }
-
-
     public:
     
         WindowsBitmapHeader() = default;
@@ -86,7 +61,12 @@ namespace BitmapGraphics
         int getBitmapHeight() const noexcept;
         int getFileSize() const noexcept;
         
-        void write ( std::ostream& os );
+        void write ( std::ostream& os ) const;
+        
+    private:
+    
+        void writeFileHeader ( std::ostream& os ) const;
+        void writeInfoHeader ( std::ostream& os ) const;
         
     private:
         

@@ -90,7 +90,8 @@ namespace Binary
 
     void DoubleWord::write ( std::ostream& os ) const
     {
-        Binary::ByteType allBitsSet = static_cast<Binary::ByteType>(  1 <<  ( Byte::BIT_COUNT + 1 )  ) - 1;
+        Binary::ByteType allBitsSet =
+            static_cast<Binary::ByteType>(  (1 << ( Byte::BIT_COUNT + 1 )) - 1  );
         Byte mask{ allBitsSet };
         Byte first =  ( myValue & mask << ( 3 * Byte::BIT_COUNT ) )  >> ( 3 * Byte::BIT_COUNT );
         Byte second = ( myValue & mask << ( 2 * Byte::BIT_COUNT ) )  >> ( 2 * Byte::BIT_COUNT );

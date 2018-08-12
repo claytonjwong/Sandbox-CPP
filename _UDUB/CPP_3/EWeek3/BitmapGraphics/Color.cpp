@@ -43,20 +43,20 @@ namespace BitmapGraphics
         return myRed;
     }
     
-    bool Color::operator== ( const Color& rhs )
+    bool Color::operator== ( const Color& rhs ) const noexcept
     {
         return myRed == rhs.getRed()
             && myGreen == rhs.getGreen()
             && myBlue == rhs.getBlue();
     }
     
-    std::ostream& operator<< ( std::ostream& os, const Color::Component& rhs )
+    std::ostream& operator<< ( std::ostream& os, const Color::Component& rhs ) noexcept
     {
         os << rhs.getValue();
         return os;
     }
     
-    std::ostream& operator<< ( std::ostream& os, const Color& rhs )
+    std::ostream& operator<< ( std::ostream& os, const Color& rhs ) noexcept
     {
         os << "Color RGB{ "
            << rhs.getRed() << ", "

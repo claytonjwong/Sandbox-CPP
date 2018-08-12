@@ -19,6 +19,8 @@ namespace BitmapGraphics
     
         using Component = Binary::Byte;
         
+        static constexpr int BYTE_COUNT = 3;
+        
         static Color read ( std::istream& is ) noexcept;
         
         Color() = default;
@@ -35,7 +37,7 @@ namespace BitmapGraphics
         Component getGreen() const noexcept;
         Component getBlue() const noexcept;
         
-        bool operator== ( const Color& rhs );
+        bool operator== ( const Color& rhs ) const noexcept;
         
     private:
     
@@ -44,6 +46,6 @@ namespace BitmapGraphics
         Component myBlue;
     };
     
-    std::ostream& operator<< ( std::ostream& os, const Color::Component& rhs );
-    std::ostream& operator<< ( std::ostream& os, const Color& rhs );
+    std::ostream& operator<< ( std::ostream& os, const Color::Component& rhs ) noexcept;
+    std::ostream& operator<< ( std::ostream& os, const Color& rhs ) noexcept;
 }

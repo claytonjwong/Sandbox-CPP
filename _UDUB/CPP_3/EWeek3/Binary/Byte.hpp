@@ -35,7 +35,7 @@ namespace Binary
 
         void write ( std::ostream& os ) const;
         
-        operator ByteType();
+        operator ByteType() const noexcept;
         bool operator== ( const Byte& rhs ) const noexcept;
         
     private:

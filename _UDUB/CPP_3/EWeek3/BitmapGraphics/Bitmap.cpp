@@ -6,7 +6,10 @@
 //  Copyright © 2018 Clayton Wong. All rights reserved.
 //
 
+#include "DoubleWord.hpp"
+#include "Color.hpp"
 #include "Bitmap.hpp"
+
 
 namespace BitmapGraphics
 {
@@ -46,9 +49,9 @@ namespace BitmapGraphics
         return myScanLines.end();
     }
 
-    void Bitmap::write ( std::ostream& os )
+    void Bitmap::write ( std::ostream& os ) const
     {
-        TODO -- perform each scanLine writing here and ensure padding is performed!!!
+        int paddingSize = ( Color::BYTE_COUNT * myWidth ) % Binary::DoubleWord::BYTE_COUNT;
     
         if ( ! os )
         {

@@ -19,6 +19,8 @@ namespace Binary
     {
     public:
         
+        static constexpr int BYTE_COUNT = 4;
+        
         static DoubleWord readAnyEndian ( std::istream& is );
         static DoubleWord readLittleEndian ( std::istream& is );
         static DoubleWord readBigEndian ( std::istream& is );

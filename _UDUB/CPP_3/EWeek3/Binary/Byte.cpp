@@ -47,7 +47,7 @@ namespace Binary
         }
     }
     
-    Byte::operator ByteType()
+    Byte::operator ByteType() const noexcept
     {
         return myValue;
     }

@@ -95,9 +95,32 @@ namespace BitmapGraphics
         return myFileSize;
     }
     
-    void WindowsBitmapHeader::write ( std::ostream& os )
+    void WindowsBitmapHeader::write ( std::ostream& os ) const
     {
         writeFileHeader( os );
         writeInfoHeader( os );
+    }
+    
+    void WindowsBitmapHeader::writeFileHeader ( std::ostream& os ) const
+    {
+        firstIdentifier.write( os );
+        secondIdentifier.write( os );
+        myFileSize.write( os );
+        reserved.write( os );
+        rawImageOffset.write( os );
+    }
+    void WindowsBitmapHeader::writeInfoHeader ( std::ostream& os ) const
+    {
+        infoHeaderSize.write( os );
+        myWidth.write( os );
+        myHeight.write( os );
+        colorPlanes.write( os );
+        colorDepth.write( os );
+        compressionMethod.write( os );
+        myImageSize.write( os );
+        horizontalPixelsPerMeter.write( os );
+        verticalPixelsPerMeter.write( os );
+        numberOfColors.write( os );
+        numberOfImportantColors.write( os );
     }
 }
