@@ -17,7 +17,8 @@ namespace BitmapGraphics
     myHeight{ height }
     {
         int scanLineSize = Color::BYTE_COUNT * myWidth;
-        myPaddingSize = ( scanLineSize % 4 ) == 0 ? 0 : 4 - ( scanLineSize % 4 );
+        int align = Binary::DoubleWord::BYTE_COUNT;
+        myPaddingSize = ( align - ( scanLineSize % align ) ) % align;
     
         for ( int i = 0;  i < myHeight;  ++i )
         {
