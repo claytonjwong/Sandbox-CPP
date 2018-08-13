@@ -24,7 +24,7 @@ namespace Binary
         }
         else
         {
-            return {};
+            throw std::runtime_error{ "unable to read Byte from istream" };
         }
     }
         
@@ -44,7 +44,7 @@ namespace Binary
         
         if ( !(os) )
         {
-            throw std::runtime_error{ "unable to write Byte to output stream" };
+            throw std::runtime_error{ "unable to write Byte to ostream" };
         }
     }
     
@@ -56,5 +56,11 @@ namespace Binary
     bool Byte::operator== ( const Byte& rhs ) const noexcept
     {
         return myValue == rhs.myValue;
+    }
+    
+    std::ostream& operator<< ( std::ostream& os, const Byte& rhs )
+    {
+        rhs.write( os );
+        return os;
     }
 }

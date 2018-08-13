@@ -1,4 +1,3 @@
-
 #include "TestHarness.h"
 #include "Bitmap.hpp"
 #include "WindowsBitmapHeader.hpp"

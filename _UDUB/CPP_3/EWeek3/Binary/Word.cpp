@@ -60,7 +60,8 @@ namespace Binary
     {
     }
     
-    Word::Word ( const Byte& first, const Byte& second )
+    Word::Word ( const Byte& first, const Byte& second )  :
+    myValue{ 0 }
     {
         myValue =
             first.getValue()  << ( 1 * Byte::BIT_COUNT ) |
@@ -74,7 +75,8 @@ namespace Binary
     
     void Word::write ( std::ostream& os, bool forceBigEndian ) const
     {
-        Binary::ByteType allBitsSet = static_cast<Binary::ByteType>(  1 <<  ( Byte::BIT_COUNT + 1 )  ) - 1;
+        Binary::ByteType allBitsSet =
+            static_cast<Binary::ByteType>(  (1 <<  ( Byte::BIT_COUNT + 1 ))  - 1  );
         Byte mask{ allBitsSet };
         Byte first =  ( myValue & mask << ( 1 * Byte::BIT_COUNT ) )  >> ( 1 * Byte::BIT_COUNT );
         Byte second = ( myValue & mask << ( 0 * Byte::BIT_COUNT ) )  >> ( 0 * Byte::BIT_COUNT );

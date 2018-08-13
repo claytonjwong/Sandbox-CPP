@@ -43,4 +43,6 @@ namespace Binary
         ByteType myValue{ 0 };
         
     };
+    
+    std::ostream& operator<< ( std::ostream& os, const Byte& rhs );
 }

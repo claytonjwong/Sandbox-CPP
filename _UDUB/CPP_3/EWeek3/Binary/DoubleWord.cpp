@@ -74,7 +74,8 @@ namespace Binary
     }
     
     DoubleWord::DoubleWord ( const Byte& first, const Byte& second,
-                             const Byte& third, const Byte& fourth )
+                             const Byte& third, const Byte& fourth ) :
+    myValue{ 0 }
     {
         myValue =
             first.getValue()  << ( 3 * Byte::BIT_COUNT ) |

@@ -28,9 +28,9 @@ namespace Binary
             uint16_t word;
             uint8_t byte[2];
             
-        } binaryWord{ 0xFF00 };
+        } data{ 0xFF00 };
         
-        return binaryWord.byte[1] == 0x00FF;
+        return data.byte[1] == 0x00FF;
     }
     
     static bool IS__BIG__ENDIAN ()

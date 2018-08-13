@@ -102,10 +102,10 @@ namespace BitmapGraphics
         myVerticalPixelsPerMeter = DoubleWord::readLittleEndian( is );
         
         DoubleWord ignoreValue{ 0 };
-        verifyEquality( static_cast<std::streampos>( 46 ), is.tellg(), "myVerticalPixelsPerMeter position" );
+        verifyEquality( static_cast<std::streampos>( 46 ), is.tellg(), "numberOfColors position" );
         ignoreValue = DoubleWord::readLittleEndian( is ); // numberOfColors
         
-        verifyEquality( static_cast<std::streampos>( 50 ), is.tellg(), "myVerticalPixelsPerMeter position" );
+        verifyEquality( static_cast<std::streampos>( 50 ), is.tellg(), "numberOfImportantColors position" );
         ignoreValue = DoubleWord::readLittleEndian( is ); // numberOfImportantColors
         
         verifyEquality( static_cast<std::streampos>( 54 ), is.tellg(), "end info header" );
