@@ -30,7 +30,7 @@ namespace BitmapGraphics
         static const Binary::Byte secondIdentifier;
         // << myFileSize >>
         static const Binary::DoubleWord reserved;
-        static const Binary::DoubleWord rawImageOffset;
+        // << myRawImageOffset >>
 
         //
         // info header: https://en.wikipedia.org/wiki/BMP_file_format#DIB_header_(bitmap_information_header)
@@ -71,8 +71,10 @@ namespace BitmapGraphics
     private:
         
         Binary::DoubleWord myFileSize{ 0 };
+        Binary::DoubleWord myRawImageOffset{ 0 };
         Binary::DoubleWord myWidth{ 0 };
         Binary::DoubleWord myHeight{ 0 };
+        Binary::DoubleWord myCompressionMethod{ 0 };
         Binary::DoubleWord myImageSize{ 0 };
         Binary::DoubleWord myHorizontalPixelsPerMeter{ 0 };
         Binary::DoubleWord myVerticalPixelsPerMeter{ 0 };

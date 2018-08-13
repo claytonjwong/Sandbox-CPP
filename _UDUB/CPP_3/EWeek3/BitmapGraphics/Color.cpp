@@ -13,6 +13,9 @@ using namespace std;
 
 namespace BitmapGraphics
 {
+    //
+    // Note: significant read/write order: ( blue, green, red )
+    //
     Color Color::read ( std::istream& is ) noexcept
     {
         Component blue = Binary::Byte::read( is );
@@ -43,6 +46,9 @@ namespace BitmapGraphics
         return myRed;
     }
     
+    //
+    // Note: significant read/write order: ( blue, green, red )
+    //
     void Color::write ( std::ostream& os ) const
     {
         myBlue.write( os );

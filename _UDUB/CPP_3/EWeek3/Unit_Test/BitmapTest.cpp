@@ -107,7 +107,6 @@ TEST(BitmapReadWrite2,Bitmap)
     bitmap.write( fout );
 }
 
-
 TEST(BinaryOstreamIterator, Bitmap)
 {
     // Read in the bitmap
