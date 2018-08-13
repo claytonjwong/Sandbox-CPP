@@ -92,6 +92,21 @@ TEST(BitmapReadWrite, Bitmap)
             CHECK(false);
 }
 
+
+TEST(BitmapReadWrite2,Bitmap)
+{
+    std::ifstream fin{ "RGB.bmp", std::ios::binary };
+    CHECK( fin.is_open() );
+
+    WindowsBitmapHeader header{ fin };
+    Bitmap bitmap{ header.getBitmapWidth(), header.getBitmapHeight(), fin };
+    
+    std::ofstream fout{ "RGB_2.bmp", std::ios::binary };
+    CHECK( fout.is_open() );
+    header.write( fout );
+    bitmap.write( fout );
+}
+
 /*
 TEST(BinaryOstreamIterator, Bitmap)
 {

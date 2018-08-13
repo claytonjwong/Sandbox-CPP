@@ -10,17 +10,16 @@
 #include "Color.hpp"
 #include "Bitmap.hpp"
 
-
 namespace BitmapGraphics
 {
     Bitmap::Bitmap ( int width, int height, std::istream& is ) :
     myWidth{ width },
     myHeight{ height }
     {
-        for ( int i = 0;  i < height;  ++i )
+        for ( int i = 0;  i < myHeight;  ++i )
         {
             ScanLine scanLine;
-            for ( int j = 0;  j < width;  ++j )
+            for ( int j = 0;  j < myWidth;  ++j )
             {
                 auto color = Color::read( is );
                 scanLine.emplace_back(  std::move( color )  );
@@ -48,7 +47,7 @@ namespace BitmapGraphics
     {
         return myScanLines.end();
     }
-
+    
     void Bitmap::write ( std::ostream& os ) const
     {
         for ( const auto& scanLine: myScanLines )

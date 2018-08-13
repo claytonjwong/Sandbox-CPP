@@ -32,8 +32,8 @@ namespace BitmapGraphics
     const Word WindowsBitmapHeader::colorDepth{ 24 };
     const DoubleWord WindowsBitmapHeader::compressionMethod{ 0 };
     // << myImageSize >>
-    const Binary::DoubleWord WindowsBitmapHeader::horizontalPixelsPerMeter{ 0 };
-    const Binary::DoubleWord WindowsBitmapHeader::verticalPixelsPerMeter{ 0 };
+    // << myHorizontalPixelsPerMeter >>
+    // << myVerticalPixelsPerMeter >>
     const Binary::DoubleWord WindowsBitmapHeader::numberOfColors{ 0 };
     const Binary::DoubleWord WindowsBitmapHeader::numberOfImportantColors{ 0 };
 
@@ -51,11 +51,20 @@ namespace BitmapGraphics
     //
     void WindowsBitmapHeader::readFileHeader ( std::istream& is )
     {
-        verifyEquality( firstIdentifier, Byte::read( is ), "myFirstIdentifier" );
-        verifyEquality( secondIdentifier, Byte::read( is ), "mySecondIdentifier");
+        verifyEquality( static_cast<std::streampos>( 0 ), is.tellg(), "myFirstIdentifier position" );
+        verifyEquality( firstIdentifier, Byte::read( is ), "myFirstIdentifier value" );
+
+        verifyEquality( static_cast<std::streampos>( 1 ), is.tellg(), "mySecondIdentifier position" );
+        verifyEquality( secondIdentifier, Byte::read( is ), "mySecondIdentifier value");
+        
+        verifyEquality( static_cast<std::streampos>( 2 ), is.tellg(), "myFileSize position" );
         myFileSize = DoubleWord::readLittleEndian( is );
-        verifyEquality( reserved, DoubleWord::readLittleEndian( is ), "reserved" );
-        verifyEquality( rawImageOffset, DoubleWord::readLittleEndian( is ), "rawImageOffset" );
+        
+        verifyEquality( static_cast<std::streampos>( 6 ), is.tellg(), "reserved position" );
+        verifyEquality( reserved, DoubleWord::readLittleEndian( is ), "reserved value" );
+        
+        verifyEquality( static_cast<std::streampos>( 10 ), is.tellg(), "rawImageOffset position" );
+        verifyEquality( rawImageOffset, DoubleWord::readLittleEndian( is ), "rawImageOffset value" );
     }
     
     //
@@ -65,19 +74,41 @@ namespace BitmapGraphics
     //
     void WindowsBitmapHeader::readInfoHeader ( std::istream& is )
     {
-        verifyEquality( infoHeaderSize, DoubleWord::readLittleEndian( is ), "infoHeaderSize" );
+        verifyEquality( static_cast<std::streampos>( 14 ), is.tellg(), "infoHeaderSize position" );
+        verifyEquality( infoHeaderSize, DoubleWord::readLittleEndian( is ), "infoHeaderSize value" );
+        
+        verifyEquality( static_cast<std::streampos>( 18 ), is.tellg(), "myWidth position" );
         myWidth = DoubleWord::readLittleEndian( is );
+        
+        verifyEquality( static_cast<std::streampos>( 22 ), is.tellg(), "myHeight position" );
         myHeight = DoubleWord::readLittleEndian( is );
-        verifyEquality( colorPlanes, Word::readLittleEndian( is ), "colorPlanes" );
-        verifyEquality( colorDepth, Word::readLittleEndian( is ), "colorDepth" );
-        verifyEquality( compressionMethod, DoubleWord::readLittleEndian( is ), "compressionMethod" );
+        
+        verifyEquality( static_cast<std::streampos>( 26 ), is.tellg(), "colorPlanes position" );
+        verifyEquality( colorPlanes, Word::readLittleEndian( is ), "colorPlanes value" );
+        
+        verifyEquality( static_cast<std::streampos>( 28 ), is.tellg(), "colorDepth position" );
+        verifyEquality( colorDepth, Word::readLittleEndian( is ), "colorDepth value" );
+        
+        verifyEquality( static_cast<std::streampos>( 30 ), is.tellg(), "compressionMethod position" );
+        verifyEquality( compressionMethod, DoubleWord::readLittleEndian( is ), "compressionMethod value" );
+        
+        verifyEquality( static_cast<std::streampos>( 34 ), is.tellg(), "myImageSize position" );
         myImageSize = DoubleWord::readLittleEndian( is );
         
+        verifyEquality( static_cast<std::streampos>( 38 ), is.tellg(), "myHorizontalPixelsPerMeter position" );
+        myHorizontalPixelsPerMeter = DoubleWord::readLittleEndian( is );
+        
+        verifyEquality( static_cast<std::streampos>( 42 ), is.tellg(), "myVerticalPixelsPerMeter position" );
+        myVerticalPixelsPerMeter = DoubleWord::readLittleEndian( is );
+        
         DoubleWord ignoreValue{ 0 };
-        ignoreValue = DoubleWord::readLittleEndian( is ); // horizontalPixelsPerMeter
-        ignoreValue = DoubleWord::readLittleEndian( is ); // verticalPixelsPerMeter
+        verifyEquality( static_cast<std::streampos>( 46 ), is.tellg(), "myVerticalPixelsPerMeter position" );
         ignoreValue = DoubleWord::readLittleEndian( is ); // numberOfColors
+        
+        verifyEquality( static_cast<std::streampos>( 50 ), is.tellg(), "myVerticalPixelsPerMeter position" );
         ignoreValue = DoubleWord::readLittleEndian( is ); // numberOfImportantColors
+        
+        verifyEquality( static_cast<std::streampos>( 54 ), is.tellg(), "end info header" );
     }
     
     int WindowsBitmapHeader::getBitmapWidth() const noexcept
@@ -118,8 +149,8 @@ namespace BitmapGraphics
         colorDepth.write( os );
         compressionMethod.write( os );
         myImageSize.write( os );
-        horizontalPixelsPerMeter.write( os );
-        verticalPixelsPerMeter.write( os );
+        myHorizontalPixelsPerMeter.write( os );
+        myVerticalPixelsPerMeter.write( os );
         numberOfColors.write( os );
         numberOfImportantColors.write( os );
     }

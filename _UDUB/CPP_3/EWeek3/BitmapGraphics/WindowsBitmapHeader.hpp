@@ -44,8 +44,8 @@ namespace BitmapGraphics
         static const Binary::Word colorDepth;
         static const Binary::DoubleWord compressionMethod;
         // << myImageSize >>
-        static const Binary::DoubleWord horizontalPixelsPerMeter;
-        static const Binary::DoubleWord verticalPixelsPerMeter;
+        // << myHorizontalPixelsPerMeter >>
+        // << myVerticalPixelsPerMeter >>
         static const Binary::DoubleWord numberOfColors;
         static const Binary::DoubleWord numberOfImportantColors;
 
@@ -74,5 +74,7 @@ namespace BitmapGraphics
         Binary::DoubleWord myWidth{ 0 };
         Binary::DoubleWord myHeight{ 0 };
         Binary::DoubleWord myImageSize{ 0 };
+        Binary::DoubleWord myHorizontalPixelsPerMeter{ 0 };
+        Binary::DoubleWord myVerticalPixelsPerMeter{ 0 };
     };
 }

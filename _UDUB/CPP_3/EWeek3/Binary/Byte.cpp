@@ -7,19 +7,20 @@
 //
 
 #include "Byte.hpp"
-#include <iostream>
 
 namespace Binary
 {
     Byte Byte::read ( std::istream& is ) noexcept
     {
-        Byte value;
+        Byte byte;
         
-        is >> value.myValue;
+        char buffer;
+        is.get( buffer );
+        byte.myValue = static_cast<ByteType>( buffer );
         
         if ( is )
         {
-            return value;
+            return byte;
         }
         else
         {
