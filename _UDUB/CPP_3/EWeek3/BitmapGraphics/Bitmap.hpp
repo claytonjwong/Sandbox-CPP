@@ -39,6 +39,7 @@ namespace BitmapGraphics
         
         int getWidth() const noexcept;
         int getHeight() const noexcept;
+        int getNumberOfPadBytes() const noexcept;
         
         ScanLineIterator begin() const noexcept;
         ScanLineIterator end() const noexcept;

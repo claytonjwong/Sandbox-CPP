@@ -36,6 +36,11 @@ namespace BitmapGraphics
     {
         return myHeight;
     }
+    
+    int Bitmap::getNumberOfPadBytes() const noexcept
+    {
+        return myPaddingSize;
+    }
 
     Bitmap::ScanLineIterator Bitmap::begin() const noexcept
     {

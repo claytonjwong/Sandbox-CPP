@@ -1,11 +1,12 @@
 #include "TestHarness.h"
 #include "Bitmap.hpp"
 #include "WindowsBitmapHeader.hpp"
-//#include "binary_ostream_iterator.h"
+#include "binary_ostream_iterator.hpp"
 #include <fstream>
 #include <vector>
 
 using namespace BitmapGraphics;
+using namespace Binary;
 
 TEST(BitmapSizeTest, Bitmap)
 {
@@ -106,7 +107,7 @@ TEST(BitmapReadWrite2,Bitmap)
     bitmap.write( fout );
 }
 
-/*
+
 TEST(BinaryOstreamIterator, Bitmap)
 {
     // Read in the bitmap
@@ -119,7 +120,7 @@ TEST(BinaryOstreamIterator, Bitmap)
 
     // Write out the bitmap to a different file with the binary_ostream_iterator
     
-    std::ofstream outputStream{"output2.bmp", std::ios::binary};
+    std::ofstream outputStream{"output69.bmp", std::ios::binary};
     CHECK(outputStream.is_open());
     
     bitmapHeader.write(outputStream);
@@ -127,13 +128,14 @@ TEST(BinaryOstreamIterator, Bitmap)
     for (auto& scanLine : bitmap)
     {
         std::copy(scanLine.begin(), scanLine.end(), binary_ostream_iterator<Color>(outputStream));
+//        std::copy(scanLine.begin(), scanLine.end(), std::ostream_iterator<Color>(outputStream));
     }
     
     outputStream.close();
 
     // Read that one back in and check sizes
     
-    std::ifstream bitmapStream2{"output2.bmp", std::ios::binary};
+    std::ifstream bitmapStream2{"output69.bmp", std::ios::binary};
     CHECK(bitmapStream2.is_open());
     
     WindowsBitmapHeader bitmapHeader2{bitmapStream2};
@@ -161,7 +163,7 @@ TEST(BitmapSizeTest_101, Bitmap)
     CHECK_EQUAL(101, bitmap.getWidth());
     CHECK_EQUAL(101, bitmap.getHeight());
 }
-*/
+
 
 TEST(BitmapScanLinesTest_101, Bitmap)
 {
@@ -229,7 +231,6 @@ TEST(BitmapReadWrite_101, Bitmap)
             CHECK(false);
 }
 
-/*
 TEST(BinaryOstreamIterator_101, Bitmap)
 {
     // Read in the bitmap
@@ -275,4 +276,4 @@ TEST(BinaryOstreamIterator_101, Bitmap)
     }
     CHECK_EQUAL(101, numberOfScanLines);
 }
-*/
+
