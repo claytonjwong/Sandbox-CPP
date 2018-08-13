@@ -12,30 +12,33 @@
 
 namespace Binary
 {
-    template <class T, class charT=char, class traits=std::char_traits<charT> >
+    template <  class T, class charT = char, class traits = std::char_traits < charT >  >
     class binary_ostream_iterator :
-    public std::iterator<std::output_iterator_tag, void, void, void, void>
+    public std::iterator < std::output_iterator_tag, void, void, void, void >
     {
     public:
     
       using ostream_type = std::basic_ostream<charT,traits>;
-      binary_ostream_iterator(ostream_type& s) :
-      out_stream{ &s }
+      using self_type = binary_ostream_iterator<T,charT,traits>;
+      
+      binary_ostream_iterator ( ostream_type& stream ) :
+      myStream{ &stream }
       {
       }
 
-      binary_ostream_iterator<T,charT,traits>& operator= (const T& value) {
-        *out_stream << value;
+      self_type& operator= (const T& value)
+      {
+        *myStream << value;
         return *this;
       }
 
-      binary_ostream_iterator<T,charT,traits>& operator*() { return *this; }
-      binary_ostream_iterator<T,charT,traits>& operator++() { return *this; }
-      binary_ostream_iterator<T,charT,traits>& operator++(int) { return *this; }
+      self_type& operator* () { return *this; }
+      self_type& operator++ () { return *this; }
+      self_type& operator++ (int) { return *this; }
 
     private:
     
-      std::basic_ostream<charT,traits>* out_stream;
+      ostream_type* myStream;
 
     };
 }
