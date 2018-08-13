@@ -29,7 +29,7 @@ namespace BitmapGraphics
             }
             myScanLines.emplace_back(  std::move( scanLine )  );
             
-            for ( int i = 0;  i < myPaddingSize; ++i)
+            for ( int p = 0;  p < myPaddingSize; ++p)
             {
                 is.ignore();
             }
@@ -66,7 +66,7 @@ namespace BitmapGraphics
             }
             
             Binary::Byte padding;
-            for ( int i = 0; i < myPaddingSize; ++i )
+            for ( int p = 0; p < myPaddingSize; ++p )
             {
                 padding.write( os );
             }
