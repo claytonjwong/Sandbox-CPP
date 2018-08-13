@@ -62,5 +62,5 @@ namespace BitmapGraphics
         int myPaddingSize{ 0 };
     };
     
-    std::ostream& operator<< ( std::ostream& os, const Bitmap& bitmap );
+    std::ostream& operator<< ( std::ostream& os, const Bitmap& rhs );
 }

@@ -100,9 +100,9 @@ namespace BitmapGraphics
         }
     }
     
-    std::ostream& operator<< ( std::ostream& os, const Bitmap& bitmap )
+    std::ostream& operator<< ( std::ostream& os, const Bitmap& rhs )
     {
-        bitmap.write( os );
+        rhs.write( os );
         return os;
     }
 }

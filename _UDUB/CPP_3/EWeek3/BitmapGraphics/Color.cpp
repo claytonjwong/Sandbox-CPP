@@ -61,13 +61,7 @@ namespace BitmapGraphics
     {
         return ! ( *this == rhs );
     }
-    
-    std::ostream& operator<< ( std::ostream& os, const Color::Component& rhs ) noexcept
-    {
-        rhs.write( os );
-        return os;
-    }
-    
+        
     std::ostream& operator<< ( std::ostream& os, const Color& rhs ) noexcept
     {
         rhs.write( os );

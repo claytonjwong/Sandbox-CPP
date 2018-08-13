@@ -48,6 +48,5 @@ namespace BitmapGraphics
         Component myBlue;
     };
     
-    std::ostream& operator<< ( std::ostream& os, const Color::Component& rhs ) noexcept;
     std::ostream& operator<< ( std::ostream& os, const Color& rhs ) noexcept;
 }
