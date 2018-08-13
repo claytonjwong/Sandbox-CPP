@@ -44,6 +44,14 @@ namespace BitmapGraphics
         ScanLineIterator end() const noexcept;
     
         void write ( std::ostream& os ) const;
+        
+    private:
+    
+        void readScanLine ( std::istream& is );
+        void writeScanLine ( std::ostream& os, const ScanLine& scanLine ) const;
+    
+        void readPadding ( std::istream& is ) const noexcept;
+        void writePadding ( std::ostream& os ) const noexcept;
     
     private:
         
@@ -52,4 +60,6 @@ namespace BitmapGraphics
         ScanLineCollection myScanLines;
         int myPaddingSize{ 0 };
     };
+    
+    std::ostream& operator<< ( std::ostream& os, const Bitmap& bitmap );
 }
