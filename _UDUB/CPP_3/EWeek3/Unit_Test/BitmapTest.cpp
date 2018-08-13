@@ -162,6 +162,7 @@ TEST(BitmapSizeTest_101, Bitmap)
     CHECK_EQUAL(101, bitmap.getWidth());
     CHECK_EQUAL(101, bitmap.getHeight());
 }
+*/
 
 TEST(BitmapScanLinesTest_101, Bitmap)
 {
@@ -214,9 +215,22 @@ TEST(BitmapReadWrite_101, Bitmap)
         ++numberOfScanLines;
     }
     CHECK_EQUAL(101, numberOfScanLines);
+    
+    auto scanLine1=*bitmap.begin(),scanLine2=*bitmap2.begin();
+    
+    std::vector<Color> v1,v2;
+    for (auto& color: scanLine1)
+        v1.push_back(color);
+    
+    for (auto& color: scanLine2)
+        v2.push_back(color);
+
+    for ( int i=0; i < scanLine1.size(); ++i)
+        if ( v1[i] != v2[i] )
+            CHECK(false);
 }
 
-
+/*
 TEST(BinaryOstreamIterator_101, Bitmap)
 {
     // Read in the bitmap

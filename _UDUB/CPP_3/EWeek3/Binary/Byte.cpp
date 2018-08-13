@@ -40,7 +40,7 @@ namespace Binary
     
     void Byte::write ( std::ostream& os ) const
     {
-        os << myValue;
+        os.put( myValue );
         
         if ( !(os) )
         {

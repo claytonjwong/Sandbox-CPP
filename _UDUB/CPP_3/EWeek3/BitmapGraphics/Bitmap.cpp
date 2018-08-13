@@ -16,6 +16,9 @@ namespace BitmapGraphics
     myWidth{ width },
     myHeight{ height }
     {
+        int scanLineSize = Color::BYTE_COUNT * myWidth;
+        myPaddingSize = ( scanLineSize % 4 ) == 0 ? 0 : 4 - ( scanLineSize % 4 );
+    
         for ( int i = 0;  i < myHeight;  ++i )
         {
             ScanLine scanLine;
@@ -25,6 +28,11 @@ namespace BitmapGraphics
                 scanLine.emplace_back(  std::move( color )  );
             }
             myScanLines.emplace_back(  std::move( scanLine )  );
+            
+            for ( int i = 0;  i < myPaddingSize; ++i)
+            {
+                is.ignore();
+            }
         }
     }
     
@@ -54,19 +62,14 @@ namespace BitmapGraphics
         {
             for ( const auto& color: scanLine )
             {
-                os << color;
+                color.write( os );
             }
-            int paddingSize = ( Color::BYTE_COUNT * myWidth ) % Binary::DoubleWord::BYTE_COUNT;
+            
             Binary::Byte padding;
-            for ( int i = 0; i < paddingSize; ++i )
+            for ( int i = 0; i < myPaddingSize; ++i )
             {
-                os << padding;
+                padding.write( os );
             }
-        }
-    
-        if ( ! os )
-        {
-            throw std::runtime_error{ "unable to write to ostream" };
         }
     }
 }

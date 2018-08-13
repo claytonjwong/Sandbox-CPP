@@ -50,5 +50,6 @@ namespace BitmapGraphics
         int myWidth{ 0 };
         int myHeight{ 0 };
         ScanLineCollection myScanLines;
+        int myPaddingSize{ 0 };
     };
 }
