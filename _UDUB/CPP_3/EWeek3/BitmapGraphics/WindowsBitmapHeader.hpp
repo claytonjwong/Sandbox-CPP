@@ -54,6 +54,7 @@ namespace BitmapGraphics
         WindowsBitmapHeader() = default;
         WindowsBitmapHeader ( std::istream& is );
         
+        void read ( std::istream& is );
         void readFileHeader ( std::istream& is );
         void readInfoHeader ( std::istream& is );
         

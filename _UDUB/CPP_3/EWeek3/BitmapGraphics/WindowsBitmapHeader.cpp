@@ -40,12 +40,17 @@ namespace BitmapGraphics
 
     WindowsBitmapHeader::WindowsBitmapHeader ( std::istream& is )
     {
+        read( is );
+    }
+    
+    void WindowsBitmapHeader::read ( std::istream& is )
+    {
         readFileHeader( is );
         readInfoHeader( is );
-        
+    
         if ( is.tellg() != myRawImageOffset ) // skip past "other" headers
         {
-            is.seekg( static_cast<std::streampos>( myRawImageOffset ) );
+            is.seekg(  static_cast<std::streampos>( myRawImageOffset )  );
         }
     }
     
@@ -63,13 +68,13 @@ namespace BitmapGraphics
         verifyEquality( secondIdentifier, Byte::read( is ), "mySecondIdentifier value");
         
         verifyEquality( static_cast<std::streampos>( 2 ), is.tellg(), "myFileSize position" );
-        myFileSize = DoubleWord::readLittleEndian( is );
+        myFileSize = DoubleWord::read( is );
         
         verifyEquality( static_cast<std::streampos>( 6 ), is.tellg(), "reserved position" );
-        verifyEquality( reserved, DoubleWord::readLittleEndian( is ), "reserved value" );
+        verifyEquality( reserved, DoubleWord::read( is ), "reserved value" );
         
         verifyEquality( static_cast<std::streampos>( 10 ), is.tellg(), "rawImageOffset position" );
-        myRawImageOffset = DoubleWord::readLittleEndian( is );
+        myRawImageOffset = DoubleWord::read( is );
     }
     
     //
@@ -80,37 +85,37 @@ namespace BitmapGraphics
     void WindowsBitmapHeader::readInfoHeader ( std::istream& is )
     {
         verifyEquality( static_cast<std::streampos>( 14 ), is.tellg(), "infoHeaderSize position" );
-        verifyEquality( infoHeaderSize, DoubleWord::readLittleEndian( is ), "infoHeaderSize value" );
+        verifyEquality( infoHeaderSize, DoubleWord::read( is ), "infoHeaderSize value" );
         
         verifyEquality( static_cast<std::streampos>( 18 ), is.tellg(), "myWidth position" );
-        myWidth = DoubleWord::readLittleEndian( is );
+        myWidth = DoubleWord::read( is );
         
         verifyEquality( static_cast<std::streampos>( 22 ), is.tellg(), "myHeight position" );
-        myHeight = DoubleWord::readLittleEndian( is );
+        myHeight = DoubleWord::read( is );
         
         verifyEquality( static_cast<std::streampos>( 26 ), is.tellg(), "colorPlanes position" );
-        verifyEquality( colorPlanes, Word::readLittleEndian( is ), "colorPlanes value" );
+        verifyEquality( colorPlanes, Word::read( is ), "colorPlanes value" );
         
         verifyEquality( static_cast<std::streampos>( 28 ), is.tellg(), "colorDepth position" );
-        Word::readLittleEndian( is ); // ignore colorDepth value
+        Word::read( is ); // ignore colorDepth value
         
         verifyEquality( static_cast<std::streampos>( 30 ), is.tellg(), "compressionMethod position" );
-        myCompressionMethod = DoubleWord::readLittleEndian( is );
+        myCompressionMethod = DoubleWord::read( is );
         
         verifyEquality( static_cast<std::streampos>( 34 ), is.tellg(), "myImageSize position" );
-        myImageSize = DoubleWord::readLittleEndian( is );
+        myImageSize = DoubleWord::read( is );
         
         verifyEquality( static_cast<std::streampos>( 38 ), is.tellg(), "myHorizontalPixelsPerMeter position" );
-        myHorizontalPixelsPerMeter = DoubleWord::readLittleEndian( is );
+        myHorizontalPixelsPerMeter = DoubleWord::read( is );
         
         verifyEquality( static_cast<std::streampos>( 42 ), is.tellg(), "myVerticalPixelsPerMeter position" );
-        myVerticalPixelsPerMeter = DoubleWord::readLittleEndian( is );
+        myVerticalPixelsPerMeter = DoubleWord::read( is );
         
         verifyEquality( static_cast<std::streampos>( 46 ), is.tellg(), "numberOfColors position" );
-        DoubleWord::readLittleEndian( is ); // ignore numberOfColors
+        DoubleWord::read( is ); // ignore numberOfColors
         
         verifyEquality( static_cast<std::streampos>( 50 ), is.tellg(), "numberOfImportantColors position" );
-        DoubleWord::readLittleEndian( is ); // ignore numberOfImportantColors
+        DoubleWord::read( is ); // ignore numberOfImportantColors
         
         verifyEquality( static_cast<std::streampos>( 54 ), is.tellg(), "end info header" );
     }
