@@ -11,12 +11,12 @@
 
 namespace Binary
 {
-    Word Word::readProperEndian ( std::istream& is )
+    Word Word::read ( std::istream& is, bool forceBigEndian )
     {
         Byte first, second;
         read( is, first, second );
         
-        if ( Binary::IS__LITTLE__ENDIAN() )
+        if ( !forceBigEndian && Binary::IS__LITTLE__ENDIAN() )
         {
             return Word{ second, first };
         }

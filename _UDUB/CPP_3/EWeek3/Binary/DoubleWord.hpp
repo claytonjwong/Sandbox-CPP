@@ -21,7 +21,7 @@ namespace Binary
         
         static constexpr int BYTE_COUNT = 4;
         
-        static DoubleWord readProperEndian ( std::istream& is );
+        static DoubleWord read ( std::istream& is, bool forceBigEndian=false );
         static DoubleWord readLittleEndian ( std::istream& is );
         static DoubleWord readBigEndian ( std::istream& is );
         

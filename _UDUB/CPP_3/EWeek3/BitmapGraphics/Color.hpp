@@ -26,7 +26,6 @@ namespace BitmapGraphics
         Color() = default;
         Color ( Component red, Component green, Component blue );
         
-        
         Color ( const Color & src ) = default;
         Color ( Color&& src ) = default;
         
