@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include "Common.hpp"
 #include "Byte.hpp"
 #include <sstream>
 
@@ -19,9 +20,9 @@ namespace Binary
     {
     public:
     
-        static constexpr int BYTE_COUNT = 3;
+        static constexpr int BYTE_COUNT = 2;
     
-        static Word read ( std::istream& is, bool forceBigEndian=false );
+        static Word read ( std::istream& is, Endianness forceEndian=Endianness::Dynamic );
         static Word readLittleEndian ( std::istream& is );
         static Word readBigEndian ( std::istream& is );
 
@@ -43,7 +44,7 @@ namespace Binary
         
         WordType getValue() const noexcept;
 
-        void write ( std::ostream& os, bool forceBigEndian=false ) const;
+        void write ( std::ostream& os, Endianness forceEndian=Endianness::Dynamic ) const;
         void writeLittleEndian ( std::ostream& os ) const;
         void writeBigEndian ( std::ostream& os ) const;
         

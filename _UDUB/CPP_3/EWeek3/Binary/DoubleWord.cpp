@@ -11,12 +11,13 @@
 
 namespace Binary
 {
-    DoubleWord DoubleWord::read ( std::istream& is, bool forceBigEndian )
+    DoubleWord DoubleWord::read ( std::istream& is, Endianness forceEndian )
     {
         Byte first, second, third, fourth;
         read ( is, first, second, third, fourth );
         
-        if ( !forceBigEndian && Binary::IS__LITTLE__ENDIAN() )
+        if (  ( forceEndian == Binary::Endianness::Little ) ||
+              ( forceEndian == Binary::Endianness::Dynamic && Binary::IS__LITTLE__ENDIAN() )  )
         {
             return DoubleWord{ fourth, third, second, first };
         }
@@ -28,16 +29,12 @@ namespace Binary
 
     DoubleWord DoubleWord::readLittleEndian ( std::istream& is )
     {
-        Byte first, second, third, fourth;
-        read ( is, first, second, third, fourth );
-        return DoubleWord{ fourth, third, second, first };
+        return read( is, Endianness::Little );
     }
 
     DoubleWord DoubleWord::readBigEndian ( std::istream& is )
     {
-        Byte first, second, third, fourth;
-        read ( is, first, second, third, fourth );
-        return DoubleWord{ first, second, third, fourth };
+        return read( is, Endianness::Big );
     }
     
     void DoubleWord::read ( std::istream& is,
@@ -89,7 +86,7 @@ namespace Binary
         return myValue;
     }
 
-    void DoubleWord::write ( std::ostream& os, bool forceBigEndian ) const
+    void DoubleWord::write ( std::ostream& os, Endianness forceEndian ) const
     {
         Binary::ByteType allBitsSet =
             static_cast<Binary::ByteType>(  (1 << ( Byte::BIT_COUNT + 1 )) - 1  );
@@ -99,7 +96,8 @@ namespace Binary
         Byte third =  ( myValue & mask << ( 1 * Byte::BIT_COUNT ) )  >> ( 1 * Byte::BIT_COUNT );
         Byte fourth = ( myValue & mask << ( 0 * Byte::BIT_COUNT ) )  >> ( 0 * Byte::BIT_COUNT );
 
-        if ( !forceBigEndian && IS__LITTLE__ENDIAN() )
+        if (  ( forceEndian == Binary::Endianness::Little ) ||
+              ( forceEndian == Binary::Endianness::Dynamic && Binary::IS__LITTLE__ENDIAN() )  )
         {
             write( os, fourth, third, second, first );
         }
@@ -111,12 +109,12 @@ namespace Binary
     
     void DoubleWord::writeLittleEndian ( std::ostream& os ) const
     {
-        write( os );
+        write( os, Endianness::Little );
     }
     
     void DoubleWord::writeBigEndian ( std::ostream& os ) const
     {
-        write( os, true );
+        write( os, Endianness::Big );
     }
     
     void DoubleWord::write ( std::ostream& os,

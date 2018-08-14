@@ -20,6 +20,13 @@ namespace Binary
             throw std::runtime_error{ failure };
         }
     }
+    
+    enum class Endianness
+    {
+        Dynamic,
+        Little,
+        Big
+    };
 
     static bool IS__LITTLE__ENDIAN ()
     {

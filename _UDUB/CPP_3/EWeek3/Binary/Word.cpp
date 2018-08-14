@@ -11,12 +11,13 @@
 
 namespace Binary
 {
-    Word Word::read ( std::istream& is, bool forceBigEndian )
+    Word Word::read ( std::istream& is, Endianness forceEndian )
     {
         Byte first, second;
         read( is, first, second );
         
-        if ( !forceBigEndian && Binary::IS__LITTLE__ENDIAN() )
+        if (  ( forceEndian == Binary::Endianness::Little ) ||
+              ( forceEndian == Binary::Endianness::Dynamic && Binary::IS__LITTLE__ENDIAN() )  )
         {
             return Word{ second, first };
         }
@@ -28,16 +29,12 @@ namespace Binary
     
     Word Word::readLittleEndian ( std::istream& is )
     {
-        Byte first, second;
-        read( is, first, second );
-        return Word{ second, first };
+        return read( is, Endianness::Little );
     }
 
     Word Word::readBigEndian ( std::istream& is )
     {
-        Byte first, second;
-        read( is, first, second );
-        return Word{ first, second };
+        return read( is, Endianness::Big );
     }
     
     void Word::read ( std::istream& is, Byte& first, Byte& second )
@@ -73,7 +70,7 @@ namespace Binary
         return myValue;
     }
     
-    void Word::write ( std::ostream& os, bool forceBigEndian ) const
+    void Word::write ( std::ostream& os, Binary::Endianness forceEndian ) const
     {
         Binary::ByteType allBitsSet =
             static_cast<Binary::ByteType>(  (1 <<  ( Byte::BIT_COUNT + 1 ))  - 1  );
@@ -81,7 +78,8 @@ namespace Binary
         Byte first =  ( myValue & mask << ( 1 * Byte::BIT_COUNT ) )  >> ( 1 * Byte::BIT_COUNT );
         Byte second = ( myValue & mask << ( 0 * Byte::BIT_COUNT ) )  >> ( 0 * Byte::BIT_COUNT );
     
-        if ( !forceBigEndian && Binary::IS__LITTLE__ENDIAN() )
+        if (  ( forceEndian == Binary::Endianness::Little ) ||
+              ( forceEndian == Binary::Endianness::Dynamic && Binary::IS__LITTLE__ENDIAN() )  )
         {
             write( os, second, first );
         }
@@ -93,12 +91,12 @@ namespace Binary
     
     void Word::writeLittleEndian ( std::ostream& os ) const
     {
-        write( os );
+        write( os, Binary::Endianness::Little );
     }
     
     void Word::writeBigEndian ( std::ostream& os ) const
     {
-        write( os, true );
+        write( os, Binary::Endianness::Big );
     }
     
     void Word::write( std::ostream& os, const Byte& first, const Byte& second )

@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include "Common.hpp"
 #include "Byte.hpp"
 #include <sstream>
 
@@ -21,7 +22,7 @@ namespace Binary
         
         static constexpr int BYTE_COUNT = 4;
         
-        static DoubleWord read ( std::istream& is, bool forceBigEndian=false );
+        static DoubleWord read ( std::istream& is, Endianness forceEndian=Endianness::Dynamic );
         static DoubleWord readLittleEndian ( std::istream& is );
         static DoubleWord readBigEndian ( std::istream& is );
         
@@ -46,7 +47,7 @@ namespace Binary
         
         DoubleWordType getValue() const noexcept;
         
-        void write ( std::ostream& os, bool forceBigEndian=false ) const;
+        void write ( std::ostream& os, Endianness forceEndian=Endianness::Dynamic ) const;
         void writeLittleEndian ( std::ostream& os ) const;
         void writeBigEndian ( std::ostream& os ) const;
     

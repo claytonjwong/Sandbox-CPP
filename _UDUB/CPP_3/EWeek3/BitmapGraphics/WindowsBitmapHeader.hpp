@@ -63,9 +63,6 @@ namespace BitmapGraphics
         int getFileSize() const noexcept;
         
         void write ( std::ostream& os ) const;
-        
-    private:
-    
         void writeFileHeader ( std::ostream& os ) const;
         void writeInfoHeader ( std::ostream& os ) const;
         
