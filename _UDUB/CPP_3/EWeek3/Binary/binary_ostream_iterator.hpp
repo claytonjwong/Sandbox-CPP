@@ -12,14 +12,14 @@
 
 namespace Binary
 {
-    template <  class T, class charT = char, class traits = std::char_traits < charT >  >
+    template< class T, class charT = char, class traits = std::char_traits<charT> >
     class binary_ostream_iterator :
-    public std::iterator < std::output_iterator_tag, void, void, void, void >
+    public std::iterator< std::output_iterator_tag, void, void, void, void >
     {
     public:
     
-      using ostream_type = std::basic_ostream<charT,traits>;
-      using self_type = binary_ostream_iterator<T,charT,traits>;
+      using ostream_type = std::basic_ostream< charT, traits >;
+      using self_type = binary_ostream_iterator< T, charT, traits >;
       
       binary_ostream_iterator ( ostream_type& stream ) :
       myStream{ &stream }

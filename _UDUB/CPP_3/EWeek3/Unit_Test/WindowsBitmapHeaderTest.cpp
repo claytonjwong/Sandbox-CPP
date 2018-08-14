@@ -91,3 +91,15 @@ TEST(constructHeaderFromStream_101, WindowsBitmapHeader)
     CHECK_EQUAL(101, bitmapHeader.getBitmapWidth());
 }
 
+TEST(constructHeaderFromRGB, WindowsBitmapHeader)
+{
+    std::ifstream bitmapStream{"RGB.bmp", std::ios::binary};
+    CHECK(bitmapStream.is_open());
+    
+    WindowsBitmapHeader bitmapHeader{bitmapStream};
+    
+    CHECK_EQUAL(230454, bitmapHeader.getFileSize());
+    CHECK_EQUAL(320, bitmapHeader.getBitmapWidth());
+    CHECK_EQUAL(240, bitmapHeader.getBitmapHeight());
+}
+
