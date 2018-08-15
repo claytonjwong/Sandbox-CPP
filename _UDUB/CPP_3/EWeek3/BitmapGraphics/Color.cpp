@@ -31,17 +31,17 @@ namespace BitmapGraphics
     {
     }
         
-    Color::Component Color::getBlue() const noexcept
+    const Color::Component& Color::getBlue() const noexcept
     {
         return myBlue;
     }
     
-    Color::Component Color::getGreen() const noexcept
+    const Color::Component& Color::getGreen() const noexcept
     {
         return myGreen;
     }
     
-    Color::Component Color::getRed() const noexcept
+    const Color::Component& Color::getRed() const noexcept
     {
         return myRed;
     }

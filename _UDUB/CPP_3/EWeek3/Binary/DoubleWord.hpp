@@ -46,7 +46,7 @@ namespace Binary
         DoubleWord& operator= ( const DoubleWord& rhs ) = default;
         DoubleWord& operator= ( DoubleWord&& rhs ) = default;
         
-        DoubleWordType getValue() const noexcept;
+        const DoubleWordType& getValue() const noexcept;
         
         void write ( std::ostream& os, Endianness forceEndian=Endianness::Dynamic ) const;
         void writeLittleEndian ( std::ostream& os ) const;

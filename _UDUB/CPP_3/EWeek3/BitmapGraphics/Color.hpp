@@ -33,9 +33,9 @@ namespace BitmapGraphics
         Color& operator= ( const Color& rhs ) = default;
         Color& operator= ( Color&& rhs ) = default;
         
-        Component getRed() const noexcept;
-        Component getGreen() const noexcept;
-        Component getBlue() const noexcept;
+        const Component& getRed() const noexcept;
+        const Component& getGreen() const noexcept;
+        const Component& getBlue() const noexcept;
         
         void write ( std::ostream& os ) const;
         

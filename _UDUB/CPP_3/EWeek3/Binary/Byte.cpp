@@ -33,7 +33,7 @@ namespace Binary
     {
     }
     
-    ByteType Byte::getValue() const noexcept
+    const ByteType& Byte::getValue() const noexcept
     {
         return myValue;
     }

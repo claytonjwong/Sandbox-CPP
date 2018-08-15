@@ -65,7 +65,7 @@ namespace Binary
             second.getValue() << ( 0 * Byte::BIT_COUNT );
     }
     
-    WordType Word::getValue() const noexcept
+    const WordType& Word::getValue() const noexcept
     {
         return myValue;
     }

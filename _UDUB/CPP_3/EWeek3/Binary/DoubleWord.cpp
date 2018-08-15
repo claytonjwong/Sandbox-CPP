@@ -81,7 +81,7 @@ namespace Binary
             fourth.getValue() << ( 0 * Byte::BIT_COUNT );
     }
     
-    DoubleWordType DoubleWord::getValue() const noexcept
+    const DoubleWordType& DoubleWord::getValue() const noexcept
     {
         return myValue;
     }

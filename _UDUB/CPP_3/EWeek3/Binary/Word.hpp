@@ -43,7 +43,7 @@ namespace Binary
         Word& operator= ( const Word& rhs ) = default;
         Word& operator= ( Word&& rhs ) = default;
         
-        WordType getValue() const noexcept;
+        const WordType& getValue() const noexcept;
 
         void write ( std::ostream& os, Endianness forceEndian=Endianness::Dynamic ) const;
         void writeLittleEndian ( std::ostream& os ) const;
