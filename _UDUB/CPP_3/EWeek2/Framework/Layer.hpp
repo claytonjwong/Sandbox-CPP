@@ -26,12 +26,19 @@ namespace Framework
 
         Layer ( const std::string& alias );
         
+        Layer ( const Layer& src ) = default;
+        Layer ( Layer&& src ) = default;
+        
+        Layer& operator= ( const Layer& rhs ) = default;
+        Layer& operator= ( Layer&& rhs ) = default;
+        
         const std::string& getAlias() const noexcept;
         
         PlacedGraphicIterator begin() const noexcept;
         PlacedGraphicIterator end() const noexcept;
         
         void addGraphic ( const PlacedGraphic& graphic ) noexcept;
+        void addGraphic ( PlacedGraphic&& graphic ) noexcept;
         
         bool operator== ( const Layer& rhs ) const noexcept;
         bool operator!= ( const Layer& rhs ) const noexcept;

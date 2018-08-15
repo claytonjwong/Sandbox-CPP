@@ -14,7 +14,7 @@ using namespace std;
 namespace Framework
 {
     PlacedGraphic::PlacedGraphic() :
-    myPlacementPoint{ Point{0,0} },
+    myPlacementPoint{ std::move(Point{0,0}) },
     myGraphic{ make_shared<VectorGraphic>() }
     {
     }
@@ -46,7 +46,7 @@ namespace Framework
 
     void PlacedGraphic::setPlacementPoint ( Point&& placement ) noexcept
     {
-        myPlacementPoint = placement;
+        myPlacementPoint = std::move( placement );
     }
     
     void PlacedGraphic::setGraphic ( const HVectorGraphic& graphic ) noexcept
@@ -63,7 +63,7 @@ namespace Framework
     
     void PlacedGraphic::setGraphic ( HVectorGraphic&& graphic ) noexcept
     {
-        myGraphic = graphic;
+        myGraphic = std::move( graphic );
     }
     
     bool operator== ( const PlacedGraphic& lhs, const PlacedGraphic& rhs )

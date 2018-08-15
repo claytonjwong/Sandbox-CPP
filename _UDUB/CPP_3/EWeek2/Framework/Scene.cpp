@@ -53,7 +53,7 @@ namespace Framework
     
     void Scene::pushBack ( Layer&& layer ) noexcept
     {
-        myLayers.emplace_back(  std::forward<Layer>( layer )  );
+        myLayers.emplace_back(  std::move( layer )  );
     }
 
     void Scene::remove ( const Layer& target ) noexcept

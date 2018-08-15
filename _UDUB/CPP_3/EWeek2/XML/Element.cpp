@@ -96,9 +96,9 @@ namespace Xml
         
         vectorGraphicRoot->SetAttribute(  "closed", ( vectorGraphic.isClosed() ? "true" : "false" )  );
         
-        for (  int i=0, N=static_cast<int>( vectorGraphic.getPointCount() );  i < N;  ++i  )
+        for (  int index=0, N=static_cast<int>( vectorGraphic.getPointCount() );  index < N;  ++index  )
         {
-            auto point = vectorGraphic.getPoint( i );
+            auto point = vectorGraphic.getPoint( index );
             auto pointRoot = element->createXMLNode( "Point" );
             pointRoot->SetAttribute( "x", point.getX() );
             pointRoot->SetAttribute( "y", point.getY() );

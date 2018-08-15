@@ -34,7 +34,12 @@ namespace Framework
     {
         myGraphics.push_back( graphic );
     }
-    
+
+    void Layer::addGraphic ( PlacedGraphic&& graphic ) noexcept
+    {
+        myGraphics.emplace_back(  std::move( graphic )  );
+    }
+
     bool Layer::operator== ( const Layer& rhs ) const noexcept
     {
         return ( myAlias == rhs.myAlias )

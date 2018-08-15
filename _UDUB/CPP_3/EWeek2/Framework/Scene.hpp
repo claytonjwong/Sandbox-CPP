@@ -35,6 +35,12 @@ namespace Framework
 
         Scene() = default;
         Scene ( int width, int height );
+        
+        Scene ( const Scene& src ) = default;
+        Scene ( Scene&& src ) = default;
+        
+        Scene& operator= ( const Scene& src ) = default;
+        Scene& operator= ( Scene&& src ) = default;
 
         int getWidth() const noexcept;
         int getHeight() const noexcept;
