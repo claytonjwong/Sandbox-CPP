@@ -48,10 +48,13 @@ namespace BitmapGraphics
         readFileHeader( is );
         readInfoHeader( is );
     
-        if ( is.tellg() != myRawImageOffset ) // skip past "other" headers
+        if ( myRawImageOffset != is.tellg() ) // skip past "other" headers
         {
             is.seekg(  static_cast<std::streampos>( myRawImageOffset )  );
         }
+        
+        verifyEquality( static_cast<std::streampos>( myRawImageOffset ), is.tellg(),
+            "actual raw image position referred to via myRawImageOffset" );
     }
     
     //

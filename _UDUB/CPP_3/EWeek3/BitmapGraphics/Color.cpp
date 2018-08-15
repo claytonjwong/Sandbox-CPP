@@ -18,10 +18,10 @@ namespace BitmapGraphics
     //
     Color Color::read ( std::istream& is ) noexcept
     {
-        Component blue = Binary::Byte::read( is );
-        Component green = Binary::Byte::read( is );
-        Component red = Binary::Byte::read( is );
-        return Color{ red, green, blue };
+        auto blue = Binary::Byte::read( is );
+        auto green = Binary::Byte::read( is );
+        auto red = Binary::Byte::read( is );
+        return std::move( Color{ red, green, blue } );
     }
 
     Color::Color ( Component red, Component green, Component blue ) :

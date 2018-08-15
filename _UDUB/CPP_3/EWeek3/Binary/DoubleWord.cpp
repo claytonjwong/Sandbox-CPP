@@ -19,11 +19,11 @@ namespace Binary
         if (  ( forceEndian == Binary::Endianness::Little ) ||
               ( forceEndian == Binary::Endianness::Dynamic && Binary::IS__LITTLE__ENDIAN() )  )
         {
-            return DoubleWord{ fourth, third, second, first };
+            return std::move( DoubleWord{ fourth, third, second, first } );
         }
         else
         {
-            return DoubleWord{ first, second, third, fourth };
+            return std::move( DoubleWord{ first, second, third, fourth } );
         }
     }
 

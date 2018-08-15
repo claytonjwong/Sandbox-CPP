@@ -18,10 +18,10 @@ namespace Binary
     {
     public:
     
-      using ostream_type = std::basic_ostream< charT, traits >;
+      using stream_type = std::basic_ostream< charT, traits >;
       using self_type = binary_ostream_iterator< T, charT, traits >;
       
-      binary_ostream_iterator ( ostream_type& stream ) :
+      binary_ostream_iterator ( stream_type& stream ) :
       myStream{ &stream }
       {
       }
@@ -38,7 +38,7 @@ namespace Binary
 
     private:
     
-      ostream_type* myStream;
+      stream_type* myStream;
 
     };
 }

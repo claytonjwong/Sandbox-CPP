@@ -20,7 +20,7 @@ namespace Binary
         
         if ( is )
         {
-            return byte;
+            return std::move( byte );
         }
         else
         {
