@@ -33,6 +33,7 @@ namespace Binary
     public:
 
         Word() = default;
+        ~Word() = default;
         Word ( WordType value );
         Word ( const Byte& first, const Byte& second );
         

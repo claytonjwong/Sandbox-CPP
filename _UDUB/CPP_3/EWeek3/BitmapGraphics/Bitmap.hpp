@@ -29,6 +29,7 @@ namespace BitmapGraphics
         using ScanLineIterator = ScanLineCollection::const_iterator;
     
         Bitmap() = default;
+        ~Bitmap() = default;
         Bitmap ( int width, int height, std::istream& is );
         
         Bitmap ( const Bitmap& src ) = default;

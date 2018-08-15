@@ -35,6 +35,7 @@ namespace Binary
     public:
     
         DoubleWord() = default;
+        ~DoubleWord() = default;
         DoubleWord ( DoubleWordType value );
         DoubleWord ( const Byte& first, const Byte& second,
                      const Byte& third, const Byte& fourth );

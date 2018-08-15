@@ -23,6 +23,7 @@ namespace Binary
         static Byte read ( std::istream& is ) noexcept;
         
         Byte() = default;
+        ~Byte() = default;
         Byte ( ByteType value );
 
         Byte ( const Byte& src ) = default;
@@ -31,7 +32,7 @@ namespace Binary
         Byte& operator= ( const Byte& rhs ) = default;
         Byte& operator= ( Byte&& rhs ) = default;
         
-        ByteType getValue ( ) const noexcept;
+        ByteType getValue() const noexcept;
 
         void write ( std::ostream& os ) const;
         

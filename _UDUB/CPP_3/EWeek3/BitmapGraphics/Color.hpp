@@ -24,6 +24,7 @@ namespace BitmapGraphics
         static Color read ( std::istream& is ) noexcept;
         
         Color() = default;
+        ~Color() = default;
         Color ( Component red, Component green, Component blue );
         
         Color ( const Color & src ) = default;
