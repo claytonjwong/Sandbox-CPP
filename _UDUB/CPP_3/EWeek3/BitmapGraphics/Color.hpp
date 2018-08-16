@@ -25,8 +25,8 @@ namespace BitmapGraphics
         
         Color() = default;
         ~Color() = default;
-        Color ( Component red, Component green, Component blue );
-        explicit Color ( std::initializer_list<Binary::ByteType > initList );
+        explicit Color ( Component red, Component green, Component blue );
+        explicit Color ( std::initializer_list<Binary::ByteType> initList ); // hack
         
         Color ( const Color & src ) = default;
         Color ( Color&& src ) = default;

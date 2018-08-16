@@ -32,7 +32,21 @@ namespace BitmapGraphics
     {
     }
     
-    Color::Color ( std::initializer_list<Binary::ByteType > initList )
+    //
+    // hack
+    //
+    // after I made the Byte conversion constructor explicit, the following Color's constructor invocation
+    // no longer matches above constructor Color::Color ( Component red, Component green, Component blue )
+    //
+    // Color color{0xAA, 0xBB, 0xCC};
+    //
+    // so here's what I came up with below.  If the above constructor should be invoked instead,
+    // how should I change my code?  Obviously this is ugly and redundant, but I'm not sure how to fix it
+    // unless I remove explicit from the Byte conversion constructor:
+    //
+    // explicit Byte ( ByteType value );
+    //
+    Color::Color ( std::initializer_list<Binary::ByteType> initList )
     {
         if ( initList.size() != 3 )
         {

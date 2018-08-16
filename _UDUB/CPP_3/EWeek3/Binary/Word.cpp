@@ -72,10 +72,8 @@ namespace Binary
     
     void Word::write ( std::ostream& os, Binary::Endianness forceEndian ) const
     {
-        ByteType allBitsSet =
+        ByteType mask =
             static_cast<ByteType>(  (1 <<  ( Byte::BIT_COUNT + 1 ))  - 1  );
-        
-        Byte mask{ allBitsSet };
         
         Byte first{ static_cast<ByteType>(
             ( myValue & mask << ( 1 * Byte::BIT_COUNT ) )  >> ( 1 * Byte::BIT_COUNT )    ) };
