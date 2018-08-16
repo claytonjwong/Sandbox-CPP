@@ -22,7 +22,7 @@ namespace Binary
     
         static constexpr int BYTE_COUNT = 2;
     
-        static Word read ( std::istream& is, Endianness forceEndian=Endianness::Dynamic );
+        static Word read ( std::istream& is, const Endianness&& forceEndian=Endianness::Dynamic );
         static Word readLittleEndian ( std::istream& is );
         static Word readBigEndian ( std::istream& is );
 
@@ -43,9 +43,12 @@ namespace Binary
         Word& operator= ( const Word& rhs ) = default;
         Word& operator= ( Word&& rhs ) = default;
         
+        Word& operator= ( const WordType& rhs );
+        Word& operator= ( WordType&& rhs );
+        
         const WordType& getValue() const noexcept;
 
-        void write ( std::ostream& os, Endianness forceEndian=Endianness::Dynamic ) const;
+        void write ( std::ostream& os, const Endianness&& forceEndian=Endianness::Dynamic ) const;
         void writeLittleEndian ( std::ostream& os ) const;
         void writeBigEndian ( std::ostream& os ) const;
         
@@ -55,7 +58,9 @@ namespace Binary
 
     public:
         
-        operator WordType() const noexcept; // should be explicit?  I'm not sure how to get that to compile.
+        operator WordType() const noexcept;
+        
+        
         bool operator== ( const Word& rhs ) const noexcept;
         
     private:

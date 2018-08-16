@@ -18,27 +18,40 @@ using namespace BitmapGraphics;
 
 TEST(createColor, Color)
 {
-    Color color{0xAA, 0xBB, 0xCC};
+    int r=0xAA, g=0xBB, b=0xCC;
+    Color color{ r, g, b };
     
-    CHECK_EQUAL(0xAA, color.getRed());
-    CHECK_EQUAL(0xBB, color.getGreen());
-    CHECK_EQUAL(0xCC, color.getBlue());
+    CHECK_EQUAL(r, color.getRed());
+    CHECK_EQUAL(g, color.getGreen());
+    CHECK_EQUAL(b, color.getBlue());
 
 }
 
 TEST(createColor2, Color)
 {
-    Color color{0x01, 0x02, 0x03};
+    char r=0x01, g=0x02, b=0x03;
+    Color color{ r, g, b };
     
-    CHECK_EQUAL(0x01, color.getRed());
-    CHECK_EQUAL(0x02, color.getGreen());
-    CHECK_EQUAL(0x03, color.getBlue());
+    CHECK_EQUAL(r, color.getRed());
+    CHECK_EQUAL(g, color.getGreen());
+    CHECK_EQUAL(b, color.getBlue());
 
 }
 
 TEST(createColor3, Color)
 {
-    Color color{0x69, 0x69, 0x69};
+    long r=0x69, g=0x69, b=0x69;
+    Color color{ r, g, b };
+    
+    CHECK_EQUAL(r, color.getRed());
+    CHECK_EQUAL(g, color.getGreen());
+    CHECK_EQUAL(b, color.getBlue());
+
+}
+
+TEST(createColor4, Color)
+{
+    Color color(0x69, 0x69, 0x69);
     
     CHECK_EQUAL(0x69, color.getRed());
     CHECK_EQUAL(0x69, color.getGreen());

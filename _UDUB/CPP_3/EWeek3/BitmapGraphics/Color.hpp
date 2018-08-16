@@ -25,8 +25,9 @@ namespace BitmapGraphics
         
         Color() = default;
         ~Color() = default;
-        explicit Color ( Component red, Component green, Component blue );
-        explicit Color ( std::initializer_list<Binary::ByteType> initList ); // hack
+        
+        template <typename ColorType>
+        Color ( const ColorType& red, const ColorType& green, const ColorType& blue );
         
         Color ( const Color & src ) = default;
         Color ( Color&& src ) = default;
@@ -34,9 +35,9 @@ namespace BitmapGraphics
         Color& operator= ( const Color& rhs ) = default;
         Color& operator= ( Color&& rhs ) = default;
         
-        const Component& getRed() const noexcept;
-        const Component& getGreen() const noexcept;
-        const Component& getBlue() const noexcept;
+        const Binary::ByteType& getRed() const noexcept;
+        const Binary::ByteType& getGreen() const noexcept;
+        const Binary::ByteType& getBlue() const noexcept;
         
         void write ( std::ostream& os ) const;
         
@@ -49,6 +50,14 @@ namespace BitmapGraphics
         Component myGreen;
         Component myBlue;
     };
+    
+    template <typename ColorType>
+    Color::Color ( const ColorType& red, const ColorType& green, const ColorType& blue ) :
+    myRed{ static_cast<Component>( red ) },
+    myGreen{ static_cast<Component>( green ) },
+    myBlue{ static_cast<Component>( blue ) }
+    {
+    }
     
     std::ostream& operator<< ( std::ostream& os, const Color& rhs ) noexcept;
 }

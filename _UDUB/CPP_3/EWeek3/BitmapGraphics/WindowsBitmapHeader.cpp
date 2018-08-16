@@ -48,7 +48,7 @@ namespace BitmapGraphics
         readFileHeader( is );
         readInfoHeader( is );
     
-        if ( myRawImageOffset != is.tellg() ) // skip past "other" headers
+        if ( static_cast<std::streampos>( myRawImageOffset )  !=  is.tellg() ) // skip past "other" headers
         {
             is.seekg(  static_cast<std::streampos>( myRawImageOffset )  );
         }
@@ -125,17 +125,17 @@ namespace BitmapGraphics
     
     int WindowsBitmapHeader::getBitmapWidth() const noexcept
     {
-        return myWidth;
+        return myWidth.getValue();
     }
     
     int WindowsBitmapHeader::getBitmapHeight() const noexcept
     {
-        return myHeight;
+        return myHeight.getValue();
     }
     
     int WindowsBitmapHeader::getFileSize() const noexcept
     {
-        return myFileSize;
+        return myFileSize.getValue();
     }
     
     void WindowsBitmapHeader::write ( std::ostream& os ) const

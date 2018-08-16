@@ -22,7 +22,7 @@ namespace Binary
         
         static constexpr int BYTE_COUNT = 4;
         
-        static DoubleWord read ( std::istream& is, Endianness forceEndian=Endianness::Dynamic );
+        static DoubleWord read ( std::istream& is, const Endianness&& forceEndian=Endianness::Dynamic );
         static DoubleWord readLittleEndian ( std::istream& is );
         static DoubleWord readBigEndian ( std::istream& is );
         
@@ -45,10 +45,13 @@ namespace Binary
         
         DoubleWord& operator= ( const DoubleWord& rhs ) = default;
         DoubleWord& operator= ( DoubleWord&& rhs ) = default;
-        
+
+        DoubleWord& operator= ( const DoubleWordType& rhs );
+        DoubleWord& operator= ( DoubleWordType&& rhs );
+
         const DoubleWordType& getValue() const noexcept;
         
-        void write ( std::ostream& os, Endianness forceEndian=Endianness::Dynamic ) const;
+        void write ( std::ostream& os, const Endianness&& forceEndian=Endianness::Dynamic ) const;
         void writeLittleEndian ( std::ostream& os ) const;
         void writeBigEndian ( std::ostream& os ) const;
     
@@ -59,8 +62,9 @@ namespace Binary
             const Byte& third, const Byte& fourth);
     
     public:
-    
-        operator DoubleWordType() const noexcept; // should be explicit?  I'm not sure how to get that to compile.
+        
+        operator DoubleWordType() const noexcept;
+        
         bool operator== ( const DoubleWord& rhs ) const noexcept;
         
     private:

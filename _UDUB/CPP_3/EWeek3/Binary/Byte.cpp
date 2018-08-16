@@ -28,7 +28,7 @@ namespace Binary
         }
     }
         
-    Byte::Byte ( ByteType value ) :
+    Byte::Byte ( const ByteType& value ) :
     myValue{ value }
     {
     }

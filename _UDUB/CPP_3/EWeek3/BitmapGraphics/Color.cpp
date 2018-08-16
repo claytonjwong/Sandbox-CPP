@@ -24,58 +24,20 @@ namespace BitmapGraphics
         auto red = Binary::Byte::read( is );
         return std::move( Color{ red, green, blue } ); // user order: ( red, green, blue )
     }
-
-    Color::Color ( Component red, Component green, Component blue ) :
-    myRed{ red },
-    myGreen{ green },
-    myBlue{ blue }
+    
+    const Binary::ByteType& Color::getBlue() const noexcept
     {
+        return myBlue.getValue();
     }
     
-    //
-    // hack
-    //
-    // after I made the Byte conversion constructor explicit, the following Color's constructor invocation
-    // no longer matches above constructor Color::Color ( Component red, Component green, Component blue )
-    //
-    // Color color{0xAA, 0xBB, 0xCC};
-    //
-    // so here's what I came up with below.  If the above constructor should be invoked instead,
-    // how should I change my code?  Obviously this is ugly and redundant, but I'm not sure how to fix it
-    // unless I remove explicit from the Byte conversion constructor:
-    //
-    // explicit Byte ( ByteType value );
-    //
-    Color::Color ( std::initializer_list<Binary::ByteType> initList )
+    const Binary::ByteType& Color::getGreen() const noexcept
     {
-        if ( initList.size() != 3 )
-        {
-            throw runtime_error{ "color must be initialized with 3 components: red, green, blue" };
-        }
-        
-        auto it = initList.begin();
-        
-        myRed = Binary::Byte{ *it++ };
-        myGreen = Binary::Byte{ *it++ };
-        myBlue = Binary::Byte{ *it++ };
-        
-        Binary::verifyEquality( it, initList.end(),
-            "color must be initialized with 3 components: red, green, blue" );
+        return myGreen.getValue();
     }
     
-    const Color::Component& Color::getBlue() const noexcept
+    const Binary::ByteType& Color::getRed() const noexcept
     {
-        return myBlue;
-    }
-    
-    const Color::Component& Color::getGreen() const noexcept
-    {
-        return myGreen;
-    }
-    
-    const Color::Component& Color::getRed() const noexcept
-    {
-        return myRed;
+        return myRed.getValue();
     }
     
     //
@@ -90,9 +52,9 @@ namespace BitmapGraphics
     
     bool Color::operator== ( const Color& rhs ) const noexcept
     {
-        return myRed == rhs.getRed()
-            && myGreen == rhs.getGreen()
-            && myBlue == rhs.getBlue();
+        return myRed.getValue() == rhs.getRed()
+            && myGreen.getValue() == rhs.getGreen()
+            && myBlue.getValue() == rhs.getBlue();
     }
     
     bool Color::operator!= ( const Color& rhs ) const noexcept

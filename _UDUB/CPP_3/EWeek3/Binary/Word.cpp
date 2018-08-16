@@ -11,7 +11,7 @@
 
 namespace Binary
 {
-    Word Word::read ( std::istream& is, Endianness forceEndian )
+    Word Word::read ( std::istream& is, const Endianness&& forceEndian )
     {
         Byte first, second;
         read( is, first, second );
@@ -70,7 +70,7 @@ namespace Binary
         return myValue;
     }
     
-    void Word::write ( std::ostream& os, Binary::Endianness forceEndian ) const
+    void Word::write ( std::ostream& os, const Binary::Endianness&& forceEndian ) const
     {
         ByteType mask =
             static_cast<ByteType>(  (1 <<  ( Byte::BIT_COUNT + 1 ))  - 1  );
@@ -114,6 +114,18 @@ namespace Binary
         {
             throw std::runtime_error{ "unable to write Word's second byte to ostream" };
         }
+    }
+
+    Word& Word::operator= ( const WordType& rhs )
+    {
+        myValue = rhs;
+        return *this;
+    }
+    
+    Word& Word::operator= ( WordType&& rhs )
+    {
+        myValue = rhs;
+        return *this;
     }
 
     Word::operator WordType() const noexcept

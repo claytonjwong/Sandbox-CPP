@@ -11,7 +11,7 @@
 
 namespace Binary
 {
-    DoubleWord DoubleWord::read ( std::istream& is, Endianness forceEndian )
+    DoubleWord DoubleWord::read ( std::istream& is, const Endianness&& forceEndian )
     {
         Byte first, second, third, fourth;
         read ( is, first, second, third, fourth );
@@ -81,15 +81,27 @@ namespace Binary
             fourth.getValue() << ( 0 * Byte::BIT_COUNT );
     }
     
+    DoubleWord& DoubleWord::operator= ( const DoubleWordType& rhs )
+    {
+        myValue = rhs;
+        return *this;
+    }
+    
+    DoubleWord& DoubleWord::operator= ( DoubleWordType&& rhs )
+    {
+        myValue = rhs;
+        return *this;
+    }
+    
     const DoubleWordType& DoubleWord::getValue() const noexcept
     {
         return myValue;
     }
 
-    void DoubleWord::write ( std::ostream& os, Endianness forceEndian ) const
+    void DoubleWord::write ( std::ostream& os, const Endianness&& forceEndian ) const
     {
         Binary::ByteType mask =
-            static_cast<ByteType>(  (1 << ( Byte::BIT_COUNT + 1 )) - 1  );
+            static_cast<ByteType>(  ( 1 << ( Byte::BIT_COUNT + 1 )) - 1  );
         
         Byte first{ static_cast<ByteType>(
             ( myValue & mask << ( 3 * Byte::BIT_COUNT ) )  >> ( 3 * Byte::BIT_COUNT )    ) };
@@ -148,7 +160,7 @@ namespace Binary
             throw std::runtime_error{ "unable to write DoubleWord's second byte to ostream" };
         }
     }
-
+    
     DoubleWord::operator DoubleWordType() const noexcept
     {
         return myValue;
