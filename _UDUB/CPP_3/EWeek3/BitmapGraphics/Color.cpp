@@ -25,17 +25,17 @@ namespace BitmapGraphics
         return std::move( Color{ red, green, blue } ); // user order: ( red, green, blue )
     }
     
-    const Binary::ByteType& Color::getBlue() const noexcept
+    const Color::ComponentType& Color::getBlue() const noexcept
     {
         return myBlue.getValue();
     }
     
-    const Binary::ByteType& Color::getGreen() const noexcept
+    const Color::ComponentType& Color::getGreen() const noexcept
     {
         return myGreen.getValue();
     }
     
-    const Binary::ByteType& Color::getRed() const noexcept
+    const Color::ComponentType& Color::getRed() const noexcept
     {
         return myRed.getValue();
     }

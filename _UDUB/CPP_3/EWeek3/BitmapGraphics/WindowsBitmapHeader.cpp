@@ -48,12 +48,14 @@ namespace BitmapGraphics
         readFileHeader( is );
         readInfoHeader( is );
     
-        if ( static_cast<std::streampos>( myRawImageOffset )  !=  is.tellg() ) // skip past "other" headers
+        auto rawImagePos = static_cast<std::streampos>( myRawImageOffset );
+    
+        if ( rawImagePos != is.tellg() ) // skip past "other" headers
         {
-            is.seekg(  static_cast<std::streampos>( myRawImageOffset )  );
+            is.seekg( rawImagePos );
         }
         
-        verifyEquality( static_cast<std::streampos>( myRawImageOffset ), is.tellg(),
+        verifyEquality( rawImagePos, is.tellg(),
             "actual raw image position referred to via myRawImageOffset" );
     }
     
@@ -78,6 +80,8 @@ namespace BitmapGraphics
         
         verifyEquality( static_cast<std::streampos>( 10 ), is.tellg(), "rawImageOffset position" );
         myRawImageOffset = DoubleWord::read( is );
+        
+        verifyEquality( static_cast<std::streampos>( 14 ), is.tellg(), "end file header" );
     }
     
     //
@@ -115,10 +119,10 @@ namespace BitmapGraphics
         myVerticalPixelsPerMeter = DoubleWord::read( is );
         
         verifyEquality( static_cast<std::streampos>( 46 ), is.tellg(), "numberOfColors position" );
-        DoubleWord::read( is ); // ignore numberOfColors
+        DoubleWord::read( is ); // ignore numberOfColors value
         
         verifyEquality( static_cast<std::streampos>( 50 ), is.tellg(), "numberOfImportantColors position" );
-        DoubleWord::read( is ); // ignore numberOfImportantColors
+        DoubleWord::read( is ); // ignore numberOfImportantColors value
         
         verifyEquality( static_cast<std::streampos>( 54 ), is.tellg(), "end info header" );
     }
