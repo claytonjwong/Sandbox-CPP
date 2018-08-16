@@ -11,10 +11,10 @@
 
 namespace Binary
 {
-    Word Word::read ( std::istream& is, const Endianness&& forceEndian )
+    Word Word::read ( std::istream& inStream, const Endianness&& forceEndian )
     {
         Byte first, second;
-        read( is, first, second );
+        read( inStream, first, second );
         
         if (  ( forceEndian == Binary::Endianness::Little ) ||
               ( forceEndian == Binary::Endianness::Dynamic && Binary::IS__LITTLE__ENDIAN() )  )
@@ -27,26 +27,26 @@ namespace Binary
         }
     }
     
-    Word Word::readLittleEndian ( std::istream& is )
+    Word Word::readLittleEndian ( std::istream& inStream )
     {
-        return std::move(  read( is, Endianness::Little )  );
+        return std::move(  read( inStream, Endianness::Little )  );
     }
 
-    Word Word::readBigEndian ( std::istream& is )
+    Word Word::readBigEndian ( std::istream& inStream )
     {
-        return std::move(  read( is, Endianness::Big )  );
+        return std::move(  read( inStream, Endianness::Big )  );
     }
     
-    void Word::read ( std::istream& is, Byte& first, Byte& second )
+    void Word::read ( std::istream& inStream, Byte& first, Byte& second )
     {
-        first = Byte::read( is );
-        if ( ! is )
+        first = Byte::read( inStream );
+        if ( ! inStream )
         {
             throw std::runtime_error{ "unable to read Word's first byte from istream" };
         }
 
-        second = Byte::read( is );
-        if ( ! is )
+        second = Byte::read( inStream );
+        if ( ! inStream )
         {
             throw std::runtime_error{ "unable to read Word's second byte from istream" };
         }
@@ -70,7 +70,7 @@ namespace Binary
         return myValue;
     }
     
-    void Word::write ( std::ostream& os, const Binary::Endianness&& forceEndian ) const
+    void Word::write ( std::ostream& outStream, const Binary::Endianness&& forceEndian ) const
     {
         ByteType mask =
             static_cast<ByteType>(  (1 <<  ( Byte::BIT_COUNT + 1 ))  - 1  );
@@ -84,33 +84,33 @@ namespace Binary
         if (  ( forceEndian == Binary::Endianness::Little ) ||
               ( forceEndian == Binary::Endianness::Dynamic && Binary::IS__LITTLE__ENDIAN() )  )
         {
-            write( os, second, first );
+            write( outStream, second, first );
         }
         else
         {
-            write( os, first, second );
+            write( outStream, first, second );
         }
     }
     
-    void Word::writeLittleEndian ( std::ostream& os ) const
+    void Word::writeLittleEndian ( std::ostream& outStream ) const
     {
-        write( os, Binary::Endianness::Little );
+        write( outStream, Binary::Endianness::Little );
     }
     
-    void Word::writeBigEndian ( std::ostream& os ) const
+    void Word::writeBigEndian ( std::ostream& outStream ) const
     {
-        write( os, Binary::Endianness::Big );
+        write( outStream, Binary::Endianness::Big );
     }
     
-    void Word::write( std::ostream& os, const Byte& first, const Byte& second )
+    void Word::write( std::ostream& outStream, const Byte& first, const Byte& second )
     {
-        first.write( os );
-        if ( ! os )
+        first.write( outStream );
+        if ( ! outStream )
         {
             throw std::runtime_error{ "unable to write Word's first byte to ostream" };
         }
-        second.write( os );
-        if ( ! os )
+        second.write( outStream );
+        if ( ! outStream )
         {
             throw std::runtime_error{ "unable to write Word's second byte to ostream" };
         }
@@ -138,9 +138,9 @@ namespace Binary
         return myValue == rhs.myValue;
     }
     
-    std::ostream& operator<< ( std::ostream& os, const Word& rhs )
+    std::ostream& operator<< ( std::ostream& outStream, const Word& rhs )
     {
-        rhs.write( os );
-        return os;
+        rhs.write( outStream );
+        return outStream;
     }
 }

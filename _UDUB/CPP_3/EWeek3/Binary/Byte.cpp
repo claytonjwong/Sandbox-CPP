@@ -10,15 +10,15 @@
 
 namespace Binary
 {
-    Byte Byte::read ( std::istream& is ) noexcept
+    Byte Byte::read ( std::istream& inStream ) noexcept
     {
         Byte byte;
         
         char buffer;
-        is.get( buffer );
+        inStream.get( buffer );
         byte.myValue = static_cast<ByteType>( buffer );
         
-        if ( is )
+        if ( inStream )
         {
             return std::move( byte );
         }
@@ -50,11 +50,11 @@ namespace Binary
         return myValue;
     }
     
-    void Byte::write ( std::ostream& os ) const
+    void Byte::write ( std::ostream& outStream ) const
     {
-        os.put( myValue );
+        outStream.put( myValue );
         
-        if ( !(os) )
+        if ( !(outStream) )
         {
             throw std::runtime_error{ "unable to write Byte to ostream" };
         }
@@ -70,9 +70,9 @@ namespace Binary
         return myValue == rhs.myValue;
     }
     
-    std::ostream& operator<< ( std::ostream& os, const Byte& rhs )
+    std::ostream& operator<< ( std::ostream& outStream, const Byte& rhs )
     {
-        rhs.write( os );
-        return os;
+        rhs.write( outStream );
+        return outStream;
     }
 }

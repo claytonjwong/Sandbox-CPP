@@ -20,7 +20,7 @@ namespace Binary
         
         static constexpr int BIT_COUNT = 8;
         
-        static Byte read ( std::istream& is ) noexcept;
+        static Byte read ( std::istream& inStream ) noexcept;
         
         Byte() = default;
         ~Byte() = default;
@@ -37,13 +37,18 @@ namespace Binary
         
         const ByteType& getValue() const noexcept;
 
-        void write ( std::ostream& os ) const;
+        void write ( std::ostream& outStream ) const;
 
+        //
+        // operator ByteType() const noexcept;
         //
         // should be explicit?  I'm not sure how to get that to compile though
         //
-        // I get a compiler error when I make this operator explicit: explicit operator ByteType() const noexcept;
-        // maybe the test case is out-of-date?
+        // I get a compiler error when I make this operator explicit:
+        //
+        // explicit operator ByteType() const noexcept;
+        //
+        // maybe the test case is out-of-date?...
         //
         //    unsigned char c3{};
         //    c3 = byte2;
@@ -83,6 +88,6 @@ namespace Binary
         
     };
     
-    std::ostream& operator<< ( std::ostream& os, const Byte& rhs );
+    std::ostream& operator<< ( std::ostream& outStream, const Byte& rhs );
     
 }

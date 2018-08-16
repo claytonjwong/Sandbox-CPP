@@ -22,13 +22,13 @@ namespace Binary
         
         static constexpr int BYTE_COUNT = 4;
         
-        static DoubleWord read ( std::istream& is, const Endianness&& forceEndian=Endianness::Dynamic );
-        static DoubleWord readLittleEndian ( std::istream& is );
-        static DoubleWord readBigEndian ( std::istream& is );
+        static DoubleWord read ( std::istream& inStream, const Endianness&& forceEndian=Endianness::Dynamic );
+        static DoubleWord readLittleEndian ( std::istream& inStream );
+        static DoubleWord readBigEndian ( std::istream& inStream );
         
     private:
     
-        static void read ( std::istream& is,
+        static void read ( std::istream& inStream,
                            Byte& first, Byte& second,
                            Byte& third, Byte& fourth );
                            
@@ -51,13 +51,13 @@ namespace Binary
 
         const DoubleWordType& getValue() const noexcept;
         
-        void write ( std::ostream& os, const Endianness&& forceEndian=Endianness::Dynamic ) const;
-        void writeLittleEndian ( std::ostream& os ) const;
-        void writeBigEndian ( std::ostream& os ) const;
+        void write ( std::ostream& outStream, const Endianness&& forceEndian=Endianness::Dynamic ) const;
+        void writeLittleEndian ( std::ostream& outStream ) const;
+        void writeBigEndian ( std::ostream& outStream ) const;
     
     private:
     
-        static void write ( std::ostream& os,
+        static void write ( std::ostream& outStream,
             const Byte& first, const Byte& second,
             const Byte& third, const Byte& fourth);
     
@@ -72,5 +72,5 @@ namespace Binary
         DoubleWordType myValue{ 0 };
     };
     
-    std::ostream& operator<< ( std::ostream& os, const DoubleWord& rhs );
+    std::ostream& operator<< ( std::ostream& outStream, const DoubleWord& rhs );
 }
