@@ -39,7 +39,7 @@ namespace Binary
 
         void write ( std::ostream& os ) const;
         
-        operator ByteType() const noexcept;
+        operator ByteType() const noexcept; // should be explicit?  I'm not sure how to get that to compile though
         
         bool operator== ( const Byte& rhs ) const noexcept;
         
@@ -50,4 +50,5 @@ namespace Binary
     };
     
     std::ostream& operator<< ( std::ostream& os, const Byte& rhs );
+    
 }

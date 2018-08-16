@@ -55,11 +55,12 @@ namespace Binary
     private:
     
         static void write ( std::ostream& os,
-            const Byte& first, const Byte& second, const Byte& third, const Byte& fourth);
+            const Byte& first, const Byte& second,
+            const Byte& third, const Byte& fourth);
     
     public:
     
-        operator DoubleWordType() const noexcept;
+        operator DoubleWordType() const noexcept; // should be explicit?  I'm not sure how to get that to compile.
         bool operator== ( const DoubleWord& rhs ) const noexcept;
         
     private:

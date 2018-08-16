@@ -55,7 +55,7 @@ namespace Binary
 
     public:
         
-        operator WordType() const noexcept;
+        operator WordType() const noexcept; // should be explicit?  I'm not sure how to get that to compile.
         bool operator== ( const Word& rhs ) const noexcept;
         
     private:
