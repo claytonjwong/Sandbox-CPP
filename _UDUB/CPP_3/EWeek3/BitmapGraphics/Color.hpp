@@ -22,7 +22,7 @@ namespace BitmapGraphics
         
         static constexpr int BYTE_COUNT = 3;
         
-        static Color read ( std::istream& is ) noexcept;
+        static Color read ( std::istream& inStream ) noexcept;
         
         Color() = default;
         ~Color() = default;
@@ -30,7 +30,7 @@ namespace BitmapGraphics
         template <typename ColorType>
         Color ( const ColorType& red, const ColorType& green, const ColorType& blue );
         
-        Color ( const Color & src ) = default;
+        Color ( const Color& src ) = default;
         Color ( Color&& src ) = default;
         
         Color& operator= ( const Color& rhs ) = default;
@@ -40,7 +40,7 @@ namespace BitmapGraphics
         const ComponentType& getGreen() const noexcept;
         const ComponentType& getBlue() const noexcept;
         
-        void write ( std::ostream& os ) const;
+        void write ( std::ostream& outStream ) const;
         
         bool operator== ( const Color& rhs ) const noexcept;
         bool operator!= ( const Color& rhs ) const noexcept;
@@ -60,5 +60,5 @@ namespace BitmapGraphics
     {
     }
     
-    std::ostream& operator<< ( std::ostream& os, const Color& rhs ) noexcept;
+    std::ostream& operator<< ( std::ostream& outStream, const Color& rhs ) noexcept;
 }

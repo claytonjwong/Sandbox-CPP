@@ -53,7 +53,7 @@ namespace BitmapGraphics
     
         WindowsBitmapHeader() = default;
         ~WindowsBitmapHeader() = default;
-        explicit WindowsBitmapHeader ( std::istream& is );
+        explicit WindowsBitmapHeader ( std::istream& inStream );
         
         WindowsBitmapHeader ( const WindowsBitmapHeader& src ) = default;
         WindowsBitmapHeader ( WindowsBitmapHeader&& src ) = default;
@@ -61,17 +61,17 @@ namespace BitmapGraphics
         WindowsBitmapHeader& operator= ( const WindowsBitmapHeader& src ) = default;
         WindowsBitmapHeader& operator= ( WindowsBitmapHeader&& src ) = default;
         
-        void read ( std::istream& is );
-        void readFileHeader ( std::istream& is );
-        void readInfoHeader ( std::istream& is );
+        void read ( std::istream& inStream );
+        void readFileHeader ( std::istream& inStream );
+        void readInfoHeader ( std::istream& inStream );
         
         int getBitmapWidth() const noexcept;
         int getBitmapHeight() const noexcept;
         int getFileSize() const noexcept;
         
-        void write ( std::ostream& os ) const;
-        void writeFileHeader ( std::ostream& os ) const;
-        void writeInfoHeader ( std::ostream& os ) const;
+        void write ( std::ostream& outStream ) const;
+        void writeFileHeader ( std::ostream& outStream ) const;
+        void writeInfoHeader ( std::ostream& outStream ) const;
         
     private:
         

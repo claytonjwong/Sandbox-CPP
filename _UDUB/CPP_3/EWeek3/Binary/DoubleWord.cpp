@@ -89,7 +89,7 @@ namespace Binary
     
     DoubleWord& DoubleWord::operator= ( DoubleWordType&& rhs )
     {
-        myValue = rhs;
+        myValue = std::move( rhs );
         return *this;
     }
     

@@ -124,7 +124,7 @@ namespace Binary
     
     Word& Word::operator= ( WordType&& rhs )
     {
-        myValue = rhs;
+        myValue = std::move( rhs );
         return *this;
     }
 

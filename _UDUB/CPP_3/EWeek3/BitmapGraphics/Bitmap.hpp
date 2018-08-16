@@ -30,7 +30,7 @@ namespace BitmapGraphics
     
         Bitmap() = default;
         ~Bitmap() = default;
-        Bitmap ( int width, int height, std::istream& is );
+        Bitmap ( int width, int height, std::istream& inStream );
         
         Bitmap ( const Bitmap& src ) = default;
         Bitmap ( Bitmap&& src ) = default;
@@ -45,15 +45,15 @@ namespace BitmapGraphics
         ScanLineIterator begin() const noexcept;
         ScanLineIterator end() const noexcept;
     
-        void write ( std::ostream& os ) const;
+        void write ( std::ostream& outStream ) const;
         
     private:
     
-        void readScanLine ( std::istream& is ) noexcept;
-        void writeScanLine ( std::ostream& os, const ScanLine& scanLine ) const;
+        void readScanLine ( std::istream& inStream ) noexcept;
+        void writeScanLine ( std::ostream& outStream, const ScanLine& scanLine ) const;
     
-        void readPadding ( std::istream& is ) const noexcept;
-        void writePadding ( std::ostream& os ) const noexcept;
+        void readPadding ( std::istream& inStream ) const noexcept;
+        void writePadding ( std::ostream& outStream ) const noexcept;
     
     private:
         
@@ -63,5 +63,5 @@ namespace BitmapGraphics
         int myPaddingSize{ 0 };
     };
     
-    std::ostream& operator<< ( std::ostream& os, const Bitmap& rhs );
+    std::ostream& operator<< ( std::ostream& outStream, const Bitmap& rhs );
 }

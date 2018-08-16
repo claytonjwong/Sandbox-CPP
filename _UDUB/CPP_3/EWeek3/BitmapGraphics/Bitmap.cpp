@@ -12,7 +12,7 @@
 
 namespace BitmapGraphics
 {
-    Bitmap::Bitmap ( int width, int height, std::istream& is ) :
+    Bitmap::Bitmap ( int width, int height, std::istream& inStream ) :
     myWidth{ width },
     myHeight{ height },
     myPaddingSize{ 0 }
@@ -23,7 +23,7 @@ namespace BitmapGraphics
     
         for ( auto scanLineHeight = 0;  scanLineHeight < myHeight;  ++scanLineHeight )
         {
-            readScanLine( is );
+            readScanLine( inStream );
         }
     }
     
@@ -52,57 +52,57 @@ namespace BitmapGraphics
         return myScanLines.end();
     }
     
-    void Bitmap::write ( std::ostream& os ) const
+    void Bitmap::write ( std::ostream& outStream ) const
     {
         for ( const auto& scanLine: myScanLines )
         {
-            writeScanLine( os, scanLine );
+            writeScanLine( outStream, scanLine );
         }
     }
     
-    void Bitmap::readScanLine ( std::istream& is ) noexcept
+    void Bitmap::readScanLine ( std::istream& inStream ) noexcept
     {
         ScanLine scanLine;
         
         for ( auto width = 0;  width < myWidth;  ++width )
         {
-            scanLine.emplace_back(  std::move( Color::read( is ) )  );
+            scanLine.emplace_back(  std::move( Color::read( inStream ) )  );
         }
         myScanLines.emplace_back(  std::move( scanLine )  );
     
-        readPadding( is );
+        readPadding( inStream );
     }
     
-    void Bitmap::writeScanLine ( std::ostream& os, const ScanLine& scanLine ) const
+    void Bitmap::writeScanLine ( std::ostream& outStream, const ScanLine& scanLine ) const
     {
         for ( const auto& color: scanLine )
         {
-            color.write( os );
+            color.write( outStream );
         }
         
-        writePadding( os );
+        writePadding( outStream );
     }
     
-    void Bitmap::readPadding ( std::istream& is ) const noexcept
+    void Bitmap::readPadding ( std::istream& inStream ) const noexcept
     {
         for ( auto padCount = 0;  padCount < myPaddingSize; ++padCount )
         {
-            is.ignore();
+            inStream.ignore();
         }
     }
 
-    void Bitmap::writePadding ( std::ostream& os ) const noexcept
+    void Bitmap::writePadding ( std::ostream& outStream ) const noexcept
     {
         Binary::Byte padding;
         for ( auto padCount = 0; padCount < myPaddingSize; ++padCount )
         {
-            padding.write( os );
+            padding.write( outStream );
         }
     }
     
-    std::ostream& operator<< ( std::ostream& os, const Bitmap& rhs )
+    std::ostream& operator<< ( std::ostream& outStream, const Bitmap& rhs )
     {
-        rhs.write( os );
-        return os;
+        rhs.write( outStream );
+        return outStream;
     }
 }

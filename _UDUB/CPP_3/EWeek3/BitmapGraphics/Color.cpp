@@ -17,11 +17,11 @@ namespace BitmapGraphics
     //
     // Note: significant stream read/write order: ( blue, green, red )
     //
-    Color Color::read ( std::istream& is ) noexcept
+    Color Color::read ( std::istream& inStream ) noexcept
     {
-        auto blue = Binary::Byte::read( is );
-        auto green = Binary::Byte::read( is );
-        auto red = Binary::Byte::read( is );
+        auto blue = Binary::Byte::read( inStream );
+        auto green = Binary::Byte::read( inStream );
+        auto red = Binary::Byte::read( inStream );
         return std::move( Color{ red, green, blue } ); // user order: ( red, green, blue )
     }
     
@@ -43,11 +43,11 @@ namespace BitmapGraphics
     //
     // Note: significant stream read/write order: ( blue, green, red )
     //
-    void Color::write ( std::ostream& os ) const
+    void Color::write ( std::ostream& outStream ) const
     {
-        myBlue.write( os );
-        myGreen.write( os );
-        myRed.write( os );
+        myBlue.write( outStream );
+        myGreen.write( outStream );
+        myRed.write( outStream );
     }
     
     bool Color::operator== ( const Color& rhs ) const noexcept
@@ -62,10 +62,10 @@ namespace BitmapGraphics
         return ! ( *this == rhs );
     }
         
-    std::ostream& operator<< ( std::ostream& os, const Color& rhs ) noexcept
+    std::ostream& operator<< ( std::ostream& outStream, const Color& rhs ) noexcept
     {
-        rhs.write( os );
-        return os;
+        rhs.write( outStream );
+        return outStream;
     }
 }
 
