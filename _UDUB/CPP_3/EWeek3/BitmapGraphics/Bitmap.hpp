@@ -49,7 +49,7 @@ namespace BitmapGraphics
         
     private:
     
-        void readScanLine ( std::istream& is );
+        void readScanLine ( std::istream& is ) noexcept;
         void writeScanLine ( std::ostream& os, const ScanLine& scanLine ) const;
     
         void readPadding ( std::istream& is ) const noexcept;

@@ -29,12 +29,12 @@ namespace Binary
 
     DoubleWord DoubleWord::readLittleEndian ( std::istream& is )
     {
-        return read( is, Endianness::Little );
+        return std::move(  read( is, Endianness::Little )  );
     }
 
     DoubleWord DoubleWord::readBigEndian ( std::istream& is )
     {
-        return read( is, Endianness::Big );
+        return std::move(  read( is, Endianness::Big )  );
     }
     
     void DoubleWord::read ( std::istream& is,
@@ -89,12 +89,21 @@ namespace Binary
     void DoubleWord::write ( std::ostream& os, Endianness forceEndian ) const
     {
         Binary::ByteType allBitsSet =
-            static_cast<Binary::ByteType>(  (1 << ( Byte::BIT_COUNT + 1 )) - 1  );
+            static_cast<ByteType>(  (1 << ( Byte::BIT_COUNT + 1 )) - 1  );
+        
         Byte mask{ allBitsSet };
-        Byte first =  ( myValue & mask << ( 3 * Byte::BIT_COUNT ) )  >> ( 3 * Byte::BIT_COUNT );
-        Byte second = ( myValue & mask << ( 2 * Byte::BIT_COUNT ) )  >> ( 2 * Byte::BIT_COUNT );
-        Byte third =  ( myValue & mask << ( 1 * Byte::BIT_COUNT ) )  >> ( 1 * Byte::BIT_COUNT );
-        Byte fourth = ( myValue & mask << ( 0 * Byte::BIT_COUNT ) )  >> ( 0 * Byte::BIT_COUNT );
+        
+        Byte first{ static_cast<ByteType>(
+            ( myValue & mask << ( 3 * Byte::BIT_COUNT ) )  >> ( 3 * Byte::BIT_COUNT )    ) };
+        
+        Byte second{ static_cast<ByteType>(
+            ( myValue & mask << ( 2 * Byte::BIT_COUNT ) )  >> ( 2 * Byte::BIT_COUNT )    ) };
+        
+        Byte third{ static_cast<ByteType>(
+            ( myValue & mask << ( 1 * Byte::BIT_COUNT ) )  >> ( 1 * Byte::BIT_COUNT )    ) };
+        
+        Byte fourth{ static_cast<ByteType>(
+            ( myValue & mask << ( 0 * Byte::BIT_COUNT ) )  >> ( 0 * Byte::BIT_COUNT )    ) };
 
         if (  ( forceEndian == Binary::Endianness::Little ) ||
               ( forceEndian == Binary::Endianness::Dynamic && Binary::IS__LITTLE__ENDIAN() )  )

@@ -60,13 +60,13 @@ namespace BitmapGraphics
         }
     }
     
-    void Bitmap::readScanLine ( std::istream& is )
+    void Bitmap::readScanLine ( std::istream& is ) noexcept
     {
         ScanLine scanLine;
         
         for ( auto width = 0;  width < myWidth;  ++width )
         {
-            scanLine.emplace_back(  std::move(Color::read( is ))  );
+            scanLine.emplace_back(  std::move( Color::read( is ) )  );
         }
         myScanLines.emplace_back(  std::move( scanLine )  );
     
@@ -85,7 +85,7 @@ namespace BitmapGraphics
     
     void Bitmap::readPadding ( std::istream& is ) const noexcept
     {
-        for ( auto padCount = 0;  padCount < myPaddingSize; ++padCount)
+        for ( auto padCount = 0;  padCount < myPaddingSize; ++padCount )
         {
             is.ignore();
         }

@@ -53,7 +53,7 @@ namespace BitmapGraphics
     
         WindowsBitmapHeader() = default;
         ~WindowsBitmapHeader() = default;
-        WindowsBitmapHeader ( std::istream& is );
+        explicit WindowsBitmapHeader ( std::istream& is );
         
         WindowsBitmapHeader ( const WindowsBitmapHeader& src ) = default;
         WindowsBitmapHeader ( WindowsBitmapHeader&& src ) = default;

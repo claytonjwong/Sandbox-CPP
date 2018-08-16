@@ -29,12 +29,12 @@ namespace Binary
     
     Word Word::readLittleEndian ( std::istream& is )
     {
-        return read( is, Endianness::Little );
+        return std::move(  read( is, Endianness::Little )  );
     }
 
     Word Word::readBigEndian ( std::istream& is )
     {
-        return read( is, Endianness::Big );
+        return std::move(  read( is, Endianness::Big )  );
     }
     
     void Word::read ( std::istream& is, Byte& first, Byte& second )
@@ -72,11 +72,16 @@ namespace Binary
     
     void Word::write ( std::ostream& os, Binary::Endianness forceEndian ) const
     {
-        Binary::ByteType allBitsSet =
-            static_cast<Binary::ByteType>(  (1 <<  ( Byte::BIT_COUNT + 1 ))  - 1  );
+        ByteType allBitsSet =
+            static_cast<ByteType>(  (1 <<  ( Byte::BIT_COUNT + 1 ))  - 1  );
+        
         Byte mask{ allBitsSet };
-        Byte first =  ( myValue & mask << ( 1 * Byte::BIT_COUNT ) )  >> ( 1 * Byte::BIT_COUNT );
-        Byte second = ( myValue & mask << ( 0 * Byte::BIT_COUNT ) )  >> ( 0 * Byte::BIT_COUNT );
+        
+        Byte first{ static_cast<ByteType>(
+            ( myValue & mask << ( 1 * Byte::BIT_COUNT ) )  >> ( 1 * Byte::BIT_COUNT )    ) };
+            
+        Byte second{ static_cast<ByteType>(
+            ( myValue & mask << ( 0 * Byte::BIT_COUNT ) )  >> ( 0 * Byte::BIT_COUNT )    ) };
     
         if (  ( forceEndian == Binary::Endianness::Little ) ||
               ( forceEndian == Binary::Endianness::Dynamic && Binary::IS__LITTLE__ENDIAN() )  )

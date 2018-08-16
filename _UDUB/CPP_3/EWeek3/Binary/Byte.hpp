@@ -24,7 +24,7 @@ namespace Binary
         
         Byte() = default;
         ~Byte() = default;
-        Byte ( ByteType value );
+        explicit Byte ( ByteType value );
 
         Byte ( const Byte& src ) = default;
         Byte ( Byte&& src ) = default;
@@ -32,11 +32,15 @@ namespace Binary
         Byte& operator= ( const Byte& rhs ) = default;
         Byte& operator= ( Byte&& rhs ) = default;
         
+        Byte& operator= ( const ByteType& rhs );
+        Byte& operator= ( ByteType&& rhs );
+        
         const ByteType& getValue() const noexcept;
 
         void write ( std::ostream& os ) const;
         
         operator ByteType() const noexcept;
+        
         bool operator== ( const Byte& rhs ) const noexcept;
         
     private:

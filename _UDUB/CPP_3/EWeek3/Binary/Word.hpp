@@ -34,7 +34,7 @@ namespace Binary
 
         Word() = default;
         ~Word() = default;
-        Word ( WordType value );
+        explicit Word ( WordType value );
         Word ( const Byte& first, const Byte& second );
         
         Word ( const Word& src ) = default;

@@ -6,6 +6,7 @@
 //  Copyright © 2018 Clayton Wong. All rights reserved.
 //
 
+#include "Common.hpp"
 #include "Byte.hpp"
 #include "Color.hpp"
 
@@ -14,14 +15,14 @@ using namespace std;
 namespace BitmapGraphics
 {
     //
-    // Note: significant read/write order: ( blue, green, red )
+    // Note: significant stream read/write order: ( blue, green, red )
     //
     Color Color::read ( std::istream& is ) noexcept
     {
         auto blue = Binary::Byte::read( is );
         auto green = Binary::Byte::read( is );
         auto red = Binary::Byte::read( is );
-        return std::move( Color{ red, green, blue } );
+        return std::move( Color{ red, green, blue } ); // user order: ( red, green, blue )
     }
 
     Color::Color ( Component red, Component green, Component blue ) :
@@ -30,7 +31,24 @@ namespace BitmapGraphics
     myBlue{ blue }
     {
     }
+    
+    Color::Color ( std::initializer_list<Binary::ByteType > initList )
+    {
+        if ( initList.size() != 3 )
+        {
+            throw runtime_error{ "color must be initialized with 3 components: red, green, blue" };
+        }
         
+        auto it = initList.begin();
+        
+        myRed = Binary::Byte{ *it++ };
+        myGreen = Binary::Byte{ *it++ };
+        myBlue = Binary::Byte{ *it++ };
+        
+        Binary::verifyEquality( it, initList.end(),
+            "color must be initialized with 3 components: red, green, blue" );
+    }
+    
     const Color::Component& Color::getBlue() const noexcept
     {
         return myBlue;
@@ -47,7 +65,7 @@ namespace BitmapGraphics
     }
     
     //
-    // Note: significant read/write order: ( blue, green, red )
+    // Note: significant stream read/write order: ( blue, green, red )
     //
     void Color::write ( std::ostream& os ) const
     {
