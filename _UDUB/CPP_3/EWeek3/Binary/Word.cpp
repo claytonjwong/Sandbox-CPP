@@ -8,23 +8,25 @@
 
 #include "Word.hpp"
 #include "Common.hpp"
+#include <list>
 
 namespace Binary
 {
     Word Word::read ( std::istream& inStream, const Endianness&& forceEndian )
     {
-        Byte first, second;
-        read( inStream, first, second );
+        std::list<Byte> bytes;
+        read( inStream, bytes );
         
         if (  ( forceEndian == Binary::Endianness::Little ) ||
               ( forceEndian == Binary::Endianness::Dynamic && Binary::IS__LITTLE__ENDIAN() )  )
         {
-            return std::move( Word{ second, first } );
+            ; // no-op
         }
         else
         {
-            return std::move( Word{ first, second } );
+            std::reverse( bytes.begin(), bytes.end() );
         }
+        return std::move(  Word{ bytes }  );
     }
     
     Word Word::readLittleEndian ( std::istream& inStream )
@@ -37,18 +39,17 @@ namespace Binary
         return std::move(  read( inStream, Endianness::Big )  );
     }
     
-    void Word::read ( std::istream& inStream, Byte& first, Byte& second )
+    void Word::read ( std::istream& inStream, std::list<Byte>& bytes )
     {
-        first = Byte::read( inStream );
-        if ( ! inStream )
+        for ( int index=0; index < Word::BYTE_COUNT; ++index )
         {
-            throw std::runtime_error{ "unable to read Word's first byte from istream" };
-        }
-
-        second = Byte::read( inStream );
-        if ( ! inStream )
-        {
-            throw std::runtime_error{ "unable to read Word's second byte from istream" };
+            Byte byte = Byte::read( inStream );
+            bytes.push_back( std::move( byte ) );
+            
+            if ( ! inStream )
+            {
+                throw std::runtime_error{ "unable to read Word byte from istream" };
+            }
         }
     }
     
@@ -57,12 +58,14 @@ namespace Binary
     {
     }
     
-    Word::Word ( const Byte& first, const Byte& second )  :
+    Word::Word ( const std::list<Byte>& bytes ) :
     myValue{ 0 }
     {
-        myValue =
-            first.getValue()  << ( 1 * Byte::BIT_COUNT ) |
-            second.getValue() << ( 0 * Byte::BIT_COUNT );
+        int index=0;
+        for ( const auto& byte: bytes )
+        {
+            myValue |= ( byte.getValue() << ( index++ * Byte::BIT_COUNT ) );
+        }
     }
     
     const WordType& Word::getValue() const noexcept
@@ -71,25 +74,26 @@ namespace Binary
     }
     
     void Word::write ( std::ostream& outStream, const Binary::Endianness&& forceEndian ) const
-    {
-        ByteType mask =
-            static_cast<ByteType>(  (1 <<  ( Byte::BIT_COUNT + 1 ))  - 1  );
-        
-        Byte first{ static_cast<ByteType>(
-            ( myValue & mask << ( 1 * Byte::BIT_COUNT ) )  >> ( 1 * Byte::BIT_COUNT )    ) };
-            
-        Byte second{ static_cast<ByteType>(
-            ( myValue & mask << ( 0 * Byte::BIT_COUNT ) )  >> ( 0 * Byte::BIT_COUNT )    ) };
+    {        
+        std::list<Byte> bytes;
+        for ( int index = 0; index < Word::BYTE_COUNT; ++index)
+        {
+            Byte byte{ static_cast<ByteType>(
+                (myValue & Byte::MASK_ALL_BITS_SET << ( index * Byte::BIT_COUNT ))  >> ( index * Byte::BIT_COUNT )  )  };
+            bytes.emplace_back( std::move( byte ) );
+        }
     
         if (  ( forceEndian == Binary::Endianness::Little ) ||
               ( forceEndian == Binary::Endianness::Dynamic && Binary::IS__LITTLE__ENDIAN() )  )
         {
-            write( outStream, second, first );
+            ; // no-op, bytes are read in little endian order by default
         }
         else
         {
-            write( outStream, first, second );
+            std::reverse( bytes.begin(), bytes.end() );
         }
+        
+        write( outStream, bytes );
     }
     
     void Word::writeLittleEndian ( std::ostream& outStream ) const
@@ -102,17 +106,15 @@ namespace Binary
         write( outStream, Binary::Endianness::Big );
     }
     
-    void Word::write( std::ostream& outStream, const Byte& first, const Byte& second )
+    void Word::write( std::ostream& outStream, const std::list<Byte>& bytes )
     {
-        first.write( outStream );
-        if ( ! outStream )
+        for (const auto& byte: bytes)
         {
-            throw std::runtime_error{ "unable to write Word's first byte to ostream" };
-        }
-        second.write( outStream );
-        if ( ! outStream )
-        {
-            throw std::runtime_error{ "unable to write Word's second byte to ostream" };
+            byte.write( outStream );
+            if ( ! outStream )
+            {
+                throw std::runtime_error{ "unable to write Word byte to ostream" };
+            }
         }
     }
 

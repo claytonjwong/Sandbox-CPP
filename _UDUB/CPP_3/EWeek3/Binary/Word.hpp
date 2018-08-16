@@ -11,6 +11,7 @@
 #include "Common.hpp"
 #include "Byte.hpp"
 #include <sstream>
+#include <list>
 
 namespace Binary
 {
@@ -28,14 +29,14 @@ namespace Binary
 
     private:
     
-        static void read ( std::istream& inStream, Byte& first, Byte& second );
+        static void read ( std::istream& inStream, std::list<Byte>& bytes );
         
     public:
 
         Word() = default;
         ~Word() = default;
         explicit Word ( WordType value );
-        Word ( const Byte& first, const Byte& second );
+        Word ( const std::list<Byte>& bytes );
         
         Word ( const Word& src ) = default;
         Word ( Word&& src ) = default;
@@ -54,7 +55,7 @@ namespace Binary
         
     private:
     
-        static void write ( std::ostream& outStream, const Byte& first, const Byte& second );
+        static void write( std::ostream& outStream, const std::list<Byte>& bytes );
 
     public:
         
