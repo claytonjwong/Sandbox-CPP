@@ -8,6 +8,16 @@
 
 #pragma once
 
+#include "MultiByte_t.hpp"
+
+namespace Binary
+{
+    using DoubleWord = MultiByte_t<uint32_t>;
+    using DoubleWordType = uint32_t;
+}
+
+/*
+
 #include "Common.hpp"
 #include "Byte.hpp"
 #include <sstream>
@@ -77,3 +87,6 @@ namespace Binary
     
     std::ostream& operator<< ( std::ostream& outStream, const DoubleWord& rhs );
 }
+
+*/
+

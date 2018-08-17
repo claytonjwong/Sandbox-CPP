@@ -26,6 +26,12 @@ namespace Binary
       self_type& operator= (const T& value)
       {
         *myStream << value;
+        
+        if ( ! *myStream )
+        {
+            throw std::runtime_error{ "unable to write to stream" };
+        }
+        
         return *this;
       }
 

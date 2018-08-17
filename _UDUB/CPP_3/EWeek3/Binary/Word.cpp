@@ -6,9 +6,13 @@
 //  Copyright © 2018 Clayton Wong. All rights reserved.
 //
 
+/*
+
 #include "Word.hpp"
 #include "Common.hpp"
+#include "binary_ostream_iterator.hpp"
 #include <list>
+
 
 namespace Binary
 {
@@ -123,15 +127,8 @@ namespace Binary
     
     void Word::write( std::ostream& outStream, const std::list<Byte>& bytes )
     {
-        for (const auto& byte: bytes)
-        {
-            byte.write( outStream );
-            
-            if ( ! outStream )
-            {
-                throw std::runtime_error{ "unable to write Word byte to ostream" };
-            }
-        }
+        std::copy( bytes.begin(), bytes.end(),
+            Binary::binary_ostream_iterator<Byte>( outStream )  );
     }
 
 
@@ -154,3 +151,5 @@ namespace Binary
         return outStream;
     }
 }
+*/
+
