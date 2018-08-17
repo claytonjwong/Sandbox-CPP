@@ -19,9 +19,9 @@ namespace Binary
     public:
         
         static constexpr int BIT_COUNT = 8;
+        
         static constexpr ByteType MASK_ALL_BITS_SET =
             static_cast<ByteType>(  (1 <<  ( Byte::BIT_COUNT + 1 ))  - 1  );
-
         
         static Byte read ( std::istream& inStream ) noexcept;
         

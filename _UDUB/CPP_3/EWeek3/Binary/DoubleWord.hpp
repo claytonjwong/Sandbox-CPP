@@ -11,6 +11,7 @@
 #include "Common.hpp"
 #include "Byte.hpp"
 #include <sstream>
+#include <list>
 
 namespace Binary
 {
@@ -27,19 +28,17 @@ namespace Binary
         static DoubleWord readBigEndian ( std::istream& inStream );
         
     private:
-    
-        static void read ( std::istream& inStream,
-                           Byte& first, Byte& second,
-                           Byte& third, Byte& fourth );
-                           
+        
+        static void read ( std::istream& inStream, std::list<Byte>& bytes );
+
     public:
     
         DoubleWord() = default;
         ~DoubleWord() = default;
         explicit DoubleWord ( DoubleWordType value );
-        DoubleWord ( const Byte& first, const Byte& second,
-                     const Byte& third, const Byte& fourth );
-        
+        explicit DoubleWord ( const std::list<Byte>& bytes );
+
+
         DoubleWord ( const DoubleWord& src ) = default;
         DoubleWord ( DoubleWord&& src ) = default;
         
@@ -56,10 +55,8 @@ namespace Binary
         void writeBigEndian ( std::ostream& outStream ) const;
     
     private:
-    
-        static void write ( std::ostream& outStream,
-            const Byte& first, const Byte& second,
-            const Byte& third, const Byte& fourth);
+        
+        static void write ( std::ostream& outStream, const std::list<Byte>& bytes );
     
     public:
         

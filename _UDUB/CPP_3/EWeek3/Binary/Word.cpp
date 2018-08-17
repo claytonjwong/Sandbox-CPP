@@ -20,7 +20,7 @@ namespace Binary
         if (  ( forceEndian == Binary::Endianness::Little ) ||
               ( forceEndian == Binary::Endianness::Dynamic && Binary::IS__LITTLE__ENDIAN() )  )
         {
-            ; // no-op
+            ; // no-op, little endian by default
         }
         else
         {
@@ -86,7 +86,7 @@ namespace Binary
         if (  ( forceEndian == Binary::Endianness::Little ) ||
               ( forceEndian == Binary::Endianness::Dynamic && Binary::IS__LITTLE__ENDIAN() )  )
         {
-            ; // no-op, bytes are read in little endian order by default
+            ; // no-op, little endian by default
         }
         else
         {

@@ -8,22 +8,41 @@
 
 #include "DoubleWord.hpp"
 #include "Common.hpp"
+#include <list>
 
 namespace Binary
 {
     DoubleWord DoubleWord::read ( std::istream& inStream, const Endianness&& forceEndian )
     {
-        Byte first, second, third, fourth;
-        read ( inStream, first, second, third, fourth );
+        std::list<Byte> bytes;
+        
+        read( inStream, bytes );
         
         if (  ( forceEndian == Binary::Endianness::Little ) ||
               ( forceEndian == Binary::Endianness::Dynamic && Binary::IS__LITTLE__ENDIAN() )  )
         {
-            return std::move( DoubleWord{ fourth, third, second, first } );
+            ; // no-op, little endian by default
         }
         else
         {
-            return std::move( DoubleWord{ first, second, third, fourth } );
+            reverse( bytes.begin(), bytes.end() );
+        }
+        
+        return std::move( DoubleWord{ bytes } );
+    }
+    
+    void DoubleWord::read ( std::istream& inStream, std::list<Byte>& bytes )
+    {
+        for ( int index = 0; index < DoubleWord::BYTE_COUNT; ++index )
+        {
+            Byte byte = Byte::read( inStream );
+            
+            bytes.push_back(  std::move( byte )  );
+            
+            if ( ! inStream )
+            {
+                throw std::runtime_error{ "unable to read DoubleWord from istream" };
+            }
         }
     }
 
@@ -37,48 +56,19 @@ namespace Binary
         return std::move(  read( inStream, Endianness::Big )  );
     }
     
-    void DoubleWord::read ( std::istream& inStream,
-                            Byte& first, Byte& second, Byte& third, Byte& fourth )
-    {
-        first = Byte::read( inStream );
-        if ( ! inStream )
-        {
-            throw std::runtime_error{ "unable to read DoubleWord's first byte from istream" };
-        }
-        
-        second = Byte::read( inStream );
-        if ( ! inStream )
-        {
-            throw std::runtime_error{ "unable to read DoubleWord's second byte from istream" };
-        }
-
-        third = Byte::read( inStream );
-        if ( ! inStream )
-        {
-            throw std::runtime_error{ "unable to read DoubleWord's third byte from istream" };
-        }
-
-        fourth = Byte::read( inStream );
-        if ( ! inStream )
-        {
-            throw std::runtime_error{ "unable to read DoubleWord's fourth byte from istream" };
-        }
-    }
-    
     DoubleWord::DoubleWord( DoubleWordType value ) :
     myValue{ value }
     {
     }
     
-    DoubleWord::DoubleWord ( const Byte& first, const Byte& second,
-                             const Byte& third, const Byte& fourth ) :
+    DoubleWord::DoubleWord ( const std::list<Byte>& bytes ) :
     myValue{ 0 }
     {
-        myValue =
-            first.getValue()  << ( 3 * Byte::BIT_COUNT ) |
-            second.getValue() << ( 2 * Byte::BIT_COUNT ) |
-            third.getValue()  << ( 1 * Byte::BIT_COUNT ) |
-            fourth.getValue() << ( 0 * Byte::BIT_COUNT );
+        int index = 0;
+        for ( const auto& byte: bytes )
+        {
+            myValue |= ( byte.getValue() << ( index++ * Byte::BIT_COUNT ) );
+        }
     }
     
     DoubleWord& DoubleWord::operator= ( const DoubleWordType& rhs )
@@ -100,30 +90,26 @@ namespace Binary
 
     void DoubleWord::write ( std::ostream& outStream, const Endianness&& forceEndian ) const
     {
-        Binary::ByteType mask =
-            static_cast<ByteType>(  ( 1 << ( Byte::BIT_COUNT + 1 )) - 1  );
+        std::list<Byte> bytes;
         
-        Byte first{ static_cast<ByteType>(
-            ( myValue & mask << ( 3 * Byte::BIT_COUNT ) )  >> ( 3 * Byte::BIT_COUNT )    ) };
-        
-        Byte second{ static_cast<ByteType>(
-            ( myValue & mask << ( 2 * Byte::BIT_COUNT ) )  >> ( 2 * Byte::BIT_COUNT )    ) };
-        
-        Byte third{ static_cast<ByteType>(
-            ( myValue & mask << ( 1 * Byte::BIT_COUNT ) )  >> ( 1 * Byte::BIT_COUNT )    ) };
-        
-        Byte fourth{ static_cast<ByteType>(
-            ( myValue & mask << ( 0 * Byte::BIT_COUNT ) )  >> ( 0 * Byte::BIT_COUNT )    ) };
+        for ( int index = 0; index < DoubleWord::BYTE_COUNT; ++index )
+        {
+            Byte byte{ static_cast<ByteType>(
+                (myValue & Byte::MASK_ALL_BITS_SET << ( index * Byte::BIT_COUNT ))  >> ( index * Byte::BIT_COUNT )  )  };
+            bytes.push_back(  std::move( byte )  );
+        }
 
         if (  ( forceEndian == Binary::Endianness::Little ) ||
               ( forceEndian == Binary::Endianness::Dynamic && Binary::IS__LITTLE__ENDIAN() )  )
         {
-            write( outStream, fourth, third, second, first );
+            ; // no-op, little endian by default
         }
         else
         {
-            write( outStream, first, second, third, fourth );
+            reverse( bytes.begin(), bytes.end() );
         }
+        
+        write( outStream, bytes );
     }
     
     void DoubleWord::writeLittleEndian ( std::ostream& outStream ) const
@@ -136,28 +122,16 @@ namespace Binary
         write( outStream, Endianness::Big );
     }
     
-    void DoubleWord::write ( std::ostream& outStream,
-        const Byte& first, const Byte& second, const Byte& third, const Byte& fourth)
+    void DoubleWord::write ( std::ostream& outStream, const std::list<Byte>& bytes )
     {
-        first.write( outStream );
-        if ( ! outStream )
+        for ( const auto& byte: bytes )
         {
-            throw std::runtime_error{ "unable to write DoubleWord's first byte to ostream" };
-        }
-        second.write( outStream );
-        if ( ! outStream )
-        {
-            throw std::runtime_error{ "unable to write DoubleWord's second byte to ostream" };
-        }
-        third.write( outStream );
-        if ( ! outStream )
-        {
-            throw std::runtime_error{ "unable to write DoubleWord's second byte to ostream" };
-        }
-        fourth.write( outStream );
-        if ( ! outStream )
-        {
-            throw std::runtime_error{ "unable to write DoubleWord's second byte to ostream" };
+            byte.write( outStream );
+            
+            if ( ! outStream )
+            {
+                throw std::runtime_error{ "unable to write DoubleWord byte to ostream" };
+            }
         }
     }
     
