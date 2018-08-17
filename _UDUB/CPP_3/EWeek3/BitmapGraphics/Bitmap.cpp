@@ -18,7 +18,9 @@ namespace BitmapGraphics
     myPaddingSize{ 0 }
     {
         auto scanLineSize = Color::BYTE_COUNT * myWidth;
+        
         auto align = Binary::DoubleWord::BYTE_COUNT;
+        
         myPaddingSize = ( align - ( scanLineSize % align ) ) % align;
     
         for ( auto scanLineHeight = 0;  scanLineHeight < myHeight;  ++scanLineHeight )
@@ -75,6 +77,7 @@ namespace BitmapGraphics
         {
             scanLine.emplace_back(  std::move( Color::read( inStream ) )  );
         }
+        
         myScanLines.emplace_back(  std::move( scanLine )  );
     
         readPadding( inStream );
@@ -104,6 +107,7 @@ namespace BitmapGraphics
     void Bitmap::writePadding ( std::ostream& outStream ) const noexcept
     {
         Binary::Byte padding;
+        
         for ( auto padCount = 0; padCount < myPaddingSize; ++padCount )
         {
             padding.write( outStream );
@@ -114,6 +118,7 @@ namespace BitmapGraphics
     std::ostream& operator<< ( std::ostream& outStream, const Bitmap& rhs )
     {
         rhs.write( outStream );
+        
         return outStream;
     }
 }

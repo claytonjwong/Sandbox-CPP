@@ -22,7 +22,7 @@ namespace BitmapGraphics
         auto blue = Binary::Byte::read( inStream );
         auto green = Binary::Byte::read( inStream );
         auto red = Binary::Byte::read( inStream );
-        return std::move( Color{ red, green, blue } ); // user order: ( red, green, blue )
+        return std::move(  Color{ red, green, blue }  ); // user order: ( red, green, blue )
     }
     
     
@@ -72,6 +72,7 @@ namespace BitmapGraphics
     std::ostream& operator<< ( std::ostream& outStream, const Color& rhs ) noexcept
     {
         rhs.write( outStream );
+        
         return outStream;
     }
 }

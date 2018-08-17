@@ -28,7 +28,7 @@ namespace Binary
             reverse( bytes.begin(), bytes.end() );
         }
         
-        return std::move( DoubleWord{ bytes } );
+        return std::move(  DoubleWord{ bytes }  );
     }
     
     
@@ -36,7 +36,7 @@ namespace Binary
     {
         for ( int index = 0; index < DoubleWord::BYTE_COUNT; ++index )
         {
-            Byte byte = Byte::read( inStream );
+            auto byte = Byte::read( inStream );
             
             bytes.push_back(  std::move( byte )  );
             

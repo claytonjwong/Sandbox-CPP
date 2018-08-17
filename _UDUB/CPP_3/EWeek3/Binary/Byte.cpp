@@ -81,6 +81,7 @@ namespace Binary
     std::ostream& operator<< ( std::ostream& outStream, const Byte& rhs )
     {
         rhs.write( outStream );
+        
         return outStream;
     }
 }

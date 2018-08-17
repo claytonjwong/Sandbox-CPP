@@ -21,7 +21,7 @@ namespace Binary
         static constexpr int BIT_COUNT = 8;
         
         static constexpr ByteType MASK_ALL_BITS_SET =
-            static_cast<ByteType>(  (1 <<  ( Byte::BIT_COUNT + 1 ))  - 1  );
+            static_cast<ByteType>(  ( 1 << ( Byte::BIT_COUNT + 1 ) )  - 1  );
         
         static Byte read ( std::istream& inStream ) noexcept;
         
@@ -51,12 +51,9 @@ namespace Binary
         //
         // explicit operator ByteType() const noexcept;
         //
-        // maybe the test case is out-of-date?...
-        //
         //    unsigned char c3{};
-        //    c3 = byte2;
+        //    c3 = byte2; // compiler error: Assigning to 'unsigned char' from incompatible type 'Binary::Byte'
         //
-        // Assigning to 'unsigned char' from incompatible type 'Binary::Byte'
         //
         // This can be resolved by either:
         //

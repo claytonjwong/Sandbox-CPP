@@ -58,8 +58,8 @@ namespace BitmapGraphics
         WindowsBitmapHeader ( const WindowsBitmapHeader& src ) = default;
         WindowsBitmapHeader ( WindowsBitmapHeader&& src ) = default;
         
-        WindowsBitmapHeader& operator= ( const WindowsBitmapHeader& src ) = default;
-        WindowsBitmapHeader& operator= ( WindowsBitmapHeader&& src ) = default;
+        WindowsBitmapHeader& operator= ( const WindowsBitmapHeader& rhs ) = default;
+        WindowsBitmapHeader& operator= ( WindowsBitmapHeader&& rhs ) = default;
         
         void read ( std::istream& inStream );
         void readFileHeader ( std::istream& inStream );

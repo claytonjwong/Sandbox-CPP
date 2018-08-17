@@ -48,7 +48,7 @@ namespace Binary
     {
         for ( int index=0; index < Word::BYTE_COUNT; ++index )
         {
-            Byte byte = Byte::read( inStream );
+            auto byte = Byte::read( inStream );
             
             bytes.push_back( std::move( byte ) );
             
@@ -86,12 +86,13 @@ namespace Binary
     void Word::write ( std::ostream& outStream, const Binary::Endianness&& forceEndian ) const
     {        
         std::list<Byte> bytes;
+        
         for ( int index = 0; index < Word::BYTE_COUNT; ++index)
         {
             Byte byte{ static_cast<ByteType>(
                 (myValue & Byte::MASK_ALL_BITS_SET << ( index * Byte::BIT_COUNT ))  >> ( index * Byte::BIT_COUNT )  )  };
             
-            bytes.emplace_back( std::move( byte ) );
+            bytes.emplace_back(  std::move( byte )  );
         }
     
         if (  ( forceEndian == Binary::Endianness::Little ) ||
@@ -149,6 +150,7 @@ namespace Binary
     std::ostream& operator<< ( std::ostream& outStream, const Word& rhs )
     {
         rhs.write( outStream );
+        
         return outStream;
     }
 }
