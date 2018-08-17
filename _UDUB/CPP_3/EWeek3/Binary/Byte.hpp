@@ -47,12 +47,12 @@ namespace Binary
         //
         // should be explicit?  I'm not sure how to get that to compile though
         //
-        // I get a compiler error when I make this operator explicit:
+        // I get a compiler error when I make this operator explicit due to the way the unit test was provided:
         //
         // explicit operator ByteType() const noexcept;
         //
         //    unsigned char c3{};
-        //    c3 = byte2; // compiler error: Assigning to 'unsigned char' from incompatible type 'Binary::Byte'
+        //    c3 = byte2; // unit test provided gives compiler error: Assigning to 'unsigned char' from incompatible type 'Binary::Byte'
         //
         //
         // This can be resolved by either:
@@ -64,7 +64,7 @@ namespace Binary
         //
         // OR
         //
-        // 2) modifying the test case to explicitly cast the byte to an unsigned char
+        // 2) modifying the test case to explicitly cast the byte
         //
         //    unsigned char c3{};
         //    c3 = static_cast<Binary::ByteType>(byte2);

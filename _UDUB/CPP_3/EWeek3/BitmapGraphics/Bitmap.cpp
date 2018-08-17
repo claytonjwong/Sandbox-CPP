@@ -9,6 +9,7 @@
 #include "DoubleWord.hpp"
 #include "Color.hpp"
 #include "Bitmap.hpp"
+#include "binary_ostream_iterator.hpp"
 
 namespace BitmapGraphics
 {
@@ -86,10 +87,8 @@ namespace BitmapGraphics
     
     void Bitmap::writeScanLine ( std::ostream& outStream, const ScanLine& scanLine ) const
     {
-        for ( const auto& color: scanLine )
-        {
-            color.write( outStream );
-        }
+        std::copy( scanLine.begin(), scanLine.end(),
+            Binary::binary_ostream_iterator<Color>( outStream ));
         
         writePadding( outStream );
     }
