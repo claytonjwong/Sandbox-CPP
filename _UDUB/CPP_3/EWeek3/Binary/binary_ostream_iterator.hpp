@@ -8,8 +8,6 @@
 
 #pragma once
 
-#include <iterator>
-
 namespace Binary
 {
     template< class T, class charT = char, class traits = std::char_traits<charT> >

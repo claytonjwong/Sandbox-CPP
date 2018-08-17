@@ -25,20 +25,24 @@ namespace BitmapGraphics
         return std::move( Color{ red, green, blue } ); // user order: ( red, green, blue )
     }
     
+    
     const Color::ComponentType& Color::getBlue() const noexcept
     {
         return myBlue.getValue();
     }
+    
     
     const Color::ComponentType& Color::getGreen() const noexcept
     {
         return myGreen.getValue();
     }
     
+    
     const Color::ComponentType& Color::getRed() const noexcept
     {
         return myRed.getValue();
     }
+    
     
     //
     // Note: significant stream read/write order: ( blue, green, red )
@@ -50,6 +54,7 @@ namespace BitmapGraphics
         myRed.write( outStream );
     }
     
+    
     bool Color::operator== ( const Color& rhs ) const noexcept
     {
         return myRed.getValue() == rhs.getRed()
@@ -57,10 +62,12 @@ namespace BitmapGraphics
             && myBlue.getValue() == rhs.getBlue();
     }
     
+    
     bool Color::operator!= ( const Color& rhs ) const noexcept
     {
         return ! ( *this == rhs );
     }
+    
         
     std::ostream& operator<< ( std::ostream& outStream, const Color& rhs ) noexcept
     {

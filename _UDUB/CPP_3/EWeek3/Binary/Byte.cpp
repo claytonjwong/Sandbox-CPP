@@ -27,11 +27,13 @@ namespace Binary
             throw std::runtime_error{ "unable to read Byte from istream" };
         }
     }
-        
+    
+    
     Byte::Byte ( const ByteType& value ) :
     myValue{ value }
     {
     }
+    
     
     Byte& Byte::operator= ( const ByteType& rhs )
     {
@@ -39,16 +41,19 @@ namespace Binary
         return *this;
     }
 
+
     Byte& Byte::operator= ( ByteType&& rhs )
     {
         myValue = rhs;
         return *this;
     }
     
+    
     const ByteType& Byte::getValue() const noexcept
     {
         return myValue;
     }
+    
     
     void Byte::write ( std::ostream& outStream ) const
     {
@@ -60,15 +65,18 @@ namespace Binary
         }
     }
     
+    
     Byte::operator ByteType() const noexcept
     {
         return myValue;
     }
     
+    
     bool Byte::operator== ( const Byte& rhs ) const noexcept
     {
         return myValue == rhs.myValue;
     }
+    
     
     std::ostream& operator<< ( std::ostream& outStream, const Byte& rhs )
     {

@@ -43,6 +43,7 @@ namespace BitmapGraphics
         read( inStream );
     }
     
+    
     void WindowsBitmapHeader::read ( std::istream& inStream )
     {
         readFileHeader( inStream );
@@ -58,6 +59,7 @@ namespace BitmapGraphics
         verifyEquality( rawImagePos, inStream.tellg(),
             "actual raw image position referred to via myRawImageOffset" );
     }
+    
     
     //
     // order of read() matters based on the file header!
@@ -83,6 +85,7 @@ namespace BitmapGraphics
         
         verifyEquality( static_cast<std::streampos>( 14 ), inStream.tellg(), "end file header" );
     }
+    
     
     //
     // order of read() matters based on the info header!
@@ -127,26 +130,31 @@ namespace BitmapGraphics
         verifyEquality( static_cast<std::streampos>( 54 ), inStream.tellg(), "end info header" );
     }
     
+    
     int WindowsBitmapHeader::getBitmapWidth() const noexcept
     {
         return myWidth.getValue();
     }
+    
     
     int WindowsBitmapHeader::getBitmapHeight() const noexcept
     {
         return myHeight.getValue();
     }
     
+    
     int WindowsBitmapHeader::getFileSize() const noexcept
     {
         return myFileSize.getValue();
     }
+    
     
     void WindowsBitmapHeader::write ( std::ostream& outStream ) const
     {
         writeFileHeader( outStream );
         writeInfoHeader( outStream );
     }
+    
     
     void WindowsBitmapHeader::writeFileHeader ( std::ostream& outStream ) const
     {
@@ -156,6 +164,8 @@ namespace BitmapGraphics
         reserved.write( outStream );
         myRawImageOffset.write( outStream );
     }
+    
+    
     void WindowsBitmapHeader::writeInfoHeader ( std::ostream& outStream ) const
     {
         infoHeaderSize.write( outStream );

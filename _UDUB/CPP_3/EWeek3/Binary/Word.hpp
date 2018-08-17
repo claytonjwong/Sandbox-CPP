@@ -36,7 +36,7 @@ namespace Binary
         Word() = default;
         ~Word() = default;
         explicit Word ( WordType value );
-        Word ( const std::list<Byte>& bytes );
+        explicit Word ( const std::list<Byte>& bytes );
         
         Word ( const Word& src ) = default;
         Word ( Word&& src ) = default;
@@ -44,8 +44,8 @@ namespace Binary
         Word& operator= ( const Word& rhs ) = default;
         Word& operator= ( Word&& rhs ) = default;
         
-        Word& operator= ( const WordType& rhs );
-        Word& operator= ( WordType&& rhs );
+        template <typename Type>
+        Word& operator= ( Type&& rhs );
         
         const WordType& getValue() const noexcept;
 
@@ -67,6 +67,13 @@ namespace Binary
     
         WordType myValue{ 0 };
     };
+    
+    template <typename Type>
+    Word& Word::operator= ( Type&& rhs )
+    {
+        myValue = static_cast<WordType>( rhs );
+        return *this;
+    }
     
     std::ostream& operator<< ( std::ostream& outStream, const Word& rhs );
 }

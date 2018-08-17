@@ -27,30 +27,36 @@ namespace BitmapGraphics
         }
     }
     
+    
     int Bitmap::getWidth() const noexcept
     {
         return myWidth;
     }
+    
 
     int Bitmap::getHeight() const noexcept
     {
         return myHeight;
     }
     
+    
     int Bitmap::getNumberOfPadBytes() const noexcept
     {
         return myPaddingSize;
     }
+    
 
     Bitmap::ScanLineIterator Bitmap::begin() const noexcept
     {
         return myScanLines.begin();
     }
+    
 
     Bitmap::ScanLineIterator Bitmap::end() const noexcept
     {
         return myScanLines.end();
     }
+    
     
     void Bitmap::write ( std::ostream& outStream ) const
     {
@@ -59,6 +65,7 @@ namespace BitmapGraphics
             writeScanLine( outStream, scanLine );
         }
     }
+    
     
     void Bitmap::readScanLine ( std::istream& inStream ) noexcept
     {
@@ -73,6 +80,7 @@ namespace BitmapGraphics
         readPadding( inStream );
     }
     
+    
     void Bitmap::writeScanLine ( std::ostream& outStream, const ScanLine& scanLine ) const
     {
         for ( const auto& color: scanLine )
@@ -83,6 +91,7 @@ namespace BitmapGraphics
         writePadding( outStream );
     }
     
+    
     void Bitmap::readPadding ( std::istream& inStream ) const noexcept
     {
         for ( auto padCount = 0;  padCount < myPaddingSize; ++padCount )
@@ -90,6 +99,7 @@ namespace BitmapGraphics
             inStream.ignore();
         }
     }
+
 
     void Bitmap::writePadding ( std::ostream& outStream ) const noexcept
     {
@@ -99,6 +109,7 @@ namespace BitmapGraphics
             padding.write( outStream );
         }
     }
+    
     
     std::ostream& operator<< ( std::ostream& outStream, const Bitmap& rhs )
     {

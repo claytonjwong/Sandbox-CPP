@@ -38,15 +38,14 @@ namespace Binary
         explicit DoubleWord ( DoubleWordType value );
         explicit DoubleWord ( const std::list<Byte>& bytes );
 
-
         DoubleWord ( const DoubleWord& src ) = default;
         DoubleWord ( DoubleWord&& src ) = default;
         
         DoubleWord& operator= ( const DoubleWord& rhs ) = default;
         DoubleWord& operator= ( DoubleWord&& rhs ) = default;
 
-        DoubleWord& operator= ( const DoubleWordType& rhs );
-        DoubleWord& operator= ( DoubleWordType&& rhs );
+        template <typename Type>
+        DoubleWord& operator= ( Type&& rhs );
 
         const DoubleWordType& getValue() const noexcept;
         
@@ -68,6 +67,13 @@ namespace Binary
     
         DoubleWordType myValue{ 0 };
     };
+
+    template <typename Type>
+    DoubleWord& DoubleWord::operator= ( Type&& rhs )
+    {
+        myValue = static_cast<DoubleWordType>( rhs );
+        return *this;
+    }
     
     std::ostream& operator<< ( std::ostream& outStream, const DoubleWord& rhs );
 }
