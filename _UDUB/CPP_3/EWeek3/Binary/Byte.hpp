@@ -35,8 +35,8 @@ namespace Binary
         Byte& operator= ( const Byte& rhs ) = default;
         Byte& operator= ( Byte&& rhs ) = default;
         
-        Byte& operator= ( const ByteType& rhs );
-        Byte& operator= ( ByteType&& rhs );
+        template <typename Type>
+        Byte& operator= ( Type&& rhs );
         
         const ByteType& getValue() const noexcept;
 
@@ -87,6 +87,13 @@ namespace Binary
         ByteType myValue{ 0 };
         
     };
+    
+    template <typename Type>
+    Byte& Byte::operator= ( Type&& rhs )
+    {
+        myValue = static_cast<ByteType>( rhs );
+        return *this;
+    }
     
     std::ostream& operator<< ( std::ostream& outStream, const Byte& rhs );
     

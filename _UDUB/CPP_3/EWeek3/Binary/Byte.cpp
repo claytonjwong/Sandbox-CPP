@@ -34,21 +34,6 @@ namespace Binary
     {
     }
     
-    
-    Byte& Byte::operator= ( const ByteType& rhs )
-    {
-        myValue = rhs;
-        return *this;
-    }
-
-
-    Byte& Byte::operator= ( ByteType&& rhs )
-    {
-        myValue = rhs;
-        return *this;
-    }
-    
-    
     const ByteType& Byte::getValue() const noexcept
     {
         return myValue;

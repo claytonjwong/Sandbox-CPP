@@ -16,12 +16,12 @@
 namespace Binary
 {
     using DoubleWordType = uint32_t;
-
+    
     class DoubleWord
     {
     public:
         
-        static constexpr int BYTE_COUNT = 4;
+        static constexpr int BYTE_COUNT{  sizeof( DoubleWordType )  };
         
         static DoubleWord read ( std::istream& inStream, const Endianness&& forceEndian=Endianness::Dynamic );
         static DoubleWord readLittleEndian ( std::istream& inStream );

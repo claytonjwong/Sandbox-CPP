@@ -21,7 +21,7 @@ namespace Binary
     {
     public:
     
-        static constexpr int BYTE_COUNT = 2;
+        static constexpr int BYTE_COUNT{  sizeof( WordType )  };
     
         static Word read ( std::istream& inStream, const Endianness&& forceEndian=Endianness::Dynamic );
         static Word readLittleEndian ( std::istream& inStream );

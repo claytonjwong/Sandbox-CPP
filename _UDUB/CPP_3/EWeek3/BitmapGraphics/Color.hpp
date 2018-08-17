@@ -54,9 +54,9 @@ namespace BitmapGraphics
     
     template <typename Type>
     Color::Color ( const Type& red, const Type& green, const Type& blue ) :
-    myRed{ static_cast<Component>( red ) },
-    myGreen{ static_cast<Component>( green ) },
-    myBlue{ static_cast<Component>( blue ) }
+    myRed{  static_cast<Component>( red )  },
+    myGreen{  static_cast<Component>( green )  },
+    myBlue{  static_cast<Component>( blue )  }
     {
     }
     

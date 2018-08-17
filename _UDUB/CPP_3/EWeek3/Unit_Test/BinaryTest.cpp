@@ -346,6 +346,12 @@ TEST(assign2, Word)
     CHECK_EQUAL(Binary::WordType{0x5678}, w2);
 }
 
+TEST(assign3, Word)
+{
+    Binary::Word word1{0x1234},word2;
+    word2 = word1;
+}
+
 TEST(assign, DoubleWord)
 {
     Binary::DoubleWordType dw1{0x12345678};
