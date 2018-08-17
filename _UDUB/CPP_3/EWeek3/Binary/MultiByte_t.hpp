@@ -22,9 +22,9 @@ namespace Binary
     {
     public:
         
-        static constexpr int BYTE_COUNT{  sizeof( Type )  };
+        static constexpr int BYTE_COUNT {  sizeof( Type )  };
         
-        static MultiByte_t read ( std::istream& inStream, const Endianness&& forceEndian=Endianness::Dynamic );
+        static MultiByte_t read ( std::istream& inStream, const Endianness&& forceEndian = Endianness::Dynamic );
         static MultiByte_t readLittleEndian ( std::istream& inStream );
         static MultiByte_t readBigEndian ( std::istream& inStream );
         
@@ -50,7 +50,7 @@ namespace Binary
 
         const Type& getValue() const noexcept;
         
-        void write ( std::ostream& outStream, const Endianness&& forceEndian=Endianness::Dynamic ) const;
+        void write ( std::ostream& outStream, const Endianness&& forceEndian = Endianness::Dynamic ) const;
         void writeLittleEndian ( std::ostream& outStream ) const;
         void writeBigEndian ( std::ostream& outStream ) const;
     
@@ -68,26 +68,6 @@ namespace Binary
     
         Type myValue{ 0 };
     };
-
-
-    template <typename Type>
-    MultiByte_t<Type>& MultiByte_t<Type>::operator= ( const Type& rhs )
-    {
-        myValue = static_cast<Type>( rhs );
-        return *this;
-    }
-
-
-    template <typename Type>
-    MultiByte_t<Type>& MultiByte_t<Type>::operator= ( Type&& rhs )
-    {
-        myValue = static_cast<Type>( rhs );
-        return *this;
-    }
-    
-    
-    template <typename Type>
-    std::ostream& operator<< ( std::ostream& outStream, const MultiByte_t<Type>& rhs );
     
     
     template <typename Type>
@@ -112,23 +92,6 @@ namespace Binary
     
     
     template <typename Type>
-    void MultiByte_t<Type>::read ( std::istream& inStream, std::list<Byte>& bytes )
-    {
-        for ( int index = 0; index < MultiByte_t<Type>::BYTE_COUNT; ++index )
-        {
-            auto byte = Byte::read( inStream );
-            
-            bytes.push_back(  std::move( byte )  );
-            
-            if ( ! inStream )
-            {
-                throw std::runtime_error{ "unable to read DoubleWord from istream" };
-            }
-        }
-    }
-    
-    
-    template <typename Type>
     MultiByte_t<Type> MultiByte_t<Type>::readLittleEndian ( std::istream& inStream )
     {
         return std::move(  read( inStream, Endianness::Little )  );
@@ -139,6 +102,23 @@ namespace Binary
     MultiByte_t<Type> MultiByte_t<Type>::readBigEndian ( std::istream& inStream )
     {
         return std::move(  read( inStream, Endianness::Big )  );
+    }
+    
+    
+    template <typename Type>
+    void MultiByte_t<Type>::read ( std::istream& inStream, std::list<Byte>& bytes )
+    {
+        for ( int index = 0; index < MultiByte_t<Type>::BYTE_COUNT; ++index )
+        {
+            auto byte = Byte::read( inStream );
+            
+            bytes.emplace_back(  std::move( byte )  );
+            
+            if ( ! inStream )
+            {
+                throw std::runtime_error{ "unable to read DoubleWord from istream" };
+            }
+        }
     }
     
     
@@ -162,6 +142,22 @@ namespace Binary
     
     
     template <typename Type>
+    MultiByte_t<Type>& MultiByte_t<Type>::operator= ( const Type& rhs )
+    {
+        myValue = static_cast<Type>( rhs );
+        return *this;
+    }
+
+
+    template <typename Type>
+    MultiByte_t<Type>& MultiByte_t<Type>::operator= ( Type&& rhs )
+    {
+        myValue = static_cast<Type>( rhs );
+        return *this;
+    }
+    
+    
+    template <typename Type>
     const Type& MultiByte_t<Type>::getValue() const noexcept
     {
         return myValue;
@@ -176,9 +172,10 @@ namespace Binary
         for ( int index = 0; index < MultiByte_t<Type>::BYTE_COUNT; ++index )
         {
             Byte byte{ static_cast<ByteType>(
-                (myValue & Byte::MASK_ALL_BITS_SET << ( index * Byte::BIT_COUNT ))  >> ( index * Byte::BIT_COUNT )  )  };
+                ( myValue & Byte::MASK_ALL_BITS_SET << ( index * Byte::BIT_COUNT ) )
+                    >> ( index * Byte::BIT_COUNT )    ) };
             
-            bytes.push_back(  std::move( byte )  );
+            bytes.emplace_back(  std::move( byte )  );
         }
 
         if (  ( forceEndian == Binary::Endianness::Little ) ||
@@ -238,4 +235,6 @@ namespace Binary
         
         return outStream;
     }
+    
+    
 }

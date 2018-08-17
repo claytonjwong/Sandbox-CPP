@@ -12,6 +12,7 @@
 
 namespace Binary
 {
+
     template <typename T>
     void verifyEquality ( const T& expected, const T& actual, const char* failure )
     {
@@ -21,12 +22,14 @@ namespace Binary
         }
     }
     
+    
     enum class Endianness
     {
         Dynamic,
         Little,
         Big
     };
+    
 
     static bool IS__LITTLE__ENDIAN ()
     {
@@ -39,6 +42,7 @@ namespace Binary
         
         return data.byte[1] == 0x00FF;
     }
+    
     
     static bool IS__BIG__ENDIAN ()
     {

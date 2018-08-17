@@ -105,11 +105,11 @@ namespace BitmapGraphics
 
     void Bitmap::writePadding ( std::ostream& outStream ) const noexcept
     {
-        Binary::Byte padding;
+        Binary::Byte pad;
         
         for ( auto padCount = 0; padCount < myPaddingSize; ++padCount )
         {
-            padding.write( outStream );
+            pad.write( outStream );
         }
     }
     

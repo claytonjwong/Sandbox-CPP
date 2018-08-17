@@ -10,7 +10,8 @@
 
 namespace Binary
 {
-    Byte Byte::read ( std::istream& inStream ) noexcept
+
+    Byte Byte::read ( std::istream& inStream )
     {
         Byte byte;
         
@@ -34,6 +35,7 @@ namespace Binary
     {
     }
     
+    
     const ByteType& Byte::getValue() const noexcept
     {
         return myValue;
@@ -44,7 +46,7 @@ namespace Binary
     {
         outStream.put( myValue );
         
-        if ( !(outStream) )
+        if ( ! outStream )
         {
             throw std::runtime_error{ "unable to write Byte to ostream" };
         }
@@ -69,4 +71,7 @@ namespace Binary
         
         return outStream;
     }
+    
+    
 }
+

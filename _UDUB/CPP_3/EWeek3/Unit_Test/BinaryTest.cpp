@@ -10,13 +10,13 @@ TEST(readByte1, Byte)
     std::stringstream ss{"abc"};
     
     auto b = Binary::Byte::read(ss);
-    CHECK_EQUAL('a', static_cast<unsigned char>(b));
+    CHECK_EQUAL('a', b);
     
     b = Binary::Byte::read(ss);
-    CHECK_EQUAL('b', static_cast<unsigned char>(b));
+    CHECK_EQUAL('b', b);
     
     b = Binary::Byte::read(ss);
-    CHECK_EQUAL('c', static_cast<unsigned char>(b));
+    CHECK_EQUAL('c', b);
 }
 
 TEST(readByte2, Byte)
@@ -24,13 +24,13 @@ TEST(readByte2, Byte)
     std::stringstream ss{"def"};
     
     auto b = Binary::Byte::read(ss);
-    CHECK_EQUAL('d', static_cast<unsigned char>(b));
+    CHECK_EQUAL('d', b);
     
     b = Binary::Byte::read(ss);
-    CHECK_EQUAL('e', static_cast<unsigned char>(b));
+    CHECK_EQUAL('e', b);
     
     b = Binary::Byte::read(ss);
-    CHECK_EQUAL('f', static_cast<unsigned char>(b));
+    CHECK_EQUAL('f', b);
 }
 
 TEST(readWordDynamicEndian, Word)
@@ -39,7 +39,7 @@ TEST(readWordDynamicEndian, Word)
     std::stringstream ss{reinterpret_cast<char*>(carray)};
 
     auto w = Binary::Word::read(ss);
-    CHECK_EQUAL(0xb2b1, static_cast<Binary::WordType>(w));
+    CHECK_EQUAL(0xb2b1, w);
 }
 
 TEST(readWordDynamicEndian2, Word)
@@ -48,10 +48,10 @@ TEST(readWordDynamicEndian2, Word)
     std::stringstream ss{reinterpret_cast<char*>(carray)};
 
     auto w = Binary::Word::read(ss);
-    CHECK_EQUAL(0xb2b1, static_cast<Binary::WordType>(w));
+    CHECK_EQUAL(0xb2b1, w);
     
     w = Binary::Word::read(ss);
-    CHECK_EQUAL(0xb4b3, static_cast<Binary::WordType>(w));
+    CHECK_EQUAL(0xb4b3, w);
 }
 
 TEST(readWordLittleEndian, Word)
@@ -60,7 +60,7 @@ TEST(readWordLittleEndian, Word)
     std::stringstream ss{reinterpret_cast<char*>(carray)};
 
     auto w = Binary::Word::readLittleEndian(ss);
-    CHECK_EQUAL(0xb2b1, static_cast<Binary::WordType>(w));
+    CHECK_EQUAL(0xb2b1, w);
 }
 
 TEST(readWordLittleEndian2, Word)
@@ -69,10 +69,10 @@ TEST(readWordLittleEndian2, Word)
     std::stringstream ss{reinterpret_cast<char*>(carray)};
 
     auto w = Binary::Word::readLittleEndian(ss);
-    CHECK_EQUAL(0xb2b1, static_cast<Binary::WordType>(w));
+    CHECK_EQUAL(0xb2b1, w);
     
     w = Binary::Word::readLittleEndian(ss);
-    CHECK_EQUAL(0xb4b3, static_cast<Binary::WordType>(w));
+    CHECK_EQUAL(0xb4b3, w);
 
 }
 
@@ -82,7 +82,7 @@ TEST(readWordBigEndian, Word)
     std::stringstream ss{reinterpret_cast<char*>(carray)};
 
     auto w = Binary::Word::readBigEndian(ss);
-    CHECK_EQUAL(0xb1b2, static_cast<Binary::WordType>(w));
+    CHECK_EQUAL(0xb1b2, w);
 }
 
 TEST(readWordBigEndian2, Word)
@@ -91,10 +91,10 @@ TEST(readWordBigEndian2, Word)
     std::stringstream ss{reinterpret_cast<char*>(carray)};
 
     auto w = Binary::Word::readBigEndian(ss);
-    CHECK_EQUAL(0xb1b2, static_cast<Binary::WordType>(w));
+    CHECK_EQUAL(0xb1b2, w);
     
     w = Binary::Word::readBigEndian(ss);
-    CHECK_EQUAL(0xb3b4, static_cast<Binary::WordType>(w));
+    CHECK_EQUAL(0xb3b4, w);
 }
 
 TEST(readDoubleWordDynamicEndian, DoubleWord)
@@ -103,7 +103,7 @@ TEST(readDoubleWordDynamicEndian, DoubleWord)
     std::stringstream ss{reinterpret_cast<char*>(carray)};
 
     auto dw = Binary::DoubleWord::read(ss);
-    CHECK_EQUAL(0xb4b3b2b1, static_cast<Binary::DoubleWordType>(dw));
+    CHECK_EQUAL(0xb4b3b2b1, dw);
 }
 
 TEST(readDoubleWordDynamicEndian2, DoubleWord)
@@ -112,10 +112,10 @@ TEST(readDoubleWordDynamicEndian2, DoubleWord)
     std::stringstream ss{reinterpret_cast<char*>(carray)};
 
     auto dw = Binary::DoubleWord::read(ss);
-    CHECK_EQUAL(0xb4b3b2b1, static_cast<Binary::DoubleWordType>(dw));
+    CHECK_EQUAL(0xb4b3b2b1, dw);
     
     dw = Binary::DoubleWord::read(ss);
-    CHECK_EQUAL(0xb8b7b6b5, static_cast<Binary::DoubleWordType>(dw));
+    CHECK_EQUAL(0xb8b7b6b5, dw);
 }
 
 TEST(readDoubleWordLittleEndian, Word)
@@ -124,7 +124,7 @@ TEST(readDoubleWordLittleEndian, Word)
     std::stringstream ss{reinterpret_cast<char*>(carray)};
 
     auto dw = Binary::DoubleWord::readLittleEndian(ss);
-    CHECK_EQUAL(0xb4b3b2b1, static_cast<Binary::DoubleWordType>(dw));
+    CHECK_EQUAL(0xb4b3b2b1, dw);
 }
 
 TEST(readDoubleWordLittleEndian2, Word)
@@ -133,10 +133,10 @@ TEST(readDoubleWordLittleEndian2, Word)
     std::stringstream ss{reinterpret_cast<char*>(carray)};
 
     auto dw = Binary::DoubleWord::readLittleEndian(ss);
-    CHECK_EQUAL(0xb4b3b2b1, static_cast<Binary::DoubleWordType>(dw));
+    CHECK_EQUAL(0xb4b3b2b1, dw);
 
     dw = Binary::DoubleWord::readLittleEndian(ss);
-    CHECK_EQUAL(0xb8b7b6b5, static_cast<Binary::DoubleWordType>(dw));
+    CHECK_EQUAL(0xb8b7b6b5, dw);
 }
 
 TEST(readDoubleWordBigEndian, Word)
@@ -145,7 +145,7 @@ TEST(readDoubleWordBigEndian, Word)
     std::stringstream ss{reinterpret_cast<char*>(carray)};
 
     auto dw = Binary::DoubleWord::readBigEndian(ss);
-    CHECK_EQUAL(0xb1b2b3b4, static_cast<Binary::DoubleWordType>(dw));
+    CHECK_EQUAL(0xb1b2b3b4, dw);
 }
 
 TEST(readDoubleWordBigEndian2, Word)
@@ -154,10 +154,10 @@ TEST(readDoubleWordBigEndian2, Word)
     std::stringstream ss{reinterpret_cast<char*>(carray)};
 
     auto dw = Binary::DoubleWord::readBigEndian(ss);
-    CHECK_EQUAL(0xb1b2b3b4, static_cast<Binary::DoubleWordType>(dw));
+    CHECK_EQUAL(0xb1b2b3b4, dw);
     
     dw = Binary::DoubleWord::readBigEndian(ss);
-    CHECK_EQUAL(0xb5b6b7b8, static_cast<Binary::DoubleWordType>(dw));
+    CHECK_EQUAL(0xb5b6b7b8, dw);
 }
 
 TEST(writeByte, Byte)
@@ -326,24 +326,24 @@ TEST(assign2, Byte)
 
 TEST(assign, Word)
 {
-    Binary::WordType w1{0x1234};
+    uint16_t w1{0x1234};
     Binary::Word word1;
     word1 = w1;
     CHECK_EQUAL(word1,w1);
     
-    Binary::WordType w2{0x5678};
+    uint16_t w2{0x5678};
     CHECK_EQUAL(0x5678, w2);
 }
 
 TEST(assign2, Word)
 {
-    Binary::WordType w1{0x1234};
+    Binary::MultiByte_t<uint16_t> w1{0x1234};
     Binary::Word word1;
-    word1 = Binary::WordType{0x1234};
+    word1 = Binary::MultiByte_t<uint16_t>{0x1234};
     CHECK_EQUAL(word1,w1);
     
-    Binary::WordType w2{0x5678};
-    CHECK_EQUAL(Binary::WordType{0x5678}, w2);
+    Binary::MultiByte_t<uint16_t> w2{0x5678};
+    CHECK_EQUAL(Binary::MultiByte_t<uint16_t>{0x5678}, w2);
 }
 
 TEST(assign3, Word)
@@ -354,24 +354,24 @@ TEST(assign3, Word)
 
 TEST(assign, DoubleWord)
 {
-    Binary::DoubleWordType dw1{0x12345678};
+    uint32_t dw1{0x12345678};
     Binary::DoubleWord doubleWord1;
     doubleWord1 = dw1;
     CHECK_EQUAL(doubleWord1,dw1);
     
-    Binary::DoubleWordType dw2{0x12345678};
+    uint32_t dw2{0x12345678};
     CHECK_EQUAL(0x12345678, dw2);
 }
 
 TEST(assign2, DoubleWord)
 {
-    Binary::DoubleWordType dw1{0x12345678};
+    Binary::MultiByte_t<uint32_t> dw1{0x12345678};
     Binary::DoubleWord doubleWord1;
     doubleWord1 = dw1;
     CHECK_EQUAL(doubleWord1,dw1);
     
-    Binary::DoubleWordType dw2{0x12345678};
-    CHECK_EQUAL(Binary::DoubleWordType{0x12345678}, dw2);
+    Binary::MultiByte_t<uint32_t> dw2{0x12345678};
+    CHECK_EQUAL(Binary::MultiByte_t<uint32_t>{0x12345678}, dw2);
 }
 
 TEST(readWordDynamicEndian, Binary)

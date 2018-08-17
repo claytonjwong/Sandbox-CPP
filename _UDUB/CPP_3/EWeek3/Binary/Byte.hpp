@@ -23,7 +23,7 @@ namespace Binary
         static constexpr ByteType MASK_ALL_BITS_SET =
             static_cast<ByteType>(  ( 1 << ( Byte::BIT_COUNT + 1 ) )  - 1  );
         
-        static Byte read ( std::istream& inStream ) noexcept;
+        static Byte read ( std::istream& inStream );
         
         Byte() = default;
         ~Byte() = default;
@@ -35,53 +35,17 @@ namespace Binary
         Byte& operator= ( const Byte& rhs ) = default;
         Byte& operator= ( Byte&& rhs ) = default;
         
-        template <typename Type>
-        Byte& operator= ( Type&& rhs );
-        
         const ByteType& getValue() const noexcept;
 
         void write ( std::ostream& outStream ) const;
 
-        //
-        // operator ByteType() const noexcept;
-        //
-        // should be explicit?  I'm not sure how to get that to compile though
-        //
-        // I get a compiler error when I make this operator explicit due to the way the unit test was provided:
-        //
-        // explicit operator ByteType() const noexcept;
-        //
-        //    unsigned char c3{};
-        //    c3 = byte2; // unit test provided gives compiler error: Assigning to 'unsigned char' from incompatible type 'Binary::Byte'
-        //
-        //
-        // This can be resolved by either:
-        //
-        // 1) removing "explicit" in the Byte class, then the test case remains unchanged
-        //
-        //    unsigned char c3{};
-        //    c3 = byte2;
-        //
-        // OR
-        //
-        // 2) modifying the test case to explicitly cast the byte
-        //
-        //    unsigned char c3{};
-        //    c3 = static_cast<Binary::ByteType>(byte2);
-        //
-        // since multiple test cases would need to be modified for #2,
-        // I choose #1 to resolve this issue
-        //
-        // there is a good possibility that I have completely misunderstood this operator usage
-        // my understanding is that when this is marked as "explicit", then the test case
-        // must explicitly perform static_cast to change byte2 to an unsigned char.  However, since
-        // I removed explicit, the test case is allowed to implicitly perform this conversion
-        // without having to modify the test case by adding a static_cast
-        //
         operator ByteType() const noexcept;
         
         bool operator== ( const Byte& rhs ) const noexcept;
         
+        template <typename Type>
+        Byte& operator= ( Type&& rhs );
+
     private:
         
         ByteType myValue{ 0 };
@@ -98,3 +62,4 @@ namespace Binary
     std::ostream& operator<< ( std::ostream& outStream, const Byte& rhs );
     
 }
+
