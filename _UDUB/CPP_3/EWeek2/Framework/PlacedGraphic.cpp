@@ -29,7 +29,7 @@ namespace Framework
         }
     }
 
-    Point PlacedGraphic::getPlacementPoint() const noexcept
+    const Point& PlacedGraphic::getPlacementPoint() const noexcept
     {
         return myPlacementPoint;
     }

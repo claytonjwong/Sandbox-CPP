@@ -28,7 +28,7 @@ namespace Framework
         PlacedGraphic& operator= ( const PlacedGraphic& rhs ) = default;
         PlacedGraphic& operator= ( PlacedGraphic&& rhs ) = default;
 
-        VG::Point getPlacementPoint() const noexcept;
+        const VG::Point& getPlacementPoint() const noexcept;
         const VG::VectorGraphic& getGraphic() const noexcept;
     
         void setPlacementPoint ( const VG::Point& point ) noexcept;
