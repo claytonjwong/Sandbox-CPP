@@ -153,25 +153,22 @@ namespace Binary
     {
         auto mask = Byte::MASK_ALL_BITS_SET;
         auto bits = Byte::BIT_COUNT;
+        int shift{ 0 };
     
-        if (  ( forceEndian == Endianness::Little ) ||
-              ( forceEndian == Endianness::Dynamic && SYSTEM_ENDIANNESSS() == Endianness::Little ) )
+        for ( int index = 0; index < MultiByte_t<Type>::BYTE_COUNT; ++index )
         {
-            for ( int index = 0; index < MultiByte_t<Type>::BYTE_COUNT; ++index )
+            if (  ( forceEndian == Endianness::Little ) ||
+                  ( forceEndian == Endianness::Dynamic && SYSTEM_ENDIANNESSS() == Endianness::Little ) )
             {
-                auto shift = index * bits;
-                ByteType value = ( myValue & mask << shift ) >> shift;
-                outStream << value;
+                shift = index * bits;
             }
-        }
-        else
-        {
-            for ( int index = MultiByte_t<Type>::BYTE_COUNT - 1; index >= 0 ; --index )
+            else
             {
-                auto shift = index * bits;
-                ByteType value = ( myValue & mask << shift ) >> shift;
-                outStream << value;
+                shift = ( MultiByte_t<Type>::BYTE_COUNT - 1 - index ) * bits;
             }
+            
+            ByteType value = ( myValue & mask << shift ) >> shift;
+            outStream << value;
         }
     }
     
