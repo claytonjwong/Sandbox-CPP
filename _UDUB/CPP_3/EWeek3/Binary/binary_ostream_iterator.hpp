@@ -25,7 +25,7 @@ namespace Binary
 
       self_type& operator= (const T& value)
       {
-        *myStream << value;
+        value.write( *myStream );
         
         if ( ! *myStream )
         {

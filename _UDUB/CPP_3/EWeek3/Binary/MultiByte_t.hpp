@@ -28,12 +28,6 @@ namespace Binary
         static MultiByte_t readLittleEndian ( std::istream& inStream );
         static MultiByte_t readBigEndian ( std::istream& inStream );
         
-    private:
-        
-        static void read ( std::istream& inStream, std::list<Byte>& bytes );
-
-    public:
-    
         MultiByte_t() = default;
         ~MultiByte_t() = default;
         explicit MultiByte_t ( Type value );
@@ -53,12 +47,6 @@ namespace Binary
         void write ( std::ostream& outStream, const Endianness&& forceEndian = Endianness::Dynamic ) const;
         void writeLittleEndian ( std::ostream& outStream ) const;
         void writeBigEndian ( std::ostream& outStream ) const;
-    
-    private:
-        
-        static void write ( std::ostream& outStream, const std::list<Byte>& bytes );
-    
-    public:
         
         operator Type() const noexcept;
         
@@ -67,6 +55,9 @@ namespace Binary
     private:
     
         Type myValue{ 0 };
+        
+        static void read ( std::istream& inStream, std::list<Byte>& bytes );
+        static void write ( std::ostream& outStream, const std::list<Byte>& bytes );
     };
     
     
@@ -77,8 +68,8 @@ namespace Binary
         
         read( inStream, bytes );
         
-        if (  ( forceEndian == Binary::Endianness::Little ) ||
-              ( forceEndian == Binary::Endianness::Dynamic && Binary::IS__LITTLE__ENDIAN() )  )
+        if (  ( forceEndian == Endianness::Little ) ||
+              ( forceEndian == Endianness::Dynamic && SYSTEM_ENDIANNESSS() == Endianness::Little )  )
         {
             ; // no-op, little endian by default
         }
@@ -102,23 +93,6 @@ namespace Binary
     MultiByte_t<Type> MultiByte_t<Type>::readBigEndian ( std::istream& inStream )
     {
         return std::move(  read( inStream, Endianness::Big )  );
-    }
-    
-    
-    template <typename Type>
-    void MultiByte_t<Type>::read ( std::istream& inStream, std::list<Byte>& bytes )
-    {
-        for ( int index = 0; index < MultiByte_t<Type>::BYTE_COUNT; ++index )
-        {
-            auto byte = Byte::read( inStream );
-            
-            bytes.emplace_back(  std::move( byte )  );
-            
-            if ( ! inStream )
-            {
-                throw std::runtime_error{ "unable to read DoubleWord from istream" };
-            }
-        }
     }
     
     
@@ -167,7 +141,8 @@ namespace Binary
     template <typename Type>
     void MultiByte_t<Type>::write ( std::ostream& outStream, const Endianness&& forceEndian ) const
     {
-        std::list<Byte> bytes;
+        static std::list<Byte> bytes;
+        bytes.clear();
         
         for ( int index = 0; index < MultiByte_t<Type>::BYTE_COUNT; ++index )
         {
@@ -178,12 +153,8 @@ namespace Binary
             bytes.emplace_back(  std::move( byte )  );
         }
 
-        if (  ( forceEndian == Binary::Endianness::Little ) ||
-              ( forceEndian == Binary::Endianness::Dynamic && Binary::IS__LITTLE__ENDIAN() )  )
-        {
-            ; // no-op, little endian by default
-        }
-        else
+        if ( ! (  ( forceEndian == Endianness::Little ) ||
+              ( forceEndian == Endianness::Dynamic && SYSTEM_ENDIANNESSS() == Endianness::Little )  ) )
         {
             reverse( bytes.begin(), bytes.end() );
         }
@@ -203,14 +174,6 @@ namespace Binary
     void MultiByte_t<Type>::writeBigEndian ( std::ostream& outStream ) const
     {
         write( outStream, Endianness::Big );
-    }
-    
-    
-    template <typename Type>
-    void MultiByte_t<Type>::write ( std::ostream& outStream, const std::list<Byte>& bytes )
-    {
-        std::copy( bytes.begin(), bytes.end(),
-            Binary::binary_ostream_iterator<Byte>( outStream )  );
     }
     
     
@@ -236,5 +199,28 @@ namespace Binary
         return outStream;
     }
     
-    
+
+    template <typename Type>
+    void MultiByte_t<Type>::read ( std::istream& inStream, std::list<Byte>& bytes )
+    {
+        for ( int index = 0; index < MultiByte_t<Type>::BYTE_COUNT; ++index )
+        {
+            auto byte = Byte::read( inStream );
+            
+            bytes.emplace_back(  std::move( byte )  );
+            
+            if ( ! inStream )
+            {
+                throw std::runtime_error{ "unable to read DoubleWord from istream" };
+            }
+        }
+    }
+
+
+    template <typename Type>
+    void MultiByte_t<Type>::write ( std::ostream& outStream, const std::list<Byte>& bytes )
+    {
+        std::copy( bytes.begin(), bytes.end(), binary_ostream_iterator<Byte>( outStream )  );
+    }
+
 }

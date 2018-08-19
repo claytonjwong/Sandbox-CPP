@@ -19,36 +19,6 @@ namespace BitmapGraphics
 
     class WindowsBitmapHeader
     {
-    private:
-        
-        //
-        // file header: https://en.wikipedia.org/wiki/BMP_file_format#Bitmap_file_header
-        //
-        static constexpr int FILE_HEADER_SIZE { 14 };
-        
-        static const Binary::Byte firstIdentifier;
-        static const Binary::Byte secondIdentifier;
-        // << myFileSize >>
-        static const Binary::DoubleWord reserved;
-        // << myRawImageOffset >>
-
-        //
-        // info header: https://en.wikipedia.org/wiki/BMP_file_format#DIB_header_(bitmap_information_header)
-        //
-        static constexpr int INFO_HEADER_SIZE { 40 };
-        
-        static const Binary::DoubleWord infoHeaderSize;
-        // << myWidth >>
-        // << myHeight >>
-        static const Binary::Word colorPlanes;
-        static const Binary::Word colorDepth;
-        static const Binary::DoubleWord compressionMethod;
-        // << myImageSize >>
-        // << myHorizontalPixelsPerMeter >>
-        // << myVerticalPixelsPerMeter >>
-        static const Binary::DoubleWord numberOfColors;
-        static const Binary::DoubleWord numberOfImportantColors;
-
     public:
     
         WindowsBitmapHeader() = default;
@@ -83,5 +53,33 @@ namespace BitmapGraphics
         Binary::DoubleWord myImageSize{ 0 };
         Binary::DoubleWord myHorizontalPixelsPerMeter{ 0 };
         Binary::DoubleWord myVerticalPixelsPerMeter{ 0 };
+        
+        //
+        // file header: https://en.wikipedia.org/wiki/BMP_file_format#Bitmap_file_header
+        //
+        static constexpr int FILE_HEADER_SIZE { 14 };
+        
+        static const Binary::Byte firstIdentifier;
+        static const Binary::Byte secondIdentifier;
+        // << myFileSize >>
+        static const Binary::DoubleWord reserved;
+        // << myRawImageOffset >>
+
+        //
+        // info header: https://en.wikipedia.org/wiki/BMP_file_format#DIB_header_(bitmap_information_header)
+        //
+        static constexpr int INFO_HEADER_SIZE { 40 };
+        
+        static const Binary::DoubleWord infoHeaderSize;
+        // << myWidth >>
+        // << myHeight >>
+        static const Binary::Word colorPlanes;
+        static const Binary::Word colorDepth;
+        static const Binary::DoubleWord compressionMethod;
+        // << myImageSize >>
+        // << myHorizontalPixelsPerMeter >>
+        // << myVerticalPixelsPerMeter >>
+        static const Binary::DoubleWord numberOfColors;
+        static const Binary::DoubleWord numberOfImportantColors;
     };
 }

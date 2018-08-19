@@ -19,13 +19,7 @@ namespace BitmapGraphics
     public:
     
         using ScanLine = std::list<Color>;
-        
-    private:
-    
         using ScanLineCollection = std::list<ScanLine>;
-    
-    public:
-    
         using ScanLineIterator = ScanLineCollection::const_iterator;
     
         Bitmap() = default;
@@ -48,19 +42,18 @@ namespace BitmapGraphics
         void write ( std::ostream& outStream ) const;
         
     private:
-    
-        void readScanLine ( std::istream& inStream ) noexcept;
-        void writeScanLine ( std::ostream& outStream, const ScanLine& scanLine ) const;
-    
-        void readPadding ( std::istream& inStream ) const noexcept;
-        void writePadding ( std::ostream& outStream ) const noexcept;
-    
-    private:
         
         int myWidth{ 0 };
         int myHeight{ 0 };
         ScanLineCollection myScanLines;
         int myPaddingSize{ 0 };
+        
+        void readScanLine ( std::istream& inStream ) noexcept;
+        void writeScanLine ( std::ostream& outStream, const ScanLine& scanLine ) const;
+    
+        void readPadding ( std::istream& inStream ) const noexcept;
+        void writePadding ( std::ostream& outStream ) const noexcept;
+
     };
     
     std::ostream& operator<< ( std::ostream& outStream, const Bitmap& rhs );

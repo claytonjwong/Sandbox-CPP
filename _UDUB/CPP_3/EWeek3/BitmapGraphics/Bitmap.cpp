@@ -11,16 +11,19 @@
 #include "Bitmap.hpp"
 #include "binary_ostream_iterator.hpp"
 
+using namespace Binary;
+using namespace std;
+
 namespace BitmapGraphics
 {
-    Bitmap::Bitmap ( int width, int height, std::istream& inStream ) :
+    Bitmap::Bitmap ( int width, int height, istream& inStream ) :
     myWidth{ width },
     myHeight{ height },
     myPaddingSize{ 0 }
     {
         auto scanLineSize = Color::BYTE_COUNT * myWidth;
         
-        auto align = Binary::DoubleWord::BYTE_COUNT;
+        auto align = DoubleWord::BYTE_COUNT;
         
         myPaddingSize = ( align - ( scanLineSize % align ) ) % align;
     
@@ -61,7 +64,7 @@ namespace BitmapGraphics
     }
     
     
-    void Bitmap::write ( std::ostream& outStream ) const
+    void Bitmap::write ( ostream& outStream ) const
     {
         for ( const auto& scanLine: myScanLines )
         {
@@ -70,7 +73,7 @@ namespace BitmapGraphics
     }
     
     
-    void Bitmap::readScanLine ( std::istream& inStream ) noexcept
+    void Bitmap::readScanLine ( istream& inStream ) noexcept
     {
         ScanLine scanLine;
         
@@ -85,16 +88,15 @@ namespace BitmapGraphics
     }
     
     
-    void Bitmap::writeScanLine ( std::ostream& outStream, const ScanLine& scanLine ) const
+    void Bitmap::writeScanLine ( ostream& outStream, const ScanLine& scanLine ) const
     {
-        std::copy( scanLine.begin(), scanLine.end(),
-            Binary::binary_ostream_iterator<Color>( outStream ));
+        std::copy( scanLine.begin(), scanLine.end(), binary_ostream_iterator<Color>( outStream ));
         
         writePadding( outStream );
     }
     
     
-    void Bitmap::readPadding ( std::istream& inStream ) const noexcept
+    void Bitmap::readPadding ( istream& inStream ) const noexcept
     {
         for ( auto padCount = 0;  padCount < myPaddingSize; ++padCount )
         {
@@ -103,7 +105,7 @@ namespace BitmapGraphics
     }
 
 
-    void Bitmap::writePadding ( std::ostream& outStream ) const noexcept
+    void Bitmap::writePadding ( ostream& outStream ) const noexcept
     {
         Binary::Byte pad;
         
@@ -114,7 +116,7 @@ namespace BitmapGraphics
     }
     
     
-    std::ostream& operator<< ( std::ostream& outStream, const Bitmap& rhs )
+    ostream& operator<< ( ostream& outStream, const Bitmap& rhs )
     {
         rhs.write( outStream );
         

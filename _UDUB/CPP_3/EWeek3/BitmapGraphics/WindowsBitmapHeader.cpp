@@ -13,31 +13,6 @@ using namespace Binary;
 
 namespace BitmapGraphics
 {
-    //
-    // file header: https://en.wikipedia.org/wiki/BMP_file_format#Bitmap_file_header
-    //
-    const Byte WindowsBitmapHeader::firstIdentifier{ 'B' };
-    const Byte WindowsBitmapHeader::secondIdentifier{ 'M' };
-    // << myFileSize >>
-    const DoubleWord WindowsBitmapHeader::reserved{ 0 };
-    // << myRawImageOffset >>
-    
-    //
-    // info header: https://en.wikipedia.org/wiki/BMP_file_format#DIB_header_(bitmap_information_header)
-    //
-    const DoubleWord WindowsBitmapHeader::infoHeaderSize{ INFO_HEADER_SIZE };
-    // << myWidth >>
-    // << myHeight >>
-    const Word WindowsBitmapHeader::colorPlanes{ 1 };
-    const Word WindowsBitmapHeader::colorDepth{ 24 };
-    // << myCompressionMethod >>
-    // << myImageSize >>
-    // << myHorizontalPixelsPerMeter >>
-    // << myVerticalPixelsPerMeter >>
-    const Binary::DoubleWord WindowsBitmapHeader::numberOfColors{ 0 };
-    const Binary::DoubleWord WindowsBitmapHeader::numberOfImportantColors{ 0 };
-
-
     WindowsBitmapHeader::WindowsBitmapHeader ( std::istream& inStream )
     {
         read( inStream );
@@ -180,4 +155,31 @@ namespace BitmapGraphics
         numberOfColors.write( outStream );
         numberOfImportantColors.write( outStream );
     }
+    
+    
+    //
+    // file header: https://en.wikipedia.org/wiki/BMP_file_format#Bitmap_file_header
+    //
+    const Byte WindowsBitmapHeader::firstIdentifier{ 'B' };
+    const Byte WindowsBitmapHeader::secondIdentifier{ 'M' };
+    // << myFileSize >>
+    const DoubleWord WindowsBitmapHeader::reserved{ 0 };
+    // << myRawImageOffset >>
+    
+    
+    //
+    // info header: https://en.wikipedia.org/wiki/BMP_file_format#DIB_header_(bitmap_information_header)
+    //
+    const DoubleWord WindowsBitmapHeader::infoHeaderSize{ INFO_HEADER_SIZE };
+    // << myWidth >>
+    // << myHeight >>
+    const Word WindowsBitmapHeader::colorPlanes{ 1 };
+    const Word WindowsBitmapHeader::colorDepth{ 24 };
+    // << myCompressionMethod >>
+    // << myImageSize >>
+    // << myHorizontalPixelsPerMeter >>
+    // << myVerticalPixelsPerMeter >>
+    const Binary::DoubleWord WindowsBitmapHeader::numberOfColors{ 0 };
+    const Binary::DoubleWord WindowsBitmapHeader::numberOfImportantColors{ 0 };
+    
 }

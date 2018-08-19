@@ -13,8 +13,8 @@
 namespace Binary
 {
 
-    template <typename T>
-    void verifyEquality ( const T& expected, const T& actual, const char* failure )
+    template <typename Type1, typename Type2>
+    void verifyEquality ( Type1&& expected, Type2&& actual, const char* failure )
     {
         if (  !( expected == actual )  )
         {
@@ -31,21 +31,9 @@ namespace Binary
     };
     
 
-    static bool IS__LITTLE__ENDIAN ()
+    static constexpr Endianness SYSTEM_ENDIANNESSS ()
     {
-        union
-        {
-            uint16_t word;
-            uint8_t byte[2];
-            
-        } data{ 0xFF00 };
-        
-        return data.byte[1] == 0x00FF;
+        return ( uint16_t{ 0x0001 } == uint16_t{ 0x01 } ) ? Endianness::Little : Endianness::Big;
     }
     
-    
-    static bool IS__BIG__ENDIAN ()
-    {
-        return ! (  IS__LITTLE__ENDIAN()  );
-    }
 }

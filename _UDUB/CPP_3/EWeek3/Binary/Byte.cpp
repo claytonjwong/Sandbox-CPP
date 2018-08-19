@@ -8,10 +8,12 @@
 
 #include "Byte.hpp"
 
+using namespace std;
+
 namespace Binary
 {
 
-    Byte Byte::read ( std::istream& inStream )
+    Byte Byte::read ( istream& inStream )
     {
         Byte byte;
         
@@ -25,7 +27,7 @@ namespace Binary
         }
         else
         {
-            throw std::runtime_error{ "unable to read Byte from istream" };
+            throw runtime_error{ "unable to read Byte from istream" };
         }
     }
     
@@ -42,13 +44,13 @@ namespace Binary
     }
     
     
-    void Byte::write ( std::ostream& outStream ) const
+    void Byte::write ( ostream& outStream ) const
     {
         outStream.put( myValue );
         
         if ( ! outStream )
         {
-            throw std::runtime_error{ "unable to write Byte to ostream" };
+            throw runtime_error{ "unable to write Byte to ostream" };
         }
     }
     
@@ -65,7 +67,7 @@ namespace Binary
     }
     
     
-    std::ostream& operator<< ( std::ostream& outStream, const Byte& rhs )
+    ostream& operator<< ( ostream& outStream, const Byte& rhs )
     {
         rhs.write( outStream );
         
