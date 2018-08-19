@@ -9,14 +9,19 @@
 #pragma once
 
 #include "Common.hpp"
-#include "Byte.hpp"
 #include "binary_ostream_iterator.hpp"
 #include <sstream>
 #include <vector>
 
 namespace Binary
 {
-    
+    using ByteType = uint8_t;
+
+    static constexpr int BITS_PER_BYTE = 8;
+
+    static constexpr ByteType MASK_ALL_BITS_SET =
+        static_cast<ByteType>(  ( 1 << ( BITS_PER_BYTE + 1 ) )  - 1  );
+
     template <typename Type>
     class Binary_t
     {
@@ -61,12 +66,8 @@ namespace Binary
     template <typename Type>
     Binary_t<Type> Binary_t<Type>::read ( std::istream& inStream, const Endianness&& forceEndian )
     {
-        Type readResult{ 0 };
-        auto mask{ Byte::MASK_ALL_BITS_SET };
-        auto bits{ Byte::BIT_COUNT };
-        int shift{ 0 };
-
-        for ( int index = 0; index < Binary_t<Type>::BYTE_COUNT; ++index )
+        Type readResult = 0;
+        for ( int index = 0, shift = 0; index < Binary_t<Type>::BYTE_COUNT; ++index )
         {
             char buffer;
             inStream.get( buffer );
@@ -80,11 +81,11 @@ namespace Binary
             if (  ( forceEndian == Endianness::Little ) ||
                   ( forceEndian == Endianness::Dynamic && SYSTEM_ENDIANNESSS() == Endianness::Little )  )
             {
-                shift = index * bits;
+                shift = index * BITS_PER_BYTE;
             }
             else
             {
-                shift = ( Binary_t<Type>::BYTE_COUNT - 1 - index ) * bits;
+                shift = ( Binary_t<Type>::BYTE_COUNT - 1 - index ) * BITS_PER_BYTE;
             }
             
             readResult |= byteValue << shift;
@@ -141,23 +142,19 @@ namespace Binary
     template <typename Type>
     void Binary_t<Type>::write ( std::ostream& outStream, const Endianness&& forceEndian ) const
     {
-        auto mask = Byte::MASK_ALL_BITS_SET;
-        auto bits = Byte::BIT_COUNT;
-        int shift{ 0 };
-    
-        for ( int index = 0; index < Binary_t<Type>::BYTE_COUNT; ++index )
+        for ( auto index = 0, shift = 0; index < Binary_t<Type>::BYTE_COUNT; ++index )
         {
             if (  ( forceEndian == Endianness::Little ) ||
                   ( forceEndian == Endianness::Dynamic && SYSTEM_ENDIANNESSS() == Endianness::Little ) )
             {
-                shift = index * bits;
+                shift = index * BITS_PER_BYTE;
             }
             else
             {
-                shift = ( Binary_t<Type>::BYTE_COUNT - 1 - index ) * bits;
+                shift = ( Binary_t<Type>::BYTE_COUNT - 1 - index ) * BITS_PER_BYTE;
             }
             
-            ByteType value = ( myValue & mask << shift ) >> shift;
+            ByteType value = ( myValue & MASK_ALL_BITS_SET << shift ) >> shift;
             outStream << value;
         }
     }
