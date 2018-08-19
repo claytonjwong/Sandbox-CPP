@@ -10,6 +10,7 @@
 #include "Color.hpp"
 #include "Bitmap.hpp"
 #include "binary_ostream_iterator.hpp"
+#include <iostream>
 
 using namespace Binary;
 using namespace std;
@@ -79,7 +80,7 @@ namespace BitmapGraphics
         
         for ( auto width = 0;  width < myWidth;  ++width )
         {
-            scanLine.emplace_back(  std::move( Color::read( inStream ) )  );
+            scanLine.emplace_back(  Color::read( inStream )  );
         }
         
         myScanLines.emplace_back(  std::move( scanLine )  );

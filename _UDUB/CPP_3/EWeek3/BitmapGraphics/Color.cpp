@@ -10,6 +10,7 @@
 #include "Byte.hpp"
 #include "Color.hpp"
 
+using namespace Binary;
 using namespace std;
 
 namespace BitmapGraphics
@@ -17,12 +18,12 @@ namespace BitmapGraphics
     //
     // Note: significant stream read/write order: ( blue, green, red )
     //
-    Color Color::read ( std::istream& inStream ) noexcept
+    Color Color::read ( istream& inStream ) noexcept
     {
-        auto blue = Binary::Byte::read( inStream );
-        auto green = Binary::Byte::read( inStream );
-        auto red = Binary::Byte::read( inStream );
-        return std::move(  Color{ red, green, blue }  ); // user order: ( red, green, blue )
+        auto blue = Byte::read( inStream );
+        auto green = Byte::read( inStream );
+        auto red = Byte::read( inStream );
+        return Color{ red, green, blue }; // user order: ( red, green, blue )
     }
     
     
@@ -47,7 +48,7 @@ namespace BitmapGraphics
     //
     // Note: significant stream read/write order: ( blue, green, red )
     //
-    void Color::write ( std::ostream& outStream ) const
+    void Color::write ( ostream& outStream ) const
     {
         myBlue.write( outStream );
         myGreen.write( outStream );
@@ -69,7 +70,7 @@ namespace BitmapGraphics
     }
     
         
-    std::ostream& operator<< ( std::ostream& outStream, const Color& rhs ) noexcept
+    ostream& operator<< ( ostream& outStream, const Color& rhs ) noexcept
     {
         rhs.write( outStream );
         

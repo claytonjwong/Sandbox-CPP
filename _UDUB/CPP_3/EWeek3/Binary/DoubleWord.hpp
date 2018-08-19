@@ -12,5 +12,5 @@
 
 namespace Binary
 {
-    using DoubleWord = Binary_t<uint32_t>;
+    using DoubleWord = Binary_t<DoubleWord_t>;
 }

@@ -9,7 +9,7 @@
 #pragma once
 
 #include "Byte.hpp"
-#include <sstream>
+#include <iostream>
 
 namespace BitmapGraphics
 {
@@ -18,7 +18,7 @@ namespace BitmapGraphics
     public:
     
         using Component = Binary::Byte;
-        using ComponentType = Binary::ByteType;
+        using ComponentType = Binary::Byte_t;
         
         static constexpr int BYTE_COUNT = 3; // one byte per color: red, green, blue
         
@@ -27,8 +27,8 @@ namespace BitmapGraphics
         Color() = default;
         ~Color() = default;
         
-        template <typename Type>
-        Color ( const Type& red, const Type& green, const Type& blue );
+        template <typename InputType>
+        Color ( const InputType& red, const InputType& green, const InputType& blue );
         
         Color ( const Color& src ) = default;
         Color ( Color&& src ) = default;
@@ -52,8 +52,8 @@ namespace BitmapGraphics
         Component myBlue;
     };
     
-    template <typename Type>
-    Color::Color ( const Type& red, const Type& green, const Type& blue ) :
+    template <typename InputType>
+    Color::Color ( const InputType& red, const InputType& green, const InputType& blue ) :
     myRed{  static_cast<Component>( red )  },
     myGreen{  static_cast<Component>( green )  },
     myBlue{  static_cast<Component>( blue )  }

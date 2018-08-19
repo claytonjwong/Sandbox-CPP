@@ -12,6 +12,6 @@
 
 namespace Binary
 {
-    using Byte = Binary_t<uint8_t>;
+    using Byte = Binary_t<Byte_t>;
 }
 

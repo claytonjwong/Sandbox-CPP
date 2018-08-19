@@ -10,17 +10,18 @@
 
 #include "Common.hpp"
 #include "binary_ostream_iterator.hpp"
-#include <sstream>
-#include <vector>
+#include <iostream>
 
 namespace Binary
 {
-    using ByteType = uint8_t;
+    using Byte_t = uint8_t;
+    using Word_t = uint16_t;
+    using DoubleWord_t = uint32_t;
 
     static constexpr int BITS_PER_BYTE = 8;
 
-    static constexpr ByteType MASK_ALL_BITS_SET =
-        static_cast<ByteType>(  ( 1 << ( BITS_PER_BYTE + 1 ) )  - 1  );
+    static constexpr Byte_t MASK_ALL_BITS_SET =
+        static_cast<Byte_t>(  ( 1 << ( BITS_PER_BYTE + 1 ) )  - 1  );
 
     template <typename Type>
     class Binary_t
@@ -43,8 +44,8 @@ namespace Binary
         Binary_t& operator= ( const Binary_t& rhs ) = default;
         Binary_t& operator= ( Binary_t&& rhs ) = default;
 
-        Binary_t& operator= ( const Type& rhs );
-        Binary_t& operator= ( Type&& rhs );
+        Binary_t& operator= ( const Type& value );
+        Binary_t& operator= ( Type&& value );
 
         const Type& getValue() const noexcept;
         
@@ -66,17 +67,16 @@ namespace Binary
     template <typename Type>
     Binary_t<Type> Binary_t<Type>::read ( std::istream& inStream, const Endianness&& forceEndian )
     {
-        Type readResult = 0;
+        Type result = 0;
         for ( int index = 0, shift = 0; index < Binary_t<Type>::BYTE_COUNT; ++index )
         {
             char buffer;
             inStream.get( buffer );
-            auto byteValue = static_cast<ByteType>( buffer );
-
             if ( ! inStream )
             {
                 throw std::runtime_error{ "unable to read DoubleWord from istream" };
             }
+            auto value = static_cast<Byte_t>( buffer );
 
             if (  ( forceEndian == Endianness::Little ) ||
                   ( forceEndian == Endianness::Dynamic && SYSTEM_ENDIANNESSS() == Endianness::Little )  )
@@ -88,10 +88,10 @@ namespace Binary
                 shift = ( Binary_t<Type>::BYTE_COUNT - 1 - index ) * BITS_PER_BYTE;
             }
             
-            readResult |= byteValue << shift;
+            result |= value << shift;
         }
 
-        return std::move(  Binary_t<Type>{ readResult }  );
+        return Binary_t<Type>{ result };
     }
     
     
@@ -125,9 +125,9 @@ namespace Binary
 
 
     template <typename Type>
-    Binary_t<Type>& Binary_t<Type>::operator= ( Type&& rhs )
+    Binary_t<Type>& Binary_t<Type>::operator= ( Type&& value )
     {
-        myValue = static_cast<Type>( rhs );
+        myValue = static_cast<Type>( value );
         return *this;
     }
     
@@ -154,8 +154,12 @@ namespace Binary
                 shift = ( Binary_t<Type>::BYTE_COUNT - 1 - index ) * BITS_PER_BYTE;
             }
             
-            ByteType value = ( myValue & MASK_ALL_BITS_SET << shift ) >> shift;
+            Byte_t value = ( myValue & MASK_ALL_BITS_SET << shift ) >> shift;
             outStream << value;
+            if ( ! outStream )
+            {
+                throw std::runtime_error{ "unable to write to stream" };
+            }
         }
     }
     
@@ -192,7 +196,6 @@ namespace Binary
     std::ostream& operator<< ( std::ostream& outStream, const Binary_t<Type>& rhs )
     {
         rhs.write( outStream );
-        
         return outStream;
     }
     

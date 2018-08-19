@@ -12,5 +12,5 @@
 
 namespace Binary
 {
-    using Word = Binary_t<uint16_t>;
+    using Word = Binary_t<Word_t>;
 }
