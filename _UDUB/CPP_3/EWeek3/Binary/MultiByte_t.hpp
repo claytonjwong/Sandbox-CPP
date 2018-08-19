@@ -55,29 +55,49 @@ namespace Binary
     private:
     
         Type myValue{ 0 };
-        
-        static void read ( std::istream& inStream, std::vector<Byte>& bytes );
+    
     };
     
     
     template <typename Type>
     MultiByte_t<Type> MultiByte_t<Type>::read ( std::istream& inStream, const Endianness&& forceEndian )
     {
-        std::vector<Byte> bytes;
-        
-        read( inStream, bytes );
-        
+        Type value{ 0 };
+        auto mask{ Byte::MASK_ALL_BITS_SET };
+        auto bits{ Byte::BIT_COUNT };
+
         if (  ( forceEndian == Endianness::Little ) ||
               ( forceEndian == Endianness::Dynamic && SYSTEM_ENDIANNESSS() == Endianness::Little )  )
         {
-            ; // no-op, little endian by default
+            for ( int index = 0; index < MultiByte_t<Type>::BYTE_COUNT; ++index )
+            {
+                auto byte = Byte::read( inStream ).getValue();
+                
+                if ( ! inStream )
+                {
+                    throw std::runtime_error{ "unable to read DoubleWord from istream" };
+                }
+                
+                auto shift = index * bits;
+                value |= byte << shift;
+            }
         }
         else
         {
-            reverse( bytes.begin(), bytes.end() );
+            for ( int index = MultiByte_t<Type>::BYTE_COUNT - 1; index >= 0 ; --index )
+            {
+                auto byte = Byte::read( inStream ).getValue();
+                
+                if ( ! inStream )
+                {
+                    throw std::runtime_error{ "unable to read DoubleWord from istream" };
+                }
+                
+                auto shift = index * bits;
+                value |= byte << shift;
+            }
         }
-        
-        return std::move(  MultiByte_t<Type>{ bytes }  );
+        return std::move(  MultiByte_t<Type>{ value }  );
     }
     
     
@@ -201,21 +221,5 @@ namespace Binary
         return outStream;
     }
     
-
-    template <typename Type>
-    void MultiByte_t<Type>::read ( std::istream& inStream, std::vector<Byte>& bytes )
-    {
-        for ( int index = 0; index < MultiByte_t<Type>::BYTE_COUNT; ++index )
-        {
-            auto byte = Byte::read( inStream );
-            
-            bytes.emplace_back(  std::move( byte )  );
-            
-            if ( ! inStream )
-            {
-                throw std::runtime_error{ "unable to read DoubleWord from istream" };
-            }
-        }
-    }
 
 }

@@ -103,3 +103,4 @@ TEST(constructHeaderFromRGB, WindowsBitmapHeader)
     CHECK_EQUAL(240, bitmapHeader.getBitmapHeight());
 }
 
+
