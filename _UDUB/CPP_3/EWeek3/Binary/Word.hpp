@@ -8,9 +8,9 @@
 
 #pragma once
 
-#include "MultiByte_t.hpp"
+#include "Binary_t.hpp"
 
 namespace Binary
 {
-    using Word = MultiByte_t<uint16_t>;
+    using Word = Binary_t<uint16_t>;
 }

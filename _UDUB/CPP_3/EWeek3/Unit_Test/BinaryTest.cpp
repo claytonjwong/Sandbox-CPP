@@ -337,13 +337,13 @@ TEST(assign, Word)
 
 TEST(assign2, Word)
 {
-    Binary::MultiByte_t<uint16_t> w1{0x1234};
+    Binary::Binary_t<uint16_t> w1{0x1234};
     Binary::Word word1;
-    word1 = Binary::MultiByte_t<uint16_t>{0x1234};
+    word1 = Binary::Binary_t<uint16_t>{0x1234};
     CHECK_EQUAL(word1,w1);
     
-    Binary::MultiByte_t<uint16_t> w2{0x5678};
-    CHECK_EQUAL(Binary::MultiByte_t<uint16_t>{0x5678}, w2);
+    Binary::Binary_t<uint16_t> w2{0x5678};
+    CHECK_EQUAL(Binary::Binary_t<uint16_t>{0x5678}, w2);
 }
 
 TEST(assign3, Word)
@@ -365,13 +365,13 @@ TEST(assign, DoubleWord)
 
 TEST(assign2, DoubleWord)
 {
-    Binary::MultiByte_t<uint32_t> dw1{0x12345678};
+    Binary::Binary_t<uint32_t> dw1{0x12345678};
     Binary::DoubleWord doubleWord1;
     doubleWord1 = dw1;
     CHECK_EQUAL(doubleWord1,dw1);
     
-    Binary::MultiByte_t<uint32_t> dw2{0x12345678};
-    CHECK_EQUAL(Binary::MultiByte_t<uint32_t>{0x12345678}, dw2);
+    Binary::Binary_t<uint32_t> dw2{0x12345678};
+    CHECK_EQUAL(Binary::Binary_t<uint32_t>{0x12345678}, dw2);
 }
 
 TEST(readWordDynamicEndian, Binary)

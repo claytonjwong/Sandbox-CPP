@@ -1,8 +1,8 @@
 //
-//  MultiByte_t.hpp
+//  Binary_t.hpp
 //  EWeek3
 //
-//  Created by CLAYTON WONG on 8/17/18.
+//  Created by CLAYTON WONG on 8/19/18.
 //  Copyright © 2018 Clayton Wong. All rights reserved.
 //
 
@@ -18,29 +18,28 @@ namespace Binary
 {
     
     template <typename Type>
-    class MultiByte_t
+    class Binary_t
     {
     public:
         
         static constexpr int BYTE_COUNT {  sizeof( Type )  };
         
-        static MultiByte_t read ( std::istream& inStream, const Endianness&& forceEndian = Endianness::Dynamic );
-        static MultiByte_t readLittleEndian ( std::istream& inStream );
-        static MultiByte_t readBigEndian ( std::istream& inStream );
+        static Binary_t read ( std::istream& inStream, const Endianness&& forceEndian = Endianness::Dynamic );
+        static Binary_t readLittleEndian ( std::istream& inStream );
+        static Binary_t readBigEndian ( std::istream& inStream );
         
-        MultiByte_t() = default;
-        ~MultiByte_t() = default;
-        explicit MultiByte_t ( Type value );
-        explicit MultiByte_t ( const std::vector<Byte>& bytes );
+        Binary_t() = default;
+        ~Binary_t() = default;
+        explicit Binary_t ( Type value );
 
-        MultiByte_t ( const MultiByte_t& src ) = default;
-        MultiByte_t ( MultiByte_t&& src ) = default;
+        Binary_t ( const Binary_t& src ) = default;
+        Binary_t ( Binary_t&& src ) = default;
         
-        MultiByte_t& operator= ( const MultiByte_t& rhs ) = default;
-        MultiByte_t& operator= ( MultiByte_t&& rhs ) = default;
+        Binary_t& operator= ( const Binary_t& rhs ) = default;
+        Binary_t& operator= ( Binary_t&& rhs ) = default;
 
-        MultiByte_t& operator= ( const Type& rhs );
-        MultiByte_t& operator= ( Type&& rhs );
+        Binary_t& operator= ( const Type& rhs );
+        Binary_t& operator= ( Type&& rhs );
 
         const Type& getValue() const noexcept;
         
@@ -50,7 +49,7 @@ namespace Binary
         
         operator Type() const noexcept;
         
-        bool operator== ( const MultiByte_t& rhs ) const noexcept;
+        bool operator== ( const Binary_t& rhs ) const noexcept;
         
     private:
     
@@ -60,16 +59,19 @@ namespace Binary
     
     
     template <typename Type>
-    MultiByte_t<Type> MultiByte_t<Type>::read ( std::istream& inStream, const Endianness&& forceEndian )
+    Binary_t<Type> Binary_t<Type>::read ( std::istream& inStream, const Endianness&& forceEndian )
     {
-        Type value{ 0 };
+        Type readResult{ 0 };
         auto mask{ Byte::MASK_ALL_BITS_SET };
         auto bits{ Byte::BIT_COUNT };
         int shift{ 0 };
 
-        for ( int index = 0; index < MultiByte_t<Type>::BYTE_COUNT; ++index )
+        for ( int index = 0; index < Binary_t<Type>::BYTE_COUNT; ++index )
         {
-            auto byte = Byte::read( inStream ).getValue();
+            char buffer;
+            inStream.get( buffer );
+            auto byteValue = static_cast<ByteType>( buffer );
+
             if ( ! inStream )
             {
                 throw std::runtime_error{ "unable to read DoubleWord from istream" };
@@ -82,59 +84,47 @@ namespace Binary
             }
             else
             {
-                shift = ( MultiByte_t<Type>::BYTE_COUNT - 1 - index ) * bits;
+                shift = ( Binary_t<Type>::BYTE_COUNT - 1 - index ) * bits;
             }
             
-            value |= byte << shift;
+            readResult |= byteValue << shift;
         }
 
-        return std::move(  MultiByte_t<Type>{ value }  );
+        return std::move(  Binary_t<Type>{ readResult }  );
     }
     
     
     template <typename Type>
-    MultiByte_t<Type> MultiByte_t<Type>::readLittleEndian ( std::istream& inStream )
+    Binary_t<Type> Binary_t<Type>::readLittleEndian ( std::istream& inStream )
     {
         return std::move(  read( inStream, Endianness::Little )  );
     }
     
 
     template <typename Type>
-    MultiByte_t<Type> MultiByte_t<Type>::readBigEndian ( std::istream& inStream )
+    Binary_t<Type> Binary_t<Type>::readBigEndian ( std::istream& inStream )
     {
         return std::move(  read( inStream, Endianness::Big )  );
     }
     
     
     template <typename Type>
-    MultiByte_t<Type>::MultiByte_t ( Type value ) :
+    Binary_t<Type>::Binary_t ( Type value ) :
     myValue{ value }
     {
     }
     
     
     template <typename Type>
-    MultiByte_t<Type>::MultiByte_t ( const std::vector<Byte>& bytes ) :
-    myValue{ 0 }
+    Binary_t<Type>& Binary_t<Type>::operator= ( const Type& value )
     {
-        int index = 0;
-        for ( const auto& byte: bytes )
-        {
-            myValue |= ( byte.getValue() << ( index++ * Byte::BIT_COUNT ) );
-        }
-    }
-    
-    
-    template <typename Type>
-    MultiByte_t<Type>& MultiByte_t<Type>::operator= ( const Type& rhs )
-    {
-        myValue = static_cast<Type>( rhs );
+        myValue = static_cast<Type>( value );
         return *this;
     }
 
 
     template <typename Type>
-    MultiByte_t<Type>& MultiByte_t<Type>::operator= ( Type&& rhs )
+    Binary_t<Type>& Binary_t<Type>::operator= ( Type&& rhs )
     {
         myValue = static_cast<Type>( rhs );
         return *this;
@@ -142,20 +132,20 @@ namespace Binary
     
     
     template <typename Type>
-    const Type& MultiByte_t<Type>::getValue() const noexcept
+    const Type& Binary_t<Type>::getValue() const noexcept
     {
         return myValue;
     }
     
 
     template <typename Type>
-    void MultiByte_t<Type>::write ( std::ostream& outStream, const Endianness&& forceEndian ) const
+    void Binary_t<Type>::write ( std::ostream& outStream, const Endianness&& forceEndian ) const
     {
         auto mask = Byte::MASK_ALL_BITS_SET;
         auto bits = Byte::BIT_COUNT;
         int shift{ 0 };
     
-        for ( int index = 0; index < MultiByte_t<Type>::BYTE_COUNT; ++index )
+        for ( int index = 0; index < Binary_t<Type>::BYTE_COUNT; ++index )
         {
             if (  ( forceEndian == Endianness::Little ) ||
                   ( forceEndian == Endianness::Dynamic && SYSTEM_ENDIANNESSS() == Endianness::Little ) )
@@ -164,7 +154,7 @@ namespace Binary
             }
             else
             {
-                shift = ( MultiByte_t<Type>::BYTE_COUNT - 1 - index ) * bits;
+                shift = ( Binary_t<Type>::BYTE_COUNT - 1 - index ) * bits;
             }
             
             ByteType value = ( myValue & mask << shift ) >> shift;
@@ -174,35 +164,35 @@ namespace Binary
     
     
     template <typename Type>
-    void MultiByte_t<Type>::writeLittleEndian ( std::ostream& outStream ) const
+    void Binary_t<Type>::writeLittleEndian ( std::ostream& outStream ) const
     {
         write( outStream, Endianness::Little );
     }
     
     
     template <typename Type>
-    void MultiByte_t<Type>::writeBigEndian ( std::ostream& outStream ) const
+    void Binary_t<Type>::writeBigEndian ( std::ostream& outStream ) const
     {
         write( outStream, Endianness::Big );
     }
     
     
     template <typename Type>
-    MultiByte_t<Type>::operator Type() const noexcept
+    Binary_t<Type>::operator Type() const noexcept
     {
         return myValue;
     }
 
 
     template <typename Type>
-    bool MultiByte_t<Type>::operator== ( const MultiByte_t<Type>& rhs ) const noexcept
+    bool Binary_t<Type>::operator== ( const Binary_t<Type>& rhs ) const noexcept
     {
         return myValue == rhs.myValue;
     }
     
     
     template <typename Type>
-    std::ostream& operator<< ( std::ostream& outStream, const MultiByte_t<Type>& rhs )
+    std::ostream& operator<< ( std::ostream& outStream, const Binary_t<Type>& rhs )
     {
         rhs.write( outStream );
         

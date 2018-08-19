@@ -53,9 +53,9 @@ namespace Binary
     };
     
     template <typename Type>
-    Byte& Byte::operator= ( Type&& rhs )
+    Byte& Byte::operator= ( Type&& value )
     {
-        myValue = static_cast<ByteType>( rhs );
+        myValue = static_cast<ByteType>( value );
         return *this;
     }
     
