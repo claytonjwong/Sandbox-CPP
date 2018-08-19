@@ -12,7 +12,7 @@
 #include "Byte.hpp"
 #include "binary_ostream_iterator.hpp"
 #include <sstream>
-#include <list>
+#include <vector>
 
 namespace Binary
 {
@@ -31,7 +31,7 @@ namespace Binary
         MultiByte_t() = default;
         ~MultiByte_t() = default;
         explicit MultiByte_t ( Type value );
-        explicit MultiByte_t ( const std::list<Byte>& bytes );
+        explicit MultiByte_t ( const std::vector<Byte>& bytes );
 
         MultiByte_t ( const MultiByte_t& src ) = default;
         MultiByte_t ( MultiByte_t&& src ) = default;
@@ -56,15 +56,14 @@ namespace Binary
     
         Type myValue{ 0 };
         
-        static void read ( std::istream& inStream, std::list<Byte>& bytes );
-        static void write ( std::ostream& outStream, const std::list<Byte>& bytes );
+        static void read ( std::istream& inStream, std::vector<Byte>& bytes );
     };
     
     
     template <typename Type>
     MultiByte_t<Type> MultiByte_t<Type>::read ( std::istream& inStream, const Endianness&& forceEndian )
     {
-        std::list<Byte> bytes;
+        std::vector<Byte> bytes;
         
         read( inStream, bytes );
         
@@ -104,7 +103,7 @@ namespace Binary
     
     
     template <typename Type>
-    MultiByte_t<Type>::MultiByte_t ( const std::list<Byte>& bytes ) :
+    MultiByte_t<Type>::MultiByte_t ( const std::vector<Byte>& bytes ) :
     myValue{ 0 }
     {
         int index = 0;
@@ -141,25 +140,28 @@ namespace Binary
     template <typename Type>
     void MultiByte_t<Type>::write ( std::ostream& outStream, const Endianness&& forceEndian ) const
     {
-        static std::list<Byte> bytes;
-        bytes.clear();
-        
-        for ( int index = 0; index < MultiByte_t<Type>::BYTE_COUNT; ++index )
+        auto mask = Byte::MASK_ALL_BITS_SET;
+        auto bits = Byte::BIT_COUNT;
+    
+        if (  ( forceEndian == Endianness::Little ) ||
+              ( forceEndian == Endianness::Dynamic && SYSTEM_ENDIANNESSS() == Endianness::Little ) )
         {
-            Byte byte{ static_cast<ByteType>(
-                ( myValue & Byte::MASK_ALL_BITS_SET << ( index * Byte::BIT_COUNT ) )
-                    >> ( index * Byte::BIT_COUNT )    ) };
-            
-            bytes.emplace_back(  std::move( byte )  );
+            for ( int index = 0; index < MultiByte_t<Type>::BYTE_COUNT; ++index )
+            {
+                auto shift = index * bits;
+                ByteType value = ( myValue & mask << shift ) >> shift;
+                outStream << value;
+            }
         }
-
-        if ( ! (  ( forceEndian == Endianness::Little ) ||
-              ( forceEndian == Endianness::Dynamic && SYSTEM_ENDIANNESSS() == Endianness::Little )  ) )
+        else
         {
-            reverse( bytes.begin(), bytes.end() );
+            for ( int index = MultiByte_t<Type>::BYTE_COUNT - 1; index >= 0 ; --index )
+            {
+                auto shift = index * bits;
+                ByteType value = ( myValue & mask << shift ) >> shift;
+                outStream << value;
+            }
         }
-        
-        write( outStream, bytes );
     }
     
     
@@ -201,7 +203,7 @@ namespace Binary
     
 
     template <typename Type>
-    void MultiByte_t<Type>::read ( std::istream& inStream, std::list<Byte>& bytes )
+    void MultiByte_t<Type>::read ( std::istream& inStream, std::vector<Byte>& bytes )
     {
         for ( int index = 0; index < MultiByte_t<Type>::BYTE_COUNT; ++index )
         {
@@ -214,13 +216,6 @@ namespace Binary
                 throw std::runtime_error{ "unable to read DoubleWord from istream" };
             }
         }
-    }
-
-
-    template <typename Type>
-    void MultiByte_t<Type>::write ( std::ostream& outStream, const std::list<Byte>& bytes )
-    {
-        std::copy( bytes.begin(), bytes.end(), binary_ostream_iterator<Byte>( outStream )  );
     }
 
 }
