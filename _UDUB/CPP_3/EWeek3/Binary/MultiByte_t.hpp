@@ -65,38 +65,29 @@ namespace Binary
         Type value{ 0 };
         auto mask{ Byte::MASK_ALL_BITS_SET };
         auto bits{ Byte::BIT_COUNT };
+        int shift{ 0 };
 
-        if (  ( forceEndian == Endianness::Little ) ||
-              ( forceEndian == Endianness::Dynamic && SYSTEM_ENDIANNESSS() == Endianness::Little )  )
+        for ( int index = 0; index < MultiByte_t<Type>::BYTE_COUNT; ++index )
         {
-            for ( int index = 0; index < MultiByte_t<Type>::BYTE_COUNT; ++index )
+            auto byte = Byte::read( inStream ).getValue();
+            if ( ! inStream )
             {
-                auto byte = Byte::read( inStream ).getValue();
-                
-                if ( ! inStream )
-                {
-                    throw std::runtime_error{ "unable to read DoubleWord from istream" };
-                }
-                
-                auto shift = index * bits;
-                value |= byte << shift;
+                throw std::runtime_error{ "unable to read DoubleWord from istream" };
             }
-        }
-        else
-        {
-            for ( int index = MultiByte_t<Type>::BYTE_COUNT - 1; index >= 0 ; --index )
+
+            if (  ( forceEndian == Endianness::Little ) ||
+                  ( forceEndian == Endianness::Dynamic && SYSTEM_ENDIANNESSS() == Endianness::Little )  )
             {
-                auto byte = Byte::read( inStream ).getValue();
-                
-                if ( ! inStream )
-                {
-                    throw std::runtime_error{ "unable to read DoubleWord from istream" };
-                }
-                
-                auto shift = index * bits;
-                value |= byte << shift;
+                shift = index * bits;
             }
+            else
+            {
+                shift = ( MultiByte_t<Type>::BYTE_COUNT - 1 - index ) * bits;
+            }
+            
+            value |= byte << shift;
         }
+
         return std::move(  MultiByte_t<Type>{ value }  );
     }
     
