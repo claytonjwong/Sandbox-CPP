@@ -10,7 +10,9 @@
 #include "Color.hpp"
 #include "Bitmap.hpp"
 #include "binary_ostream_iterator.hpp"
+#include "BitmapIterator.hpp"
 #include <iostream>
+#include <memory>
 
 using namespace Binary;
 using namespace std;
@@ -35,33 +37,39 @@ namespace BitmapGraphics
     }
     
     
-    int Bitmap::getWidth() const noexcept
+    int Bitmap::getWidth ( ) const noexcept
     {
         return myWidth;
     }
     
 
-    int Bitmap::getHeight() const noexcept
+    int Bitmap::getHeight ( ) const noexcept
     {
         return myHeight;
     }
     
     
-    int Bitmap::getNumberOfPadBytes() const noexcept
+    int Bitmap::getNumberOfPadBytes ( ) const noexcept
     {
         return myPaddingSize;
     }
     
 
-    Bitmap::ScanLineIterator Bitmap::begin() const noexcept
+    Bitmap::ScanLineIterator Bitmap::begin ( ) const noexcept
     {
         return myScanLines.begin();
     }
     
 
-    Bitmap::ScanLineIterator Bitmap::end() const noexcept
+    Bitmap::ScanLineIterator Bitmap::end ( ) const noexcept
     {
         return myScanLines.end();
+    }
+    
+    
+    HBitmapIterator Bitmap::createIterator ( ) const noexcept
+    {
+        return make_shared<BitmapIterator>( *this );
     }
     
     

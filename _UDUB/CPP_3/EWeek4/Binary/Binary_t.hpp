@@ -74,7 +74,7 @@ namespace Binary
             inStream.get( buffer );
             if ( ! inStream )
             {
-                throw std::runtime_error{ "unable to read DoubleWord from istream" };
+                throw std::runtime_error{ "unable to read from stream" };
             }
             auto value = static_cast<Byte_t>( buffer );
 

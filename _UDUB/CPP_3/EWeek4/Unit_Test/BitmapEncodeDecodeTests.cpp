@@ -1,11 +1,9 @@
 #include "TestHarness.h"
-
-/*
-#include "Bitmap.h"
-#include "WindowsBitmapDecoder.h"
-#include "WindowsBitmapEncoder.h"
-#include "BitmapIterator.h"
-#include "binary_ostream_iterator.h"
+#include "Bitmap.hpp"
+#include "WindowsBitmapDecoder.hpp"
+//#include "WindowsBitmapEncoder.h"
+//#include "BitmapIterator.h"
+#include "binary_ostream_iterator.hpp"
 #include <fstream>
 
 using namespace BitmapGraphics;
@@ -15,11 +13,12 @@ TEST(createDecoder, WindowsBitmapDecoder)
     std::ifstream bitmapStream{"basic.bmp", std::ios::binary};
     CHECK(bitmapStream.is_open());
     
-    WindowsBitmapDecoder decoderPrototype{};
-    HBitmapDecoder decoder{decoderPrototype.clone(bitmapStream)};
-    CHECK_EQUAL("image/x-ms-bmp", decoder->getMimeType());
+//    WindowsBitmapDecoder decoderPrototype{};
+//    HBitmapDecoder decoder{decoderPrototype.clone(bitmapStream)};
+//    CHECK_EQUAL("image/x-ms-bmp", decoder->getMimeType());
 }
 
+/*
 TEST(BitmapSizeTest, BitmapIterator)
 {
     std::ifstream bitmapStream{"basic.bmp", std::ios::binary};

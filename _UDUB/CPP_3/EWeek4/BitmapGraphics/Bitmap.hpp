@@ -9,6 +9,7 @@
 #pragma once
 
 #include "Color.hpp"
+#include "IBitmapIterator.hpp"
 #include <list>
 #include <iostream>
 
@@ -19,11 +20,13 @@ namespace BitmapGraphics
     public:
     
         using ScanLine = std::list<Color>;
+        using Pixel = Color;
+        using PixelIterator = ScanLine::const_iterator;
         using ScanLineCollection = std::list<ScanLine>;
         using ScanLineIterator = ScanLineCollection::const_iterator;
     
-        Bitmap() = default;
-        ~Bitmap() = default;
+        Bitmap ( ) = default;
+        ~Bitmap ( ) = default;
         Bitmap ( int width, int height, std::istream& inStream );
         
         Bitmap ( const Bitmap& src ) = default;
@@ -32,12 +35,13 @@ namespace BitmapGraphics
         Bitmap& operator= ( const Bitmap& rhs ) = default;
         Bitmap& operator= ( Bitmap&& rhs ) = default;
         
-        int getWidth() const noexcept;
-        int getHeight() const noexcept;
-        int getNumberOfPadBytes() const noexcept;
+        int getWidth ( ) const noexcept;
+        int getHeight ( ) const noexcept;
+        int getNumberOfPadBytes ( ) const noexcept;
         
-        ScanLineIterator begin() const noexcept;
-        ScanLineIterator end() const noexcept;
+        ScanLineIterator begin ( ) const noexcept;
+        ScanLineIterator end ( ) const noexcept;
+        HBitmapIterator createIterator ( ) const noexcept;
     
         void write ( std::ostream& outStream ) const;
         
@@ -45,8 +49,8 @@ namespace BitmapGraphics
         
         int myWidth{ 0 };
         int myHeight{ 0 };
-        ScanLineCollection myScanLines;
         int myPaddingSize{ 0 };
+        ScanLineCollection myScanLines;
         
         void readScanLine ( std::istream& inStream ) noexcept;
         void writeScanLine ( std::ostream& outStream, const ScanLine& scanLine ) const;
