@@ -1,7 +1,5 @@
 #include "TestHarness.h"
-
-/*
-#include "WindowsBitmapHeader.h"
+#include "WindowsBitmapHeader.hpp"
 #include <fstream>
 
 using namespace BitmapGraphics;
@@ -92,5 +90,5 @@ TEST(constructHeaderFromStream_101, WindowsBitmapHeader)
     CHECK_EQUAL(101, bitmapHeader.getBitmapHeight());
     CHECK_EQUAL(101, bitmapHeader.getBitmapWidth());
 }
-*/
+
 
