@@ -9,6 +9,7 @@
 #pragma once
 
 #include "Color.hpp"
+#include "IBitmapHeader.hpp"
 #include <memory>
 
 namespace BitmapGraphics
@@ -22,19 +23,22 @@ namespace BitmapGraphics
         
         virtual ~IBitmapIterator ( ) {};
         
-        virtual void nextScanLine ( ) = 0;
-        
-        virtual bool isEndOfImage ( ) const noexcept = 0;
-        
-        virtual void nextPixel ( ) = 0;
-        
-        virtual bool isEndOfScanLine ( ) const noexcept = 0;
-        
         virtual Color getColor ( ) const noexcept = 0;
         
         virtual int getBitmapWidth ( ) const noexcept = 0;
         
         virtual int getBitmapHeight ( ) const noexcept = 0;
+        
+        virtual int getBitmapNumberOfPadBytes ( ) const noexcept = 0;
+        
+        virtual bool isEndOfImage ( ) const noexcept = 0;
+        
+        virtual bool isEndOfScanLine ( ) const noexcept = 0;
+        
+        virtual void nextScanLine ( ) = 0;
+        
+        virtual void nextPixel ( ) = 0;
+        
         
     };
 }

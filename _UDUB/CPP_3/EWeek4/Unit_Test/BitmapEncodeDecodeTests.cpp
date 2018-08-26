@@ -1,8 +1,8 @@
 #include "TestHarness.h"
 #include "Bitmap.hpp"
 #include "WindowsBitmapDecoder.hpp"
-//#include "WindowsBitmapEncoder.h"
-//#include "BitmapIterator.h"
+#include "WindowsBitmapEncoder.hpp"
+#include "BitmapIterator.hpp"
 #include "binary_ostream_iterator.hpp"
 #include <fstream>
 
@@ -60,7 +60,7 @@ TEST(BitmapScanLinesTest, BitmapIterator)
     CHECK_EQUAL(100, numberOfScanLines);
 }
 
-/*
+
 TEST(BitmapReadWrite, Bitmap)
 {
     // Read in the bitmap
@@ -108,7 +108,6 @@ TEST(BitmapReadWrite, Bitmap)
     CHECK_EQUAL(100, numberOfScanLines);
 }
 
-
 //// --- Repeat the tests with a bitmap that requires pad bytes (101x101)
 
 TEST(BitmapSizeTest_101, BitmapIterator)
@@ -150,6 +149,7 @@ TEST(BitmapScanLinesTest_101, BitmapIterator)
     CHECK_EQUAL(101, numberOfScanLines);
 }
 
+/*
 TEST(BitmapReadWrite_101, Bitmap)
 {
     // Read in the bitmap

@@ -52,7 +52,7 @@ namespace Codec
         
             virtual bool isSupported ( ) const noexcept override
             {
-                return true; // TODO: I'm not sure how this method is intended to be used?
+                return true; // TODO: provide first 100 bytes in stream here,                
             }
         
         private:
