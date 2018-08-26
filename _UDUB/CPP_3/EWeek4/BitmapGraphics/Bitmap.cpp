@@ -57,13 +57,13 @@ namespace BitmapGraphics
 
     Bitmap::ScanLineIterator Bitmap::begin ( ) const noexcept
     {
-        return myScanLines.begin();
+        return myScanLines.cbegin();
     }
     
 
     Bitmap::ScanLineIterator Bitmap::end ( ) const noexcept
     {
-        return myScanLines.end();
+        return myScanLines.cend();
     }
     
     

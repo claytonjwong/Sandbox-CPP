@@ -9,20 +9,57 @@
 #pragma once
 
 #include "IBitmapDecoder.hpp"
+#include "IBitmapIterator.hpp"
+#include "BitmapIterator.hpp"
+#include "WindowsBitmapHeader.hpp"
+#include "Bitmap.hpp"
+#include <iostream>
+#include <sstream>
 
 namespace Codec
 {
     class WindowsBitmapDecoder : public IBitmapDecoder
     {
         public:
-            virtual ~WindowsBitmapDecoder ( );
         
-            virtual HBitmapDecoder clone ( ) const noexcept override;
+            WindowsBitmapDecoder ( ) :
+            myMimeType{ "image/x-ms-bmp" }
+            {
+            }
         
-            virtual BitmapGraphics::HBitmapIterator createIterator ( ) const noexcept override;
+            virtual ~WindowsBitmapDecoder ( ) = default;
         
-            virtual std::string getMimeType ( ) const noexcept override;
+            virtual HBitmapDecoder clone ( std::istream& inStream ) noexcept override
+            {
+                auto result = std::make_shared<WindowsBitmapDecoder>();
+                result->myStream << inStream.rdbuf();
+                BitmapGraphics::WindowsBitmapHeader header{ result->myStream };
+                result->myBitmap = BitmapGraphics::Bitmap{
+                    header.getBitmapWidth(), header.getBitmapHeight(), result->myStream };
+                return result;
+            }
         
-            virtual bool isSupported ( ) const noexcept override;
+            virtual BitmapGraphics::HBitmapIterator createIterator ( ) const noexcept override
+            {
+                auto it = BitmapGraphics::BitmapIterator{ myBitmap };
+                return std::make_shared<BitmapGraphics::BitmapIterator>( it );
+            }
+        
+            virtual const std::string& getMimeType ( ) const noexcept override
+            {
+                return myMimeType;
+            }
+        
+            virtual bool isSupported ( ) const noexcept override
+            {
+                return true; // TODO: I'm not sure how this method is intended to be used?
+            }
+        
+        private:
+        
+            std::stringstream myStream;
+            const std::string myMimeType;
+            BitmapGraphics::Bitmap myBitmap;
     };
+    
 }

@@ -7,18 +7,19 @@
 #include <fstream>
 
 using namespace BitmapGraphics;
+using namespace Codec;
 
 TEST(createDecoder, WindowsBitmapDecoder)
 {
     std::ifstream bitmapStream{"basic.bmp", std::ios::binary};
     CHECK(bitmapStream.is_open());
     
-//    WindowsBitmapDecoder decoderPrototype{};
-//    HBitmapDecoder decoder{decoderPrototype.clone(bitmapStream)};
-//    CHECK_EQUAL("image/x-ms-bmp", decoder->getMimeType());
+    WindowsBitmapDecoder decoderPrototype{};
+    HBitmapDecoder decoder{decoderPrototype.clone(bitmapStream)};
+    CHECK_EQUAL("image/x-ms-bmp", decoder->getMimeType());
 }
 
-/*
+
 TEST(BitmapSizeTest, BitmapIterator)
 {
     std::ifstream bitmapStream{"basic.bmp", std::ios::binary};
@@ -31,6 +32,7 @@ TEST(BitmapSizeTest, BitmapIterator)
     CHECK_EQUAL(100, bitmapIter->getBitmapWidth());
     CHECK_EQUAL(100, bitmapIter->getBitmapHeight());
 }
+
 
 TEST(BitmapScanLinesTest, BitmapIterator)
 {
@@ -58,6 +60,7 @@ TEST(BitmapScanLinesTest, BitmapIterator)
     CHECK_EQUAL(100, numberOfScanLines);
 }
 
+/*
 TEST(BitmapReadWrite, Bitmap)
 {
     // Read in the bitmap

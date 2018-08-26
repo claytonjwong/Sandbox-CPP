@@ -9,24 +9,28 @@
 #pragma once
 
 #include "IBitmapIterator.hpp"
-
+#include <iostream>
+#include <memory>
 
 namespace Codec
 {
+
     class IBitmapDecoder;
-    using HBitmapDecoder = IBitmapDecoder*;
+    using HBitmapDecoder = std::shared_ptr<IBitmapDecoder>;
 
     class IBitmapDecoder
     {
     public:
     
-        virtual ~IBitmapDecoder ( ) = 0;
+        virtual ~IBitmapDecoder ( )
+        {
+        }
         
-        virtual HBitmapDecoder clone ( ) const noexcept = 0;
+        virtual HBitmapDecoder clone ( std::istream& inStream ) noexcept = 0;
         
         virtual BitmapGraphics::HBitmapIterator createIterator ( ) const noexcept = 0;
         
-        virtual std::string getMimeType ( ) const noexcept = 0;
+        virtual const std::string& getMimeType ( ) const noexcept = 0;
         
         virtual bool isSupported ( ) const noexcept = 0;
         

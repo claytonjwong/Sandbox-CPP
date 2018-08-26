@@ -17,9 +17,13 @@ namespace BitmapGraphics
     {
     public:
     
+        BitmapIterator ( ) = delete;
+    
         BitmapIterator ( const BitmapGraphics::Bitmap& bitmap ) :
-        myBitmap{ bitmap },
-        myCurrScanLine{ myBitmap.begin() },
+        myWidth{ bitmap.getWidth() },
+        myHeight{ bitmap.getHeight() },
+        myCurrScanLine{ bitmap.begin() },
+        myEndOfScanLines{ bitmap.end() },
         myCurrPixel{ myCurrScanLine->begin() }
         {
         }
@@ -33,17 +37,17 @@ namespace BitmapGraphics
         
         virtual int getBitmapWidth ( ) const noexcept override
         {
-            return myBitmap.getWidth();
+            return myWidth;
         }
         
         virtual int getBitmapHeight ( ) const noexcept override
         {
-            return myBitmap.getHeight();
+            return myHeight;
         }
         
         virtual bool isEndOfImage ( ) const noexcept override
         {
-            return myCurrScanLine == myBitmap.end();
+            return myCurrScanLine == myEndOfScanLines;
         }
         
         virtual bool isEndOfScanLine ( ) const noexcept override
@@ -72,12 +76,10 @@ namespace BitmapGraphics
             ++myCurrPixel;
         }
         
-        
-        
     private:
-    
-        const Bitmap& myBitmap;
+        const int myWidth, myHeight;
         Bitmap::ScanLineIterator myCurrScanLine;
+        Bitmap::ScanLineIterator myEndOfScanLines;
         Bitmap::PixelIterator myCurrPixel;
     };
 }

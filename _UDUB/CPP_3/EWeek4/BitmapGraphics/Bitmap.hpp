@@ -19,8 +19,8 @@ namespace BitmapGraphics
     {
     public:
     
-        using ScanLine = std::list<Color>;
         using Pixel = Color;
+        using ScanLine = std::list<Pixel>;
         using PixelIterator = ScanLine::const_iterator;
         using ScanLineCollection = std::list<ScanLine>;
         using ScanLineIterator = ScanLineCollection::const_iterator;
