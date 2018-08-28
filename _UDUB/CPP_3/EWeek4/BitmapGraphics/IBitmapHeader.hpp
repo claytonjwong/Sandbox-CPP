@@ -12,16 +12,16 @@
 
 namespace BitmapGraphics
 {
-
     class IBitmapHeader;
     using HBitmapHeader = std::shared_ptr<IBitmapHeader>;
 
     class IBitmapHeader
     {
     public:
-        
+    
         virtual void read ( std::istream& inStream ) = 0;
         
-        virtual void write ( std::ostream& outStream ) = 0;
+        virtual void write ( std::ostream& outStream ) const = 0;
+        
     };
 }

@@ -149,7 +149,6 @@ TEST(BitmapScanLinesTest_101, BitmapIterator)
     CHECK_EQUAL(101, numberOfScanLines);
 }
 
-/*
 TEST(BitmapReadWrite_101, Bitmap)
 {
     // Read in the bitmap
@@ -196,5 +195,4 @@ TEST(BitmapReadWrite_101, Bitmap)
     }
     CHECK_EQUAL(101, numberOfScanLines);
 }
-*/
 

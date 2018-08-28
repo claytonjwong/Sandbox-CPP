@@ -32,9 +32,15 @@ namespace Codec
         
         virtual void encodeToStream ( std::ostream& outStream ) const noexcept
         {
-            //
-            // TODO: write header contents here!
-            //
+            auto header = myIt->getBitmapHeader();
+            if ( header )
+            {
+                header->write( outStream );
+            }
+            else
+            {
+                throw std::runtime_error{ "unable to retrieve header from iterator, cannot write header to stream" };
+            }
             
             for ( auto it=myIt; ! it->isEndOfImage(); it->nextScanLine() )
             {

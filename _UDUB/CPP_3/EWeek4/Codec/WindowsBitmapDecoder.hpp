@@ -34,6 +34,7 @@ namespace Codec
                 auto result = std::make_shared<WindowsBitmapDecoder>();
                 result->myStream << inStream.rdbuf();
                 BitmapGraphics::WindowsBitmapHeader header{ result->myStream };
+                result->myBitmapHeader = std::make_shared<BitmapGraphics::WindowsBitmapHeader>( header );
                 result->myBitmap = BitmapGraphics::Bitmap{
                     header.getBitmapWidth(), header.getBitmapHeight(), result->myStream };
                 return result;
@@ -41,7 +42,7 @@ namespace Codec
         
             virtual BitmapGraphics::HBitmapIterator createIterator ( ) const noexcept override
             {
-                auto it = BitmapGraphics::BitmapIterator{ myBitmap };
+                auto it = BitmapGraphics::BitmapIterator{ myBitmapHeader, myBitmap };
                 return std::make_shared<BitmapGraphics::BitmapIterator>( it );
             }
         
@@ -59,6 +60,7 @@ namespace Codec
         
             std::stringstream myStream;
             const std::string myMimeType;
+            BitmapGraphics::HBitmapHeader myBitmapHeader;
             BitmapGraphics::Bitmap myBitmap;
     };
     

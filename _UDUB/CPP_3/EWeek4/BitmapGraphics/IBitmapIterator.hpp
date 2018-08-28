@@ -23,6 +23,8 @@ namespace BitmapGraphics
         
         virtual ~IBitmapIterator ( ) {};
         
+        virtual HBitmapHeader getBitmapHeader ( ) const noexcept = 0;
+        
         virtual Color getColor ( ) const noexcept = 0;
         
         virtual int getBitmapWidth ( ) const noexcept = 0;

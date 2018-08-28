@@ -19,7 +19,8 @@ namespace BitmapGraphics
     
         BitmapIterator ( ) = delete;
     
-        BitmapIterator ( const BitmapGraphics::Bitmap& bitmap ) :
+        BitmapIterator ( BitmapGraphics::HBitmapHeader header, const BitmapGraphics::Bitmap& bitmap ) :
+        myHeader{ header },
         myWidth{ bitmap.getWidth() },
         myHeight{ bitmap.getHeight() },
         myNumberOfPadBytes{ bitmap.getNumberOfPadBytes() },
@@ -30,6 +31,11 @@ namespace BitmapGraphics
         }
         
         virtual ~BitmapIterator ( ) = default;
+    
+        virtual HBitmapHeader getBitmapHeader ( ) const noexcept override
+        {
+            return myHeader;
+        }
     
         virtual Color getColor ( ) const noexcept override
         {
@@ -83,6 +89,7 @@ namespace BitmapGraphics
         }
         
     private:
+        HBitmapHeader myHeader;
         const int myWidth, myHeight, myNumberOfPadBytes;
         Bitmap::ScanLineIterator myCurrScanLine;
         Bitmap::ScanLineIterator myEndOfScanLines;

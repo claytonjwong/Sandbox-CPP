@@ -12,12 +12,13 @@
 #include "Byte.hpp"
 #include "Word.hpp"
 #include "DoubleWord.hpp"
+#include "IBitmapHeader.hpp"
 #include <iostream>
 
 namespace BitmapGraphics
 {
 
-    class WindowsBitmapHeader
+    class WindowsBitmapHeader : public IBitmapHeader
     {
     public:
     
@@ -31,7 +32,7 @@ namespace BitmapGraphics
         WindowsBitmapHeader& operator= ( const WindowsBitmapHeader& rhs ) = default;
         WindowsBitmapHeader& operator= ( WindowsBitmapHeader&& rhs ) = default;
         
-        void read ( std::istream& inStream );
+        void read ( std::istream& inStream ) override;
         void readFileHeader ( std::istream& inStream );
         void readInfoHeader ( std::istream& inStream );
         
@@ -39,7 +40,7 @@ namespace BitmapGraphics
         int getBitmapHeight() const noexcept;
         int getFileSize() const noexcept;
         
-        void write ( std::ostream& outStream ) const;
+        virtual void write ( std::ostream& outStream ) const override;
         void writeFileHeader ( std::ostream& outStream ) const;
         void writeInfoHeader ( std::ostream& outStream ) const;
         
