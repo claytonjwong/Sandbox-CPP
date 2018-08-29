@@ -27,19 +27,19 @@ namespace BitmapGraphics
     }
     
     
-    const Color::ComponentType& Color::getBlue() const noexcept
+    const Color::Component_t& Color::getBlue() const noexcept
     {
         return myBlue.getValue();
     }
     
     
-    const Color::ComponentType& Color::getGreen() const noexcept
+    const Color::Component_t& Color::getGreen() const noexcept
     {
         return myGreen.getValue();
     }
     
     
-    const Color::ComponentType& Color::getRed() const noexcept
+    const Color::Component_t& Color::getRed() const noexcept
     {
         return myRed.getValue();
     }

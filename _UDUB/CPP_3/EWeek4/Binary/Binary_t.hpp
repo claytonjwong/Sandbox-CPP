@@ -98,14 +98,14 @@ namespace Binary
     template <typename Type>
     Binary_t<Type> Binary_t<Type>::readLittleEndian ( std::istream& inStream )
     {
-        return std::move(  read( inStream, Endianness::Little )  );
+        return read( inStream, Endianness::Little );
     }
     
 
     template <typename Type>
     Binary_t<Type> Binary_t<Type>::readBigEndian ( std::istream& inStream )
     {
-        return std::move(  read( inStream, Endianness::Big )  );
+        return read( inStream, Endianness::Big );
     }
     
     
