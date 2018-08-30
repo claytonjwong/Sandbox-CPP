@@ -1,0 +1,16 @@
+_EPI
+_DPCI
+_CCI
+.DS_Store
+*.pbxproj
+*.xcodeproj
+*.xcworkspacedata
+*.xcuserstate
+*.xcscheme
+*.plist
+*amazon*
+*.xcbkptlist
+*.xcuserstate
+UserInterfaceState.xcuserstate
+*sandbox*
+*.mp4
