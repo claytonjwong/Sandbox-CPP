@@ -22,7 +22,8 @@ public:
     {
         for ( const auto& word: words )
         {
-            if (  isMatch( word, pattern )
+            if (  word.size() == pattern.size()
+              &&  isMatch( word, pattern )
               &&  isMatch( pattern, word )  )
             {
                 answer.push_back( word );
@@ -34,15 +35,8 @@ public:
 
 private:
 
-    bool isMatch( const string& word, const string& pattern )
+    bool isMatch( const string& word, const string& pattern, unordered_map<char,char>&& umap={} )
     {
-        if ( word.size() != pattern.size() )
-        {
-            return false;
-        }
-
-        unordered_map<char,char> umap;
-        bool match = true;
         for ( auto index = 0; index < word.size(); ++index )
         {
             auto it = umap.find( pattern[ index ] );
