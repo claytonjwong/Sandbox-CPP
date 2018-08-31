@@ -11,7 +11,9 @@
 #include "IBitmapEncoder.hpp"
 #include "IBitmapIterator.hpp"
 #include "Byte.hpp"
+#include "WindowsBitmapHeader.hpp"
 #include <iostream>
+#include <sstream>
 
 namespace Codec
 {
@@ -32,16 +34,10 @@ namespace Codec
         
         virtual void encodeToStream ( std::ostream& outStream ) const noexcept
         {
-            auto header = myIt->getBitmapHeader();
-            if ( header )
-            {
-                header->write( outStream );
-            }
-            else
-            {
-                throw std::runtime_error{ "unable to retrieve header from iterator, cannot write header to stream" };
-            }
-            
+            BitmapGraphics::WindowsBitmapHeader
+                header{ myIt->getBitmapWidth(), myIt->getBitmapHeight() };
+            header.write( outStream );
+        
             for ( auto it=myIt; ! it->isEndOfImage(); it->nextScanLine() )
             {
                 for ( ; ! it->isEndOfScanLine(); it->nextPixel() )

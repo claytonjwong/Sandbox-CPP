@@ -9,7 +9,6 @@
 #pragma once
 
 #include "Color.hpp"
-#include "IBitmapHeader.hpp"
 #include <memory>
 
 namespace BitmapGraphics
@@ -22,8 +21,6 @@ namespace BitmapGraphics
     public:
         
         virtual ~IBitmapIterator ( ) {};
-        
-        virtual HBitmapHeader getBitmapHeader ( ) const noexcept = 0;
         
         virtual Color getColor ( ) const noexcept = 0;
         
