@@ -17,8 +17,6 @@ namespace BitmapGraphics
     {
     public:
     
-        BitmapIterator ( ) = delete;
-    
         BitmapIterator ( const BitmapGraphics::Bitmap& bitmap );
         
         virtual ~BitmapIterator ( ) = default;

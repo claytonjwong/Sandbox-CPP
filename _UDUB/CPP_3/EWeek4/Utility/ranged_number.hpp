@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include "Color.hpp"
 #include <algorithm>
 
 template <typename Type, Type lowerBound, Type upperBound>
