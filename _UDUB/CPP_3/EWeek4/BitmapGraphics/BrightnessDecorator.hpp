@@ -17,7 +17,6 @@ namespace BitmapGraphics
         
         BrightnessDecorator ( HBitmapIterator innerDecorator, const int adjustment ) :
         BitmapIteratorDecorator{ innerDecorator },
-        myInnerDecorator{ innerDecorator },
         myAdjustment{ adjustment }
         {
         }
@@ -51,7 +50,6 @@ namespace BitmapGraphics
         }
         
     private:
-        HBitmapIterator myInnerDecorator;
         const int myAdjustment;
     };
 }
