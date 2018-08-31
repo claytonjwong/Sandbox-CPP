@@ -24,13 +24,18 @@ namespace Codec
     {
     }
     
-    HBitmapDecoder WindowsBitmapDecoder::clone ( std::istream& inStream ) noexcept
+    HBitmapDecoder WindowsBitmapDecoder::clone ( std::istream& inStream )
     {
         auto result = std::make_shared<WindowsBitmapDecoder>();
         result->myStream << inStream.rdbuf();
         
         if ( ! result->myStream.str().empty() )
         {
+            if ( ! isSupported( result->myStream.str().substr( 0, 100 ) ) ) // use first 100 bytes to check if supported
+            {
+                throw std::runtime_error{ "unsupported format" };
+            }
+            
             BitmapGraphics::WindowsBitmapHeader header{ result->myStream };
             result->myBitmap = std::make_unique<BitmapGraphics::Bitmap>(
                 BitmapGraphics::Bitmap{
@@ -56,8 +61,8 @@ namespace Codec
         return myMimeType;
     }
 
-    bool WindowsBitmapDecoder::isSupported ( ) const noexcept
+    bool WindowsBitmapDecoder::isSupported ( const std::string& firstChunkOfBitmap ) const noexcept
     {
-        return true; // TODO: provide first 100 bytes in stream here,
+        return firstChunkOfBitmap[0] == 'B' && firstChunkOfBitmap[1] == 'M';
     }
 }

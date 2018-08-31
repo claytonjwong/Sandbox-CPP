@@ -32,13 +32,13 @@ namespace Codec
             WindowsBitmapDecoder& operator= ( const WindowsBitmapDecoder& rhs ) = delete;
             WindowsBitmapDecoder& operator= ( WindowsBitmapDecoder&& rhs ) = delete;
         
-            virtual HBitmapDecoder clone ( std::istream& inStream ) noexcept override;
+            virtual HBitmapDecoder clone ( std::istream& inStream ) override;
         
             virtual BitmapGraphics::HBitmapIterator createIterator ( ) const override;
         
             virtual const std::string& getMimeType ( ) const noexcept override;
         
-            virtual bool isSupported ( ) const noexcept override;
+            virtual bool isSupported ( const std::string& firstChunkOfBitmap ) const noexcept override;
         
         private:
         
