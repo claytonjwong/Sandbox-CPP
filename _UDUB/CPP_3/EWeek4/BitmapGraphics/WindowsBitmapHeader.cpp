@@ -20,6 +20,14 @@ namespace BitmapGraphics
     }
     
     
+    WindowsBitmapHeader::WindowsBitmapHeader ( const int width, const int height ) :
+    myWidth{ static_cast<Binary::Byte>( width ) },
+    myHeight{ static_cast<Binary::Byte>( height ) },
+    myRawImageOffset{ FILE_HEADER_SIZE + INFO_HEADER_SIZE }
+    {
+    }
+
+    
     void WindowsBitmapHeader::read ( istream& inStream )
     {
         readFileHeader( inStream );

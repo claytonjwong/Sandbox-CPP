@@ -24,12 +24,7 @@ namespace BitmapGraphics
         WindowsBitmapHeader() = default;
         ~WindowsBitmapHeader() = default;
         explicit WindowsBitmapHeader ( std::istream& inStream );
-        WindowsBitmapHeader ( const int width, const int height ) :
-        myWidth{ static_cast<Binary::Byte>( width ) },
-        myHeight{ static_cast<Binary::Byte>( height ) }
-        {
-            
-        }
+        WindowsBitmapHeader ( const int width, const int height );
         
         WindowsBitmapHeader ( const WindowsBitmapHeader& src ) = default;
         WindowsBitmapHeader ( WindowsBitmapHeader&& src ) = default;

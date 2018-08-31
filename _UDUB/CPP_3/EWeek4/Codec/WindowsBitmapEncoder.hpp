@@ -21,39 +21,25 @@ namespace Codec
     {
     public:
         
-        WindowsBitmapEncoder ( ) = default;
-        
+        WindowsBitmapEncoder ( ) = default; // TODO: make singleton?
         virtual ~WindowsBitmapEncoder ( ) = default;
         
-        virtual HBitmapEncoder clone ( BitmapGraphics::HBitmapIterator it ) noexcept
-        {
-            auto result = std::make_shared<WindowsBitmapEncoder>();
-            result->myIt = it;
-            return result;
-        }
+        WindowsBitmapEncoder ( const WindowsBitmapEncoder& src ) = delete;
+        WindowsBitmapEncoder ( WindowsBitmapEncoder&& src ) = delete;
         
-        virtual void encodeToStream ( std::ostream& outStream ) const noexcept
-        {
-            BitmapGraphics::WindowsBitmapHeader
-                header{ myIt->getBitmapWidth(), myIt->getBitmapHeight() };
-            header.write( outStream );
-        
-            for ( auto it=myIt; ! it->isEndOfImage(); it->nextScanLine() )
-            {
-                for ( ; ! it->isEndOfScanLine(); it->nextPixel() )
-                {
-                    outStream << it->getColor();
-                }
+        WindowsBitmapEncoder& operator= ( const WindowsBitmapEncoder& rhs ) = delete;
+        WindowsBitmapEncoder& operator= ( WindowsBitmapEncoder&& rhs ) = delete;
                 
-                Binary::Byte padByte{ 0 };
-                for ( int pad = 0u; pad < it->getBitmapNumberOfPadBytes(); ++pad )
-                {
-                    outStream << padByte;
-                }
-            }
-        }
+        virtual HBitmapEncoder clone ( BitmapGraphics::HBitmapIterator it ) noexcept;
+        
+        virtual void encodeToStream ( std::ostream& outStream ) const noexcept;
+        
         
     private:
+    
+        void encodeHeader ( std::ostream& outStream ) const noexcept;
+        void encodePayload ( std::ostream& outStream ) const noexcept;
+    
         BitmapGraphics::HBitmapIterator myIt;
     };
 }

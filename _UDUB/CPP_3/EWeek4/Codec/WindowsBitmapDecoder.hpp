@@ -22,38 +22,23 @@ namespace Codec
     {
         public:
         
-            WindowsBitmapDecoder ( ) :
-            myMimeType{ "image/x-ms-bmp" }
-            {
-            }
+            WindowsBitmapDecoder ( ); // TODO: make singleton?
         
             virtual ~WindowsBitmapDecoder ( ) = default;
         
-            virtual HBitmapDecoder clone ( std::istream& inStream ) noexcept override
-            {
-                auto result = std::make_shared<WindowsBitmapDecoder>();
-                result->myStream << inStream.rdbuf();
-                BitmapGraphics::WindowsBitmapHeader header{ result->myStream };
-                result->myBitmap = BitmapGraphics::Bitmap{
-                    header.getBitmapWidth(), header.getBitmapHeight(), result->myStream };
-                return result;
-            }
+            WindowsBitmapDecoder ( const WindowsBitmapDecoder& src ) = delete;
+            WindowsBitmapDecoder ( WindowsBitmapDecoder&& src ) = delete;
         
-            virtual BitmapGraphics::HBitmapIterator createIterator ( ) const noexcept override
-            {
-                auto it = BitmapGraphics::BitmapIterator{ myBitmap };
-                return std::make_shared<BitmapGraphics::BitmapIterator>( it );
-            }
+            WindowsBitmapDecoder& operator= ( const WindowsBitmapDecoder& rhs ) = delete;
+            WindowsBitmapDecoder& operator= ( WindowsBitmapDecoder&& rhs ) = delete;
         
-            virtual const std::string& getMimeType ( ) const noexcept override
-            {
-                return myMimeType;
-            }
+            virtual HBitmapDecoder clone ( std::istream& inStream ) noexcept override;
         
-            virtual bool isSupported ( ) const noexcept override
-            {
-                return true; // TODO: provide first 100 bytes in stream here,                
-            }
+            virtual BitmapGraphics::HBitmapIterator createIterator ( ) const noexcept override;
+        
+            virtual const std::string& getMimeType ( ) const noexcept override;
+        
+            virtual bool isSupported ( ) const noexcept override;
         
         private:
         
