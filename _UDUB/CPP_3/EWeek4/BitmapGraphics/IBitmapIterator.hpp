@@ -38,6 +38,5 @@ namespace BitmapGraphics
         
         virtual void nextPixel ( ) = 0;
         
-        
     };
 }

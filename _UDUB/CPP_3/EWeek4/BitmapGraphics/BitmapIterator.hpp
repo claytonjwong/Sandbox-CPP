@@ -32,8 +32,10 @@ namespace BitmapGraphics
         
         virtual void nextScanLine ( ) override;
         virtual void nextPixel ( ) override;
-        
+    
+    
     private:
+    
         const int myWidth, myHeight, myNumberOfPadBytes;
         Bitmap::ScanLineIterator myCurrScanLine;
         Bitmap::ScanLineIterator myEndOfScanLines;

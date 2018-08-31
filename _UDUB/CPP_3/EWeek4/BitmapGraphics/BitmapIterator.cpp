@@ -26,30 +26,36 @@ namespace BitmapGraphics
         return *myCurrPixel;
     }
 
+
     int BitmapIterator::getBitmapWidth ( ) const noexcept
     {
         return myWidth;
     }
 
+
     int BitmapIterator::getBitmapHeight ( ) const noexcept
     {
         return myHeight;
     }
+    
 
     int BitmapIterator::getBitmapNumberOfPadBytes ( ) const noexcept
     {
         return myNumberOfPadBytes;
     }
 
+
     bool BitmapIterator::isEndOfImage ( ) const noexcept
     {
         return myCurrScanLine == myEndOfScanLines;
     }
+    
 
     bool BitmapIterator::isEndOfScanLine ( ) const noexcept
     {
         return myCurrPixel == myCurrScanLine->end();
     }
+    
 
     void BitmapIterator::nextScanLine ( )
     {
@@ -61,6 +67,7 @@ namespace BitmapGraphics
         ++myCurrScanLine;
         myCurrPixel = myCurrScanLine->begin();
     }
+    
 
     void BitmapIterator::nextPixel ( )
     {
@@ -71,4 +78,5 @@ namespace BitmapGraphics
         
         ++myCurrPixel;
     }
+    
 }
