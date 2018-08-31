@@ -14,6 +14,21 @@ namespace Codec
         MimeType::WINDOWS_BITMAP
     };
     
+    CodecLibrary::CodecLibrary ( ) :
+    mySupportedMimeTypes{ MimeType::WINDOWS_BITMAP }
+    {
+    }
+    
+    void CodecLibrary::registerEncoder ( const HBitmapEncoder& encoder ) noexcept
+    {
+        myEncoder = encoder; // TODO: determine how to register multiple encoders
+    }
+
+    void CodecLibrary::registerDecoder ( const HBitmapDecoder& decoder ) noexcept
+    {
+        myDecoder = decoder; // TODO: determine how to register multiple decoders
+    }
+
     HBitmapEncoder CodecLibrary::createEncoder ( const std::string& mimeType, const BitmapGraphics::HBitmapIterator& iter )
     {
         if ( mySupportedMimeTypes.find( mimeType ) == mySupportedMimeTypes.end() )
@@ -22,6 +37,11 @@ namespace Codec
         }
         
         return myEncoder->clone( iter );
+    }
+    
+    HBitmapDecoder CodecLibrary::createDecoder ( std::istream& inStream )
+    {
+        return myDecoder->clone( inStream );
     }
     
     HBitmapDecoder CodecLibrary::createDecoder ( const std::string& mimeType, std::istream& inStream )

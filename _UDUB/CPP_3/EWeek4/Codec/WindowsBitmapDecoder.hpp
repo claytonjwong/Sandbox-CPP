@@ -22,7 +22,7 @@ namespace Codec
     {
         public:
         
-            WindowsBitmapDecoder ( ); // TODO: make singleton?
+            WindowsBitmapDecoder ( );
         
             virtual ~WindowsBitmapDecoder ( ) = default;
         

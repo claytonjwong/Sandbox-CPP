@@ -26,12 +26,16 @@ namespace Codec
     
     HBitmapDecoder WindowsBitmapDecoder::clone ( std::istream& inStream )
     {
+        //
+        // clone into result stream without consuming the original input stream
+        // that way the same input can be used for multiple clones
+        //
         auto result = std::make_shared<WindowsBitmapDecoder>();
         result->myStream << inStream.rdbuf();
         
         if ( ! result->myStream.str().empty() )
         {
-            if ( ! isSupported( result->myStream.str().substr( 0, 100 ) ) ) // use first 100 bytes to check if supported
+            if ( ! isSupported( result->myStream.str().substr( 0, FIRST_CHUNK_SIZE ) ) )
             {
                 throw std::runtime_error{ "unsupported format" };
             }

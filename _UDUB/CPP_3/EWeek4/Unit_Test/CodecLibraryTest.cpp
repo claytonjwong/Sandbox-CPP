@@ -131,7 +131,7 @@ TEST(createFailedDecoderViaMimeType, CodecLibrary)
     tearDown();
 }
 
-/*
+
 TEST(createDecoderAutoDetermine, CodecLibrary)
 {
     setUp();
@@ -145,6 +145,7 @@ TEST(createDecoderAutoDetermine, CodecLibrary)
 
     tearDown();
 }
+
 
 TEST(windowsBitmapDecodeEncode, CodecLibrary)
 {
@@ -169,6 +170,7 @@ TEST(windowsBitmapDecodeEncode, CodecLibrary)
     tearDown();
 }
 
+/*
 TEST(brightnessDecoratorIterator, CodecLibrary)
 {
     setUp();
@@ -192,6 +194,7 @@ TEST(brightnessDecoratorIterator, CodecLibrary)
 
     tearDown();
 }
+
 
 TEST(colorInvertDecoratorIterator, CodecLibrary)
 {

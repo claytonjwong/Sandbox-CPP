@@ -21,7 +21,7 @@ namespace Codec
     {
     public:
         
-        WindowsBitmapEncoder ( ) = default; // TODO: make singleton?
+        WindowsBitmapEncoder ( ) = default;
         virtual ~WindowsBitmapEncoder ( ) = default;
         
         WindowsBitmapEncoder ( const WindowsBitmapEncoder& src ) = delete;
