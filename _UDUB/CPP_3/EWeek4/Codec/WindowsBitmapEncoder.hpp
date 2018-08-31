@@ -32,13 +32,12 @@ namespace Codec
                 
         virtual HBitmapEncoder clone ( BitmapGraphics::HBitmapIterator it ) noexcept;
         
-        virtual void encodeToStream ( std::ostream& outStream ) const noexcept;
-        
+        virtual void encodeToStream ( std::ostream& outStream ) const;
         
     private:
     
-        void encodeHeader ( std::ostream& outStream ) const noexcept;
-        void encodePayload ( std::ostream& outStream ) const noexcept;
+        void encodeHeader ( std::ostream& outStream ) const;
+        void encodePayload ( std::ostream& outStream ) const;
     
         BitmapGraphics::HBitmapIterator myIt;
     };

@@ -18,6 +18,8 @@
 
 namespace Codec
 {
+    static constexpr std::string_view WINDOWS_BITMAP_MIME_TYPE = "image/x-ms-bmp";
+
     class WindowsBitmapDecoder : public IBitmapDecoder
     {
         public:
@@ -34,7 +36,7 @@ namespace Codec
         
             virtual HBitmapDecoder clone ( std::istream& inStream ) noexcept override;
         
-            virtual BitmapGraphics::HBitmapIterator createIterator ( ) const noexcept override;
+            virtual BitmapGraphics::HBitmapIterator createIterator ( ) const override;
         
             virtual const std::string& getMimeType ( ) const noexcept override;
         
@@ -44,7 +46,7 @@ namespace Codec
         
             std::stringstream myStream;
             const std::string myMimeType;
-            BitmapGraphics::Bitmap myBitmap;
+            std::unique_ptr<BitmapGraphics::Bitmap> myBitmap;
     };
     
 }

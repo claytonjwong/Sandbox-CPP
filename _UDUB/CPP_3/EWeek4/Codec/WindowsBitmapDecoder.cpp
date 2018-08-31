@@ -14,11 +14,12 @@
 #include "Bitmap.hpp"
 #include <iostream>
 #include <sstream>
+#include <memory>
 
 namespace Codec
 {
     WindowsBitmapDecoder::WindowsBitmapDecoder ( ) :
-    myMimeType{ "image/x-ms-bmp" }
+    myMimeType{ WINDOWS_BITMAP_MIME_TYPE }
     {
     }
     
@@ -27,14 +28,20 @@ namespace Codec
         auto result = std::make_shared<WindowsBitmapDecoder>();
         result->myStream << inStream.rdbuf();
         BitmapGraphics::WindowsBitmapHeader header{ result->myStream };
-        result->myBitmap = BitmapGraphics::Bitmap{
-            header.getBitmapWidth(), header.getBitmapHeight(), result->myStream };
+        result->myBitmap = std::make_unique<BitmapGraphics::Bitmap>(
+            BitmapGraphics::Bitmap{
+                header.getBitmapWidth(), header.getBitmapHeight(), result->myStream }  );
         return result;
     }
     
-    BitmapGraphics::HBitmapIterator WindowsBitmapDecoder::createIterator ( ) const noexcept
+    BitmapGraphics::HBitmapIterator WindowsBitmapDecoder::createIterator ( ) const
     {
-        auto it = BitmapGraphics::BitmapIterator{ myBitmap };
+        if ( myBitmap == nullptr )
+        {
+            throw std::runtime_error{ "myBitmap is null" };
+        }
+        
+        auto it = BitmapGraphics::BitmapIterator{ *myBitmap };
         return std::make_shared<BitmapGraphics::BitmapIterator>( it );
     }
     

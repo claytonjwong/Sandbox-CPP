@@ -20,11 +20,11 @@ namespace Codec
     {
     public:
     
-        virtual ~IBitmapEncoder ( ) {};
+        virtual ~IBitmapEncoder ( ) { }
         
         virtual HBitmapEncoder clone ( BitmapGraphics::HBitmapIterator it ) noexcept = 0;
         
-        virtual void encodeToStream ( std::ostream& outStream ) const noexcept = 0;
+        virtual void encodeToStream ( std::ostream& outStream ) const = 0;
     };
 }
 

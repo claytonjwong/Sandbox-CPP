@@ -1,16 +1,15 @@
 #include "TestHarness.h"
-
-/*
-#include "CodecLibrary.h"
-#include "BrightnessDecorator.h"
-#include "ColorInversionDecorator.h"
-#include "WindowsBitmapDecoder.h"
-#include "WindowsBitmapEncoder.h"
-#include "BitmapIterator.h"
+#include "CodecLibrary.hpp"
+//#include "BrightnessDecorator.h"
+//#include "ColorInversionDecorator.h"
+#include "WindowsBitmapDecoder.hpp"
+#include "WindowsBitmapEncoder.hpp"
+#include "BitmapIterator.hpp"
 #include <fstream>
 #include <memory>
 
 using namespace BitmapGraphics;
+using namespace Codec;
 
 namespace
 {
@@ -63,6 +62,7 @@ TEST(invalidEncoder, CodecLibrary)
     }
 }
 
+/*
 TEST(createEncoderViaMimeType, CodecLibrary)
 {
     setUp();

@@ -18,20 +18,25 @@ namespace Codec
         return result;
     }
 
-    void WindowsBitmapEncoder::encodeToStream ( std::ostream& outStream ) const noexcept
+    void WindowsBitmapEncoder::encodeToStream ( std::ostream& outStream ) const
     {
+        if ( myIt == nullptr )
+        {
+            throw std::runtime_error{ "myIt is null" };
+        }
+        
         encodeHeader( outStream );
         encodePayload( outStream );
     }
 
-    void WindowsBitmapEncoder::encodeHeader ( std::ostream& outStream ) const noexcept
+    void WindowsBitmapEncoder::encodeHeader ( std::ostream& outStream ) const
     {
         BitmapGraphics::WindowsBitmapHeader
             header{ myIt->getBitmapWidth(), myIt->getBitmapHeight() };
         header.write( outStream );
     }
 
-    void WindowsBitmapEncoder::encodePayload ( std::ostream& outStream ) const noexcept
+    void WindowsBitmapEncoder::encodePayload ( std::ostream& outStream ) const
     {
         for ( auto it=myIt; ! it->isEndOfImage(); it->nextScanLine() )
         {
