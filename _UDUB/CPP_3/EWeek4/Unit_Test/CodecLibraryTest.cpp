@@ -62,7 +62,7 @@ TEST(invalidEncoder, CodecLibrary)
     }
 }
 
-/*
+
 TEST(createEncoderViaMimeType, CodecLibrary)
 {
     setUp();
@@ -75,6 +75,7 @@ TEST(createEncoderViaMimeType, CodecLibrary)
 
     tearDown();
 }
+
 
 TEST(failedCreateEncoderViaMimeType, CodecLibrary)
 {
@@ -109,6 +110,7 @@ TEST(createDecoderViaMimeType, CodecLibrary)
     tearDown();
 }
 
+
 TEST(createFailedDecoderViaMimeType, CodecLibrary)
 {
     setUp();
@@ -129,6 +131,7 @@ TEST(createFailedDecoderViaMimeType, CodecLibrary)
     tearDown();
 }
 
+/*
 TEST(createDecoderAutoDetermine, CodecLibrary)
 {
     setUp();

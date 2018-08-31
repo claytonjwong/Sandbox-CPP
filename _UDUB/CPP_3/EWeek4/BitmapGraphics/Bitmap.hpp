@@ -27,7 +27,7 @@ namespace BitmapGraphics
     
         Bitmap ( ) = default;
         ~Bitmap ( ) = default;
-        Bitmap ( int width, int height, std::istream& inStream );
+        Bitmap ( int width, int height, std::istream& inStream=std::cin );
         
         Bitmap ( const Bitmap& src ) = default;
         Bitmap ( Bitmap&& src ) = default;

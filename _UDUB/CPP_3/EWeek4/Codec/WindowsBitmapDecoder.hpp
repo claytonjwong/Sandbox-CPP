@@ -18,8 +18,6 @@
 
 namespace Codec
 {
-    static constexpr std::string_view WINDOWS_BITMAP_MIME_TYPE = "image/x-ms-bmp";
-
     class WindowsBitmapDecoder : public IBitmapDecoder
     {
         public:

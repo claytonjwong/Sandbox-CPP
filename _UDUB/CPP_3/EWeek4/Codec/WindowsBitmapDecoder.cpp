@@ -12,6 +12,7 @@
 #include "BitmapIterator.hpp"
 #include "WindowsBitmapHeader.hpp"
 #include "Bitmap.hpp"
+#include "CodecLibrary.hpp"
 #include <iostream>
 #include <sstream>
 #include <memory>
@@ -19,7 +20,7 @@
 namespace Codec
 {
     WindowsBitmapDecoder::WindowsBitmapDecoder ( ) :
-    myMimeType{ WINDOWS_BITMAP_MIME_TYPE }
+    myMimeType{ MimeType::WINDOWS_BITMAP }
     {
     }
     
@@ -27,10 +28,15 @@ namespace Codec
     {
         auto result = std::make_shared<WindowsBitmapDecoder>();
         result->myStream << inStream.rdbuf();
-        BitmapGraphics::WindowsBitmapHeader header{ result->myStream };
-        result->myBitmap = std::make_unique<BitmapGraphics::Bitmap>(
-            BitmapGraphics::Bitmap{
-                header.getBitmapWidth(), header.getBitmapHeight(), result->myStream }  );
+        
+        if ( ! result->myStream.str().empty() )
+        {
+            BitmapGraphics::WindowsBitmapHeader header{ result->myStream };
+            result->myBitmap = std::make_unique<BitmapGraphics::Bitmap>(
+                BitmapGraphics::Bitmap{
+                    header.getBitmapWidth(), header.getBitmapHeight(), result->myStream }  );
+        }
+        
         return result;
     }
     

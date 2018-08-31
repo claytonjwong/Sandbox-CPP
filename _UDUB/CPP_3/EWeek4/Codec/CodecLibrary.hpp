@@ -10,14 +10,23 @@
 
 #include "IBitmapEncoder.hpp"
 #include "IBitmapDecoder.hpp"
+#include <unordered_set>
+#include <string>
 
 namespace Codec
 {
+    struct MimeType
+    {
+        static constexpr std::string_view WINDOWS_BITMAP = "image/x-ms-bmp";
+    };
+
     class CodecLibrary
     {
     public:
         
-        CodecLibrary ( ) = default;
+        CodecLibrary ( ) :
+        mySupportedMimeTypes{ MimeType::WINDOWS_BITMAP }
+        {}
         
         CodecLibrary ( const CodecLibrary& src ) = default;
         CodecLibrary ( CodecLibrary&& src ) = default;
@@ -35,9 +44,13 @@ namespace Codec
             myDecoder = decoder;
         }
         
+        HBitmapEncoder createEncoder ( const std::string& mimeType, const BitmapGraphics::HBitmapIterator& iter );
+        HBitmapDecoder createDecoder ( const std::string& mimeType, std::istream& inStream );
+        
     private:
     
         HBitmapEncoder myEncoder;
         HBitmapDecoder myDecoder;
+        std::unordered_set<std::string_view> mySupportedMimeTypes;
     };
 }
