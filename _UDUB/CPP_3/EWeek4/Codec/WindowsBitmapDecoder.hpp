@@ -34,7 +34,7 @@ namespace Codec
         
             virtual HBitmapDecoder clone ( std::istream& inStream ) override;
         
-            virtual BitmapGraphics::HBitmapIterator createIterator ( ) const override;
+            virtual BitmapGraphics::HBitmapIterator createIterator ( const bool reverse=false ) const override;
         
             virtual const std::string& getMimeType ( ) const noexcept override;
         

@@ -17,7 +17,7 @@ namespace BitmapGraphics
     {
     public:
     
-        BitmapIterator ( const BitmapGraphics::Bitmap& bitmap );
+        BitmapIterator ( const BitmapGraphics::Bitmap& bitmap, bool reverse=false );
         
         virtual ~BitmapIterator ( ) = default;
     
@@ -40,5 +40,7 @@ namespace BitmapGraphics
         Bitmap::ScanLineIterator myCurrScanLine;
         Bitmap::ScanLineIterator myEndOfScanLines;
         Bitmap::PixelIterator myCurrPixel;
+        Bitmap::ReversePixelIterator myCurrReversePixel;
+        const bool myReverse{ false };
     };
 }

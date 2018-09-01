@@ -49,14 +49,14 @@ namespace Codec
         return result;
     }
     
-    BitmapGraphics::HBitmapIterator WindowsBitmapDecoder::createIterator ( ) const
+    BitmapGraphics::HBitmapIterator WindowsBitmapDecoder::createIterator ( const bool reverse ) const
     {
         if ( myBitmap == nullptr )
         {
             throw std::runtime_error{ "myBitmap is null" };
         }
         
-        auto it = BitmapGraphics::BitmapIterator{ *myBitmap };
+        auto it = BitmapGraphics::BitmapIterator{ *myBitmap, reverse };
         return std::make_shared<BitmapGraphics::BitmapIterator>( it );
     }
     

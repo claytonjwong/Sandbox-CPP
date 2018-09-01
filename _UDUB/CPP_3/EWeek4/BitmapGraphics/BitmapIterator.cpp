@@ -10,20 +10,29 @@
 
 namespace BitmapGraphics
 {
-    BitmapIterator::BitmapIterator ( const BitmapGraphics::Bitmap& bitmap ) :
+    BitmapIterator::BitmapIterator ( const BitmapGraphics::Bitmap& bitmap, bool reverse ) :
     myWidth{ bitmap.getWidth() },
     myHeight{ bitmap.getHeight() },
     myNumberOfPadBytes{ bitmap.getNumberOfPadBytes() },
     myCurrScanLine{ bitmap.begin() },
     myEndOfScanLines{ bitmap.end() },
-    myCurrPixel{ myCurrScanLine->begin() }
+    myCurrPixel{ myCurrScanLine->begin() },
+    myCurrReversePixel{ myCurrScanLine->rbegin() },
+    myReverse{ reverse }
     {
     }
     
 
     Color BitmapIterator::getColor ( ) const noexcept
     {
-        return *myCurrPixel;
+        if ( myReverse )
+        {
+            return *myCurrReversePixel;
+        }
+        else
+        {
+            return *myCurrPixel;
+        }
     }
 
 
@@ -53,7 +62,14 @@ namespace BitmapGraphics
 
     bool BitmapIterator::isEndOfScanLine ( ) const noexcept
     {
-        return myCurrPixel == myCurrScanLine->end();
+        if ( myReverse )
+        {
+            return myCurrReversePixel == myCurrScanLine->rend();
+        }
+        else
+        {
+            return myCurrPixel == myCurrScanLine->end();
+        }
     }
     
 
@@ -66,6 +82,7 @@ namespace BitmapGraphics
         
         ++myCurrScanLine;
         myCurrPixel = myCurrScanLine->begin();
+        myCurrReversePixel = myCurrScanLine->rbegin();
     }
     
 
@@ -77,6 +94,7 @@ namespace BitmapGraphics
         }
         
         ++myCurrPixel;
+        ++myCurrReversePixel;
     }
     
 }
