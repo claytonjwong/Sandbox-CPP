@@ -118,11 +118,11 @@ public:
 };
 */
 
-class Solution {
-    TreeNode *X{ new TreeNode{-1} }, *C{ X };
+using T = TreeNode;
+class Solution{ T *X{ new T{-1} }, *C{ X };
 public:
-    TreeNode* increasingBST(TreeNode* R) {
-        if(R) increasingBST(R->left), C=C->right=new TreeNode(R->val), increasingBST(R->right); return X->right;
+    T* increasingBST(T* R) {
+        if(R) increasingBST(R->left), C=C->right=new T{R->val}, increasingBST(R->right); return X->right;
     }
 };
 
