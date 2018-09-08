@@ -18,9 +18,11 @@ namespace BitmapGraphics
     public:
     
         using Component = Binary::Byte;
-        using ComponentType = Binary::Byte_t;
+        using Component_t = Binary::Byte_t;
         
         static constexpr int BYTE_COUNT = 3; // one byte per color: red, green, blue
+        static constexpr int MIN = 0;
+        static constexpr int MAX = 255;
         
         static Color read ( std::istream& inStream ) noexcept;
         
@@ -36,9 +38,9 @@ namespace BitmapGraphics
         Color& operator= ( const Color& rhs ) = default;
         Color& operator= ( Color&& rhs ) = default;
         
-        const ComponentType& getRed() const noexcept;
-        const ComponentType& getGreen() const noexcept;
-        const ComponentType& getBlue() const noexcept;
+        const Component_t& getRed() const noexcept;
+        const Component_t& getGreen() const noexcept;
+        const Component_t& getBlue() const noexcept;
         
         void write ( std::ostream& outStream ) const;
         

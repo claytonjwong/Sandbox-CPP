@@ -1,6 +1,5 @@
-/*
-#include "Layer.h"
-#include "VectorGraphic.h"
+#include "Layer.hpp"
+#include "VectorGraphic.hpp"
 #include "TestHarness.h"
 
 TEST(pushBack, Layer)
@@ -48,5 +47,4 @@ TEST(remove, Layer)
     constexpr int expectedSize{2};
     CHECK_EQUAL(expectedSize, numberOfGraphics);
 }
-*/
 

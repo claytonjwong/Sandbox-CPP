@@ -1,8 +1,7 @@
-/*
 #include "TestHarness.h"
-#include "DoubleWord.h"
-#include "Byte.h"
-#include "Word.h"
+#include "DoubleWord.hpp"
+#include "Byte.hpp"
+#include "Word.hpp"
 #include <sstream>
 
 TEST(readByte, Byte)
@@ -100,5 +99,4 @@ TEST(readDoubleWordBigEndian, Binary)
     
     CHECK_EQUAL(expected, actual);
 }
-*/
 
