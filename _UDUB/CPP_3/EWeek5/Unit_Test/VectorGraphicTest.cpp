@@ -1,6 +1,4 @@
-/*
-#include "Parse.h"
-#include "VectorGraphic.h"
+#include "VectorGraphic.hpp"
 #include "TestHarness.h"
 
 TEST(ctor, VectorGraphic)
@@ -132,5 +130,4 @@ TEST(widthHeight, VectorGraphic)
     CHECK_EQUAL(4, vectorGraphic.getWidth());
     CHECK_EQUAL(2, vectorGraphic.getHeight());
 }
-*/
 

@@ -1,12 +1,14 @@
+#include "XmlReader.hpp"
+#include "Element.hpp"
+#include "Scene.hpp"
+#include "SceneReader.hpp"
+
 /*
-#include "XmlReader.h"
-#include "Element.h"
-#include "Scene.h"
-#include "SceneReader.h"
 #include "BasicCanvas.h"
 #include "WindowsBitmapFileProjector.h"
 #include "WindowsBitmapDecoder.h"
 #include "WindowsBitmapEncoder.h"
+*/
 #include "TestHarness.h"
 
 const std::string TestXml = R"(
@@ -76,7 +78,7 @@ const std::string SceneXml = R"(
 </Scene>)";
 
 
-using namespace BitmapGraphics;
+//using namespace BitmapGraphics;
 
 TEST(ReadScene, SceneReader)
 {
@@ -140,6 +142,8 @@ TEST(ReadScene, SceneReader)
 }
 
 //////////////////
+
+/*
 
 namespace
 {

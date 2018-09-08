@@ -14,11 +14,11 @@ using namespace std;
 
 namespace Xml
 {
-    const HElement Reader::loadXml(stringstream& ss)
+    const HElement Reader::loadXml ( stringstream& stream )
     {
         HElement element_handle = make_shared<Element>();
         
-        const auto& xml = ss.str();
+        const auto& xml = stream.str();
         
         auto return_code = element_handle->parseXML( xml );
         

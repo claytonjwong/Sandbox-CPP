@@ -1,5 +1,4 @@
-/*
-#include "Scene.h"
+#include "Scene.hpp"
 #include "TestHarness.h"
 #include <algorithm>
 
@@ -67,5 +66,5 @@ TEST(remove, Scene)
     LayerMatcher matcher = std::for_each(scene.begin(), scene.end(), LayerMatcher());
     CHECK(matcher.onlyMountainsSkyFound());
 }
-*/
+
 

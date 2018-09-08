@@ -89,9 +89,9 @@ namespace Xml
         return pointRoot;
     }
 
-    const HElement Element::make_HElement ( const VG::VectorGraphic& vectorGraphic )
+    const std::shared_ptr<Element> Element::make_HElement ( const VG::VectorGraphic& vectorGraphic )
     {
-        HElement element = make_shared<Element>();
+        std::shared_ptr<Element> element = make_shared<Element>();
         auto vectorGraphicRoot = element->createXMLNode( "VectorGraphic" );
         
         vectorGraphicRoot->SetAttribute(  "closed", ( vectorGraphic.isClosed() ? "true" : "false" )  );

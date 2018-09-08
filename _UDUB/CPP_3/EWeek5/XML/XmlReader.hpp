@@ -20,6 +20,6 @@ namespace Xml
     {
     public:
         
-        static const HElement loadXml(std::stringstream& ss);
+        static const HElement loadXml ( std::stringstream& stream );
     };
 }

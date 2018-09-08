@@ -20,21 +20,22 @@
 
 namespace Xml
 {
-    class Element; // forward declaration for HElement using-declaration
+    class Element;
     using HElement = std::shared_ptr<Element>;
+    using ElementList = std::vector<HElement>;
     
     using HXMLElement = tinyxml2::XMLElement*;
     using HXMLNode = tinyxml2::XMLNode*;
     using ElementDocument = tinyxml2::XMLDocument;
     using AttributeMap = std::unordered_map<std::string,std::string>;
-    using ElementList = std::vector<HElement>;
+    
     using ElementError = tinyxml2::XMLError;
 
     class Element
     {
     public:
         
-        Element(HXMLElement root = nullptr) : myRoot{ root } {}
+        explicit Element ( tinyxml2::XMLElement* root = nullptr ) : myRoot{ root } {}
         ~Element() = default;
         
         Element(const Element& src) = delete;
@@ -47,12 +48,12 @@ namespace Xml
         // of the original XML structure, instead of having a real copy of the xmlDocument
         
         // TODO: consider moving this stuff into the scene writer...
-        const static HElement make_HElement(const Framework::Scene& scene);
-        static HXMLNode make_HXMLNode(HElement handle, const Framework::Layer& layer);
-        static HXMLNode make_HXMLNode(HElement handle, const Framework::PlacedGraphic& graphic);
-        static HXMLNode make_HXMLNode(HElement handle, const VG::VectorGraphic& vg);
-        static HXMLNode make_HXMLNode(HElement handle, const VG::Point& point);
-        const static HElement make_HElement(const VG::VectorGraphic& vg);
+        const static std::shared_ptr<Element> make_HElement(const Framework::Scene& scene);
+        static tinyxml2::XMLNode* make_HXMLNode(std::shared_ptr<Element> handle, const Framework::Layer& layer);
+        static tinyxml2::XMLNode* make_HXMLNode(std::shared_ptr<Element> handle, const Framework::PlacedGraphic& graphic);
+        static tinyxml2::XMLNode* make_HXMLNode(std::shared_ptr<Element> handle, const VG::VectorGraphic& vg);
+        static tinyxml2::XMLNode* make_HXMLNode(std::shared_ptr<Element> handle, const VG::Point& point);
+        const static std::shared_ptr<Element> make_HElement(const VG::VectorGraphic& vg);
         
         const std::string getName() const noexcept;
         const std::string getAttribute(const std::string& name) const noexcept;
@@ -60,14 +61,15 @@ namespace Xml
         const ElementList getChildElements() const noexcept;
         
         // TODO: consider moving this stuff into the scene writer...
-        ElementError parseXML(const std::string& xml);
-        HXMLElement createXMLNode(const std::string& name);
-        HXMLNode insertXMLNode( HXMLNode child );
+        tinyxml2::XMLError parseXML(const std::string& xml);
+        tinyxml2::XMLElement* createXMLNode(const std::string& name);
+        tinyxml2::XMLNode* insertXMLNode( HXMLNode child );
         
     private:
         
-        HXMLElement myRoot;
-        ElementDocument myDocument;
+        tinyxml2::XMLElement* myRoot;
+        tinyxml2::XMLDocument myDocument;
+        
         ElementList myChildren;
     };
 }

@@ -1,6 +1,5 @@
-/*
-#include "XmlReader.h"
-#include "VectorGraphic.h"
+#include "XmlReader.hpp"
+#include "VectorGraphic.hpp"
 #include "TestHarness.h"
 
 const std::string SceneXml = R"(
@@ -71,5 +70,4 @@ TEST(loadXml, XmlReader)
     CHECK_EQUAL("0", placedGraphic->getAttribute("x"));
     CHECK_EQUAL("0", placedGraphic->getAttribute("y"));
 }
-*/
 

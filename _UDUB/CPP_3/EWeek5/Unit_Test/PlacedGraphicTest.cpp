@@ -1,6 +1,5 @@
-/*
-#include "PlacedGraphic.h"
-#include "VectorGraphic.h"
+#include "PlacedGraphic.hpp"
+#include "VectorGraphic.hpp"
 #include "TestHarness.h"
 
 TEST(ctor, PlacedGraphic)
@@ -30,5 +29,5 @@ TEST(setGraphic, PlacedGraphic)
 
     CHECK_EQUAL(vg.get(), &pg.getGraphic());
 }
-*/
+
 
