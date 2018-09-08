@@ -21,6 +21,8 @@ namespace BitmapGraphics
         using Component_t = Binary::Byte_t;
         
         static constexpr int BYTE_COUNT = 3; // one byte per color: red, green, blue
+        static constexpr int MIN = 0;
+        static constexpr int MAX = 255;
         
         static Color read ( std::istream& inStream ) noexcept;
         

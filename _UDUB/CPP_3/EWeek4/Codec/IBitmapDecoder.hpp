@@ -14,7 +14,6 @@
 
 namespace Codec
 {
-
     class IBitmapDecoder;
     using HBitmapDecoder = std::shared_ptr<IBitmapDecoder>;
 
@@ -22,17 +21,15 @@ namespace Codec
     {
     public:
     
-        virtual ~IBitmapDecoder ( )
-        {
-        }
+        virtual ~IBitmapDecoder ( ) { }
         
-        virtual HBitmapDecoder clone ( std::istream& inStream ) noexcept = 0;
+        virtual HBitmapDecoder clone ( std::istream& inStream ) = 0;
         
-        virtual BitmapGraphics::HBitmapIterator createIterator ( ) const noexcept = 0;
+        virtual BitmapGraphics::HBitmapIterator createIterator ( const bool reverse=false ) const = 0;
         
         virtual const std::string& getMimeType ( ) const noexcept = 0;
         
-        virtual bool isSupported ( ) const noexcept = 0;
+        virtual bool isSupported ( const std::string& firstChunkOfBitmap ) const noexcept = 0;
         
     };
 }

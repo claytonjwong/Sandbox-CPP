@@ -22,12 +22,13 @@ namespace BitmapGraphics
         using Pixel = Color;
         using ScanLine = std::list<Pixel>;
         using PixelIterator = ScanLine::const_iterator;
+        using ReversePixelIterator = ScanLine::const_reverse_iterator;
         using ScanLineCollection = std::list<ScanLine>;
         using ScanLineIterator = ScanLineCollection::const_iterator;
     
         Bitmap ( ) = default;
         ~Bitmap ( ) = default;
-        Bitmap ( int width, int height, std::istream& inStream );
+        Bitmap ( int width, int height, std::istream& inStream=std::cin );
         
         Bitmap ( const Bitmap& src ) = default;
         Bitmap ( Bitmap&& src ) = default;

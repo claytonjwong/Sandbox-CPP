@@ -69,7 +69,7 @@ namespace BitmapGraphics
     
     HBitmapIterator Bitmap::createIterator ( ) const noexcept
     {
-        return make_shared<BitmapIterator>( nullptr, *this );
+        return make_shared<BitmapIterator>( *this );
     }
     
     

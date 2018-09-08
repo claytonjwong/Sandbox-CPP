@@ -11,7 +11,9 @@
 #include "IBitmapEncoder.hpp"
 #include "IBitmapIterator.hpp"
 #include "Byte.hpp"
+#include "WindowsBitmapHeader.hpp"
 #include <iostream>
+#include <sstream>
 
 namespace Codec
 {
@@ -20,44 +22,23 @@ namespace Codec
     public:
         
         WindowsBitmapEncoder ( ) = default;
-        
         virtual ~WindowsBitmapEncoder ( ) = default;
         
-        virtual HBitmapEncoder clone ( BitmapGraphics::HBitmapIterator it ) noexcept
-        {
-            auto result = std::make_shared<WindowsBitmapEncoder>();
-            result->myIt = it;
-            return result;
-        }
+        WindowsBitmapEncoder ( const WindowsBitmapEncoder& src ) = delete;
+        WindowsBitmapEncoder ( WindowsBitmapEncoder&& src ) = delete;
         
-        virtual void encodeToStream ( std::ostream& outStream ) const noexcept
-        {
-            auto header = myIt->getBitmapHeader();
-            if ( header )
-            {
-                header->write( outStream );
-            }
-            else
-            {
-                throw std::runtime_error{ "unable to retrieve header from iterator, cannot write header to stream" };
-            }
-            
-            for ( auto it=myIt; ! it->isEndOfImage(); it->nextScanLine() )
-            {
-                for ( ; ! it->isEndOfScanLine(); it->nextPixel() )
-                {
-                    outStream << it->getColor();
-                }
+        WindowsBitmapEncoder& operator= ( const WindowsBitmapEncoder& rhs ) = delete;
+        WindowsBitmapEncoder& operator= ( WindowsBitmapEncoder&& rhs ) = delete;
                 
-                Binary::Byte padByte{ 0 };
-                for ( int pad = 0u; pad < it->getBitmapNumberOfPadBytes(); ++pad )
-                {
-                    outStream << padByte;
-                }
-            }
-        }
+        virtual HBitmapEncoder clone ( BitmapGraphics::HBitmapIterator it ) noexcept;
+        
+        virtual void encodeToStream ( std::ostream& outStream ) const;
         
     private:
+    
+        void encodeHeader ( std::ostream& outStream ) const;
+        void encodePayload ( std::ostream& outStream ) const;
+    
         BitmapGraphics::HBitmapIterator myIt;
     };
 }

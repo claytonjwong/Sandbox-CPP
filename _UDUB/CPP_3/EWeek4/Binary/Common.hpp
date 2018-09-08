@@ -31,7 +31,7 @@ namespace Binary
     };
     
 
-    static constexpr Endianness SYSTEM_ENDIANNESSS () noexcept
+    static constexpr Endianness SYSTEM_ENDIANNESSS () noexcept // this isn't correct
     {
         return ( uint16_t{ 0x0001 } == uint16_t{ 0x01 } ) ? Endianness::Little : Endianness::Big;
     }
