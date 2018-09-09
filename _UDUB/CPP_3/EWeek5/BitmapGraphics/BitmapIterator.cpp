@@ -23,7 +23,7 @@ namespace BitmapGraphics
     }
     
 
-    Color BitmapIterator::getColor ( ) const noexcept
+    Color BitmapIterator::getColor ( ) const
     {
         if ( myReverse )
         {

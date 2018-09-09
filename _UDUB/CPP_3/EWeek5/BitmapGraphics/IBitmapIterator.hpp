@@ -22,7 +22,7 @@ namespace BitmapGraphics
         
         virtual ~IBitmapIterator ( ) {};
         
-        virtual Color getColor ( ) const noexcept = 0;
+        virtual Color getColor ( ) const = 0;
         
         virtual int getBitmapWidth ( ) const noexcept = 0;
         

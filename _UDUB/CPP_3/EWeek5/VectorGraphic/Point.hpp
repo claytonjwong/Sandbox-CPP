@@ -52,39 +52,7 @@ namespace VG
     
     std::ostream& operator<< ( std::ostream& os, const Point& rhs );
     
-    /*
-    struct PointComparator
-    {
-        bool operator ( ) ( const VG::Point& lhs, const VG::Point& rhs ) const
-        {
-            if ( lhs == rhs )
-            {
-                return true;
-            }
-            
-            if ( lhs.getY() < rhs.getY() )
-            {
-                return true;
-            }
-            else
-                if ( lhs.getY() > rhs.getY() )
-                {
-                    return false;
-                }
-                else // Y is equal
-                {
-                    if ( lhs.getX() <= rhs.getX() )
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-        }
-    };
-     */
-}
+    
+} // namespace VG
 
 

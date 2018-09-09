@@ -8,74 +8,42 @@
 
 #pragma once
 
-#include "Color.hpp"
-#include "Point.hpp"
-#include <map>
+#include "Drawing.hpp"
+#include "IBitmapIterator.hpp"
+#include "ICanvas.hpp"
+#include "BasicCanvasBitmapIterator.hpp"
 
 namespace BitmapGraphics
 {
-    class BasicCanvas
+
+    
+    class BasicCanvas : public ICanvas
     {
     public:
-        
-        BasicCanvas ( int width, int height, const Color& background ) :
-        myWidth{ width },
-        myHeight{ height },
-        myMin{ VG::Point{0,0} },
-        myMax{ VG::Point{myWidth,myHeight} },
-        myBackground{ background }
-        {
-        }
-        
-        int getWidth ( ) const noexcept
-        {
-            return myWidth;
-        }
-        
-        int getHeight ( ) const noexcept
-        {
-            return myHeight;
-        }
-        
-        const Color& getPixelColor ( const VG::Point& point ) const
-        {
-            if (  ! point.isInBounds( myMin, myMax )  )
-            {
-                throw std::out_of_range{ "cannot get pixel color since the point is out-of-bounds" };
-            }
-            
-            auto it = myDrawing.find( point );
-            
-            if ( it != myDrawing.end() )
-            {
-                return it->second;
-            }
-            else
-            {
-                return myBackground;
-            }
-        }
-        
-        void setPixelColor ( const VG::Point& point, const Color& color )
-        {
-            if (  ! point.isInBounds( myMin, myMax )  )
-            {
-                throw std::out_of_range{ "cannot set pixel color since the point is out-of-bounds" };
-            }
 
-            myDrawing.insert( pointColor( point, color ) );
-        }
-    
+        BasicCanvas ( int width, int height, const Color& background );
+        ~BasicCanvas ( ) = default;
         
+        BasicCanvas ( const BasicCanvas& src ) = default;
+        BasicCanvas ( BasicCanvas&& src ) = default;
+        
+        BasicCanvas& operator= ( const BasicCanvas& rhs ) = default;
+        BasicCanvas& operator= ( BasicCanvas&& rhs ) = default;
+
+        int getWidth ( ) const noexcept;
+        int getHeight ( ) const noexcept;
+
+        Color getPixelColor ( const VG::Point& point ) const;
+        void setPixelColor ( const VG::Point& point, const Color& color );
+
+        HBitmapIterator createBitmapIterator ( ) const noexcept;
+
     private:
-        
-        const int myWidth, myHeight;
+
         const VG::Point myMin, myMax;
-        Color myBackground;
-        
-        using pointColor = std::pair< VG::Point, Color >;
-        std::map< VG::Point, Color > myDrawing;
+        Drawing myDrawing;
+
     };
-    
-    
+
+
 } // namespace BitmapGraphics

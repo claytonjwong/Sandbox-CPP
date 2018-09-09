@@ -20,8 +20,14 @@ namespace BitmapGraphics
         BitmapIterator ( const BitmapGraphics::Bitmap& bitmap, bool reverse=false );
         
         virtual ~BitmapIterator ( ) = default;
+        
+        BitmapIterator ( const BitmapIterator& src ) = default;
+        BitmapIterator ( BitmapIterator&& src ) = default;
+        
+        BitmapIterator& operator= ( const BitmapIterator& rhs ) = default;
+        BitmapIterator& operator= ( BitmapIterator&& rhs ) = default;
     
-        virtual Color getColor ( ) const noexcept override;
+        virtual Color getColor ( ) const override;
         
         virtual int getBitmapWidth ( ) const noexcept override;
         virtual int getBitmapHeight ( ) const noexcept override;

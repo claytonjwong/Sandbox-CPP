@@ -78,7 +78,6 @@ TEST(getPixelOutsideDimensions, BasicCanvas)
     }
 }
 
-/*
 TEST(IBitmapIterator, BasicCanvas)
 {
     Color backColor(1, 2, 3);
@@ -108,5 +107,4 @@ TEST(IBitmapIterator, BasicCanvas)
 
     CHECK_EQUAL(9, rows);
 }
-*/
 
