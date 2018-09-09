@@ -1,7 +1,7 @@
-/*
 #include "TestHarness.h"
-
-#include "BasicCanvas.h"
+#include "Color.hpp"
+#include "Point.hpp"
+#include "BasicCanvas.hpp"
 
 using namespace BitmapGraphics;
 
@@ -15,6 +15,7 @@ TEST(BackgroundColor, BasicCanvas)
     CHECK_EQUAL(expected, actual);
 }
 
+/*
 TEST(setPixelColor, BasicCanvas)
 {
     Color background(255, 255, 255);
