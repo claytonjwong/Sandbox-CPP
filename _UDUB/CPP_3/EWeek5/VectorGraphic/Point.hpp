@@ -16,7 +16,7 @@ namespace VG
     class Point
     {
     public:
-    
+      
         constexpr Point ( int x=0, int y=0 ) :
         myX{ x },
         myY{ y }
@@ -35,9 +35,13 @@ namespace VG
         Point& operator= ( const Point& rhs ) = default;
         Point& operator= ( Point&& rhs ) = default;
         
-        constexpr int getX() const noexcept { return myX; }
-        constexpr int getY() const noexcept { return myY; }
-                
+        constexpr int getX ( ) const noexcept { return myX; }
+        constexpr int getY ( ) const noexcept { return myY; }
+        
+        bool isInBounds ( const Point& minPoint, const Point& maxPoint ) const noexcept;
+        
+        bool operator< ( const Point& rhs ) const noexcept;
+        
     private:
         int myX{ 0 };
         int myY{ 0 };
@@ -47,6 +51,40 @@ namespace VG
     bool operator!= ( const Point& lhs, const Point& rhs );
     
     std::ostream& operator<< ( std::ostream& os, const Point& rhs );
+    
+    /*
+    struct PointComparator
+    {
+        bool operator ( ) ( const VG::Point& lhs, const VG::Point& rhs ) const
+        {
+            if ( lhs == rhs )
+            {
+                return true;
+            }
+            
+            if ( lhs.getY() < rhs.getY() )
+            {
+                return true;
+            }
+            else
+                if ( lhs.getY() > rhs.getY() )
+                {
+                    return false;
+                }
+                else // Y is equal
+                {
+                    if ( lhs.getX() <= rhs.getX() )
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+        }
+    };
+     */
 }
 
 

@@ -90,7 +90,7 @@ namespace BitmapGraphics
     {
         if ( isEndOfScanLine() )
         {
-            throw std::runtime_error{ "cannot retrieve next pixel, current at end of scan line" };
+            throw std::runtime_error{ "cannot retrieve next pixel, currently at end of scan line" };
         }
         
         ++myCurrPixel;

@@ -15,7 +15,6 @@ TEST(BackgroundColor, BasicCanvas)
     CHECK_EQUAL(expected, actual);
 }
 
-/*
 TEST(setPixelColor, BasicCanvas)
 {
     Color background(255, 255, 255);
@@ -79,6 +78,7 @@ TEST(getPixelOutsideDimensions, BasicCanvas)
     }
 }
 
+/*
 TEST(IBitmapIterator, BasicCanvas)
 {
     Color backColor(1, 2, 3);
