@@ -67,4 +67,5 @@ namespace Xml
         
         ElementList myChildren;
     };
-}
+    
+} // namespace Xml

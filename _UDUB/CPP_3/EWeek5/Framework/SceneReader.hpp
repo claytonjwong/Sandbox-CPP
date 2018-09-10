@@ -27,4 +27,5 @@ namespace Framework
         
         static VG::HVectorGraphic readVectorGraphic ( const Xml::HElement vectorGraphicRoot );
     };
-}
+    
+}  // namespace Framework

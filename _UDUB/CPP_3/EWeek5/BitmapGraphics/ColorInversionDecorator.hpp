@@ -41,4 +41,5 @@ namespace BitmapGraphics
             return Color{ red, green, blue };
         }
     };
-}
+    
+} // namespace BitmapGraphics

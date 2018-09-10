@@ -53,4 +53,5 @@ namespace Framework
         std::string myAlias;
         PlacedGraphicCollection myGraphics;
     };
-}
+    
+} // namespace Framework

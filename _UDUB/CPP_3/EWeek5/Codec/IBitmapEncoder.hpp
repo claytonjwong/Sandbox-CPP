@@ -25,6 +25,8 @@ namespace Codec
         virtual HBitmapEncoder clone ( BitmapGraphics::HBitmapIterator it ) noexcept = 0;
         
         virtual void encodeToStream ( std::ostream& outStream ) const = 0;
+        
     };
-}
+    
+}  // namespace Codec
 

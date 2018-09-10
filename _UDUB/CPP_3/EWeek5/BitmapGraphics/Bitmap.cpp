@@ -19,6 +19,8 @@ using namespace std;
 
 namespace BitmapGraphics
 {
+    
+    
     Bitmap::Bitmap ( int width, int height, istream& inStream ) :
     myWidth{ width },
     myHeight{ height },
@@ -131,4 +133,6 @@ namespace BitmapGraphics
         
         return outStream;
     }
-}
+    
+    
+} // namespace BitmapGraphics

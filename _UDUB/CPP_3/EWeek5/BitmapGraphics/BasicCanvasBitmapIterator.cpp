@@ -20,6 +20,7 @@ namespace BitmapGraphics
     {
     }
     
+    
     Color BasicCanvasBitmapIterator::getColor ( ) const
     {
         if (  ! myCurrPosition.isInBounds( myMin, myMax )  )
@@ -30,30 +31,36 @@ namespace BitmapGraphics
         return myDrawing.getPixelColor( myCurrPosition );
     }
     
+    
     int BasicCanvasBitmapIterator::getBitmapWidth ( ) const noexcept
     {
         return myMax.getX();
     }
+    
     
     int BasicCanvasBitmapIterator::getBitmapHeight ( ) const noexcept
     {
         return myMax.getY();
     }
     
+    
     int BasicCanvasBitmapIterator::getBitmapNumberOfPadBytes ( ) const noexcept
     {
         return 0; // irrelevant for this type of iterator, since there is no specific file format
     }
+    
     
     bool BasicCanvasBitmapIterator::isEndOfImage ( ) const noexcept
     {
         return myCurrPosition.getY() >= myMax.getY();
     }
     
+    
     bool BasicCanvasBitmapIterator::isEndOfScanLine ( ) const noexcept
     {
         return myCurrPosition.getX() >= myMax.getX();
     }
+    
     
     void BasicCanvasBitmapIterator::nextScanLine ( )
     {
@@ -63,6 +70,7 @@ namespace BitmapGraphics
         
         std::swap( myCurrPosition, nextPosition );
     }
+    
     
     void BasicCanvasBitmapIterator::nextPixel ( )
     {

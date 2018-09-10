@@ -14,6 +14,8 @@ using namespace std;
 
 namespace Xml
 {
+    
+    
     void Writer::writeXml(const HElement root, ostream& os, int&& depth) // default value depth=0
     {
         if ( root != nullptr )
@@ -28,6 +30,7 @@ namespace Xml
             writeXmlNodeTail( root, os, depth );
         }
     }
+    
     
     void Writer::writeXmlNodeHead(const HElement root, ostream& os, const int depth)
     {
@@ -46,12 +49,14 @@ namespace Xml
         os << ">" << endl;
     }
     
+    
     void Writer::writeXmlNodeTail(const HElement root, ostream& os, const int depth)
     {
         writeLeadingWhitespace( os, depth );
         
         os << "</" << root->getName() << ">" << endl;
     }
+    
 
     void Writer::writeLeadingWhitespace(ostream& os, const int depth)
     {
@@ -62,4 +67,6 @@ namespace Xml
         
         os << whitespace;
     }
-}
+    
+    
+} // namespace Xml

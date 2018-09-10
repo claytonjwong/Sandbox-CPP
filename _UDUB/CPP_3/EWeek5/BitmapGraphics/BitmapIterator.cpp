@@ -10,6 +10,8 @@
 
 namespace BitmapGraphics
 {
+    
+    
     BitmapIterator::BitmapIterator ( const BitmapGraphics::Bitmap& bitmap, bool reverse ) :
     myWidth{ bitmap.getWidth() },
     myHeight{ bitmap.getHeight() },
@@ -97,4 +99,5 @@ namespace BitmapGraphics
         ++myCurrReversePixel;
     }
     
-}
+    
+} // namespace BitmapGraphics

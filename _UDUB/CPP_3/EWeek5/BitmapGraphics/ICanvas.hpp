@@ -12,7 +12,6 @@
 
 namespace BitmapGraphics
 {
-
     class ICanvas
     {
     public:
@@ -27,6 +26,5 @@ namespace BitmapGraphics
         
         virtual HBitmapIterator createBitmapIterator ( ) const noexcept = 0;
     };
-    
     
 } // namespace BitmapGraphics

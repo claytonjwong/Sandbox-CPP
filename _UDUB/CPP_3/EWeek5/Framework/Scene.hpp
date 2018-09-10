@@ -62,4 +62,5 @@ namespace Framework
         LayerCollection myLayers;
         
     };
-}
+    
+}  // namespace Framework

@@ -14,8 +14,6 @@
 
 namespace BitmapGraphics
 {
-    
-    
     class Drawing
     {
     public:
@@ -37,6 +35,5 @@ namespace BitmapGraphics
         std::map< VG::Point, Color > myDrawing;
         Color myBackground;
     };
-    
     
 } // namespace BitmapGraphics

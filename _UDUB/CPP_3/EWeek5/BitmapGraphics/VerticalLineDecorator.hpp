@@ -49,4 +49,5 @@ namespace BitmapGraphics
         const unsigned int myLineSpace;
         mutable int myCurrentSpace{ 0 };
     };
-}
+    
+} // namespace BitmapGraphics

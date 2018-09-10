@@ -33,13 +33,13 @@ namespace BitmapGraphics
         {
             auto color = BitmapIteratorDecorator::getColor();
             
-            ranged_number<int, Color::MIN, Color::MAX> red {
+            Utility::ranged_number<int, Color::MIN, Color::MAX> red {
                 color.getRed() + myAdjustment
             };
-            ranged_number<int, Color::MIN, Color::MAX> green {
+            Utility::ranged_number<int, Color::MIN, Color::MAX> green {
                 color.getGreen() + myAdjustment
             };
-            ranged_number<int, Color::MIN, Color::MAX> blue {
+            Utility::ranged_number<int, Color::MIN, Color::MAX> blue {
                 color.getBlue() + myAdjustment
             };
             return Color{
@@ -52,4 +52,5 @@ namespace BitmapGraphics
     private:
         const int myAdjustment;
     };
-}
+    
+} // namespace BitmapGraphics

@@ -19,10 +19,13 @@
 
 namespace Codec
 {
+    
+    
     WindowsBitmapDecoder::WindowsBitmapDecoder ( ) :
     myMimeType{ MimeType::WINDOWS_BITMAP }
     {
     }
+    
     
     HBitmapDecoder WindowsBitmapDecoder::clone ( std::istream& inStream )
     {
@@ -49,6 +52,7 @@ namespace Codec
         return result;
     }
     
+    
     BitmapGraphics::HBitmapIterator WindowsBitmapDecoder::createIterator ( const bool reverse ) const
     {
         if ( myBitmap == nullptr )
@@ -60,13 +64,17 @@ namespace Codec
         return std::make_shared<BitmapGraphics::BitmapIterator>( it );
     }
     
+    
     const std::string& WindowsBitmapDecoder::getMimeType ( ) const noexcept
     {
         return myMimeType;
     }
+    
 
     bool WindowsBitmapDecoder::isSupported ( const std::string& firstChunkOfBitmap ) const noexcept
     {
         return firstChunkOfBitmap[0] == 'B' && firstChunkOfBitmap[1] == 'M';
     }
-}
+    
+    
+} // namespace Codec

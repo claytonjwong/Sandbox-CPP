@@ -41,4 +41,5 @@ namespace Codec
     
         BitmapGraphics::HBitmapIterator myIt;
     };
-}
+    
+}  // namespace Codec

@@ -49,4 +49,5 @@ namespace BitmapGraphics
         Bitmap::ReversePixelIterator myCurrReversePixel;
         const bool myReverse{ false };
     };
-}
+    
+} // namespace BitmapGraphics

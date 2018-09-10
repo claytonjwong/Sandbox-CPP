@@ -63,4 +63,5 @@ namespace BitmapGraphics
     }
     
     std::ostream& operator<< ( std::ostream& outStream, const Color& rhs ) noexcept;
-}
+    
+} // namespace BitmapGraphics

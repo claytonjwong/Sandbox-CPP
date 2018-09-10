@@ -13,11 +13,14 @@ using namespace std;
 
 namespace Framework
 {
+    
+    
     PlacedGraphic::PlacedGraphic() :
     myPlacementPoint{ Point{0,0} },
     myGraphic{ make_shared<VectorGraphic>() }
     {
     }
+    
 
     PlacedGraphic::PlacedGraphic ( const Point& placement, const HVectorGraphic& graphic ) :
     myPlacementPoint{ placement },
@@ -28,26 +31,31 @@ namespace Framework
             throw runtime_error{ "null vector graphic not allowed" };
         }
     }
+    
 
     const Point& PlacedGraphic::getPlacementPoint() const noexcept
     {
         return myPlacementPoint;
     }
     
+    
     const VG::VectorGraphic& PlacedGraphic::getGraphic() const noexcept
     {
         return *myGraphic;
     }
+    
 
     void PlacedGraphic::setPlacementPoint ( const Point& placement ) noexcept
     {
         myPlacementPoint = placement;
     }
+    
 
     void PlacedGraphic::setPlacementPoint ( Point&& placement ) noexcept
     {
         myPlacementPoint = std::move( placement );
     }
+    
     
     void PlacedGraphic::setGraphic ( const HVectorGraphic& graphic ) noexcept
     {
@@ -61,10 +69,12 @@ namespace Framework
         }
     }
     
+    
     void PlacedGraphic::setGraphic ( HVectorGraphic&& graphic ) noexcept
     {
         myGraphic = std::move( graphic );
     }
+    
     
     bool operator== ( const PlacedGraphic& lhs, const PlacedGraphic& rhs )
     {
@@ -72,9 +82,11 @@ namespace Framework
             && ( lhs.getGraphic() == rhs.getGraphic() );
     }
     
+    
     bool operator!= ( const PlacedGraphic& lhs, const PlacedGraphic& rhs )
     {
         return ! ( lhs == rhs );
     }
+    
 
-}
+} // namespace Framework

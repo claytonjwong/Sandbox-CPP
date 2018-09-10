@@ -44,4 +44,5 @@ namespace Framework
     
     bool operator== ( const PlacedGraphic& lhs, const PlacedGraphic& rhs );
     bool operator!= ( const PlacedGraphic& lhs, const PlacedGraphic& rhs );
-}
+    
+}  // namespace Framework

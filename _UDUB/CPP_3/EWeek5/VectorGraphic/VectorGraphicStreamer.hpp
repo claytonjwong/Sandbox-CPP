@@ -30,6 +30,7 @@ namespace VG {
         static std::stringstream getStreamFromHandle(const Xml::HElement root);
         static void writeToFileFromStream(const std::string& filename, std::stringstream& ss);
     };
-}
+    
+} // namespace VG
 
 

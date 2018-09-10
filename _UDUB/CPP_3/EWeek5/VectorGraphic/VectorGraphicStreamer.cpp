@@ -17,7 +17,9 @@
 using namespace std;
 
 namespace VG
-{    
+{
+    
+    
     const VectorGraphic VectorGraphicStreamer::getVectorGraphicFromFile(const std::string& filename)
     {
         auto ss = getStreamFromFile( filename );
@@ -26,12 +28,14 @@ namespace VG
         return vg;
     }
     
+    
     void VectorGraphicStreamer::setVectorGraphicToFile(const VectorGraphic& vg, const std::string& filename)
     {
         auto root = getHandleFromVectorGraphic( vg );
         auto ss = getStreamFromHandle( root );
         writeToFileFromStream( filename, ss );
     }
+    
 
     stringstream VectorGraphicStreamer::getStreamFromFile(const string& filename)
     {
@@ -48,11 +52,13 @@ namespace VG
         return ss;
     }
     
+    
     const Xml::HElement VectorGraphicStreamer::getHandleFromStream(std::stringstream& ss)
     {
         auto root = Xml::Reader::loadXml( ss );
         return root;
     }
+    
     
     const VectorGraphic VectorGraphicStreamer::getVectorGraphicFromHandle(const Xml::HElement root)
     {
@@ -82,6 +88,7 @@ namespace VG
         }
         return vg;
     }
+    
 
     const Xml::HElement VectorGraphicStreamer::getHandleFromVectorGraphic(const VectorGraphic& vg)
     {
@@ -89,12 +96,14 @@ namespace VG
         return root;
     }
     
+    
     stringstream VectorGraphicStreamer::getStreamFromHandle(const Xml::HElement root)
     {
         stringstream ss;
         Xml::Writer::writeXml( root, ss );
         return ss;
     }
+    
     
     void VectorGraphicStreamer::writeToFileFromStream(const std::string& filename, std::stringstream& ss)
     {
@@ -108,4 +117,6 @@ namespace VG
             throw invalid_argument{ "output file not found" };
         }
     }
-}
+    
+    
+} // namespace VG

@@ -28,4 +28,5 @@ namespace Xml
         static void writeXmlNodeTail(HElement root, ostream& os, const int depth=0);
         static void writeLeadingWhitespace(ostream& os, const int depth=0);
     };
-}
+    
+}  // namespace Xml

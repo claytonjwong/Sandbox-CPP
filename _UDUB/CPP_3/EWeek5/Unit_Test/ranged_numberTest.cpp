@@ -1,6 +1,8 @@
 #include "TestHarness.h"
 #include "ranged_number.hpp"
 
+using namespace Utility;
+
 
 TEST(cTor, ranged_number)
 {

@@ -15,6 +15,8 @@ using namespace std;
 
 namespace BitmapGraphics
 {
+    
+    
     //
     // Note: significant stream read/write order: ( blue, green, red )
     //
@@ -76,5 +78,7 @@ namespace BitmapGraphics
         
         return outStream;
     }
-}
+    
+    
+} // namespace BitmapGraphics
 

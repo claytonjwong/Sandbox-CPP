@@ -14,6 +14,8 @@ using namespace std;
 
 namespace BitmapGraphics
 {
+    
+    
     WindowsBitmapHeader::WindowsBitmapHeader ( istream& inStream )
     {
         read( inStream );
@@ -191,4 +193,4 @@ namespace BitmapGraphics
     const Binary::DoubleWord WindowsBitmapHeader::numberOfColors{ 0 };
     const Binary::DoubleWord WindowsBitmapHeader::numberOfImportantColors{ 0 };
     
-}
+} // namespace BitmapGraphics

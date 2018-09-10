@@ -13,22 +13,27 @@
 
 using namespace std;
 
-namespace VG {
+namespace VG
+{
+
     
     VectorGraphic::VectorGraphic() :
     myShapeStyle{ ShapeStyle::Close }
     {
     }
     
+    
     void VectorGraphic::addPoint ( const Point& point )
     {
         myPath.push_back( point );
     }
     
+    
     void VectorGraphic::addPoint ( Point&& point )
     {
         myPath.emplace_back(  forward<Point>( point )  );
     }
+    
     
     void VectorGraphic::erasePoint ( int index )
     {
@@ -43,6 +48,7 @@ namespace VG {
         }
     }
     
+    
     void VectorGraphic::removePoint ( const Point& target )
     {
         auto newEnd = remove( myPath.begin(), myPath.end(), target );
@@ -56,21 +62,25 @@ namespace VG {
         }
     }
     
+    
     void VectorGraphic::openShape() noexcept
     {
         myShapeStyle = ShapeStyle::Open;
     }
+    
     
     void VectorGraphic::closeShape() noexcept
     {
          myShapeStyle = ShapeStyle::Close;
     }
     
+    
     bool VectorGraphic::isClosed() const noexcept
     {
         return ! ( isOpen() );
-        
     }
+    
+    
     bool VectorGraphic::isOpen() const noexcept
     {
         return myShapeStyle == ShapeStyle::Open;
@@ -82,10 +92,12 @@ namespace VG {
         return myPath.at( index ); // throws std::out_of_range if index out of range
     }
     
+    
     size_t VectorGraphic::getPointCount() const noexcept
     {
         return myPath.size();
     }
+    
     
     int VectorGraphic::getHeight() const noexcept
     {
@@ -101,6 +113,7 @@ namespace VG {
         }
     }
     
+    
     int VectorGraphic::getWidth() const noexcept
     {
         if ( getPointCount() > 0 )
@@ -115,15 +128,18 @@ namespace VG {
         }
     }
     
+    
     PathIterator VectorGraphic::begin() const noexcept
     {
         return myPath.begin();
     }
+    
 
     PathIterator VectorGraphic::end() const noexcept
     {
         return myPath.end();
     }
+    
     
     bool operator== ( const VectorGraphic& lhs, const VectorGraphic& rhs )
     {
@@ -131,9 +147,11 @@ namespace VG {
             && ( lhs.myShapeStyle == rhs.myShapeStyle );
     }
     
+    
     bool operator!= ( const VectorGraphic& lhs, const VectorGraphic& rhs )
     {
         return ! ( lhs == rhs );
     }
 
-}
+    
+} // namespace VG

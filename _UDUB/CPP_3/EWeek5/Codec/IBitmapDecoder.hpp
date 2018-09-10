@@ -32,4 +32,5 @@ namespace Codec
         virtual bool isSupported ( const std::string& firstChunkOfBitmap ) const noexcept = 0;
         
     };
-}
+    
+}  // namespace Codec

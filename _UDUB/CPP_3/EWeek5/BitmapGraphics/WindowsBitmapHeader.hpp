@@ -16,7 +16,6 @@
 
 namespace BitmapGraphics
 {
-
     class WindowsBitmapHeader
     {
     public:
@@ -83,4 +82,5 @@ namespace BitmapGraphics
         static const Binary::DoubleWord numberOfColors;
         static const Binary::DoubleWord numberOfImportantColors;
     };
-}
+    
+} // namespace BitmapGraphics

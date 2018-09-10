@@ -61,4 +61,5 @@ namespace BitmapGraphics
     };
     
     std::ostream& operator<< ( std::ostream& outStream, const Bitmap& rhs );
-}
+    
+} // namespace BitmapGraphics

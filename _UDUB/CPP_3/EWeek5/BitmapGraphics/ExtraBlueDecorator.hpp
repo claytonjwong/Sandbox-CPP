@@ -36,4 +36,5 @@ namespace BitmapGraphics
             return Color{ color.getRed(), color.getGreen(), static_cast<Color::Component_t>( Color::MAX ) };
         }
     };
-}
+    
+} // namespace BitmapGraphics

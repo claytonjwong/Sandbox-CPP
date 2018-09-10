@@ -22,4 +22,5 @@ namespace Xml
         
         static const HElement loadXml ( std::stringstream& stream );
     };
-}
+    
+}  // namespace Xml

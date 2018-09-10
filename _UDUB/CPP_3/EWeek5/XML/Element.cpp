@@ -13,6 +13,8 @@ using namespace std;
 
 namespace Xml
 {
+    
+    
     const HElement Element::make_HElement ( const Framework::Scene& scene )
     {
         HElement handle = make_shared<Element>();
@@ -31,6 +33,7 @@ namespace Xml
         return handle;
     }
     
+    
     HXMLNode Element::make_HXMLNode ( HElement handle, const Framework::Layer& layer )
     {
         auto layerRoot = handle->createXMLNode( "Layer" );
@@ -45,6 +48,7 @@ namespace Xml
         
         return layerRoot;
     }
+    
     
     HXMLNode Element::make_HXMLNode ( HElement handle, const Framework::PlacedGraphic& graphic )
     {
@@ -64,6 +68,7 @@ namespace Xml
         return placedGraphicRoot;
     }
     
+    
     HXMLNode Element::make_HXMLNode ( HElement handle, const VG::VectorGraphic& vectorGraphic )
     {
         auto vectorGraphicRoot = handle->createXMLNode( "VectorGraphic" );
@@ -79,6 +84,7 @@ namespace Xml
         return vectorGraphicRoot;
     }
     
+    
     HXMLNode Element::make_HXMLNode ( HElement handle, const VG::Point& point )
     {
         auto pointRoot = handle->createXMLNode( "Point" );
@@ -88,6 +94,7 @@ namespace Xml
         
         return pointRoot;
     }
+    
 
     const std::shared_ptr<Element> Element::make_HElement ( const VG::VectorGraphic& vectorGraphic )
     {
@@ -109,6 +116,7 @@ namespace Xml
         
         return element;
     }
+    
 
     const string Element::getName() const noexcept
     {
@@ -124,6 +132,7 @@ namespace Xml
         }
     }
     
+    
     const string Element::getAttribute(const string& name) const noexcept
     {
         auto result = myRoot->Attribute( name.c_str() );
@@ -138,6 +147,7 @@ namespace Xml
         }
     }
     
+    
     const AttributeMap Element::getAttributes() const noexcept
     {
         AttributeMap result;
@@ -151,6 +161,7 @@ namespace Xml
         return result;
     }
     
+    
     const ElementList Element::getChildElements() const noexcept
     {
         ElementList result;
@@ -163,6 +174,7 @@ namespace Xml
         
         return result;
     }
+    
         
     ElementError Element::parseXML(const std::string& xml)
     {
@@ -172,11 +184,13 @@ namespace Xml
         
         return result;
     }
+    
 
     HXMLElement Element::createXMLNode(const std::string& name)
     {
         return myDocument.NewElement( name.c_str() );
     }
+    
 
     HXMLNode Element::insertXMLNode(HXMLNode node)
     {
@@ -186,4 +200,6 @@ namespace Xml
         
         return result;
     }
-}
+    
+    
+} // namespace Xml

@@ -14,6 +14,8 @@ using namespace std;
 
 namespace Xml
 {
+    
+    
     const HElement Reader::loadXml ( stringstream& stream )
     {
         HElement element_handle = make_shared<Element>();
@@ -31,4 +33,6 @@ namespace Xml
             throw runtime_error( "failed to parse XML input" );
         }
     }
-}
+    
+    
+} // namespace Xml

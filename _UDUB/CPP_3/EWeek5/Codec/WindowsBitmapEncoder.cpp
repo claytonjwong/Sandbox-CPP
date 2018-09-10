@@ -11,12 +11,15 @@
 
 namespace Codec
 {
+    
+    
     HBitmapEncoder WindowsBitmapEncoder::clone ( BitmapGraphics::HBitmapIterator it ) noexcept
     {
         auto result = std::make_shared<WindowsBitmapEncoder>();
         result->myIt = it;
         return result;
     }
+    
 
     void WindowsBitmapEncoder::encodeToStream ( std::ostream& outStream ) const
     {
@@ -28,6 +31,7 @@ namespace Codec
         encodeHeader( outStream );
         encodePayload( outStream );
     }
+    
 
     void WindowsBitmapEncoder::encodeHeader ( std::ostream& outStream ) const
     {
@@ -35,6 +39,7 @@ namespace Codec
             header{ myIt->getBitmapWidth(), myIt->getBitmapHeight() };
         header.write( outStream );
     }
+    
 
     void WindowsBitmapEncoder::encodePayload ( std::ostream& outStream ) const
     {
@@ -52,4 +57,6 @@ namespace Codec
             }
         }
     }
-}
+    
+    
+} // namespace Codec

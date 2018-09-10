@@ -49,4 +49,5 @@ namespace Codec
         HBitmapDecoder myDecoder;
         std::unordered_set<std::string_view> mySupportedMimeTypes;
     };
-}
+    
+} // namespace Codec

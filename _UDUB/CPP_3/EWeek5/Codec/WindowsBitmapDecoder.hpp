@@ -47,4 +47,4 @@ namespace Codec
             std::unique_ptr<BitmapGraphics::Bitmap> myBitmap;
     };
     
-}
+}  // namespace Codec

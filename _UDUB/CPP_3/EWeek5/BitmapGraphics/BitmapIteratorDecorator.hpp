@@ -75,4 +75,5 @@ namespace BitmapGraphics
         HBitmapIterator myIterator;
         
     };
-}
+    
+} // namespace BitmapGraphics

@@ -10,6 +10,8 @@
 
 namespace Framework
 {
+    
+    
     Layer::Layer ( const std::string& alias ) :
     myAlias{ alias }
     {
@@ -52,4 +54,5 @@ namespace Framework
         return ! ( *this == rhs );
     }
     
-}
+    
+} // namespace Framework

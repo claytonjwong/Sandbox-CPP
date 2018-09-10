@@ -15,6 +15,8 @@ using namespace std;
 
 namespace Framework
 {
+    
+    
     int toInt ( const string& str )
     {
         int value{ 0 };
@@ -23,6 +25,7 @@ namespace Framework
         return value;
     }
 
+    
     Scene SceneReader::readScene ( const Xml::Element& sceneRoot )
     {
         if ( sceneRoot.getName() == "Scene" )
@@ -47,6 +50,7 @@ namespace Framework
             throw runtime_error{ "unable to create Scene from XML" };
         }
     }
+    
 
     Layer SceneReader::readLayer ( const Xml::HElement layerRoot )
     {
@@ -67,6 +71,7 @@ namespace Framework
             throw runtime_error{ "unable to create Layer from XML" };
         }
     }
+    
 
     PlacedGraphic SceneReader::readPlacedGraphic ( const Xml::HElement placedGraphicRoot )
     {
@@ -93,6 +98,7 @@ namespace Framework
             throw runtime_error{ "unable to create PlacedGraphic from XML" };
         }
     }
+    
 
     VG::HVectorGraphic SceneReader::readVectorGraphic ( const Xml::HElement vectorGraphicRoot )
     {
@@ -109,4 +115,6 @@ namespace Framework
             throw runtime_error{ "unable to create VectorGraphic from XML" };
         }
     }
-}
+    
+    
+} // namespace Framework

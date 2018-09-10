@@ -76,7 +76,6 @@ namespace VG {
         enum class ShapeStyle { Open, Close } myShapeStyle;
     };
     
-
-}
+} // namespace VG
 
 
