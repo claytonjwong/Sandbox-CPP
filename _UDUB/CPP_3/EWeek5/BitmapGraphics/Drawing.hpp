@@ -18,6 +18,8 @@ namespace BitmapGraphics
     {
     public:
         
+        using PointColorCollection = std::map< VG::Point, Color >;
+        
         Drawing ( const Color& background );
         ~Drawing ( ) = default;
         
@@ -28,12 +30,13 @@ namespace BitmapGraphics
         Drawing& operator= ( Drawing&& rhs ) = default;
         
         Color getPixelColor ( const VG::Point& point ) const noexcept;
-        
         void setPixelColor ( const VG::Point& point, const Color& color ) noexcept;
         
     private:
-        std::map< VG::Point, Color > myDrawing;
+        
+        PointColorCollection myDrawing;
         Color myBackground;
+        
     };
     
 } // namespace BitmapGraphics
