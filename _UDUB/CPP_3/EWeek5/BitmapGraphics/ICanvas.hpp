@@ -9,9 +9,13 @@
 #pragma once
 
 #include "IBitmapIterator.hpp"
+#include "Point.hpp"
 
 namespace BitmapGraphics
 {
+    class ICanvas;
+    using HCanvas = std::shared_ptr< ICanvas >;
+    
     class ICanvas
     {
     public:
