@@ -49,7 +49,7 @@ TEST(ReadScene, SceneReader)
     CHECK_EQUAL(600, s.getHeight());
 
     int numberOfLayers = 0;
-    for (auto pos = s.begin(); pos != s.end(); ++numberOfLayers, ++pos)
+    for (auto pos{ s.begin() }; pos != s.end(); ++numberOfLayers, ++pos)
     {
     
         auto layer = (*pos);
@@ -87,7 +87,7 @@ TEST(ReadScene, SceneReader)
             CHECK_EQUAL("mountains", layer.getAlias());
 
             int numberOfGraphics = 0;
-            for (auto graphic = layer.begin(); graphic != layer.end(); ++graphic)
+            for ( auto graphic{ layer.begin() };  graphic != layer.end();  ++graphic )
             {
                 ++numberOfGraphics;
             }

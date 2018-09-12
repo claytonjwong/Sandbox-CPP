@@ -67,8 +67,8 @@ namespace Binary
     template <typename Type>
     Binary_t<Type> Binary_t<Type>::read ( std::istream& inStream, const Endianness&& forceEndian )
     {
-        Type result = 0;
-        for ( int index = 0, shift = 0; index < Binary_t<Type>::BYTE_COUNT; ++index )
+        Type result{ 0 };
+        for ( int index{ 0 }, shift{ 0 };  index < Binary_t<Type>::BYTE_COUNT;  ++index )
         {
             char buffer;
             inStream.get( buffer );
@@ -142,7 +142,7 @@ namespace Binary
     template <typename Type>
     void Binary_t<Type>::write ( std::ostream& outStream, const Endianness&& forceEndian ) const
     {
-        for ( auto index = 0, shift = 0; index < Binary_t<Type>::BYTE_COUNT; ++index )
+        for ( auto index{ 0 }, shift{ 0 };  index < Binary_t<Type>::BYTE_COUNT;  ++index )
         {
             if (  ( forceEndian == Endianness::Little ) ||
                   ( forceEndian == Endianness::Dynamic && SYSTEM_ENDIANNESSS() == Endianness::Little ) )

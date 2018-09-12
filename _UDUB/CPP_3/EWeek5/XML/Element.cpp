@@ -103,7 +103,7 @@ namespace Xml
         
         vectorGraphicRoot->SetAttribute(  "closed", ( vectorGraphic.isClosed() ? "true" : "false" )  );
         
-        for (  int index=0, N=static_cast<int>( vectorGraphic.getPointCount() );  index < N;  ++index  )
+        for (  int index{ 0 }, N{  static_cast<int>( vectorGraphic.getPointCount() )  };  index < N;  ++index  )
         {
             auto point = vectorGraphic.getPoint( index );
             auto pointRoot = element->createXMLNode( "Point" );
@@ -152,7 +152,7 @@ namespace Xml
     {
         AttributeMap result;
         
-        for ( auto attribute = myRoot->FirstAttribute();
+        for ( auto attribute{ myRoot->FirstAttribute() };
               attribute != nullptr;
               attribute = attribute->Next() )
         {
@@ -165,7 +165,7 @@ namespace Xml
     const ElementList Element::getChildElements() const noexcept
     {
         ElementList result;
-        for ( auto child = myRoot->FirstChildElement();
+        for ( auto child{ myRoot->FirstChildElement() };
               child != nullptr;
               child = child->NextSiblingElement() )
         {

@@ -11,7 +11,7 @@ TEST(pushBack, Layer)
     layer.pushBack(Framework::PlacedGraphic(VG::Point(33, 33), VG::HVectorGraphic(new VG::VectorGraphic)));
 
     int numberOfGraphics{0};
-    for (auto pos = layer.begin(); pos != layer.end(); ++pos)
+    for ( auto pos{ layer.begin() };  pos != layer.end();  ++pos )
     {
         ++numberOfGraphics;
     }
@@ -39,7 +39,7 @@ TEST(remove, Layer)
     layer.remove(Framework::PlacedGraphic(VG::Point(33, 33), VG::HVectorGraphic(new VG::VectorGraphic)));
 
     int numberOfGraphics{0};
-    for (auto pos = layer.begin(); pos != layer.end(); ++pos)
+    for ( auto pos{ layer.begin() };  pos != layer.end();  ++pos )
     {
         ++numberOfGraphics;
     }

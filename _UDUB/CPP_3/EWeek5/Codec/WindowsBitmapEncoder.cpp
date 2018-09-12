@@ -43,7 +43,7 @@ namespace Codec
 
     void WindowsBitmapEncoder::encodePayload ( std::ostream& outStream ) const
     {
-        for ( auto it=myIt; ! it->isEndOfImage(); it->nextScanLine() )
+        for ( auto it{ myIt }; ! it->isEndOfImage(); it->nextScanLine() )
         {
             for ( ; ! it->isEndOfScanLine(); it->nextPixel() )
             {
@@ -51,7 +51,7 @@ namespace Codec
             }
             
             Binary::Byte padByte{ 0 };
-            for ( int pad = 0u; pad < it->getBitmapNumberOfPadBytes(); ++pad )
+            for ( int pad{ 0 };  pad < it->getBitmapNumberOfPadBytes();  ++pad )
             {
                 outStream << padByte;
             }

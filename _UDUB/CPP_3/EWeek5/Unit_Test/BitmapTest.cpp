@@ -130,7 +130,7 @@ TEST(BitmapReadWrite, Bitmap)
     for (auto& color: scanLine2)
         v2.push_back(color);
 
-    for ( int i=0; i < scanLine1.size(); ++i)
+    for ( int i{ 0 }; i < scanLine1.size(); ++i)
         if ( v1[i] != v2[i] )
             CHECK(false);
 }
@@ -180,7 +180,7 @@ TEST(BitmapReadWrite2, Bitmap)
     for (auto& color: scanLine2)
         v2.push_back(color);
 
-    for ( int i=0; i < scanLine1.size(); ++i)
+    for ( int i{ 0 }; i < scanLine1.size(); ++i)
         if ( v1[i] != v2[i] )
             CHECK(false);
 }
@@ -316,7 +316,7 @@ TEST(BitmapReadWrite_101, Bitmap)
     for (auto& color: scanLine2)
         v2.push_back(color);
 
-    for ( int i=0; i < scanLine1.size(); ++i)
+    for ( int i{ 0 }; i < scanLine1.size(); ++i)
         if ( v1[i] != v2[i] )
             CHECK(false);
 }
@@ -343,7 +343,7 @@ TEST(BinaryOstreamIterator_101, Bitmap)
         std::copy(scanLine.begin(), scanLine.end(), binary_ostream_iterator<Color>(outputStream));
         
         // Write pad bytes
-        for (auto pad = 0; pad < bitmap.getNumberOfPadBytes(); ++pad)
+        for (auto pad{ 0 };  pad < bitmap.getNumberOfPadBytes();  ++pad)
         {
             Binary::Byte(0).write(outputStream);
         }

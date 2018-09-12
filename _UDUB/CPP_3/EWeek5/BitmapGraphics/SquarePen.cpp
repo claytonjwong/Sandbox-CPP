@@ -21,9 +21,9 @@ namespace BitmapGraphics
     
     void SquarePen::drawPoint ( const HCanvas& canvas, const VG::Point& topLeftPoint ) const
     {
-        for ( auto x = topLeftPoint.getX();  x < mySize;  ++x )
+        for ( auto x{ topLeftPoint.getX() };  x < mySize;  ++x )
         {
-            for ( auto y = topLeftPoint.getY();  y < mySize;  ++y )
+            for ( auto y{ topLeftPoint.getY() };  y < mySize;  ++y )
             {
                 VG::Point currPoint{ x, y };
                 canvas->setPixelColor( currPoint, myColor );

@@ -112,11 +112,11 @@ TEST(readScanLines, Color)
     
     ScanLineContainer scanLines;
     
-    for (auto row = 0; row < Height; ++row)
+    for ( auto row{ 0 };  row < Height;  ++row )
     {
         ScanLine scanLine;
         
-        for (auto column = 0; column < Width; ++column)
+        for (auto column{ 0 }; column < Width; ++column)
         {
             scanLine.push_back(Color::read(colorStream));
         }
@@ -148,11 +148,11 @@ TEST(readScanLines2, Color)
     
     ScanLineContainer scanLines;
     
-    for (auto row = 0; row < Height; ++row)
+    for (auto row{ 0 }; row < Height; ++row)
     {
         ScanLine scanLine;
         
-        for (auto column = 0; column < Width; ++column)
+        for (auto column{ 0 }; column < Width; ++column)
         {
             scanLine.push_back(Color::read(colorStream));
         }
