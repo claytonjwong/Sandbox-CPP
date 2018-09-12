@@ -17,11 +17,7 @@ namespace BitmapGraphics
     {
     public:
         
-        ColorInversionDecorator ( HBitmapIterator innerDecorator ) :
-        BitmapIteratorDecorator{ innerDecorator }
-        {
-        }
-        
+        ColorInversionDecorator ( HBitmapIterator innerDecorator );
         ~ColorInversionDecorator ( ) = default;
         
         ColorInversionDecorator ( const ColorInversionDecorator& src ) = default;
@@ -30,16 +26,8 @@ namespace BitmapGraphics
         ColorInversionDecorator& operator= ( const ColorInversionDecorator& rhs ) = default;
         ColorInversionDecorator& operator= ( ColorInversionDecorator&& rhs ) = default;
         
-        virtual Color getColor ( ) const noexcept override
-        {
-            auto color = BitmapIteratorDecorator::getColor();
-            
-            auto red = Color::MAX - color.getRed();
-            auto green = Color::MAX - color.getGreen();
-            auto blue = Color::MAX - color.getBlue();
-            
-            return Color{ red, green, blue };
-        }
+        virtual Color getColor ( ) const noexcept override;
+        
     };
     
 } // namespace BitmapGraphics

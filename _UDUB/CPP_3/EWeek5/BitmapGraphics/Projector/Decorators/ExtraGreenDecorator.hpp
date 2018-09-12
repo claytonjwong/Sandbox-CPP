@@ -17,11 +17,7 @@ namespace BitmapGraphics
     {
     public:
         
-        ExtraGreenDecorator ( HBitmapIterator innerDecorator ) :
-        BitmapIteratorDecorator{ innerDecorator }
-        {
-        }
-        
+        ExtraGreenDecorator ( HBitmapIterator innerDecorator );
         ~ExtraGreenDecorator ( ) = default;
         
         ExtraGreenDecorator ( const ExtraGreenDecorator& src ) = default;
@@ -30,11 +26,8 @@ namespace BitmapGraphics
         ExtraGreenDecorator& operator= ( const ExtraGreenDecorator& rhs ) = default;
         ExtraGreenDecorator& operator= ( ExtraGreenDecorator&& rhs ) = default;
         
-        virtual Color getColor ( ) const noexcept override
-        {
-            auto color = BitmapIteratorDecorator::getColor();
-            return Color{ color.getRed(), static_cast<Color::Component_t>( Color::MAX ), color.getBlue() };
-        }
+        virtual Color getColor ( ) const noexcept override;
+        
     };
     
 } // namespace BitmapGraphics

@@ -14,34 +14,24 @@ namespace Binary
     class binary_ostream_iterator
     {
     public:
-    
-      using stream_type = std::basic_ostream< charT, traits >;
-      using self_type = binary_ostream_iterator< T, charT, traits >;
-      
-      binary_ostream_iterator ( stream_type& stream ) :
-      myStream{ &stream }
-      {
-      }
 
-      self_type& operator= (const T& value)
-      {
-        value.write( *myStream );
-        
-        if ( ! *myStream )
-        {
-            throw std::runtime_error{ "unable to write to stream" };
-        }
-        
-        return *this;
-      }
+        using stream_type = std::basic_ostream< charT, traits >;
+        using self_type = binary_ostream_iterator< T, charT, traits >;
 
-      self_type& operator* () { return *this; }
-      self_type& operator++ () { return *this; }
-      self_type& operator++ (int) { return *this; }
+        binary_ostream_iterator ( stream_type& stream );
+
+        self_type& operator= (const T& value);
+        self_type& operator* ();
+        self_type& operator++ ();
+        self_type& operator++ (int);
 
     private:
-    
-      stream_type* myStream;
+
+        stream_type* myStream;
 
     };
-}
+    
+} // namespace Binary
+
+#include "binary_ostream_iterator_impl.hpp"
+
