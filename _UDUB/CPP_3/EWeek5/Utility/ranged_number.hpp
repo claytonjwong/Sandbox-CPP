@@ -13,11 +13,11 @@
 
 namespace Utility
 {
-
     template <typename Type, Type lowerBound, Type upperBound>
     class ranged_number
     {
     public:
+        
         ranged_number ( ) = default;
         ranged_number ( const Type& value );
         ~ranged_number ( ) = default;
@@ -45,104 +45,12 @@ namespace Utility
         const ranged_number& operator-= ( ranged_number&& rhs ) noexcept;
 
     private:
+        
         Type myValue;
+        
     };
-
-
-    template <typename Type, Type lowerBound, Type upperBound>
-    ranged_number<Type,lowerBound,upperBound>::ranged_number ( const Type& value ) :
-    myValue{ std::clamp( value, lowerBound, upperBound ) }
-    {
-    }
-
-
-    template <typename Type, Type lowerBound, Type upperBound>
-    const Type& ranged_number<Type,lowerBound,upperBound>::getValue ( ) const noexcept
-    {
-        return myValue;
-    }
-
-
-    template <typename Type, Type lowerBound, Type upperBound>
-    ranged_number<Type,lowerBound,upperBound>::operator Type()
-    {
-        return myValue;
-    }
-
-
-    template <typename Type, Type lowerBound, Type upperBound>
-    const ranged_number<Type,lowerBound,upperBound>&
-    ranged_number<Type,lowerBound,upperBound>::operator++ ( ) noexcept
-    {
-        myValue = std::clamp<Type>( myValue + 1, lowerBound, upperBound );
-        return *this;
-    }
-
-
-    template <typename Type, Type lowerBound, Type upperBound>
-    const ranged_number<Type,lowerBound,upperBound>
-    ranged_number<Type,lowerBound,upperBound>::operator++ ( int ) noexcept
-    {
-        auto beforeIncrement = *this;
-        operator++();
-        return std::move( beforeIncrement );
-    }
-
-
-    template <typename Type, Type lowerBound, Type upperBound>
-    const ranged_number<Type,lowerBound,upperBound>&
-    ranged_number<Type,lowerBound,upperBound>::operator-- ( ) noexcept
-    {
-        myValue = std::clamp<Type>( myValue - 1, lowerBound, upperBound );
-        return *this;
-    }
-
-
-    template <typename Type, Type lowerBound, Type upperBound>
-    const ranged_number<Type,lowerBound,upperBound>
-    ranged_number<Type,lowerBound,upperBound>::operator-- ( int ) noexcept
-    {
-        auto beforeDecrement = *this;
-        operator--();
-        return std::move( beforeDecrement );
-    }
-
-
-    template <typename Type, Type lowerBound, Type upperBound>
-    const ranged_number<Type,lowerBound,upperBound>&
-    ranged_number<Type,lowerBound,upperBound>::operator+= ( const ranged_number& rhs ) noexcept
-    {
-        myValue = std::clamp<Type>( myValue + rhs.getValue(), lowerBound, upperBound );
-        return *this;
-    }
-
-
-    template <typename Type, Type lowerBound, Type upperBound>
-    const ranged_number<Type,lowerBound,upperBound>&
-    ranged_number<Type,lowerBound,upperBound>::operator+= ( ranged_number&& rhs ) noexcept
-    {
-        myValue = std::clamp<Type>( myValue + rhs.getValue(), lowerBound, upperBound );
-        return *this;
-    }
-
-
-    template <typename Type, Type lowerBound, Type upperBound>
-    const ranged_number<Type,lowerBound,upperBound>&
-    ranged_number<Type,lowerBound,upperBound>::operator-= ( const ranged_number& rhs ) noexcept
-    {
-        myValue = std::clamp<Type>( myValue - rhs.getValue(), lowerBound, upperBound );
-        return *this;
-    }
-
-
-    template <typename Type, Type lowerBound, Type upperBound>
-    const ranged_number<Type,lowerBound,upperBound>&
-    ranged_number<Type,lowerBound,upperBound>::operator-= ( ranged_number&& rhs ) noexcept
-    {
-        myValue = std::clamp<Type>( myValue - rhs.getValue(), lowerBound, upperBound );
-        return *this;
-    }
-
     
 } // namespace Utility
+
+#include "ranged_number_impl.hpp"
 
