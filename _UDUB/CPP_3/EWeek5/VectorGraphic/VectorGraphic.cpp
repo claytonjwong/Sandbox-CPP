@@ -182,6 +182,20 @@ namespace VG
             
         } while ( nextPoint != myPath.end() );
         
+        if ( myShapeStyle == ShapeStyle::Close ) // connect last point to the first point if the shape is closed
+        {
+            Point lastPoint = Point{ currPoint->getX() + offset.getX(), currPoint->getY() + offset.getY()  };
+            Point firstPoint = Point{  myPath.begin()->getX() + offset.getX(),  myPath.begin()->getY() + offset.getY()  };
+            
+            Utility::LineIterator lineIt{ lastPoint, firstPoint };
+            
+            pen->drawPoint( canvas, lineIt.getCurrentPoint() );
+            while ( ! lineIt.isEnd() )
+            {
+                lineIt.nextPoint();
+                pen->drawPoint( canvas, lineIt.getCurrentPoint() );
+            }
+        }
     }
     
     
