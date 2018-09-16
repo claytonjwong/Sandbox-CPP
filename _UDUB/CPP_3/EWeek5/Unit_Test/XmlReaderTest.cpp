@@ -145,3 +145,80 @@ TEST(loadXml2, XmlReader)
 
 }
 
+
+const char* const SceneXmlWithStrokes = STR(
+<Scene width="800" height="800">
+  <Layer alias="bottom">
+    <PlacedGraphic x="11" y="12">
+      <VectorGraphic closed="true">
+        <Stroke tip="slash" size="7" color="FF0000" />
+        <Point x="100" y="500" />
+        <Point x="100" y="100" />
+        <Point x="500" y="600" />
+      </VectorGraphic>
+    </PlacedGraphic>
+    <PlacedGraphic x="400" y="300">
+      <VectorGraphic closed="true">
+        <Stroke tip="square" size="5" color="00FF00" />
+        <Point x="0" y="0" />
+        <Point x="0" y="100" />
+        <Point x="100" y="100" />
+        <Point x="100" y="0" />
+      </VectorGraphic>
+    </PlacedGraphic>
+  </Layer>
+  <Layer alias="top">
+    <PlacedGraphic x="250" y="250">
+      <VectorGraphic closed="false">
+        <Stroke tip="square" size="3" color="0000FF" />
+        <Point x="0" y="0" />
+        <Point x="0" y="100" />
+        <Point x="100" y="100" />
+        <Point x="100" y="0" />
+      </VectorGraphic>
+    </PlacedGraphic>
+  </Layer>
+</Scene>);
+
+
+TEST(loadXmlWithStrokes, XmlReader)
+{
+    std::stringstream xmlStream(SceneXmlWithStrokes);
+    
+    Xml::HElement root = Xml::Reader::loadXml(xmlStream);
+    
+    CHECK_EQUAL("Scene", root->getName());
+    CHECK_EQUAL("800", root->getAttribute("width"));
+    CHECK_EQUAL("800", root->getAttribute("height"));
+    CHECK(root->getAttribute("depth").empty());
+    
+    Xml::AttributeMap attributes = root->getAttributes();
+    CHECK(!attributes.empty());
+    CHECK_EQUAL(2, attributes.size());
+    CHECK_EQUAL("800", attributes["width"])
+    CHECK_EQUAL("800", attributes["height"])
+    
+    Xml::ElementList children = root->getChildElements();
+    CHECK(!children.empty());
+    CHECK_EQUAL(2, children.size());
+    
+    Xml::HElement layer0 = children[0];
+    CHECK_EQUAL("Layer", layer0->getName());
+    attributes = layer0->getAttributes();
+    CHECK(!attributes.empty());
+    CHECK_EQUAL(1, attributes.size());
+    CHECK_EQUAL("bottom", layer0->getAttribute("alias"));
+    
+    Xml::ElementList layerChildren = layer0->getChildElements();
+    CHECK(!layerChildren.empty());
+    CHECK_EQUAL(2, layerChildren.size());
+    Xml::HElement placedGraphic = layerChildren[0];
+    CHECK_EQUAL("PlacedGraphic", placedGraphic->getName());
+    attributes = placedGraphic->getAttributes();
+    CHECK(!attributes.empty());
+    CHECK_EQUAL(2, attributes.size());
+    CHECK_EQUAL("11", placedGraphic->getAttribute("x"));
+    CHECK_EQUAL("12", placedGraphic->getAttribute("y"));
+    
+}
+

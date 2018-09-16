@@ -21,6 +21,18 @@ namespace VG
     myShapeStyle{ ShapeStyle::Close }
     {
     }
+
+    
+    BitmapGraphics::HStroke VectorGraphic::getStroke ( ) const noexcept
+    {
+        return myStroke;
+    }
+    
+    
+    void VectorGraphic::setStroke ( BitmapGraphics::HStroke stroke ) noexcept
+    {
+        myStroke = stroke;
+    }
     
     
     void VectorGraphic::addPoint ( const Point& point )

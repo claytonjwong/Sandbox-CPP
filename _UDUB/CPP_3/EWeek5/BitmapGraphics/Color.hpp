@@ -21,6 +21,7 @@ namespace BitmapGraphics
         using Component_t = Binary::Byte_t;
         
         static constexpr int BYTE_COUNT = 3; // one byte per color: red, green, blue
+        static constexpr int NIBBLES_PER_BYTE = 2;
         static constexpr int MIN = 0;
         static constexpr int MAX = 255;
         
@@ -31,6 +32,8 @@ namespace BitmapGraphics
         
         template <typename InputType>
         Color ( const InputType& red, const InputType& green, const InputType& blue );
+        
+        Color ( const std::string& color );
         
         Color ( const Color& src ) = default;
         Color ( Color&& src ) = default;
@@ -43,6 +46,8 @@ namespace BitmapGraphics
         const Component_t& getBlue() const noexcept;
         
         void write ( std::ostream& outStream ) const;
+        
+        std::string toString ( ) const noexcept;
         
         bool operator== ( const Color& rhs ) const noexcept;
         bool operator!= ( const Color& rhs ) const noexcept;

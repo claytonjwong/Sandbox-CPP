@@ -12,14 +12,33 @@ namespace BitmapGraphics
 {
     
     
-    SquarePen::SquarePen ( size_t size, Color color ) :
-    mySize{ size },
+    SquarePen::SquarePen ( const std::string& name, size_t size, Color color ) :
+    myName{ name },
+    mySize{ size},
     myColor{ color }
     {
     }
     
     
-    void SquarePen::drawPoint ( const HCanvas& canvas, const VG::Point& topLeft ) const
+    const std::string& SquarePen::getName ( ) const noexcept
+    {
+        return myName;
+    }
+    
+    
+    size_t SquarePen::getSize ( ) const noexcept
+    {
+        return mySize;
+    }
+    
+    
+    Color SquarePen::getColor ( ) const noexcept
+    {
+        return myColor;
+    }
+    
+    
+    void SquarePen::drawPoint ( const HCanvas& canvas, const VG::Point& topLeft ) const noexcept
     {
         for ( auto x{ topLeft.getX() };  x < mySize;  ++x )
         {

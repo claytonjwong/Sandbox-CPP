@@ -19,15 +19,21 @@ namespace BitmapGraphics
     {
     public:
         
-        SquarePen ( size_t size, Color color );
+        SquarePen ( const std::string& name, size_t size, Color color );
         
-        virtual void drawPoint ( const HCanvas& canvas, const VG::Point& topLeftPoint ) const override;
-    
+        virtual const std::string& getName ( ) const noexcept override;
+        
+        virtual size_t getSize ( ) const noexcept override;
+        
+        virtual Color getColor ( ) const noexcept override;
+        
+        virtual void drawPoint ( const HCanvas& canvas, const VG::Point& topLeftPoint ) const noexcept override;
+        
     private:
         
+        std::string myName;
         size_t mySize;
         Color myColor;
-        
     };
     
 } // namespace BitmapGraphics

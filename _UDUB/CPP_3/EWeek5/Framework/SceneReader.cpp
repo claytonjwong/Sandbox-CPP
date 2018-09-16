@@ -8,23 +8,16 @@
 
 #include "SceneReader.hpp"
 #include "VectorGraphicStreamer.hpp"
+#include "Conversion.hpp"
 #include <string>
 #include <sstream>
 
 using namespace std;
+using namespace Utility;
 
 namespace Framework
 {
     
-    
-    int toInt ( const string& str )
-    {
-        int value{ 0 };
-        stringstream stream{ str };
-        stream >> value;
-        return value;
-    }
-
     
     Scene SceneReader::readScene ( const Xml::Element& sceneRoot )
     {

@@ -103,6 +103,16 @@ namespace Xml
         
         vectorGraphicRoot->SetAttribute(  "closed", ( vectorGraphic.isClosed() ? "true" : "false" )  );
         
+        auto stroke = vectorGraphic.getStroke();
+        if ( stroke )
+        {
+            auto strokeRoot = element->createXMLNode( "Stroke" );
+            strokeRoot->SetAttribute( "tip", stroke->getName().c_str() );
+            strokeRoot->SetAttribute( "size", static_cast< int >( stroke->getSize() ) );
+            strokeRoot->SetAttribute( "color", stroke->getColor().toString().c_str() );
+            vectorGraphicRoot->InsertEndChild( strokeRoot );
+        }
+        
         for (  int index{ 0 }, N{  static_cast<int>( vectorGraphic.getPointCount() )  };  index < N;  ++index  )
         {
             auto point = vectorGraphic.getPoint( index );
@@ -180,7 +190,7 @@ namespace Xml
     {
         auto result = myDocument.Parse( xml.c_str() );
         
-        myRoot = myDocument.RootElement(); // TODO: double check if I want to update myRoot here or not
+        myRoot = myDocument.RootElement();
         
         return result;
     }
@@ -196,7 +206,7 @@ namespace Xml
     {
         auto result = myDocument.InsertEndChild( node );
         
-        myRoot = myDocument.RootElement(); // TODO: double check if I want to update myRoot here or not
+        myRoot = myDocument.RootElement();
         
         return result;
     }

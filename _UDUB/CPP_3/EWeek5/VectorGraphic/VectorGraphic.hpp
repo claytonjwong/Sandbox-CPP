@@ -9,35 +9,21 @@
 #pragma once
 
 #include "Point.hpp"
+#include "IStroke.hpp"
 #include <vector>
 #include <memory>
 
-/*
- TEST(removePoint, VectorGraphic)
- {
- VG::VectorGraphic vg;
- vg.addPoint(VG::Point{1, 1});
- vg.addPoint(VG::Point{2, 2});
- vg.removePoint(VG::Point{1, 1});
- 
- CHECK_EQUAL(1, vg.getPointCount());
- CHECK_EQUAL(VG::Point(2, 2), vg.getPoint(0));
- }
- */
 
 namespace VG {
 
     class VectorGraphic;
-    using HVectorGraphic = std::shared_ptr<VectorGraphic>;
-    using Path = std::vector<Point>;
+    using HVectorGraphic = std::shared_ptr< VectorGraphic >;
+    using Path = std::vector< Point >;
     using PathIterator = Path::const_iterator;
+    
 
     class VectorGraphic {
     public:
-    
-        friend bool operator== ( const VectorGraphic& lhs, const VectorGraphic& rhs );
-        friend bool operator!= ( const VectorGraphic& lhs, const VectorGraphic& rhs );
-
     
         VectorGraphic();
         ~VectorGraphic() = default;
@@ -50,6 +36,9 @@ namespace VG {
 
         Point getPoint ( int index ) const;
         size_t getPointCount() const noexcept;
+        
+        BitmapGraphics::HStroke getStroke ( ) const noexcept;
+        void setStroke ( BitmapGraphics::HStroke stroke ) noexcept;
         
         void addPoint ( const Point& point );
         void addPoint ( Point&& point );
@@ -69,11 +58,17 @@ namespace VG {
         PathIterator begin() const noexcept;
         PathIterator end() const noexcept;
 
+        friend bool operator== ( const VectorGraphic& lhs, const VectorGraphic& rhs );
+        friend bool operator!= ( const VectorGraphic& lhs, const VectorGraphic& rhs );
+        
     private:
     
         Path myPath;
         
         enum class ShapeStyle { Open, Close } myShapeStyle;
+        
+        BitmapGraphics::HStroke myStroke;
+        
     };
     
 } // namespace VG

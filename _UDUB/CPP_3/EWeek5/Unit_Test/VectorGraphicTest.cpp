@@ -4,6 +4,7 @@
 #include "VectorGraphicStreamer.hpp"
 #include "TestHarness.h"
 #include "Point.hpp"
+#include "Color.hpp"
 
 using namespace std;
 
@@ -160,7 +161,6 @@ TEST(fromXml, VectorGraphic)
 {
     stringstream sstr(VectorGraphicXml);
     
-    
     auto root = VG::VectorGraphicStreamer::getHandleFromStream( sstr );
     VG::VectorGraphic vg = VG::VectorGraphicStreamer::getVectorGraphicFromHandle( root );
     
@@ -170,6 +170,47 @@ TEST(fromXml, VectorGraphic)
     CHECK_EQUAL(10, vg.getPoint(2).getY());
 }
 
+const string VectorGraphicXmlWithStroke = R"(
+<VectorGraphic closed="true">
+    <Stroke tip="square" size="7" color="112233" />
+    <Point x="1" y="2"/>
+    <Point x="3" y="4">
+    </Point>
+    <Point x="5" y="6"/>
+    <Point x="7" y="8"/>
+</VectorGraphic>
+)";
+
+TEST(fromXmlWithStroke, VectorGraphic)
+{
+    stringstream stream{ VectorGraphicXmlWithStroke };
+    
+    auto root = VG::VectorGraphicStreamer::getHandleFromStream( stream );
+    VG::VectorGraphic vg = VG::VectorGraphicStreamer::getVectorGraphicFromHandle( root );
+    
+    CHECK_EQUAL(true, vg.isClosed());
+    
+    auto stroke = vg.getStroke();
+    auto pen = stroke->createPen();
+    
+    CHECK_EQUAL(  BitmapGraphics::Color( 0x11, 0x22, 0x33 ),  pen->getColor()  );
+    CHECK_EQUAL( 7, pen->getSize() );    
+    
+    CHECK_EQUAL(4, vg.getPointCount());
+    
+    CHECK_EQUAL(1, vg.getPoint(0).getX());
+    CHECK_EQUAL(2, vg.getPoint(0).getY());
+    
+    CHECK_EQUAL(3, vg.getPoint(1).getX());
+    CHECK_EQUAL(4, vg.getPoint(1).getY());
+
+    CHECK_EQUAL(5, vg.getPoint(2).getX());
+    CHECK_EQUAL(6, vg.getPoint(2).getY());
+
+    CHECK_EQUAL(7, vg.getPoint(3).getX());
+    CHECK_EQUAL(8, vg.getPoint(3).getY());
+
+}
 
 TEST(toXml, VectorGraphic)
 {

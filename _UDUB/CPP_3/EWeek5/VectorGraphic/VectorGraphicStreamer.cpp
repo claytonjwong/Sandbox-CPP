@@ -10,11 +10,16 @@
 #include "VectorGraphic.hpp"
 #include "XmlReader.hpp"
 #include "XmlWriter.hpp"
+#include "StrokeFactory.hpp"
+#include "Color.hpp"
+#include "Conversion.hpp"
 #include <fstream>
 #include <sstream>
 #include <iostream>
 
 using namespace std;
+using namespace Utility;
+using namespace BitmapGraphics;
 
 namespace VG
 {
@@ -25,6 +30,7 @@ namespace VG
         auto ss = getStreamFromFile( filename );
         auto root = getHandleFromStream( ss );
         auto vg = getVectorGraphicFromHandle( root );
+    
         return vg;
     }
     
@@ -78,10 +84,19 @@ namespace VG
             for ( const auto& child: root->getChildElements() )
             {
                 auto name = child->getName();
-                if ( name == "Point" )
+                
+                if ( name == "Stroke" )
                 {
-                    auto x = stoi(  child->getAttribute( "x" )  );
-                    auto y = stoi(  child->getAttribute( "y" )  );
+                    auto name = child->getAttribute( "tip" );
+                    auto size = toInt(  child->getAttribute( "size" )  );
+                    auto color = Color{  child->getAttribute( "color" )  };
+                    
+                    vg.setStroke(  StrokeFactory::createStroke( name, size, color )  );
+                }
+                else if ( name == "Point" )
+                {
+                    auto x = toInt(  child->getAttribute( "x" )  );
+                    auto y = toInt(  child->getAttribute( "y" )  );
                     vg.addPoint(  Point{ x, y }  );
                 }
             }
