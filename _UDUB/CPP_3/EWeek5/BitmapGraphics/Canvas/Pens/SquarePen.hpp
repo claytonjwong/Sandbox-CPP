@@ -19,7 +19,15 @@ namespace BitmapGraphics
     {
     public:
         
+        SquarePen ( ) = delete;
+        
         SquarePen ( const std::string& name, size_t size, Color color );
+        
+        SquarePen ( const SquarePen& src ) = default;
+        SquarePen ( SquarePen&& src ) = default;
+        
+        SquarePen& operator= ( const SquarePen& src ) = default;
+        SquarePen& operator= ( SquarePen&& src ) = default;
         
         virtual const std::string& getName ( ) const noexcept override;
         

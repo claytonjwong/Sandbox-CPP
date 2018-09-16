@@ -40,11 +40,17 @@ namespace BitmapGraphics
     
     void SquarePen::drawPoint ( const HCanvas& canvas, const VG::Point& topLeft ) const noexcept
     {
+        auto canvasBegin = VG::Point{ 0, 0 }, canvasEnd = VG::Point{ canvas->getWidth(), canvas->getHeight() };
+        
         for ( auto x{ topLeft.getX() };  x < mySize + topLeft.getX();  ++x )
         {
             for ( auto y{ topLeft.getY() };  y < mySize + topLeft.getY();  ++y )
             {
-                canvas->setPixelColor(  VG::Point{ x, y }, myColor  );
+                auto point = VG::Point{ x, y };
+                if (  point.isInBounds( canvasBegin, canvasEnd )  )
+                {
+                    canvas->setPixelColor( point , myColor  );
+                }
             }
         }
     }

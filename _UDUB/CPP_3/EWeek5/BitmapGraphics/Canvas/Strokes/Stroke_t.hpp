@@ -15,7 +15,15 @@ namespace BitmapGraphics
     {
     public:
         
+        Stroke_t ( ) = delete;
+        
         Stroke_t ( const std::string& name, const size_t size, const Color& color );
+        
+        Stroke_t ( const Stroke_t& src ) = default;
+        Stroke_t ( Stroke_t&& src ) = default;
+        
+        Stroke_t& operator= ( const Stroke_t& rhs ) = default;
+        Stroke_t& operator= ( Stroke_t&& rhs ) = default;
         
         virtual const std::string& getName ( ) const noexcept override;
         

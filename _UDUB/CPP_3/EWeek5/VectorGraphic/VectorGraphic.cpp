@@ -153,6 +153,38 @@ namespace VG
     }
     
     
+    void VectorGraphic::Draw ( BitmapGraphics::HCanvas canvas, const Point& offset ) const
+    {
+        if ( myPath.empty() )
+        {
+            return;
+        }
+        
+        auto pen = myStroke->createPen();
+        
+        auto currPoint = myPath.begin(), nextPoint = next( currPoint );
+        do
+        {
+            Point absoluteCurr{ currPoint->getX() + offset.getX(), currPoint->getY() + offset.getY() };
+            Point absoluteNext{ nextPoint->getX() + offset.getX(), nextPoint->getY() + offset.getY() };
+            
+            Utility::LineIterator lineIt{ absoluteCurr, absoluteNext };
+            
+            pen->drawPoint( canvas, lineIt.getCurrentPoint() );
+            while ( ! lineIt.isEnd() )
+            {
+                lineIt.nextPoint();
+                pen->drawPoint( canvas, lineIt.getCurrentPoint() );
+            }
+            
+            currPoint = nextPoint;
+            nextPoint = next( nextPoint );
+            
+        } while ( nextPoint != myPath.end() );
+        
+    }
+    
+    
     bool operator== ( const VectorGraphic& lhs, const VectorGraphic& rhs )
     {
         return ( lhs.myPath == rhs.myPath )

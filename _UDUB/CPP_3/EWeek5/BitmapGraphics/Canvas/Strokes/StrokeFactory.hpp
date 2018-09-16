@@ -19,6 +19,13 @@ namespace BitmapGraphics
     public:
         
         static HStroke createStroke ( const std::string& name, size_t size, Color color );
+        
+        StrokeFactory ( ) = delete;
+        ~StrokeFactory ( ) = delete;
+        StrokeFactory ( const StrokeFactory& src ) = delete;
+        StrokeFactory ( StrokeFactory&& src ) = delete;
+        StrokeFactory& operator= ( const StrokeFactory& rhs ) = delete;
+        StrokeFactory& operator= ( StrokeFactory&& rhs ) = delete;
     
     };
     
