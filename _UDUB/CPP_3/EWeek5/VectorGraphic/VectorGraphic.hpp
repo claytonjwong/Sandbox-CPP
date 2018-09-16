@@ -10,6 +10,8 @@
 
 #include "Point.hpp"
 #include "IStroke.hpp"
+#include "ICanvas.hpp"
+#include "LineIterator.hpp"
 #include <vector>
 #include <memory>
 
@@ -57,6 +59,46 @@ namespace VG {
         
         PathIterator begin() const noexcept;
         PathIterator end() const noexcept;
+        
+        void Draw ( BitmapGraphics::HCanvas canvas, const Point& offset )
+        {
+            if ( myPath.empty() )
+            {
+                return;
+            }
+            
+            auto pen = myStroke->createPen();
+            if ( myPath.size() == 1 )
+            {
+                const auto& relative = *myPath.begin();
+                auto absX = relative.getX() + offset.getX();
+                auto absY = relative.getY() + offset.getY();
+                Point absolute{ absX, absY };
+                pen->drawPoint( canvas, absolute );
+            }
+            else
+            {
+                auto currPoint = myPath.begin(), nextPoint = next( currPoint );
+                
+                do
+                {
+                    Point absoluteCurr{ currPoint->getX() + offset.getX(), currPoint->getY() + offset.getY() };
+                    Point absoluteNext{ nextPoint->getX() + offset.getX(), nextPoint->getY() + offset.getY() };
+                    
+                    Utility::LineIterator lineIt{ absoluteCurr, absoluteNext };
+                    
+                    pen->drawPoint( canvas, lineIt.getCurrentPoint() );
+                    while ( ! lineIt.isEnd() )
+                    {
+                        lineIt.nextPoint();
+                        pen->drawPoint( canvas, lineIt.getCurrentPoint() );
+                    }
+                    
+                    currPoint = nextPoint;
+                    nextPoint = next( nextPoint );
+                } while ( nextPoint != myPath.end() );
+            }
+        }
 
         friend bool operator== ( const VectorGraphic& lhs, const VectorGraphic& rhs );
         friend bool operator!= ( const VectorGraphic& lhs, const VectorGraphic& rhs );

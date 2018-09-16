@@ -2,6 +2,8 @@
 #include "Color.hpp"
 #include "Point.hpp"
 #include "BasicCanvas.hpp"
+#include "VectorGraphic.hpp"
+#include "StrokeFactory.hpp"
 
 using namespace BitmapGraphics;
 
@@ -80,8 +82,8 @@ TEST(getPixelOutsideDimensions, BasicCanvas)
 
 TEST(IBitmapIterator, BasicCanvas)
 {
-    Color backColor(1, 2, 3);
-    BasicCanvas canvas(8, 9, backColor);
+    Color backColor{ 1, 2, 3 };
+    BasicCanvas canvas{ 8, 9, backColor };
 
     HBitmapIterator bitmapIterator = canvas.createBitmapIterator();
 
@@ -107,4 +109,52 @@ TEST(IBitmapIterator, BasicCanvas)
 
     CHECK_EQUAL(9, rows);
 }
+
+TEST( VectorGraphicStrokes, BasicCanvas )
+{
+    Color backColor{ 255, 255, 255 }, foreColor{ 0, 0, 0 };
+    
+    auto canvas = std::make_shared< BasicCanvas >( 10, 10, backColor );
+    
+    VG::VectorGraphic vg;
+    vg.setStroke(  StrokeFactory::createStroke( "square", 1, foreColor )  );
+    vg.addPoint( VG::Point{ 0, 0 } );
+    vg.addPoint( VG::Point{ 0, 9 } );
+    vg.Draw( canvas, VG::Point{ 0, 0 } );
+    
+    HBitmapIterator bitmapIterator = canvas->createBitmapIterator();
+    CHECK_EQUAL(10, bitmapIterator->getBitmapWidth());
+    CHECK_EQUAL(10, bitmapIterator->getBitmapHeight());
+    
+    int row = 0;
+    while (!bitmapIterator->isEndOfImage())
+    {
+        int column = 0;
+        while (!bitmapIterator->isEndOfScanLine())
+        {
+            auto color = bitmapIterator->getColor();
+            if ( column == 0)
+            {
+                CHECK_EQUAL(foreColor, color);
+            }
+            else
+            {
+                CHECK_EQUAL(backColor, color);
+            }
+            
+            bitmapIterator->nextPixel();
+            column++;
+        }
+        
+        CHECK_EQUAL(10, column);
+        
+        bitmapIterator->nextScanLine();
+        row++;
+    }
+    
+    CHECK_EQUAL(10, row);
+}
+
+
+
 
