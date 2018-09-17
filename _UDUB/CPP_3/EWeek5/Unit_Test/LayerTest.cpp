@@ -1,6 +1,8 @@
 #include "Layer.hpp"
 #include "VectorGraphic.hpp"
 #include "TestHarness.h"
+#include "BasicCanvas.hpp"
+#include "StrokeFactory.hpp"
 
 TEST(pushBack, Layer)
 {
@@ -48,3 +50,41 @@ TEST(remove, Layer)
     CHECK_EQUAL(expectedSize, numberOfGraphics);
 }
 
+
+TEST( drawToCanvas, Layer )
+{
+    BitmapGraphics::Color backColor{ 255, 255, 255 }, foreColor{ 0, 0, 0 };
+    
+    auto singlePoint1 = std::make_shared< VG::VectorGraphic >();
+    singlePoint1->addPoint( VG::Point{ 0, 0 } );
+    singlePoint1->setStroke(  BitmapGraphics::StrokeFactory::createStroke( "square", 1, foreColor )  );
+
+    auto singlePoint2 = std::make_shared< VG::VectorGraphic >();
+    singlePoint2->addPoint( VG::Point{ 0, 0 } );
+    singlePoint2->setStroke(  BitmapGraphics::StrokeFactory::createStroke( "square", 1, foreColor )  );
+    
+    auto singlePoint3 = std::make_shared< VG::VectorGraphic >();
+    singlePoint3->addPoint( VG::Point{ 0, 0 } );
+    singlePoint3->setStroke(  BitmapGraphics::StrokeFactory::createStroke( "square", 1, foreColor )  );
+    
+    Framework::Layer layer{ "Mountains" };
+    layer.pushBack( Framework::PlacedGraphic(  VG::Point(1, 0), singlePoint1 )  );
+    layer.pushBack( Framework::PlacedGraphic(  VG::Point(2, 1), singlePoint2 )  );
+    layer.pushBack( Framework::PlacedGraphic(  VG::Point(4, 3), singlePoint3 )  );
+    
+    auto canvas = std::make_shared< BitmapGraphics::BasicCanvas >( 5, 5, backColor );
+    layer.Draw( canvas );
+    
+    int numberOfGraphics{ 0 };
+    for ( const auto& placedGraphic: layer )
+    {
+        ++numberOfGraphics;
+    }
+    CHECK_EQUAL(  canvas->getPixelColor( VG::Point(1, 0)  ), foreColor  );
+    CHECK_EQUAL(  canvas->getPixelColor( VG::Point(2, 1)  ), foreColor  );
+    CHECK_EQUAL(  canvas->getPixelColor( VG::Point(4, 3)  ), foreColor  );
+    
+    
+    constexpr int expectedSize{ 3 };
+    CHECK_EQUAL(expectedSize, numberOfGraphics);
+}

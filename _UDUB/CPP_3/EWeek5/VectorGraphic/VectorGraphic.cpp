@@ -162,7 +162,7 @@ namespace VG
         
         auto pen = myStroke->createPen();
         
-        auto currPoint = myPath.begin(), nextPoint = next( currPoint );
+        auto currPoint = myPath.begin(), nextPoint = myPath.size() > 1 ? next( currPoint ) : currPoint;
         do
         {
             Point absoluteCurr{ currPoint->getX() + offset.getX(), currPoint->getY() + offset.getY() };

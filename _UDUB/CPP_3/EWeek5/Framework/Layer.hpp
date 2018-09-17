@@ -40,10 +40,12 @@ namespace Framework
         template <typename Container>
         void pushBack ( Container&& placedGraphic ) noexcept
         {
-            myGraphics.emplace_back( std::forward<Container>( placedGraphic ) );
+            myGraphics.emplace_back(  std::forward<Container>( placedGraphic )  );
         }
         
-        void remove(const PlacedGraphic& placedGraphic) noexcept;
+        void remove ( const PlacedGraphic& placedGraphic ) noexcept;
+        
+        void Draw ( const BitmapGraphics::HCanvas& canvas ) const;
         
         bool operator== ( const Layer& rhs ) const noexcept;
         bool operator!= ( const Layer& rhs ) const noexcept;

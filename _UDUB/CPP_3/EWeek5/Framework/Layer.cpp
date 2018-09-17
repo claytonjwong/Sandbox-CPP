@@ -41,7 +41,16 @@ namespace Framework
         myGraphics.remove( placedGraphic );
     }
     
-
+    
+    void Layer::Draw ( const BitmapGraphics::HCanvas& canvas ) const
+    {
+        for ( const auto& graphic: myGraphics )
+        {
+            graphic.Draw( canvas );
+        }
+    }
+    
+    
     bool Layer::operator== ( const Layer& rhs ) const noexcept
     {
         return ( myAlias == rhs.myAlias )
