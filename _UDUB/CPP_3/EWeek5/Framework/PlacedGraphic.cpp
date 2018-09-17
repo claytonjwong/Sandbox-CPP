@@ -76,6 +76,12 @@ namespace Framework
     }
     
     
+    void PlacedGraphic::Draw ( const BitmapGraphics::HCanvas& canvas ) const
+    {
+        myGraphic->Draw( canvas, myPlacementPoint );
+    }
+    
+    
     bool operator== ( const PlacedGraphic& lhs, const PlacedGraphic& rhs )
     {
         return ( lhs.getPlacementPoint() == rhs.getPlacementPoint() )

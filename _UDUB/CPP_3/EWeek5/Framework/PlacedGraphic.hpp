@@ -10,6 +10,7 @@
 
 #include "Point.hpp"
 #include "VectorGraphic.hpp"
+#include "ICanvas.hpp"
 
 namespace Framework
 {
@@ -35,6 +36,8 @@ namespace Framework
         void setPlacementPoint ( VG::Point&& point ) noexcept;
         void setGraphic ( const VG::HVectorGraphic& graphic ) noexcept;
         void setGraphic ( VG::HVectorGraphic&& graphic ) noexcept;
+        
+        void Draw ( const BitmapGraphics::HCanvas& canvas ) const;
         
     private:
         
