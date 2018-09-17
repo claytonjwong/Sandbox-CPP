@@ -153,7 +153,7 @@ namespace VG
     }
     
     
-    void VectorGraphic::Draw ( BitmapGraphics::HCanvas canvas, const Point& offset ) const
+    void VectorGraphic::draw ( BitmapGraphics::HCanvas canvas, const Point& offset ) const
     {
         if ( myPath.empty() )
         {

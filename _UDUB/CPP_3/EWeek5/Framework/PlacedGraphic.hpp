@@ -37,7 +37,7 @@ namespace Framework
         void setGraphic ( const VG::HVectorGraphic& graphic ) noexcept;
         void setGraphic ( VG::HVectorGraphic&& graphic ) noexcept;
         
-        void Draw ( const BitmapGraphics::HCanvas& canvas ) const;
+        void draw ( const BitmapGraphics::HCanvas& canvas ) const;
         
     private:
         

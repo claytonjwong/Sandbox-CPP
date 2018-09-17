@@ -22,7 +22,6 @@ namespace BitmapGraphics
     namespace StrokeName
     {
         static const std::string SQUARE = "square";
-        static const std::string SLASH = "slash";
     }
     
     class IStroke

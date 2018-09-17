@@ -76,9 +76,9 @@ namespace Framework
     }
     
     
-    void PlacedGraphic::Draw ( const BitmapGraphics::HCanvas& canvas ) const
+    void PlacedGraphic::draw ( const BitmapGraphics::HCanvas& canvas ) const
     {
-        myGraphic->Draw( canvas, myPlacementPoint );
+        myGraphic->draw( canvas, myPlacementPoint );
     }
     
     

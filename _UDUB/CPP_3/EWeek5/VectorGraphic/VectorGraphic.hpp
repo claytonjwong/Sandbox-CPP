@@ -60,7 +60,7 @@ namespace VG {
         PathIterator begin() const noexcept;
         PathIterator end() const noexcept;
         
-        void Draw ( BitmapGraphics::HCanvas canvas, const Point& offset ) const;
+        void draw ( BitmapGraphics::HCanvas canvas, const Point& offset ) const;
 
         friend bool operator== ( const VectorGraphic& lhs, const VectorGraphic& rhs );
         friend bool operator!= ( const VectorGraphic& lhs, const VectorGraphic& rhs );

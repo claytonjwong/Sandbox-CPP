@@ -44,7 +44,7 @@ namespace Framework
         void pushBack ( Layer&& layer ) noexcept;
         void remove ( const Layer& target ) noexcept;
         
-        void Draw ( const BitmapGraphics::HCanvas& canvas ) const;
+        void draw ( const BitmapGraphics::HCanvas& canvas ) const;
         
     private:
     

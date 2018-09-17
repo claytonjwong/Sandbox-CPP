@@ -73,7 +73,7 @@ TEST( drawToCanvas, Layer )
     layer.pushBack( Framework::PlacedGraphic(  VG::Point(4, 3), singlePoint3 )  );
     
     auto canvas = std::make_shared< BitmapGraphics::BasicCanvas >( 5, 5, backColor );
-    layer.Draw( canvas );
+    layer.draw( canvas );
     
     int numberOfGraphics{ 0 };
     for ( const auto& placedGraphic: layer )

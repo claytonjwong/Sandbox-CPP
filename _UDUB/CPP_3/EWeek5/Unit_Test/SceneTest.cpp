@@ -137,7 +137,7 @@ TEST( drawSceneToCanvas, Scene )
     
     auto canvas = std::make_shared< BitmapGraphics::BasicCanvas >( 10, 10, backColor );
 
-    scene.Draw( canvas );
+    scene.draw( canvas );
     
     CHECK_EQUAL(  canvas->getPixelColor( VG::Point(0, 0)  ), foreColor1  );
     CHECK_EQUAL(  canvas->getPixelColor( VG::Point(0, 1)  ), foreColor2  );

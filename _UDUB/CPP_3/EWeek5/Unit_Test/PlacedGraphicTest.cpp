@@ -81,7 +81,7 @@ TEST( drawToCanvasNoOffset, PlacedGraphic )
     
     VG::Point offset{ 0, 0 };
     Framework::PlacedGraphic placedGraphic{ offset, vg };
-    placedGraphic.Draw( canvas );
+    placedGraphic.draw( canvas );
     
     BitmapGraphics::HBitmapIterator bitmapIterator = canvas->createBitmapIterator();
     CHECK_EQUAL(10, bitmapIterator->getBitmapWidth());
@@ -132,7 +132,7 @@ TEST( drawToCanvasWithOffset, PlacedGraphic )
     
     VG::Point offset{ 1, 1 };
     Framework::PlacedGraphic placedGraphic{ offset, vg };
-    placedGraphic.Draw( canvas );
+    placedGraphic.draw( canvas );
     
     BitmapGraphics::HBitmapIterator bitmapIterator = canvas->createBitmapIterator();
     CHECK_EQUAL(10, bitmapIterator->getBitmapWidth());

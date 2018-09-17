@@ -42,11 +42,11 @@ namespace Framework
     }
     
     
-    void Layer::Draw ( const BitmapGraphics::HCanvas& canvas ) const
+    void Layer::draw ( const BitmapGraphics::HCanvas& canvas ) const
     {
         for ( const auto& graphic: myGraphics )
         {
-            graphic.Draw( canvas );
+            graphic.draw( canvas );
         }
     }
     

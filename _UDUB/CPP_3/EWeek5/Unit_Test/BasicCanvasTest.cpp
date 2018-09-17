@@ -124,7 +124,7 @@ TEST( VectorGraphicStrokesManuallyClosedShape, BasicCanvas )
     vg.addPoint( VG::Point{ 9, 0 } );
     vg.addPoint( VG::Point{ 0, 0 } ); // manually close shape by creating the last point equal to the first point
     vg.openShape();
-    vg.Draw( canvas, VG::Point{ 0, 0 } );
+    vg.draw( canvas, VG::Point{ 0, 0 } );
     
     HBitmapIterator bitmapIterator = canvas->createBitmapIterator();
     CHECK_EQUAL(10, bitmapIterator->getBitmapWidth());
@@ -173,7 +173,7 @@ TEST( VectorGraphicStrokesAutomaticallyClosedShape, BasicCanvas )
     vg.addPoint( VG::Point{ 9, 9 } );
     vg.addPoint( VG::Point{ 9, 0 } );
     vg.closeShape(); // automatically close shape, no need to add last point equal to first point
-    vg.Draw( canvas, VG::Point{0,0} );
+    vg.draw( canvas, VG::Point{0,0} );
     
     HBitmapIterator bitmapIterator = canvas->createBitmapIterator();
     CHECK_EQUAL(10, bitmapIterator->getBitmapWidth());
