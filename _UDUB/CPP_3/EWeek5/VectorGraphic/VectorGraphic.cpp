@@ -8,6 +8,8 @@
 
 #include "VectorGraphic.hpp"
 #include "Point.hpp"
+#include "Line.hpp"
+#include "LineFacade.hpp"
 #include <exception>
 #include <list>
 
@@ -165,17 +167,10 @@ namespace VG
         auto currPoint = myPath.begin(), nextPoint = myPath.size() > 1 ? next( currPoint ) : currPoint;
         do
         {
-            Point absoluteCurr{ currPoint->getX() + offset.getX(), currPoint->getY() + offset.getY() };
-            Point absoluteNext{ nextPoint->getX() + offset.getX(), nextPoint->getY() + offset.getY() };
+            Point lineBegin{ currPoint->getX() + offset.getX(), currPoint->getY() + offset.getY() };
+            Point lineEnd{ nextPoint->getX() + offset.getX(), nextPoint->getY() + offset.getY() };
             
-            Utility::LineIterator lineIt{ absoluteCurr, absoluteNext };
-            
-            pen->drawPoint( canvas, lineIt.getCurrentPoint() );
-            while ( ! lineIt.isEnd() )
-            {
-                lineIt.nextPoint();
-                pen->drawPoint( canvas, lineIt.getCurrentPoint() );
-            }
+            Utility::LineFacade::drawLine( canvas, pen, lineBegin, lineEnd );
             
             currPoint = nextPoint;
             nextPoint = next( nextPoint );
@@ -187,14 +182,7 @@ namespace VG
             Point lastPoint = Point{ currPoint->getX() + offset.getX(), currPoint->getY() + offset.getY()  };
             Point firstPoint = Point{  myPath.begin()->getX() + offset.getX(),  myPath.begin()->getY() + offset.getY()  };
             
-            Utility::LineIterator lineIt{ lastPoint, firstPoint };
-            
-            pen->drawPoint( canvas, lineIt.getCurrentPoint() );
-            while ( ! lineIt.isEnd() )
-            {
-                lineIt.nextPoint();
-                pen->drawPoint( canvas, lineIt.getCurrentPoint() );
-            }
+            Utility::LineFacade::drawLine( canvas, pen, lastPoint, firstPoint );
         }
     }
     

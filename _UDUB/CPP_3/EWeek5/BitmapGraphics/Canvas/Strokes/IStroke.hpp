@@ -17,8 +17,6 @@ namespace BitmapGraphics
     class IStroke;
     using HStroke = std::shared_ptr< BitmapGraphics::IStroke >;
     
-    using HPen = std::shared_ptr< IPen >;
-    
     namespace StrokeName
     {
         static const std::string SQUARE = "square";

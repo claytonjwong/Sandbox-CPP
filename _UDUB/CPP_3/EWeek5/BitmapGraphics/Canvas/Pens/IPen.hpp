@@ -13,6 +13,9 @@
 
 namespace BitmapGraphics
 {
+    class IPen;
+    using HPen = std::shared_ptr< IPen >;
+    
     class IPen
     {
     public:
