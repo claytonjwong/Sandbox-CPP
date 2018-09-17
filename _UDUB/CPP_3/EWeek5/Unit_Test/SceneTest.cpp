@@ -1,4 +1,7 @@
+
 #include "Scene.hpp"
+#include "StrokeFactory.hpp"
+#include "BasicCanvas.hpp"
 #include "TestHarness.h"
 #include <algorithm>
 
@@ -95,3 +98,49 @@ TEST(remove2, Scene)
     CHECK(matcher.onlyMountainsSkyFound());
 }
 
+TEST( drawSceneToCanvas, Scene )
+{
+    BitmapGraphics::Color backColor{ 255, 255, 255 }, foreColor1{ 0, 0, 1 }, foreColor2{ 0, 1, 0}, foreColor3{ 0, 1, 1}, foreColor4 = { 1, 0, 0 };
+    
+    auto singlePoint1 = std::make_shared< VG::VectorGraphic >();
+    singlePoint1->addPoint( VG::Point{ 0, 0 } );
+    singlePoint1->setStroke(  BitmapGraphics::StrokeFactory::createStroke( "square", 1, foreColor1 )  );
+    
+    auto singlePoint2 = std::make_shared< VG::VectorGraphic >();
+    singlePoint2->addPoint( VG::Point{ 0, 0 } );
+    singlePoint2->setStroke(  BitmapGraphics::StrokeFactory::createStroke( "square", 1, foreColor2 )  );
+    
+    auto singlePoint3 = std::make_shared< VG::VectorGraphic >();
+    singlePoint3->addPoint( VG::Point{ 0, 0 } );
+    singlePoint3->setStroke(  BitmapGraphics::StrokeFactory::createStroke( "square", 1, foreColor3 )  );
+
+    auto singlePoint4 = std::make_shared< VG::VectorGraphic >();
+    singlePoint4->addPoint( VG::Point{ 0, 0 } );
+    singlePoint4->setStroke(  BitmapGraphics::StrokeFactory::createStroke( "square", 1, foreColor4 )  );
+
+    Framework::PlacedGraphic placedGraphic1{  VG::Point{ 0, 0 }, singlePoint1  };
+    Framework::PlacedGraphic placedGraphic2{  VG::Point{ 0, 1 }, singlePoint2  };
+    Framework::PlacedGraphic placedGraphic3{  VG::Point{ 1, 0 }, singlePoint3  };
+    Framework::PlacedGraphic placedGraphic4{  VG::Point{ 1, 1 }, singlePoint4  };
+    
+    Framework::Layer layer1{ "layer1" }, layer2{ "layer2" }, layer3{ "layer3" }, layer4{ "layer4" };
+    layer1.pushBack( placedGraphic1 );
+    layer2.pushBack( placedGraphic2 );
+    layer3.pushBack( placedGraphic3 );
+    layer4.pushBack( placedGraphic4 );
+    
+    Framework::Scene scene{ 2, 2 };
+    scene.pushBack( layer1 );
+    scene.pushBack( layer2 );
+    scene.pushBack( layer3 );
+    scene.pushBack( layer4 );
+    
+    auto canvas = std::make_shared< BitmapGraphics::BasicCanvas >( 10, 10, backColor );
+
+    scene.Draw( canvas );
+    
+    CHECK_EQUAL(  canvas->getPixelColor( VG::Point(0, 0)  ), foreColor1  );
+    CHECK_EQUAL(  canvas->getPixelColor( VG::Point(0, 1)  ), foreColor2  );
+    CHECK_EQUAL(  canvas->getPixelColor( VG::Point(1, 0)  ), foreColor3  );
+    CHECK_EQUAL(  canvas->getPixelColor( VG::Point(1, 1)  ), foreColor4  );
+}

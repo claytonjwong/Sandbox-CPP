@@ -73,4 +73,13 @@ namespace Framework
     }
     
     
+    void Scene::Draw ( const BitmapGraphics::HCanvas& canvas ) const
+    {
+        for ( const auto& layer: myLayers )
+        {
+            layer.Draw( canvas );
+        }
+    }
+    
+    
 } // namespace Framework
