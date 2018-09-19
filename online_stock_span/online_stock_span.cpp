@@ -44,29 +44,47 @@ The total time limit for this problem has been reduced by 75% for C++, and 50% f
 */
 
 #include <iostream>
+#include <set>
+#include <vector>
+
+using namespace std;
 
 class StockSpanner {
 public:
-    StockSpanner() {
+    StockSpanner ( ) : history{ }, prevPrice{ numeric_limits<int>::min() } {}
 
+    int next ( int nextPrice ) {
+        if ( prevPrice > nextPrice ) {
+            history.clear();
+        }
+        history.insert( nextPrice );
+        return distance(  history.begin(), history.upper_bound( nextPrice )  );
     }
-
-    int next(int price) {
-        return 0;
-    }
+private:
+    multiset<int> history;
+    int prevPrice;
 };
 
 /**
  * Your StockSpanner object will be instantiated and called as such:
  * StockSpanner obj = new StockSpanner();
+ * \
  * int param_1 = obj.next(price);
  */
 
 
 int main() {
 
+    StockSpanner ss;
 
+    vector<int> testData{ 100, 80, 60, 70, 60, 75, 85 }, result;
 
+    for_each( testData.begin(), testData.end(), [&]( const auto price ){
+        result.push_back( ss.next( price ) );
+    });
+
+    ostream_iterator<int> outIt{ cout, "," };
+    std::copy( result.begin(), result.end(), outIt );
 
     return 0;
 }
