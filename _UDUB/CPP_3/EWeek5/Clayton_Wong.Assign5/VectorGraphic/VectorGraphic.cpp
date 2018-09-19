@@ -179,7 +179,7 @@ namespace VG
         
         if ( myShapeStyle == ShapeStyle::Close ) // connect last point to the first point if the shape is closed
         {
-            Point lastPoint = Point{  currPoint->getX() + offset.getX(), currPoint->getY() + offset.getY()  };
+            Point lastPoint = Point{ currPoint->getX() + offset.getX(), currPoint->getY() + offset.getY()  };
             Point firstPoint = Point{  myPath.begin()->getX() + offset.getX(),  myPath.begin()->getY() + offset.getY()  };
             
             Utility::LineFacade::drawLine( canvas, pen, lastPoint, firstPoint );

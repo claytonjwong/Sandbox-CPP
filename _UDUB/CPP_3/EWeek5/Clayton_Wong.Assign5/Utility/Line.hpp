@@ -19,9 +19,9 @@ namespace Utility
     public:
         
         Line ( const BitmapGraphics::HCanvas& canvas, const BitmapGraphics::HPen& pen, LineIterator& iterator );
-        ~Line ( ) = default;
         
         Line ( ) = delete;
+        ~Line ( ) = default;
         Line ( const Line& src ) = delete;
         Line ( Line&& src ) = delete;
         Line& operator= ( const Line& rhs ) = delete;
