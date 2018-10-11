@@ -13,6 +13,7 @@
 
 using namespace std;
 
+/*
 using VS = vector< string >;
 using Map = unordered_map< char,int >;
 class Solution {
@@ -50,11 +51,43 @@ public:
         return ans;
     }
 };
+*/
+
+using VS = vector< string >;
+using VI = vector< int >;
+size_t start = 'a', N = 'z'+1;
+class Solution {
+    VI generate( const string& str ){
+        VI cur( N );
+        for( const auto c: str )
+            ++cur[ c ];
+        return cur;
+    }
+public:
+    VS wordSubsets( VS& A, VS& B, VI needle=VI( N ), VS ans={} ){
+        for( const auto& b: B ){
+            auto cur{ generate( b )};
+            for( auto i{ start };  i != N;  ++i )
+                needle[ i ] = max( needle[ i ], cur[ i ] );
+        }
+        for( const auto& a: A ){
+            auto haystack{ generate( a )};
+            auto found{ true };
+            for( auto i{ start };  i != N;  ++i ) if( haystack[ i ] < needle[ i ] ){
+                found = false;
+                break;
+            }
+            if( found ) ans.push_back( a );
+        }
+        return ans;
+    }
+};
+
 
 int main(int argc, const char * argv[]) {
     
     Solution s;
-    VS A{ "amazon","apple","facebook","google","leetcode" }, B{ "ec","oc","ceo" };
+    VS A{ "amazon","apple","facebook","google","leetcode" }, B{ "e","oo" };
     auto result = s.wordSubsets( A, B );
 
     return 0;
