@@ -18,6 +18,7 @@
 
 using namespace std;
 
+/*
 class Solution {
 public:
     void reverseWords(string &str) {
@@ -30,6 +31,19 @@ public:
             s.pop();
         }
         str.pop_back(); // remove trailing whitespace
+    }
+};
+*/
+
+class Solution {
+public:
+    void reverseWords(string &A) {
+        istringstream stream{ A };
+        A.clear();
+        copy( istream_iterator<string>( A ), istream_iterator<string>(), []( const string& word ){
+            cout << word << endl;
+        });
+        return A;
     }
 };
 
