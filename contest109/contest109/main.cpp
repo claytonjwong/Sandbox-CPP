@@ -136,18 +136,19 @@ public:
 */
 
 /*
+using VL = vector< long >;
 class Solution {
     static const int MOD = 1000000007;
-    vector<vector<int>> moves{
+    vector<VL> hops{
         { 4, 6 },  { 6, 8 },  { 7, 9 },  { 4, 8 },  { 0, 3, 9 },  { },  { 0, 1, 7 },  { 2, 6 },  { 1, 3 },  { 2, 4 }
     };
 public:
     int knightDialer( int N ){
-        vector<long> cur( 10, 1 );
-        for(  vector<long> next( 10, 0 );  --N > 0;  next=vector<long>( 10, 0 )  ){
+        VL cur( 10, 1 );
+        for(  VL next( 10, 0 );  --N > 0;  next=VL( 10, 0 )  ){
             for( int i=0;  i <= 9;  ++i )
-                for( const int move: moves[ i ] )
-                    next[ i ] += cur[ move ] % MOD;
+                for( auto hop: hops[ i ] )
+                    next[ i ] += cur[ hop ] % MOD;
             cur.swap( next );
         }
         return accumulate( cur.begin(), cur.end(), 0L ) % MOD;
@@ -156,16 +157,42 @@ public:
 */
 
 
+/*
+using VL = vector< long >;
 class Solution {
     static const int MOD = 1000000007;
-    vector<vector<int>> moves{ {4,6}, {6,8}, {7,9}, {4,8}, {0,3,9}, {}, {0,1,7}, {2,6}, {1,3}, {2,4} };
+    vector<VL> hops{ {4,6}, {6,8}, {7,9}, {4,8}, {0,3,9}, {}, {0,1,7}, {2,6}, {1,3}, {2,4} };
 public:
-    int knightDialer( int N, int ans=10 ){
-        for(  vector<long> cur( 10, 1 ), next( 10, 0 );  --N > 0;  cur.swap( next ), next=vector<long>( 10, 0 ), ans = accumulate( cur.begin(), cur.end(), 0L ) % MOD  )
-            for( int i=0;  i <= 9;  ++i )
-                for( const int move: moves[ i ] )
-                    next[ i ] += cur[ move ] % MOD;
-        return ans;
+    int knightDialer( int N, VL cur=VL( 10, 1 ) ){
+        for(  VL next( 10, 0 );  --N > 0;  cur.swap( next ), next=VL( 10, 0 )  )
+            for( int i=0;  i < 10;  ++i )
+                for( auto hop: hops[ i ] )
+                    next[ i ] += cur[ hop ] % MOD;
+        return accumulate( cur.begin(), cur.end(), 0L ) % MOD;
+    }
+};
+*/
+
+
+
+static const int MOD = 1000000007;
+using VI = vector< int >;
+using VVI = vector< VI >;
+VVI memo=VVI( 5001, VI(10,1L) );
+class Solution {
+    VVI hops{ {4,6}, {6,8}, {7,9}, {4,8}, {0,3,9}, {}, {0,1,7}, {2,6}, {1,3}, {2,4} };
+    long go( int N, int digit, long result = 0L ){
+        if( N-1 == 0 || memo[ N ][ digit ] > 1L )
+            return memo[ N ][ digit ];
+        for( auto hop: hops[ digit ] )
+            result += go( N-1, hop ) % MOD;
+        return memo[ N ][ digit ] = result % MOD;
+    }
+public:
+    int knightDialer( int N, long result=0L ){
+        for( int digit = 0;  digit < 10;  ++digit )
+            result += go( N, digit ) % MOD;
+        return static_cast<int>( result % MOD );
     }
 };
 
@@ -178,7 +205,7 @@ int main(int argc, const char * argv[]) {
     */
     
     Solution s;
-    cout << s.knightDialer( 161 ) << endl;
+    cout << s.knightDialer( 5000 ) << endl;
     
     return 0;
 }
