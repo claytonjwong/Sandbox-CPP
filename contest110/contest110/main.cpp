@@ -51,17 +51,17 @@ using namespace std;
 //    }
 //};
 
-class Solution {
-public:
-    vector<string> reorderLogFiles( vector<string>& logs ){
-        auto pivot = stable_partition( logs.begin(), logs.end(), []( const auto& log ){ return isalpha( log.back() ); });
-        sort( logs.begin(), pivot, []( const auto& lhs, const auto& rhs ){
-            auto i = lhs.find_first_of(' '), j = rhs.find_first_of(' ');
-            return lhs.substr( i ) == rhs.substr( j ) ? lhs.substr( 0, i ) < rhs.substr( 0, j ) : lhs.substr( i ) < rhs.substr( j );
-        });
-        return logs;
-    }
-};
+//class Solution {
+//public:
+//    vector<string> reorderLogFiles( vector<string>& logs ){
+//        auto pivot = stable_partition( logs.begin(), logs.end(), []( const auto& log ){ return isalpha( log.back() ); });
+//        sort( logs.begin(), pivot, []( const auto& lhs, const auto& rhs ){
+//            auto i = lhs.find_first_of(' '), j = rhs.find_first_of(' ');
+//            return lhs.substr( i ) == rhs.substr( j ) ? lhs.substr( 0, i ) < rhs.substr( 0, j ) : lhs.substr( i ) < rhs.substr( j );
+//        });
+//        return logs;
+//    }
+//};
 
 
 /*
@@ -147,23 +147,36 @@ public:
 //    }
 //};
 
+struct TreeNode {
+    int val;
+    TreeNode *left, *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+class Solution {
+public:
+    int rangeSumBST( TreeNode* root, int L, int R ){
+        return root ? rangeSumBST( root->left, L, R)
+                    + rangeSumBST( root->right, L, R )
+                    + ( L <= root->val && root->val <= R ? root->val : 0 ) : 0;
+    }
+};
 
 int main(int argc, const char * argv[]) {
 
     Solution s;
 //    VS logs = {"a1 9 2 3 1","g1 act car","zo4 4 7","ab1 off key dog","a8 act zoo"};
-    vector<string> logs = { "a same same same", "c same same same", "b same same same" };
-    auto result = s.reorderLogFiles( logs );
+//    vector<string> logs = { "a same same same", "c same same same", "b same same same" };
+//    auto result = s.reorderLogFiles( logs );
     
 
-//    TreeNode* root = new TreeNode(10);
-//    root->left = new TreeNode(5);
-//    root->left->left = new TreeNode(3);
-//    root->left->right = new TreeNode(7);
-//    root->right = new TreeNode(15);
-//    root->right->right = new TreeNode(18);
-//
-//    auto result = s.rangeSumBST(root, 7, 15);
+    TreeNode* root = new TreeNode(10);
+    root->left = new TreeNode(5);
+    root->left->left = new TreeNode(3);
+    root->left->right = new TreeNode(7);
+    root->right = new TreeNode(15);
+    root->right->right = new TreeNode(18);
+
+    auto result = s.rangeSumBST(root, 7, 15);
     
     
     return 0;
