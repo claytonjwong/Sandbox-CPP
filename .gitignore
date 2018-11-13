@@ -17,3 +17,6 @@ UserInterfaceState.xcuserstate
 *.txt
 *cmake*
 *.idea
+*.zip
+.gitignore
+

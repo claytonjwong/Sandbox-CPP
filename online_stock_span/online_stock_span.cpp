@@ -3,43 +3,7 @@
 901. Online Stock Span
 
 Q: https://leetcode.com/problems/online-stock-span/description/
-A:
-
-Write a class StockSpanner which collects daily price quotes for some stock,
- and returns the span of that stock's price for the current day.
-
-The span of the stock's price today is defined as the maximum number of consecutive days
- (starting from today and going backwards) for which the price of the stock was less than or equal to today's price.
-
-For example, if the price of a stock over the next 7 days were [100, 80, 60, 70, 60, 75, 85],
- then the stock spans would be [1, 1, 1, 2, 1, 4, 6].
-
-
-
-Example 1:
-
-Input: ["StockSpanner","next","next","next","next","next","next","next"], [[],[100],[80],[60],[70],[60],[75],[85]]
-Output: [null,1,1,1,2,1,4,6]
-Explanation:
-First, S = StockSpanner() is initialized.  Then:
-S.next(100) is called and returns 1,
-S.next(80) is called and returns 1,
-S.next(60) is called and returns 1,
-S.next(70) is called and returns 2,
-S.next(60) is called and returns 1,
-S.next(75) is called and returns 4,
-S.next(85) is called and returns 6.
-
-Note that (for example) S.next(75) returned 4, because the last 4 prices
-(including today's price of 75) were less than or equal to today's price.
-
-
-Note:
-
-Calls to StockSpanner.next(int price) will have 1 <= price <= 10^5.
-There will be at most 10000 calls to StockSpanner.next per test case.
-There will be at most 150000 calls to StockSpanner.next across all test cases.
-The total time limit for this problem has been reduced by 75% for C++, and 50% for all other languages.
+A: https://leetcode.com/problems/online-stock-span/discuss/180323/Straightforward-C++
 
 */
 
@@ -49,20 +13,43 @@ The total time limit for this problem has been reduced by 75% for C++, and 50% f
 
 using namespace std;
 
-class StockSpanner {
+/*
+class StockSpanner{
+    struct Stock{
+        const int price;
+        int span;
+        Stock( const int price, const int span = 1 ): price{ price }, span{ span }{}
+    };
+    vector< Stock > history;
 public:
-    StockSpanner ( ) : history{ }, prevPrice{ numeric_limits<int>::min() } {}
-
-    int next ( int nextPrice ) {
-        if ( prevPrice > nextPrice ) {
-            history.clear();
+    int next( int price ){
+        if ( history.empty()  ||  price < history.back().price ){
+            history.emplace_back(  Stock{ price }  );
+        } else {
+            auto span{ 1 };
+            for (;  ! history.empty()  &&  price >= history.back().price;  history.pop_back() )
+                span += history.back().span;
+            history.emplace_back(  Stock{ price, span }  );
         }
-        history.insert( nextPrice );
-        return distance(  history.begin(), history.upper_bound( nextPrice )  );
+        return history.back().span;
     }
-private:
-    multiset<int> history;
-    int prevPrice;
+};
+*/
+
+class StockSpanner{
+    vector< pair<int,int> > history;
+public:
+    int next( int price ){
+        if ( history.empty()  ||  price < history.back().first ){
+            history.emplace_back(  make_pair( price, 1 )  );
+        } else {
+            auto span{ 1 };
+            for (;  ! history.empty()  &&  price >= history.back().first;  history.pop_back() )
+                span += history.back().second;
+            history.emplace_back(  make_pair( price, span )  );
+        }
+        return history.back().second;
+    }
 };
 
 /**
