@@ -51,7 +51,7 @@ else the character at the ```i```ndex is a non-letter, then append onto ```ans``
 class Solution {
 public:
     string reverseOnlyLetters( string A, vector<char> s={} ) {
-        copy_if( A.begin(), A.end(), back_inserter( s ),
+        copy_if( A.cbegin(), A.cend(), back_inserter( s ),
             []( const auto c ){ return isalpha( c ); });
         auto j=s.size();
         transform( A.begin(), A.end(), A.begin(),
@@ -77,7 +77,7 @@ public:
 class Solution {
 public:
     string reverseOnlyLetters( string A ) {
-        for( int N{ static_cast<int>(A.size()) }, i{ 0 }, j{ N-1 };  i < j; )
+        for( int N{ static_cast< int >( A.size() ) }, i{ 0 }, j{ N-1 };  i < j; )
             if( ! isalpha( A[i] ))
                 ++i;
             else if( ! isalpha( A[j] ))
@@ -89,11 +89,12 @@ public:
 };
 */
 
+/*
 class Solution {
 public:
     string reverseOnlyLetters( string A ) {
         if( ! A.empty() ){
-            for( auto i{ A.begin() }, j{ prev(A.end()) };  i < j;)
+            for( auto i{ A.begin() }, j{ prev( A.end() ) };  i < j;)
                 if( ! isalpha( *i ))
                     ++i;
                 else if( ! isalpha( *j ))
@@ -103,17 +104,51 @@ public:
         } return A;
     }
 };
+*/
+
+using VI = vector< int >;
+class Solution {
+public:
+    int maxSubarraySumCircular( VI& A ){
+    
+        auto maxValue{ *max_element( A.begin(), A.end() )};
+        if( maxValue < 0 ) return maxValue;
+        
+        int N{ static_cast< int >( A.size() )};
+        VI k( N ), p( N ), q( N );
+        
+        k[0] = max( 0, A[0] );
+        for( auto i{ 1 }, cur{ k[0] };  i < N;  k[i]=max( k[i-1], cur ), ++i )
+            cur = max( 0, cur + A[i] );
+        
+        p[0] = A[0];
+        for( auto i{ 1 }, cur{ A[i-1] };  i < N;  p[i]=max( p[i-1], cur ), ++i )
+            cur += A[i];
+        
+        q[N-1] = A[N-1];
+        for( auto j{ N-2 }, cur{ A[j+1] };  0 <= j;  q[j]=max( q[j+1], cur ), --j )
+            cur += A[j];
+        
+        auto u{ k.back() }, v{ 0 };
+        for( auto i{ 0 }, j{ i+2 };  j < N;  v=max( v,  ( p[i++] )  +  ( q[j++] )  ));
+        return max( u, v );
+    }
+};
+
 
 int main(int argc, const char * argv[]) {
-    
+    /*
     Solution s;
     
     
     cout << ("dc-ba" == s.reverseOnlyLetters("ab-cd") ) << endl;
     cout << ("j-Ih-gfE-dCba" == s.reverseOnlyLetters("a-bC-dEf-ghIj") ) << endl;
     cout << ("Qedo1ct-eeLg=ntse-T!" == s.reverseOnlyLetters("Test1ng-Leet=code-Q!")) << endl;
+    */
     
-    
+    Solution s;
+    VI A{3,-1,2,-1};
+    cout << s.maxSubarraySumCircular(A) << endl;
     
     return 0;
 }
