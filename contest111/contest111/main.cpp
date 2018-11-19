@@ -136,7 +136,7 @@ public:
 };
 */
 
-
+/*
 class Solution {
 public:
     int minDeletionSize(vector<string>& A ) {
@@ -152,6 +152,7 @@ public:
         );
     }
 };
+*/
 
 /*
 class Solution {
@@ -170,6 +171,20 @@ public:
     }
 };
 */
+
+// wrong answer
+//class Solution {
+//public:
+//    int minDeletionSize(vector<string>& A, int del=0 ) {
+//        for( int i = 0;  i < A[0].size();  ++i )
+//            if( is_sorted( A.cbegin(), A.cend(), [=]( const auto& above, const auto& below ){
+//                return above[ i ] < below[ i ];
+//            })){
+//                ++del;
+//            }
+//        return del;
+//    }
+//};
 
 /*
 class Solution {
@@ -233,6 +248,7 @@ int main(int argc, const char * argv[]) {
         "guzm"
     };
     cout << s.minDeletionSize( A ) << endl;
+    
     
     
     
