@@ -1,5 +1,5 @@
 /*
- * 
+ *
  * 941. Valid Mountain Array
  *
  * Q: https://leetcode.com/problems/valid-mountain-array/
