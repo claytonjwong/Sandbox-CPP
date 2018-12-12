@@ -14,6 +14,9 @@ A2: https://leetcode.com/problems/flip-equivalent-binary-trees/discuss/200496/Co
 Q3: https://leetcode.com/problems/reveal-cards-in-increasing-order/
 A3: https://leetcode.com/problems/reveal-cards-in-increasing-order/discuss/200489/Concise-C%2B%2B
 
+Q4: https://leetcode.com/problems/largest-component-size-by-common-factor/submissions/
+A4: https://leetcode.com/problems/largest-component-size-by-common-factor/discuss/204260/Concise-C%2B%2B
+
 */
 
 
@@ -157,6 +160,7 @@ public:
 };
 */
 
+/*
 #define L left
 #define R right
 using T = TreeNode * ;
@@ -172,7 +176,7 @@ public:
         return go( _1, _2 );
     }
 };
-
+*/
 
 //        if( t1->left == t2->left )
 //            cout << "left equal" << endl;
@@ -281,6 +285,43 @@ public:
 };
 */
 
+using VI = vector< int >;
+class Solution {
+    VI P;
+    VI getFactors( const int x ) const {
+        VI factors;
+        for( int d=2; d <= sqrt(x); ++d )
+            if( x % d == 0 )
+                factors.push_back( d ), factors.push_back( x / d );
+        return factors;
+    }
+    void u( const int a, const int b ){
+        int pa = f(a), pb = f(b);
+        P[ pa ] = pb;
+    }
+    int f( const int x ){
+        if( P[ x ] != x )
+            P[ x ] = f( P[ x ] );
+        return P[ x ];
+    }
+public:
+    Solution() : P{ VI( 100001 ) } {
+        for( size_t x=0; x < P.size(); ++x ) P[ x ] = x;
+    }
+    int largestComponentSize( VI& A, unordered_map<int,int> m={}, int ans=0 ){
+        for( const auto num: A){
+            const auto factors = getFactors( num );
+            for( const auto factor: factors )
+                u( num, factor );
+        }
+        for( const auto num: A ){
+            const auto p = f( num );
+            ans = max( ans, ++m[ p ] );
+        }
+        return ans;
+    }
+};
+
 int main() {
 
 //    Solution s;
@@ -300,6 +341,12 @@ int main() {
 //    Solution s;
 //    vector<int> A{17,13,11,2,3,5,7};
 //    auto r = s.deckRevealedIncreasing(A);
+
+    Solution s;
+
+    VI A{ 20,50,9,63 };
+    cout << s.largestComponentSize( A ) << endl;
+
     return 0;
 }
 
