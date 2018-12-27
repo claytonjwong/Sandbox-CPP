@@ -285,39 +285,80 @@ public:
 };
 */
 
+/*
 using VI = vector< int >;
+using Counter = unordered_map< int, int >;
 class Solution {
     VI P;
     VI getFactors( const int x ) const {
         VI factors;
-        for( int d=2; d <= sqrt(x); ++d )
+        for( int d{ 2 }; d <= sqrt( x ); ++d )
             if( x % d == 0 )
                 factors.push_back( d ), factors.push_back( x / d );
         return factors;
     }
-    void u( const int a, const int b ){
-        int pa = f(a), pb = f(b);
-        P[ pa ] = pb;
+    void Union( int a, int b ){
+        a = Find( a ), b = Find( b );
+        P[ a ] = b;
     }
-    int f( const int x ){
+    int Find( const int x ){
         if( P[ x ] != x )
-            P[ x ] = f( P[ x ] );
+            P[ x ] = Find( P[ x ] );
         return P[ x ];
     }
 public:
-    Solution() : P{ VI( 100001 ) } {
-        for( size_t x=0; x < P.size(); ++x ) P[ x ] = x;
-    }
-    int largestComponentSize( VI& A, unordered_map<int,int> m={}, int ans=0 ){
-        for( const auto num: A){
+    Solution() : P{ VI( 100001 ) } { for( size_t x{ 0 }; x < P.size(); ++x ) P[ x ] = x; }
+    int largestComponentSize( VI& A, Counter count={}, int ans=0 ){
+        for( const auto num: A ){
             const auto factors = getFactors( num );
             for( const auto factor: factors )
-                u( num, factor );
+                Union( num, factor );
         }
         for( const auto num: A ){
-            const auto p = f( num );
-            ans = max( ans, ++m[ p ] );
+            const auto parent = Find( num );
+            ans = max( ans, ++count[ parent ] );
         }
+        return ans;
+    }
+};
+*/
+
+/*
+using VI = vector< int >;
+using Counter = unordered_map< int, int >;
+class Solution {
+    VI P;
+    VI getFactors( const int x, VI factors={} ) const {
+        for( int d{ 2 }; d <= sqrt( x ); ++d ) if( x % d == 0 ) factors.push_back( d ), factors.push_back( x / d );
+        return factors;
+    }
+    void Union( const int a, const int b ){ P[ Find( a ) ] = Find( b ); }
+    int Find( const int x ){ return P[ x ] = ( P[ x ] == x )? x : Find( P[ x ] ); }
+public:
+    Solution() : P{ VI( 100001 ) } { for( size_t x{ 0 }; x < P.size(); ++x ) P[ x ] = x; }
+    int largestComponentSize( VI& A, Counter count={}, int ans=0 ){
+        for( const auto num: A ) for( const auto factor: getFactors( num ) ) Union( num, factor );
+        for( const auto num: A ) ans = max( ans, ++count[ Find( num ) ] );
+        return ans;
+    }
+};
+*/
+
+using VI = vector< int >;
+using Counter = unordered_map< int, int >;
+class Solution {
+    VI P;
+    VI getFactors( int x, VI factors={} ){
+        for( auto d{ 2 }; d <= sqrt( x ); ++d ) if( x % d == 0 ) factors.push_back( d ), factors.push_back( x / d );
+        return factors;
+    }
+    void Union( int a, int b ){ P[ Find( a ) ] = Find( b ); }
+    int Find( int x ){ return P[ x ] = ( P[ x ] == x )? x : Find( P[ x ] ); }
+public:
+    Solution() : P{ VI( 100001 ) } { for( size_t x{ 0 }; x < P.size(); ++x ) P[ x ] = x; }
+    int largestComponentSize( VI& A, Counter count={}, int ans=0 ){
+        for( auto num: A ) for( auto factor: getFactors( num ) ) Union( num, factor );
+        for( auto num: A ) ans = max( ans, ++count[ Find( num ) ] );
         return ans;
     }
 };
